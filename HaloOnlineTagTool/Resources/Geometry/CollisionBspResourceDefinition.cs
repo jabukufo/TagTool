@@ -101,18 +101,20 @@ namespace HaloOnlineTagTool.Resources.Geometry
                 Slip = 1 << 5,
                 PlaneNegated = 1 << 6
             }
-
+            
             [TagStructure(Size = 0xC)]
             public class Surface
             {
-                public int Plane;
-                public int FirstEdge;
+                public short Plane;
+                public short FirstEdge;
                 public short Material;
+                public short Unknown;
+                public short BreakableSurface;
                 public SurfaceFlags Flags;
                 public byte BestPlaneCalculationVertex;
             }
 
-            [TagStructure(Size = 0xc)]
+            [TagStructure(Size = 0xC)]
             public class Edge
             {
                 public short StartVertex;
