@@ -89,15 +89,27 @@ namespace HaloOnlineTagTool.Resources.Geometry
                 public short RightChild;
             }
 
-            [TagStructure(Size = 0x8)]
+            [Flags]
+            public enum SurfaceFlags : byte
+            {
+                None = 0,
+                TwoSided = 1 << 0,
+                Invisible = 1 << 1,
+                Climbable = 1 << 2,
+                Invalid = 1 << 3,
+                Conveyor = 1 << 4,
+                Slip = 1 << 5,
+                PlaneNegated = 1 << 6
+            }
+
+            [TagStructure(Size = 0xC)]
             public class Surface
             {
-                public short Plane;
-                public short FirstEdge;
+                public int Plane;
+                public int FirstEdge;
                 public short Material;
-                public short Unknown;
-                public short BreakableSurface;
-                public short Unknown2;
+                public SurfaceFlags Flags;
+                public byte BestPlaneCalculationVertex;
             }
 
             [TagStructure(Size = 0xc)]
