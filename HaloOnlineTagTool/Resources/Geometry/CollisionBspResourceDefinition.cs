@@ -12,9 +12,7 @@ namespace HaloOnlineTagTool.Resources.Geometry
     public class CollisionBspResourceDefinition
     {
         public List<CollisionBsp> CollisionBsps;
-        public int Unknown1;
-        public int Unknown2;
-        public int Unknown3;
+        public List<CollisionBsp> LargeCollisionBsps;
         public List<Compression> Compressions;
         public int Unknown4;
         public int Unknown5;
@@ -55,7 +53,14 @@ namespace HaloOnlineTagTool.Resources.Geometry
             public enum LeafFlags : byte
             {
                 None = 0,
-                ContainsDoubleSidedSurfaces = 1 << 0
+                ContainsDoubleSidedSurfaces = 1 << 0,
+                Bit1 = 1 << 1,
+                Bit2 = 1 << 2,
+                Bit3 = 1 << 3,
+                Bit4 = 1 << 4,
+                Bit5 = 1 << 5,
+                Bit6 = 1 << 6,
+                Bit7 = 1 << 7
             }
 
             [TagStructure(Size = 0x4)]
@@ -141,29 +146,29 @@ namespace HaloOnlineTagTool.Resources.Geometry
             public int Unknown10;
             public List<CollisionMoppCode> CollisionMOPPCodes2;
             public int Unknown11;
-        }
 
-        [TagStructure(Size = 0x40)]
-        public class CollisionMoppCode
-        {
-            public int Unknown1;
-            public short Size;
-            public short Count;
-            public int Address;
-            public int Unknown2;
-            public Vector3 Offset;
-            public float OffsetScale;
-            public int Unknown3;
-            public int DataSize;
-            public uint DataCapacity;
-            public sbyte Unknown4;
-            public sbyte Unknown5;
-            public sbyte Unknown6;
-            public sbyte Unknown7;
-            public int DatumCount;
-            public ResourceAddress Data;
-            public int Unknown8;
-            public int Unknown9;
+            [TagStructure(Size = 0x40)]
+            public class CollisionMoppCode
+            {
+                public int Unknown1;
+                public short Size;
+                public short Count;
+                public int Address;
+                public int Unknown2;
+                public Vector3 Offset;
+                public float OffsetScale;
+                public int Unknown3;
+                public int DataSize;
+                public uint DataCapacity;
+                public sbyte Unknown4;
+                public sbyte Unknown5;
+                public sbyte Unknown6;
+                public sbyte Unknown7;
+                public int DatumCount;
+                public ResourceAddress Data;
+                public int Unknown8;
+                public int Unknown9;
+            }
         }
 
         [TagStructure(Size = 0x8)]

@@ -40,7 +40,7 @@ namespace HaloOnlineTagTool.Commands.BSP
             
             using (var reader = new BinaryReader(resourceDataStream))
             {
-                #region root resource data
+                #region collision bsps
 
                 foreach (var cbsp in definition.CollisionBsps)
                 {
@@ -102,6 +102,71 @@ namespace HaloOnlineTagTool.Commands.BSP
                 }
 
                 #endregion
+
+                #region large collision bsps
+
+                foreach (var cbsp in definition.LargeCollisionBsps)
+                {
+                    reader.BaseStream.Position = cbsp.Bsp3DNodes.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp3DNodes.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode));
+                        cbsp.Bsp3DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode)element);
+                    }
+
+                    reader.BaseStream.Position = cbsp.Planes.Address.Offset;
+                    for (var i = 0; i < cbsp.Planes.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Plane));
+                        cbsp.Planes.Add((CollisionBspResourceDefinition.CollisionBsp.Plane)element);
+                    }
+
+                    reader.BaseStream.Position = cbsp.Leaves.Address.Offset;
+                    for (var i = 0; i < cbsp.Leaves.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Leaf));
+                        cbsp.Leaves.Add((CollisionBspResourceDefinition.CollisionBsp.Leaf)element);
+                    }
+
+                    reader.BaseStream.Position = cbsp.Bsp2DReferences.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp2DReferences.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference));
+                        cbsp.Bsp2DReferences.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference)element);
+                    }
+
+                    reader.BaseStream.Position = cbsp.Bsp2DNodes.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp2DNodes.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode));
+                        cbsp.Bsp2DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode)element);
+                    }
+
+                    reader.BaseStream.Position = cbsp.Surfaces.Address.Offset;
+                    for (var i = 0; i < cbsp.Surfaces.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Surface));
+                        cbsp.Surfaces.Add((CollisionBspResourceDefinition.CollisionBsp.Surface)element);
+                    }
+
+                    reader.BaseStream.Position = cbsp.Edges.Address.Offset;
+                    for (var i = 0; i < cbsp.Edges.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Edge));
+                        cbsp.Edges.Add((CollisionBspResourceDefinition.CollisionBsp.Edge)element);
+                    }
+
+                    reader.BaseStream.Position = cbsp.Vertices.Address.Offset;
+                    for (var i = 0; i < cbsp.Vertices.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Vertex));
+                        cbsp.Vertices.Add((CollisionBspResourceDefinition.CollisionBsp.Vertex)element);
+                    }
+                }
+
+                #endregion
+
+                #region compressions
 
                 foreach (var comp in definition.Compressions)
                 {
@@ -228,6 +293,8 @@ namespace HaloOnlineTagTool.Commands.BSP
 
                     #endregion
                 }
+
+                #endregion
             }
 
             return true;
