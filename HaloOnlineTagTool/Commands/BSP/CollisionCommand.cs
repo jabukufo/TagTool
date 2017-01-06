@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.IO;
 using HaloOnlineTagTool.Resources;
 using HaloOnlineTagTool.Serialization;
 using HaloOnlineTagTool.TagStructures;
 using HaloOnlineTagTool.Resources.Geometry;
-using System.IO;
 
 namespace HaloOnlineTagTool.Commands.BSP
 {

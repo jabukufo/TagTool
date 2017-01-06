@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Analysis\DataReferenceGuess.cs" />
     <Compile Include="Analysis\ITagElementGuessVisitor.cs" />
+    <Compile Include="Commands\Animation\AnimationCommand.cs" />
+    <Compile Include="Commands\Animation\AnimationContextFactory.cs" />
     <Compile Include="Commands\ArgumentParser.cs" />
     <Compile Include="Commands\Bitmaps\BitmapContextFactory.cs" />
     <Compile Include="Commands\Bitmaps\ImportCommand.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Resources\Geometry\CollisionGeometryBuilder.cs" />
     <Compile Include="Resources\Geometry\GeometryReference.cs" />
     <Compile Include="Resources\Geometry\BlenderPhmoReader.cs" />
+    <Compile Include="Resources\Geometry\ModelAnimationResourceDefinition.cs" />
     <Compile Include="Resources\Geometry\PhysicsModelBuilder.cs" />
     <Compile Include="Resources\Geometry\RenderMaterial.cs" />
     <Compile Include="Resources\Geometry\VertexStreamFactory.cs" />

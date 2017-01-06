@@ -1,4 +1,5 @@
-﻿using HaloOnlineTagTool.Commands.Bitmaps;
+﻿using HaloOnlineTagTool.Commands.Animation;
+using HaloOnlineTagTool.Commands.Bitmaps;
 using HaloOnlineTagTool.Commands.BSP;
 using HaloOnlineTagTool.Commands.Models;
 using HaloOnlineTagTool.Commands.RenderModels;
@@ -40,6 +41,10 @@ namespace HaloOnlineTagTool.Commands.Editing
 
                 case "mode": // render_model
                     EditRenderModel(context, info, tag);
+                    break;
+
+                case "jmad": // model_animation_graph
+                    EditAnimations(context, info, tag);
                     break;
 
                 case "rm  ": // render_method
@@ -138,6 +143,17 @@ namespace HaloOnlineTagTool.Commands.Editing
                     new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
 
             RenderModelContextFactory.Populate(context, info, tag, renderModel);
+        }
+
+        private static void EditAnimations(CommandContext context, OpenTagCache info, TagInstance tag)
+        {
+            ModelAnimationGraph jmad;
+
+            using (var stream = info.OpenCacheRead())
+                jmad = info.Deserializer.Deserialize<ModelAnimationGraph>(
+                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
+
+            AnimationContextFactory.Populate(context, info, tag, jmad);
         }
 
         private static void EditRenderMethod(CommandContext context, OpenTagCache info, TagInstance tag)
