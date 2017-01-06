@@ -27,11 +27,16 @@ namespace HaloOnlineTagTool.Commands.Animation
             var resources = new ResourceDataManager();
             resources.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
 
-            var name = Info.StringIds.GetString(new StringId(0x2B60));
+            var name = Info.StringIds.GetString(new StringId(0x1818));
 
-            var context = new ResourceSerializationContext(JMAD.ResourceGroups[0].Resource);
-            var definition = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition>(context);
+            var jmadDefinitions = new List<ModelAnimationResourceDefinition>();
 
+            foreach (var jmadDefinition in JMAD.ResourceGroups)
+            {
+                var context = new ResourceSerializationContext(jmadDefinition.Resource);
+                jmadDefinitions.Add(Info.Deserializer.Deserialize<ModelAnimationResourceDefinition>(context));
+            }
+            
             return true;
         }
     }
