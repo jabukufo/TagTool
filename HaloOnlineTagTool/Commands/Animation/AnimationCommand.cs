@@ -31,10 +31,22 @@ namespace HaloOnlineTagTool.Commands.Animation
 
             var jmadDefinitions = new List<ModelAnimationResourceDefinition>();
 
-            foreach (var jmadDefinition in JMAD.ResourceGroups)
+            foreach (var resourceGroup in JMAD.ResourceGroups)
             {
-                var context = new ResourceSerializationContext(jmadDefinition.Resource);
-                jmadDefinitions.Add(Info.Deserializer.Deserialize<ModelAnimationResourceDefinition>(context));
+                var context = new ResourceSerializationContext(resourceGroup.Resource);
+                var jmadDefinition = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition>(context);
+
+                using (var resourceDataStream = new MemoryStream())
+                using (var reader = new BinaryReader(resourceDataStream))
+                {
+                    resources.Extract(resourceGroup.Resource, resourceDataStream);
+
+                    //
+                    // TODO: Load data from the extracted resource
+                    //
+                }
+
+                jmadDefinitions.Add(jmadDefinition);
             }
             
             return true;

@@ -10,28 +10,30 @@ namespace HaloOnlineTagTool.Resources.Geometry
     [TagStructure(Name = "model_animation_tag_resource", Size = 0xC)]
     public class ModelAnimationResourceDefinition
     {
-        public List<Animation> GroupMembers;
+        public List<GroupMember> GroupMembers;
 
         [TagStructure]
-        public class Animation
+        public class GroupMember
         {
             public StringId Name;
             public uint Checksum;
             public short FrameCount;
             public sbyte NodeCount;
-            public AnimationMovementDataType MovementDataType;
+            public GroupMemberMovementDataType MovementDataType;
+            //
+            // TODO: Define the rest of the structure
+            //
+            public uint Unknown1;
+            public uint Unknown2;
+            public uint Unknown3;
+            public uint Unknown4;
+            public uint Unknown5;
+            public uint Unknown6;
+            public uint Unknown7;
+            public uint Unknown8;
+            public uint Unknown9;
 
-            public byte BlockType;
-            public byte Unknown4;
-            public byte Unknown5;
-            public byte Unknown6;
-            public int Size;
-            public int Unknown7;
-            public int Unknown8;
-            public int Unknown9;
-            public int Unknown10;
-
-            public enum AnimationMovementDataType : sbyte
+            public enum GroupMemberMovementDataType : sbyte
             {
                 None,
                 dx_dy,

@@ -288,6 +288,28 @@ namespace HaloOnlineTagTool.Commands.BSP
                     }
 
                     #endregion
+
+                    #region compression's havok collision data
+
+                    foreach (var collision in comp.CollisionMoppCodes)
+                    {
+                        for (var i = 0; i < collision.Data.Count; i++)
+                        {
+                            var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(byte));
+                            collision.Data.Add((byte)element);
+                        }
+                    }
+
+                    foreach (var collision in comp.CollisionMoppCodes2)
+                    {
+                        for (var i = 0; i < collision.Data.Count; i++)
+                        {
+                            var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(byte));
+                            collision.Data.Add((byte)element);
+                        }
+                    }
+
+                    #endregion
                 }
 
                 #endregion

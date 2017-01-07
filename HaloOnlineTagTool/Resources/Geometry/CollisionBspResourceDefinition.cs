@@ -158,7 +158,7 @@ namespace HaloOnlineTagTool.Resources.Geometry
             public short Index01;
             public short Index02;
             public int Unknown10;
-            public List<CollisionMoppCode> CollisionMOPPCodes2;
+            public List<CollisionMoppCode> CollisionMoppCodes2;
             public int Unknown11;
 
             [TagStructure(Size = 0x40)]
@@ -178,9 +178,7 @@ namespace HaloOnlineTagTool.Resources.Geometry
                 public sbyte Unknown5;
                 public sbyte Unknown6;
                 public sbyte Unknown7;
-                public int DatumCount;
-                public ResourceAddress Data;
-                public int Unknown8;
+                public ResourceBlockReference<byte> Data;
                 public int Unknown9;
             }
         }
