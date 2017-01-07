@@ -146,15 +146,9 @@ namespace HaloOnlineTagTool.Resources.Geometry
             public int Unknown13;
             public List<CollisionBsp> CollisionBsps;
             public List<CollisionMoppCode> CollisionMoppCodes;
-            public int Unknown1;
-            public int Unknown2;
-            public int Unknown3;
-            public int Unknown4;
-            public int Unknown5;
-            public int Unknown6;
-            public int Unknown7;
-            public int Unknown8;
-            public int Unknown9;
+            public ResourceBlockReference<Unknown1Block> Unknown1;
+            public ResourceBlockReference<Unknown2Block> Unknown2;
+            public ResourceBlockReference<Unknown3Block> Unknown3;
             public short Index01;
             public short Index02;
             public int Unknown10;
@@ -181,13 +175,24 @@ namespace HaloOnlineTagTool.Resources.Geometry
                 public ResourceBlockReference<byte> Data;
                 public int Unknown9;
             }
-        }
 
-        [TagStructure(Size = 0x8)]
-        public class Unknown
-        {
-            public int Unknown1;
-            public int Unknown2;
+            [TagStructure]
+            public class Unknown1Block
+            {
+                public uint Unknown;
+            }
+
+            [TagStructure]
+            public class Unknown2Block
+            {
+                public uint Unknown;
+            }
+
+            [TagStructure]
+            public class Unknown3Block
+            {
+                public uint Unknown;
+            }
         }
     }
 }

@@ -289,6 +289,28 @@ namespace HaloOnlineTagTool.Commands.BSP
 
                     #endregion
 
+                    #region Unknown Data
+
+                    for (var i = 0; i < comp.Unknown1.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.Compression.Unknown1Block));
+                        comp.Unknown1.Add((CollisionBspResourceDefinition.Compression.Unknown1Block)element);
+                    }
+
+                    for (var i = 0; i < comp.Unknown2.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.Compression.Unknown2Block));
+                        comp.Unknown2.Add((CollisionBspResourceDefinition.Compression.Unknown2Block)element);
+                    }
+
+                    for (var i = 0; i < comp.Unknown3.Count; i++)
+                    {
+                        var element = Info.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.Compression.Unknown3Block));
+                        comp.Unknown3.Add((CollisionBspResourceDefinition.Compression.Unknown3Block)element);
+                    }
+
+                    #endregion
+
                     #region compression's havok collision data
 
                     foreach (var collision in comp.CollisionMoppCodes)
