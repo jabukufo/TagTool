@@ -186,6 +186,7 @@ namespace HaloOnlineTagTool.Resources.Geometry
             public class Unknown2Block
             {
                 public uint Unknown;
+                public uint Unknown2;
             }
 
             [TagStructure]
