@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Resources.Geometry;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Resources;
+using TagTool.Resources.Geometry;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     [TagStructure(Name = "render_model", Class = "mode", Size = 0x1D0)]
     public class RenderModel

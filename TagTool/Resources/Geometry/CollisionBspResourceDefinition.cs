@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     [TagStructure(Size = 0x30)]
     public class CollisionBspResourceDefinition

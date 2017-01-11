@@ -1,13 +1,13 @@
-﻿using HaloOnlineTagTool.Resources.Geometry;
+﻿using TagTool.Resources.Geometry;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     class PhysicsModelTestCommand : Command
     {

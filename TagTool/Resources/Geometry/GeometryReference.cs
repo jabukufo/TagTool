@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     /// <summary>
     /// A reference to geometry data from a tag.

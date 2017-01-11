@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Layouts;
+using TagTool.Layouts;
 
-namespace HaloOnlineTagTool.Analysis
+namespace TagTool.Analysis
 {
     /// <summary>
     /// Converts tag layout guesses into final layouts.

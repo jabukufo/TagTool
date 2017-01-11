@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.Serialization;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     // TODO: This code is shit, clean it up
     class MatchTagsCommand : Command

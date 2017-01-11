@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Scenarios
+namespace TagTool.Commands.Scenarios
 {
     static class ScnrContextFactory
     {

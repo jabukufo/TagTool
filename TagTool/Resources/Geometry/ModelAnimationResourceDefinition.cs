@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     [TagStructure(Name = "model_animation_tag_resource", Size = 0xC)]
     public class ModelAnimationResourceDefinition

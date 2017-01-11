@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Resources;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     [TagStructure(Name = "sound", Class = "snd!", Size = 0xD4, MaxVersion = EngineVersion.V1_235640_cert_ms25)]
     [TagStructure(Name = "sound", Class = "snd!", Size = 0xD8, MinVersion = EngineVersion.V0_0_1_301003_cert_MS26_new, MaxVersion = EngineVersion.V10_1_449175_Live)]

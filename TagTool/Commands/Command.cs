@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HaloOnlineTagTool.Commands
+namespace TagTool.Commands
 {
     /// <summary>
     /// Base class for a tag manipulation command.

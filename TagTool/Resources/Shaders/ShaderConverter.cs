@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Resources.Geometry;
+using TagTool.Resources.Geometry;
 
-namespace HaloOnlineTagTool.Resources.Shaders
+namespace TagTool.Resources.Shaders
 {
     /// <summary>
     /// Utility class for converting shader bytecode between rendering pipelines.

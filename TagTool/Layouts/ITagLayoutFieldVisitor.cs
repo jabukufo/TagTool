@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Layouts
+namespace TagTool.Layouts
 {
     /// <summary>
     /// Interface for a tag layout field visitor.

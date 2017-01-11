@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     [TagStructure(Class = "devi", Size = 0x98)]
     public class Device : GameObject

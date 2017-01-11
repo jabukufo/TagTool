@@ -5,11 +5,11 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.Common;
+using TagTool.Serialization;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     /// <summary>
     /// Utility class for creating render models from scratch.

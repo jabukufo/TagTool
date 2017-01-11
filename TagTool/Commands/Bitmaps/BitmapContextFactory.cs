@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Bitmaps
+namespace TagTool.Commands.Bitmaps
 {
     static class BitmapContextFactory
     {

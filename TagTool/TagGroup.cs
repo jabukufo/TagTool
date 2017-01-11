@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     /// <summary>
     /// Describes the type of data in a tag.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     /// <summary>
     /// Contains tag data and a description of it.

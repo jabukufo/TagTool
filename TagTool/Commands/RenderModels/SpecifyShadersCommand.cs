@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.Serialization;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.RenderModels
+namespace TagTool.Commands.RenderModels
 {
     class SpecifyShadersCommand : Command
     {

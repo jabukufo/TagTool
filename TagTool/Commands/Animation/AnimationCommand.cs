@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
-using HaloOnlineTagTool.Resources.Geometry;
+using TagTool.Resources;
+using TagTool.Serialization;
+using TagTool.TagStructures;
+using TagTool.Resources.Geometry;
 using System;
 
-namespace HaloOnlineTagTool.Commands.Animation
+namespace TagTool.Commands.Animation
 {
     class AnimationCommand : Command
     {

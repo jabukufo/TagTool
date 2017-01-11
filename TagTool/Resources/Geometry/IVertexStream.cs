@@ -1,4 +1,4 @@
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     public interface IVertexStream
     {

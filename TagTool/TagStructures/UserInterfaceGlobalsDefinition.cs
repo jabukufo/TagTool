@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Resources;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     [TagStructure(Name = "user_interface_globals_definition", Class = "wgtz", Size = 0x50, MaxVersion = EngineVersion.V10_1_449175_Live)]
     [TagStructure(Name = "user_interface_globals_definition", Class = "wgtz", Size = 0x60, MinVersion = EngineVersion.V11_1_498295_Live)]

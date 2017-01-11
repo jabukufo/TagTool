@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.TagStructures;
-using BSP = HaloOnlineTagTool.TagStructures.CollisionModel.Region.Permutation.Bsp;
+using TagTool.TagStructures;
+using BSP = TagTool.TagStructures.CollisionModel.Region.Permutation.Bsp;
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     class CollisionGeometryBuilder
     {

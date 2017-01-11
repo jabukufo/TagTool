@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Serialization
+namespace TagTool.Serialization
 {
     /// <summary>
     /// Allows easy enumeration over a tag structure's elements and filtering by version.

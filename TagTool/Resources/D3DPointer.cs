@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.Serialization;
+﻿using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources
+namespace TagTool.Resources
 {
     /// <summary>
     /// Points to a D3D-related object.

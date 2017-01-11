@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace HaloOnlineTagTool.Commands
+namespace TagTool.Commands
 {
     /// <summary>
     /// A stack of command contexts.

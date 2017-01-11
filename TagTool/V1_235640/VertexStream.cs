@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources.Geometry;
+using TagTool.Common;
+using TagTool.Resources.Geometry;
 
-namespace HaloOnlineTagTool.V1_235640
+namespace TagTool.V1_235640
 {
     class VertexStream : IVertexStream
     {

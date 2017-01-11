@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
+using TagTool.Common;
 
-namespace HaloOnlineTagTool.Layouts
+namespace TagTool.Layouts
 {
     public class CppLayoutWriter : TagLayoutWriter
     {

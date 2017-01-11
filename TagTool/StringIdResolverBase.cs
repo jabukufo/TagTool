@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     /// <summary>
     /// Base class for an object which converts stringID values to and from string list indices.

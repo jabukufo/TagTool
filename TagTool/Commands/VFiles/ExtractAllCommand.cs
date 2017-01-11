@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.VFiles
+namespace TagTool.Commands.VFiles
 {
     class ExtractAllCommand : Command
     {

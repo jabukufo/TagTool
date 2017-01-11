@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Animation
+namespace TagTool.Commands.Animation
 {
     static class AnimationContextFactory
     {

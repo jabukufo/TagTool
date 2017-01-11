@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Resources.Geometry;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.Resources;
+using TagTool.Resources.Geometry;
+using TagTool.Serialization;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Models
+namespace TagTool.Commands.Models
 {
     class ExtractModelCommand : Command
     {

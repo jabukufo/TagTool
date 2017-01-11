@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Common
+namespace TagTool.Common
 {
     /// <summary>
     /// Implements a read-only wrapper for a set.

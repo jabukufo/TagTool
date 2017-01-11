@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Analysis
+namespace TagTool.Analysis
 {
     /// <summary>
     /// A guess at the layout of a tag.

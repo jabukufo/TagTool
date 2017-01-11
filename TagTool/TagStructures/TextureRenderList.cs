@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Resources;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     // TODO: Update this for cert_ms30_oct19
     [TagStructure(Name = "texture_render_list", Class = "trdf", Size = 0x48)]

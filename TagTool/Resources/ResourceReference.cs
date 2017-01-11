@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources
+namespace TagTool.Resources
 {
     /// <summary>
     /// A reference to a resource used by a tag.

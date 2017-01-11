@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HaloOnlineTagTool.Commands.Core
+namespace TagTool.Commands.Core
 {
     class HelpCommand : Command
     {

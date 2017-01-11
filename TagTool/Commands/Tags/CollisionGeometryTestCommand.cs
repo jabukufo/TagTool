@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Resources.Geometry;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.Resources.Geometry;
+using TagTool.Serialization;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     class CollisionGeometryTestCommand : Command
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     /// <summary>
     /// Represents a magic number which looks like a string.

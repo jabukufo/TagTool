@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace HaloOnlineTagTool.Commands.Core
+namespace TagTool.Commands.Core
 {
     class SetLocaleCommand : Command
     {

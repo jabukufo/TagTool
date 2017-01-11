@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     /// <summary>
     /// A constant ID representing a debug string.

@@ -1,8 +1,8 @@
 ﻿using System.IO;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources.Geometry;
+using TagTool.Common;
+using TagTool.Resources.Geometry;
 
-namespace HaloOnlineTagTool.V1_106708
+namespace TagTool.V1_106708
 {
     public class VertexStream : IVertexStream
     {

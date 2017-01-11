@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Serialization
+namespace TagTool.Serialization
 {
     /// <summary>
     /// Utility class for analyzing a tag structure type's inheritance hierarchy.

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Resources;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     [TagStructure(Name = "sky_atm_parameters", Class = "skya", Size = 0x4C, MaxVersion = EngineVersion.V10_1_449175_Live)]
     [TagStructure(Name = "sky_atm_parameters", Class = "skya", Size = 0x54, MinVersion = EngineVersion.V11_1_498295_Live)]

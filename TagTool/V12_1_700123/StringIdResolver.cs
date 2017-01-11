@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.V12_1_700123
+namespace TagTool.V12_1_700123
 {
     /// <summary>
     /// StringID resolver for 12.1.700123.

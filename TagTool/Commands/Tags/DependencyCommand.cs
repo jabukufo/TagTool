@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     /// <summary>
     /// Command for managing tag dependencies.

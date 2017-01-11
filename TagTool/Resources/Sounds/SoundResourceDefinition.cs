@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.Serialization;
+﻿using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources.Sounds
+namespace TagTool.Resources.Sounds
 {
     /// <summary>
     /// Resource definition data for sounds.

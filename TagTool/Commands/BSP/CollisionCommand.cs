@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
-using HaloOnlineTagTool.Resources.Geometry;
+using TagTool.Resources;
+using TagTool.Serialization;
+using TagTool.TagStructures;
+using TagTool.Resources.Geometry;
 
-namespace HaloOnlineTagTool.Commands.BSP
+namespace TagTool.Commands.BSP
 {
     class CollisionCommand : Command
     {

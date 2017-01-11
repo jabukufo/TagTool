@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Unicode
+namespace TagTool.Commands.Unicode
 {
     static class UnicodeContextFactory
     {

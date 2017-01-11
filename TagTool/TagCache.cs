@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     /// <summary>
     /// Provides methods for easily editing tags.dat files.

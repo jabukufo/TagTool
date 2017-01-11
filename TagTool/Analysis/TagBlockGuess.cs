@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Analysis
+namespace TagTool.Analysis
 {
     public class TagBlockGuess : ITagElementGuess
     {

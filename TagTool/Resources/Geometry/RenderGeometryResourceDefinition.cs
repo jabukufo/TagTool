@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     /// <summary>
     /// Resource definition data for renderable geometry.

@@ -6,9 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
-using HaloOnlineTagTool.Layouts;
+using TagTool.Layouts;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     class ConvertPluginsCommand : Command
     {

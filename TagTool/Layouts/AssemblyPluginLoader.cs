@@ -4,9 +4,9 @@ using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
 using System.Linq;
 using System.Xml;
-using HaloOnlineTagTool.Common;
+using TagTool.Common;
 
-namespace HaloOnlineTagTool.Layouts
+namespace TagTool.Layouts
 {
     public class AssemblyPluginLoader
     {

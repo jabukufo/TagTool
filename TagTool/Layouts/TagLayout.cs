@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Layouts
+namespace TagTool.Layouts
 {
     /// <summary>
     /// Holds information about the layout of tag data.

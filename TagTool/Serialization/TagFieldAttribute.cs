@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Serialization
+namespace TagTool.Serialization
 {
     /// <summary>
     /// Attribute for automatically-serializable values in a tag.

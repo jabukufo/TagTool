@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Resources.Geometry;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Resources;
+using TagTool.Resources.Geometry;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     [TagStructure(Name = "scenario_structure_bsp", Class = "sbsp", Size = 0x3AC, MaxVersion = EngineVersion.V1_106708_cert_ms23)]
     [TagStructure(Name = "scenario_structure_bsp", Class = "sbsp", Size = 0x3A8, MaxVersion = EngineVersion.V1_235640_cert_ms25)]

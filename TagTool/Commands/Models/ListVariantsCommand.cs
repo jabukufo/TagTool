@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Models
+namespace TagTool.Commands.Models
 {
     class ListVariantsCommand : Command
     {

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace HaloOnlineTagTool.Commands
+namespace TagTool.Commands
 {
     static class ArgumentParser
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Analysis
+namespace TagTool.Analysis
 {
     /// <summary>
     /// Interface for a class which can visit tag element guesses.

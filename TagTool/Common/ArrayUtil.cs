@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Common
+namespace TagTool.Common
 {
     static class ArrayUtil
     {

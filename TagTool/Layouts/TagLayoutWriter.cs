@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Layouts
+namespace TagTool.Layouts
 {
     /// <summary>
     /// Base for a class which can write tag layouts to files.

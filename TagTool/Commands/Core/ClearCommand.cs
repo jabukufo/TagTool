@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Commands.Core
+namespace TagTool.Commands.Core
 {
     class ClearCommand : Command
     {

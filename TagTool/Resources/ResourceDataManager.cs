@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace HaloOnlineTagTool.Resources
+namespace TagTool.Resources
 {
     /// <summary>
     /// Manages resource caches and extracting/injecting resource data.

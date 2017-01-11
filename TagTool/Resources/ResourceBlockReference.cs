@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources
+namespace TagTool.Resources
 {
     /// <summary>
     /// A block reference to raw resource data. Only used in resource definitions.

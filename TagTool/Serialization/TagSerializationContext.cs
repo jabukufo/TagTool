@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Resources;
+using TagTool.Resources;
 
-namespace HaloOnlineTagTool.Serialization
+namespace TagTool.Serialization
 {
     /// <summary>
     /// A serialization context for serializing and deserializing tags.

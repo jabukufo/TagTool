@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using HaloOnlineTagTool.TagStructures;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.VFiles
+namespace TagTool.Commands.VFiles
 {
     class ListCommand : Command
     {

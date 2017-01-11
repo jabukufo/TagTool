@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Models
+namespace TagTool.Commands.Models
 {
     static class ModelContextFactory
     {

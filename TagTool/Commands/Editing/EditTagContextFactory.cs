@@ -1,16 +1,16 @@
-﻿using HaloOnlineTagTool.Commands.Animation;
-using HaloOnlineTagTool.Commands.Bitmaps;
-using HaloOnlineTagTool.Commands.BSP;
-using HaloOnlineTagTool.Commands.Models;
-using HaloOnlineTagTool.Commands.RenderModels;
-using HaloOnlineTagTool.Commands.RenderMethods;
-using HaloOnlineTagTool.Commands.Scenarios;
-using HaloOnlineTagTool.Commands.Unicode;
-using HaloOnlineTagTool.Commands.VFiles;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.Commands.Animation;
+using TagTool.Commands.Bitmaps;
+using TagTool.Commands.BSP;
+using TagTool.Commands.Models;
+using TagTool.Commands.RenderModels;
+using TagTool.Commands.RenderMethods;
+using TagTool.Commands.Scenarios;
+using TagTool.Commands.Unicode;
+using TagTool.Commands.VFiles;
+using TagTool.Serialization;
+using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.Editing
+namespace TagTool.Commands.Editing
 {
     static class EditTagContextFactory
     {

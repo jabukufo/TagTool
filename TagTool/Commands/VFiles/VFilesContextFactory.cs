@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.VFiles
+namespace TagTool.Commands.VFiles
 {
     static class VFilesContextFactory
     {

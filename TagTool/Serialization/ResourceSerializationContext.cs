@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Resources.Bitmaps;
-using HaloOnlineTagTool.Resources.Geometry;
+using TagTool.Resources;
+using TagTool.Resources.Bitmaps;
+using TagTool.Resources.Geometry;
 
-namespace HaloOnlineTagTool.Serialization
+namespace TagTool.Serialization
 {
     /// <summary>
     /// A serialization context for serializing and deserializing resource definition structures.

@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.Serialization;
+﻿using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources
+namespace TagTool.Resources
 {
     /// <summary>
     /// A data reference to raw resource data. Only used in resource definitions.

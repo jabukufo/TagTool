@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Common;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Commands.Editing
+namespace TagTool.Commands.Editing
 {
     class SetFieldCommand : Command
     {

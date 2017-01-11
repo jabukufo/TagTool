@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HaloOnlineTagTool.Commands
+namespace TagTool.Commands
 {
     static class TagPrinter
     {

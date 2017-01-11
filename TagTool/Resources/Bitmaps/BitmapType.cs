@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Resources.Bitmaps
+namespace TagTool.Resources.Bitmaps
 {
     /// <summary>
     /// Bitmap types.

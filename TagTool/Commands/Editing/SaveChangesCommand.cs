@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Commands.Editing
+namespace TagTool.Commands.Editing
 {
     class SaveChangesCommand : Command
     {

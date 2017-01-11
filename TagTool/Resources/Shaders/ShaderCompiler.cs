@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 // ReSharper disable InconsistentNaming
 
-namespace HaloOnlineTagTool.Resources.Shaders
+namespace TagTool.Resources.Shaders
 {
     /// <summary>
     /// Utility class for invoking the D3D shader compiler functions.

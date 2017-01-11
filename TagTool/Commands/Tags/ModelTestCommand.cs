@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assimp;
-using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Resources.Geometry;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
-using PrimitiveType = HaloOnlineTagTool.Resources.Geometry.PrimitiveType;
+using TagTool.Common;
+using TagTool.Resources;
+using TagTool.Resources.Geometry;
+using TagTool.Serialization;
+using TagTool.TagStructures;
+using PrimitiveType = TagTool.Resources.Geometry.PrimitiveType;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     class ModelTestCommand : Command
     {

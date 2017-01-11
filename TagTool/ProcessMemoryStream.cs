@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     /// <summary>
     /// A stream which reads/writes another process's memory.

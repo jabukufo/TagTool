@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using LZ4;
 
-namespace HaloOnlineTagTool.Resources
+namespace TagTool.Resources
 {
     // TODO: Come up with a common class for managing .dat files
 

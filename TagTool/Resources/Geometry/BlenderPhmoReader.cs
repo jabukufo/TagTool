@@ -2,7 +2,7 @@
 using System.IO;
 using SimpleJSON;
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
     /// <summary>
     /// This class loads, reads, tokenises, and parses a simple file format

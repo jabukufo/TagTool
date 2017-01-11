@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Analysis;
-using HaloOnlineTagTool.Layouts;
+using TagTool.Analysis;
+using TagTool.Layouts;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     class GenerateLayoutsCommand : Command
     {

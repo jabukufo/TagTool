@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloOnlineTagTool.Commands
+namespace TagTool.Commands
 {
     class MapCommand : Command
     {

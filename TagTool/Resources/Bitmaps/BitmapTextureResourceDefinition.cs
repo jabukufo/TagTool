@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.Serialization;
+﻿using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Resources.Bitmaps
+namespace TagTool.Resources.Bitmaps
 {
     /// <summary>
     /// Resource definition data for bitmap textures.

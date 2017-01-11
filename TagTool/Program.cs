@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using HaloOnlineTagTool.Commands;
-using HaloOnlineTagTool.Commands.Tags;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Commands;
+using TagTool.Commands.Tags;
+using TagTool.Serialization;
 using System.Globalization;
 
-namespace HaloOnlineTagTool
+namespace TagTool
 {
     class Program
     {

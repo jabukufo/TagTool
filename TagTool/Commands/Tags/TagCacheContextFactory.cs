@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using HaloOnlineTagTool.Commands.Core;
+using TagTool.Commands.Core;
 
-namespace HaloOnlineTagTool.Commands.Tags
+namespace TagTool.Commands.Tags
 {
     static class TagCacheContextFactory
     {

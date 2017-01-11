@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.RenderModels
+namespace TagTool.Commands.RenderModels
 {
     static class RenderModelContextFactory
     {

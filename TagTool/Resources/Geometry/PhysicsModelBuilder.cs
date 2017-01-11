@@ -1,14 +1,14 @@
-﻿using HaloOnlineTagTool.Common;
-using HaloOnlineTagTool.Serialization;
-using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.Common;
+using TagTool.Serialization;
+using TagTool.TagStructures;
 using SimpleJSON;
 using System;
 using System.Collections.Generic;
-using ShapeTypes = HaloOnlineTagTool.TagStructures.PhysicsModel.RigidBody.ShapeTypeValue;
-using MotionTypeValue = HaloOnlineTagTool.TagStructures.PhysicsModel.RigidBody.MotionTypeValue;
+using ShapeTypes = TagTool.TagStructures.PhysicsModel.RigidBody.ShapeTypeValue;
+using MotionTypeValue = TagTool.TagStructures.PhysicsModel.RigidBody.MotionTypeValue;
 
 
-namespace HaloOnlineTagTool.Resources.Geometry
+namespace TagTool.Resources.Geometry
 {
 
     class PhysicsModelBuilder

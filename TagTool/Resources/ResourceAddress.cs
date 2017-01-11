@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HaloOnlineTagTool.Resources
+namespace TagTool.Resources
 {
     /// <summary>
     /// An address pointing to data in either a resource or its info buffer.

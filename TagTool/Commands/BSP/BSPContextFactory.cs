@@ -1,6 +1,6 @@
-﻿using HaloOnlineTagTool.TagStructures;
+﻿using TagTool.TagStructures;
 
-namespace HaloOnlineTagTool.Commands.BSP
+namespace TagTool.Commands.BSP
 {
     static class BSPContextFactory
     {

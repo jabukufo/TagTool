@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.Commands
+namespace TagTool.Commands
 {
     /// <summary>
     /// Holds information about an open tag cache file.

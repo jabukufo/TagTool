@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HaloOnlineTagTool.Resources;
-using HaloOnlineTagTool.Resources.Bitmaps;
-using HaloOnlineTagTool.Serialization;
+using TagTool.Resources;
+using TagTool.Resources.Bitmaps;
+using TagTool.Serialization;
 
-namespace HaloOnlineTagTool.TagStructures
+namespace TagTool.TagStructures
 {
     [TagStructure(Name = "bitmap", Class = "bitm", MaxVersion = EngineVersion.V1_106708_cert_ms23, Size = 0xB8)]
     [TagStructure(Name = "bitmap", Class = "bitm", Size = 0xAC)]
