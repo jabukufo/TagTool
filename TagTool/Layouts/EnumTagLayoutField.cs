@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagTool.Layouts
 {
@@ -50,7 +47,7 @@ namespace TagTool.Layouts
                 case BasicFieldType.Int16:
                 case BasicFieldType.UInt32:
                 case BasicFieldType.Int32:
-                case BasicFieldType.StringId:
+                case BasicFieldType.StringID:
                     break;
                 default:
                     throw new ArgumentException("The underlying type of an enum must be an integer type.");

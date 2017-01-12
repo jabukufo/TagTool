@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagTool.Resources;
+using TagTool.Common;
+using TagTool.IO;
+using TagTool.Cache;
+using TagTool.TagGroups;
 
 namespace TagTool.Serialization
 {
@@ -17,7 +18,7 @@ namespace TagTool.Serialization
 
         private readonly Stream _stream;
         private readonly TagCache _cache;
-        private readonly StringIdCache _stringIds;
+        private readonly StringIDCache _stringIds;
         private TagData _data;
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace TagTool.Serialization
         /// <param name="cache">The cache file to write to.</param>
         /// <param name="stringIds">The stringID source to use.</param>
         /// <param name="tag">The tag to overwrite.</param>
-        public TagSerializationContext(Stream stream, TagCache cache, StringIdCache stringIds, TagInstance tag)
+        public TagSerializationContext(Stream stream, TagCache cache, StringIDCache stringIds, TagInstance tag)
         {
             _stream = stream;
             _cache = cache;
@@ -49,7 +50,7 @@ namespace TagTool.Serialization
                     tag: info.GroupTag,
                     parentTag: info.ParentGroupTag,
                     grandparentTag: info.GrandparentGroupTag,
-                    name: (info.Structure.Name != null) ? _stringIds.GetStringId(info.Structure.Name) : StringId.Null
+                    name: (info.Structure.Name != null) ? _stringIds.GetStringID(info.Structure.Name) : StringID.Null
                 ),
             };
         }

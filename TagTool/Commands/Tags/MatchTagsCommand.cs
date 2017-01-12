@@ -1,12 +1,13 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.Cache;
+using TagTool.Common;
+using TagTool.GameDefinitions;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.Tags
 {
@@ -66,9 +67,9 @@ namespace TagTool.Commands.Tags
 
                 // Do version detection, and don't accept the closest version
                 // because that might not work
-                EngineVersion closestVersion;
-                info.Version = VersionDetection.DetectVersion(info.Cache, out closestVersion);
-                if (info.Version == EngineVersion.Unknown)
+                GameDefinitionSet closestVersion;
+                info.Version = GameDefinition.Detect(info.Cache, out closestVersion);
+                if (info.Version == GameDefinitionSet.Unknown)
                 {
                     Console.WriteLine("- Unrecognized version! Ignoring.");
                     continue;
@@ -115,7 +116,7 @@ namespace TagTool.Commands.Tags
                             if (data == null)
                             {
                                 // No data yet - deserialize it
-                                var context = new TagSerializationContext(stream, info.Cache, info.StringIds, tag.Tag);
+                                var context = new TagSerializationContext(stream, info.Cache, info.StringIDs, tag.Tag);
                                 var type = TagStructureTypes.FindByGroupTag(tag.Tag.Group.Tag);
                                 data = info.Deserializer.Deserialize(context, type);
                             }
@@ -128,7 +129,7 @@ namespace TagTool.Commands.Tags
                             if (!baseTagData.TryGetValue(baseTag, out baseData))
                             {
                                 // No data yet - deserialize it
-                                var context = new TagSerializationContext(baseStream, _info.Cache, _info.StringIds, _info.Cache.Tags[baseTag]);
+                                var context = new TagSerializationContext(baseStream, _info.Cache, _info.StringIDs, _info.Cache.Tags[baseTag]);
                                 var type = TagStructureTypes.FindByGroupTag(tag.Tag.Group.Tag);
                                 baseData = _info.Deserializer.Deserialize(context, type);
                                 baseTagData[baseTag] = baseData;
@@ -150,7 +151,7 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private static void CompareBlocks(object leftData, EngineVersion leftVersion, object rightData, EngineVersion rightVersion, TagVersionMap result, Queue<QueuedTag> tagQueue)
+        private static void CompareBlocks(object leftData, GameDefinitionSet leftVersion, object rightData, GameDefinitionSet rightVersion, TagVersionMap result, Queue<QueuedTag> tagQueue)
         {
             if (leftData == null || rightData == null)
                 return;
@@ -210,14 +211,14 @@ namespace TagTool.Commands.Tags
                 while (left.Next() && right.Next())
                 {
                     // Keep going on the left until the field is on the right
-                    while (!VersionDetection.IsBetween(rightVersion, left.MinVersion, left.MaxVersion))
+                    while (!GameDefinition.IsBetween(rightVersion, left.MinVersion, left.MaxVersion))
                     {
                         if (!left.Next())
                             return;
                     }
 
                     // Keep going on the right until the field is on the left
-                    while (!VersionDetection.IsBetween(leftVersion, right.MinVersion, right.MaxVersion))
+                    while (!GameDefinition.IsBetween(leftVersion, right.MinVersion, right.MaxVersion))
                     {
                         if (!right.Next())
                             return;
@@ -239,7 +240,7 @@ namespace TagTool.Commands.Tags
             var scenarios = new Dictionary<int, QueuedTag>();
             foreach (var scenarioTag in info.Cache.Tags.FindAllInGroup("scnr"))
             {
-                var context = new TagSerializationContext(stream, info.Cache, info.StringIds, scenarioTag);
+                var context = new TagSerializationContext(stream, info.Cache, info.StringIDs, scenarioTag);
                 var scenario = info.Deserializer.Deserialize<Scenario>(context);
                 scenarios[scenario.MapId] = new QueuedTag { Tag = scenarioTag, Data = scenario };
             }

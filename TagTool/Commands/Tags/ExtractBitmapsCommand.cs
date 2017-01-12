@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using TagTool.Resources;
-using TagTool.Resources.Bitmaps;
+using TagTool.Cache;
+using TagTool.Bitmaps;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.Tags
 {
@@ -62,8 +58,8 @@ namespace TagTool.Commands.Tags
 
                     try
                     {
-                        var tagContext = new TagSerializationContext(tagsStream, _info.Cache, _info.StringIds, tag);
-                        var bitmap = _info.Deserializer.Deserialize<TagStructures.Bitmap>(tagContext);
+                        var tagContext = new TagSerializationContext(tagsStream, _info.Cache, _info.StringIDs, tag);
+                        var bitmap = _info.Deserializer.Deserialize<Bitmap>(tagContext);
                         var ddsOutDir = outDir;
                         if (bitmap.Images.Count > 1)
                         {

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.GameDefinitions;
 
 namespace TagTool.Serialization
 {
@@ -12,11 +9,11 @@ namespace TagTool.Serialization
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class MaxVersionAttribute : Attribute
     {
-        public MaxVersionAttribute(EngineVersion version)
+        public MaxVersionAttribute(GameDefinitionSet version)
         {
             Version = version;
         }
 
-        public EngineVersion Version { get; set; }
+        public GameDefinitionSet Version { get; set; }
     }
 }

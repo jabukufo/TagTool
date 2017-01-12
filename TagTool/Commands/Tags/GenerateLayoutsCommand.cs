@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagTool.Analysis;
+using TagTool.Cache;
 using TagTool.Layouts;
+using TagTool.TagGroups;
 
 namespace TagTool.Commands.Tags
 {
@@ -74,7 +74,7 @@ namespace TagTool.Commands.Tags
                     if (layout != null && lastTag != null)
                     {
                         Console.WriteLine("Writing {0} layout", groupTag);
-                        var name = _info.StringIds.GetString(lastTag.Group.Name);
+                        var name = _info.StringIDs.GetString(lastTag.Group.Name);
                         var tagLayout = LayoutGuessFinalizer.MakeLayout(layout, name, groupTag);
                         var path = Path.Combine(outDir, writer.GetSuggestedFileName(tagLayout));
                         writer.WriteLayout(tagLayout, path);

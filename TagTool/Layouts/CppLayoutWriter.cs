@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagTool.Common;
 
 namespace TagTool.Layouts
@@ -173,7 +170,7 @@ namespace TagTool.Layouts
                         throw new NotSupportedException("Vector4 is not supported");
                     case BasicFieldType.Angle:
                         return "float";
-                    case BasicFieldType.StringId:
+                    case BasicFieldType.StringID:
                         return "int32_t";
                     case BasicFieldType.TagReference:
                         return "TagReference";

@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.Cache;
+using TagTool.Common;
 
 namespace TagTool.Commands.Tags
 {
-    class StringIdCommand : Command
+    class StringIDCommand : Command
     {
         private readonly OpenTagCache _info;
-        private readonly StringIdCache _stringIds;
+        private readonly StringIDCache _stringIds;
 
-        public StringIdCommand(OpenTagCache info) : base(
+        public StringIDCommand(OpenTagCache info) : base(
             CommandFlags.Inherit,
 
             "stringid",
@@ -29,7 +28,7 @@ namespace TagTool.Commands.Tags
             "\"stringid list\" will list stringIDs, optionally filtering them.")
         {
             _info = info;
-            _stringIds = info.StringIds;
+            _stringIds = info.StringIDs;
         }
 
         public override bool Execute(List<string> args)
@@ -54,7 +53,7 @@ namespace TagTool.Commands.Tags
                 return false;
             var str = args[1];
             var id = _stringIds.Add(str);
-            using (var stream = _info.StringIdsFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var stream = _info.StringIDsFile.Open(FileMode.Open, FileAccess.ReadWrite))
                 _stringIds.Save(stream);
             
             Console.WriteLine("Added string \"{0}\" as {1}.", str, id);
@@ -68,7 +67,7 @@ namespace TagTool.Commands.Tags
             uint stringId;
             if (!uint.TryParse(args[1], NumberStyles.HexNumber, null, out stringId))
                 return false;
-            var str = _stringIds.GetString(new StringId(stringId));
+            var str = _stringIds.GetString(new StringID(stringId));
             if (str != null)
                 Console.WriteLine(str);
             else
@@ -82,18 +81,18 @@ namespace TagTool.Commands.Tags
                 return false;
             var filter = (args.Count == 2) ? args[1] : null;
 
-            var strings = new List<FoundStringId>();
+            var strings = new List<FoundStringID>();
             for (var i = 0; i < _stringIds.Strings.Count; i++)
             {
                 if (_stringIds.Strings[i] == null)
                     continue;
                 if (filter != null && !_stringIds.Strings[i].Contains(filter))
                     continue;
-                var id = _stringIds.GetStringId(i);
-                strings.Add(new FoundStringId
+                var id = _stringIds.GetStringID(i);
+                strings.Add(new FoundStringID
                 {
-                    Id = id,
-                    IdDisplay = id.ToString(),
+                    ID = id,
+                    Display = id.ToString(),
                     Value = _stringIds.Strings[i]
                 });
             }
@@ -102,20 +101,20 @@ namespace TagTool.Commands.Tags
                 Console.Error.WriteLine("No strings found.");
                 return true;
             }
-            strings.Sort((a, b) => a.Id.CompareTo(b.Id));
+            strings.Sort((a, b) => a.ID.CompareTo(b.ID));
 
-            var idWidth = strings.Max(s => s.IdDisplay.Length);
+            var idWidth = strings.Max(s => s.Display.Length);
             var formatStr = string.Format("{{0,-{0}}}  {{1}}", idWidth);
             foreach (var str in strings)
-                Console.WriteLine(formatStr, str.IdDisplay, str.Value);
+                Console.WriteLine(formatStr, str.Display, str.Value);
             return true;
         }
 
-        private class FoundStringId
+        private class FoundStringID
         {
-            public StringId Id { get; set; }
+            public StringID ID { get; set; }
 
-            public string IdDisplay { get; set; }
+            public string Display { get; set; }
 
             public string Value { get; set; }
         }

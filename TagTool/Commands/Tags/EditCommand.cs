@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.Cache;
 using TagTool.Commands.Editing;
 
 namespace TagTool.Commands.Tags
@@ -37,8 +34,8 @@ namespace TagTool.Commands.Tags
         {
             if (args.Count != 1)
                 return false;
-
-            var tag = ArgumentParser.ParseTagIndex(_cache, args[0]);
+            
+            var tag = ArgumentParser.ParseTagIndex(_info, args[0]);
 
             if (tag == null)
                 return false;
@@ -47,7 +44,16 @@ namespace TagTool.Commands.Tags
 
             _stack.Push(EditTagContextFactory.Create(_stack, _info, tag));
 
-            Console.WriteLine("Tag 0x{0:X8}.{1} has been opened for editing.", tag.Index, _info.StringIds.GetString(tag.Group.Name));
+            var groupName = _info.StringIDs.GetString(tag.Group.Name);
+            var tagName = $"0x{tag.Index:X4}";
+
+            if (_info.TagNames.ContainsKey(tag.Index))
+            {
+                tagName = _info.TagNames[tag.Index];
+                tagName = $"(0x{tag.Index:X4}) {tagName.Substring(tagName.LastIndexOf('\\') + 1)}";
+            }
+
+            Console.WriteLine($"Tag {tagName}.{groupName} has been opened for editing.");
             Console.WriteLine("New commands are now available. Enter \"help\" to view them.");
             Console.WriteLine("Use \"exit\" to return to {0}.", oldContext.Name);
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TagTool.Common;
 using TagTool.Layouts;
 
 namespace TagTool.Analysis

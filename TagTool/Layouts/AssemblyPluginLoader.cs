@@ -180,7 +180,7 @@ namespace TagTool.Layouts
                     RegisterField(offset, 4);
                     break;
                 case "stringid":
-                    _results.Layout.Add(new BasicTagLayoutField(name, BasicFieldType.StringId));
+                    _results.Layout.Add(new BasicTagLayoutField(name, BasicFieldType.StringID));
                     RegisterField(offset, 4);
                     break;
                 case "tagref":

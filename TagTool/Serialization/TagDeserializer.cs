@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using TagTool.Common;
-using TagTool.Resources;
+using TagTool.GameDefinitions;
+using TagTool.Cache;
+using TagTool.TagGroups;
 
 namespace TagTool.Serialization
 {
@@ -15,13 +14,13 @@ namespace TagTool.Serialization
     /// </summary>
     public class TagDeserializer
     {
-        public readonly EngineVersion _version;
+        public readonly GameDefinitionSet _version;
 
         /// <summary>
         /// Constructs a tag deserializer for a specific engine version.
         /// </summary>
         /// <param name="version">The engine version to target.</param>
-        public TagDeserializer(EngineVersion version)
+        public TagDeserializer(GameDefinitionSet version)
         {
             _version = version;
         }
@@ -169,6 +168,9 @@ namespace TagTool.Serialization
             if (valueType == typeof(string))
                 return DeserializeString(reader, valueInfo);
 
+            if (valueType == typeof(Tag))
+                return new Tag(reader.ReadInt32());
+
             // TagInstance = Tag reference
             if (valueType == typeof(TagInstance))
                 return DeserializeTagReference(reader, context, valueInfo);
@@ -205,9 +207,19 @@ namespace TagTool.Serialization
             if (valueType == typeof(Vector4))
                 return new Vector4(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
+            if (valueType == typeof(RealQuaternion))
+                return new RealQuaternion(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+
+            if (valueType == typeof(Matrix4x3))
+                return new Matrix4x3(
+                    reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
+                    reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
+                    reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
+                    reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+
             // StringID
-            if (valueType == typeof(StringId))
-                return new StringId(reader.ReadUInt32());
+            if (valueType == typeof(StringID))
+                return new StringID(reader.ReadUInt32());
 
             // Angle (radians)
             if (valueType == typeof(Angle))

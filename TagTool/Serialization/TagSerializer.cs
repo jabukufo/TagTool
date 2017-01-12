@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using TagTool.Common;
-using TagTool.Resources;
+using TagTool.GameDefinitions;
+using TagTool.IO;
+using TagTool.Cache;
+using TagTool.TagGroups;
 
 namespace TagTool.Serialization
 {
@@ -17,13 +17,13 @@ namespace TagTool.Serialization
     {
         private const int DefaultBlockAlign = 4;
 
-        private readonly EngineVersion _version;
+        private readonly GameDefinitionSet _version;
 
         /// <summary>
         /// Constructs a tag serializer for a specific engine version.
         /// </summary>
         /// <param name="version">The engine version to target.</param>
-        public TagSerializer(EngineVersion version)
+        public TagSerializer(GameDefinitionSet version)
         {
             _version = version;
         }
@@ -33,7 +33,7 @@ namespace TagTool.Serialization
         /// </summary>
         /// <param name="context">The serialization context to use.</param>
         /// <param name="tagStructure">The tag structure.</param>
-        public void Serialize(ISerializationContext context, object tagStructure)
+        public void Serialize(ISerializationContext context, object tagStructure, uint? offset = null)
         {
             // Serialize the structure to a data block
             var info = new TagStructureInfo(tagStructure.GetType(), _version);
@@ -43,7 +43,7 @@ namespace TagTool.Serialization
             SerializeStruct(context, tagStream, structBlock, info, tagStructure);
 
             // Finalize the block and write all of the tag data out
-            var mainStructOffset = structBlock.Finalize(tagStream);
+            var mainStructOffset = offset.HasValue ? offset.Value : structBlock.Finalize(tagStream);
             var data = tagStream.ToArray();
             context.EndSerialize(info, data, mainStructOffset);
         }
@@ -188,6 +188,8 @@ namespace TagTool.Serialization
                 SerializePrimitiveValue(block.Writer, val, valueType.GetEnumUnderlyingType());
             else if (valueType == typeof(string))
                 SerializeString(block.Writer, (string)val, valueInfo);
+            else if (valueType == typeof(Tag))
+                SerializeTag(block, (Tag)val);
             else if (valueType == typeof(TagInstance))
                 SerializeTagReference(block.Writer, (TagInstance)val, valueInfo);
             else if (valueType == typeof(ResourceAddress))
@@ -204,8 +206,12 @@ namespace TagTool.Serialization
                 SerializeVector(block, (Vector3)val);
             else if (valueType == typeof(Vector4))
                 SerializeVector(block, (Vector4)val);
-            else if (valueType == typeof(StringId))
-                block.Writer.Write(((StringId)val).Value);
+            else if (valueType == typeof(RealQuaternion))
+                SerializeRealQuaternion(block, (RealQuaternion)val);
+            else if (valueType == typeof(Matrix4x3))
+                SerializeMatrix(block, (Matrix4x3)val);
+            else if (valueType == typeof(StringID))
+                block.Writer.Write(((StringID)val).Value);
             else if (valueType == typeof(Angle))
                 block.Writer.Write(((Angle)val).Radians);
             else if (valueType.IsArray)
@@ -237,6 +243,11 @@ namespace TagTool.Serialization
             }
             for (var i = clampedLength; i < valueInfo.Length; i++)
                 writer.Write((byte)0);
+        }
+
+        private static void SerializeTag(IDataBlock block, Tag tag)
+        {
+            block.Writer.Write(tag.Value);
         }
 
         /// <summary>
@@ -407,6 +418,30 @@ namespace TagTool.Serialization
             block.Writer.Write(vec.Y);
             block.Writer.Write(vec.Z);
             block.Writer.Write(vec.W);
+        }
+
+        private static void SerializeRealQuaternion(IDataBlock block, RealQuaternion quat)
+        {
+            block.Writer.Write(quat.I);
+            block.Writer.Write(quat.J);
+            block.Writer.Write(quat.K);
+            block.Writer.Write(quat.W);
+        }
+
+        public static void SerializeMatrix(IDataBlock block, Matrix4x3 mat)
+        {
+            block.Writer.Write(mat.m11);
+            block.Writer.Write(mat.m12);
+            block.Writer.Write(mat.m13);
+            block.Writer.Write(mat.m21);
+            block.Writer.Write(mat.m22);
+            block.Writer.Write(mat.m23);
+            block.Writer.Write(mat.m31);
+            block.Writer.Write(mat.m32);
+            block.Writer.Write(mat.m33);
+            block.Writer.Write(mat.m41);
+            block.Writer.Write(mat.m42);
+            block.Writer.Write(mat.m43);
         }
 
         private static void SerializeRange(IDataBlock block, object val)

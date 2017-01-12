@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagTool.Resources;
-using TagTool.Resources.Bitmaps;
+using TagTool.Common;
+using TagTool.Cache;
+using TagTool.Bitmaps;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.Tags
 {
     class ImportBitmapCommand : Command
     {
-        private readonly OpenTagCache _info;
+        private OpenTagCache Info { get; }
 
         public ImportBitmapCommand(OpenTagCache info) : base(
             CommandFlags.Inherit,
@@ -21,61 +19,63 @@ namespace TagTool.Commands.Tags
             "importbitmap",
             "Create a new bitmap tag from a DDS file",
 
-            "importbitmap <dds file>",
+            "importbitmap <tag> <dds file>",
 
             "The DDS file will be imported into textures.dat as a new resource.\n" +
             "Make sure to add the new bitmap tag as a dependency if you edit a shader!")
         {
-            _info = info;
+            Info = info;
         }
 
         public override bool Execute(List<string> args)
         {
-            if (args.Count != 1)
+            if (args.Count != 2)
                 return false;
-            var imagePath = args[0];
+                
+            var tag = ArgumentParser.ParseTagIndex(Info, args[0]);
+            var imagePath = args[1];
 
             Console.WriteLine("Loading textures.dat...");
             var resourceManager = new ResourceDataManager();
-            resourceManager.LoadCacheFromDirectory(_info.CacheFile.DirectoryName, ResourceLocation.Textures);
+            resourceManager.LoadCacheFromDirectory(Info.CacheFile.DirectoryName, ResourceLocation.Textures);
 
             Console.WriteLine("Importing image...");
-            var bitmap = new TagStructures.Bitmap
+            var bitmap = new Bitmap
             {
-                Flags = TagStructures.Bitmap.RuntimeFlags.UseResource,
-                Sequences = new List<TagStructures.Bitmap.Sequence>
+                Flags = Bitmap.RuntimeFlags.UseResource,
+                Sequences = new List<Bitmap.Sequence>
                 {
-                    new TagStructures.Bitmap.Sequence
+                    new Bitmap.Sequence
                     {
                         FirstBitmapIndex = 0,
                         BitmapCount = 1
                     }
                 },
-                Images = new List<TagStructures.Bitmap.Image>
+                Images = new List<Bitmap.Image>
                 {
-                    new TagStructures.Bitmap.Image
+                    new Bitmap.Image
                     {
                         Signature = new Tag("bitm").Value,
                         Unknown28 = -1,
                     }
                 },
-                Resources = new List<TagStructures.Bitmap.BitmapResource>
+                Resources = new List<Bitmap.BitmapResource>
                 {
-                    new TagStructures.Bitmap.BitmapResource()
+                    new Bitmap.BitmapResource()
                 }
             };
             using (var imageStream = File.OpenRead(imagePath))
             {
                 var injector = new BitmapDdsInjector(resourceManager);
-                injector.InjectDds(_info.Serializer, _info.Deserializer, bitmap, 0, imageStream);
+                injector.InjectDds(Info.Serializer, Info.Deserializer, bitmap, 0, imageStream);
             }
 
             Console.WriteLine("Creating a new tag...");
-            var tag = _info.Cache.AllocateTag();
-            using (var tagsStream = _info.OpenCacheReadWrite())
+
+            using (var tagsStream = Info.OpenCacheReadWrite())
             {
-                var tagContext = new TagSerializationContext(tagsStream, _info.Cache, _info.StringIds, tag);
-                _info.Serializer.Serialize(tagContext, bitmap);
+                var tagContext = new TagSerializationContext(tagsStream, Info.Cache, Info.StringIDs, tag);
+                Info.Serializer.Serialize(tagContext, bitmap);
             }
 
             Console.WriteLine();

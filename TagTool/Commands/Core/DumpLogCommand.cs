@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.IO;
 
 namespace TagTool.Commands.Core
 {
@@ -11,7 +9,7 @@ namespace TagTool.Commands.Core
         public DumpLogCommand()
             : base(CommandFlags.Inherit,
                   "dumplog",
-                  "Dumps the current log into the logs directory",
+                  "Dumps the current log into the logs directory.",
                   "dumplog [name = hott_*_crash.log]",
                   "Dumps the current log into the logs directory.")
         {

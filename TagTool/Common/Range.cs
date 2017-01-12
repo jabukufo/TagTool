@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagTool.Common
 {
@@ -17,7 +13,7 @@ namespace TagTool.Common
         /// Gets the maximum value within the range.
         /// </summary>
         public readonly T Max;
-
+        
         /// <summary>
         /// Creates a new range from a minimum and a maximum value.
         /// </summary>

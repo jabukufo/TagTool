@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.RenderMethods
 {
@@ -15,9 +16,9 @@ namespace TagTool.Commands.RenderMethods
 
         public ListArgumentsCommand(OpenTagCache info, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
-                 "ListArguments",
+                 "listarguments",
                  "Lists the arguments of the render_method.",
-                 "ListArguments",
+                 "listarguments",
                  "Lists the arguments of the render_method.")
         {
             Info = info;
@@ -33,7 +34,7 @@ namespace TagTool.Commands.RenderMethods
 
                 using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
-                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIds, property.Template);
+                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, property.Template);
                     template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
                 }
 
@@ -41,7 +42,7 @@ namespace TagTool.Commands.RenderMethods
                 {
                     Console.WriteLine("");
 
-                    var argumentName = Info.StringIds.GetString(template.Arguments[i].Name);
+                    var argumentName = Info.StringIDs.GetString(template.Arguments[i].Name);
                     var argumentValue = new Vector4(
                         property.Arguments[i].Arg1,
                         property.Arguments[i].Arg2,

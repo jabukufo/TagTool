@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using TagTool.Cache;
+using TagTool.GameDefinitions;
 using TagTool.Serialization;
 
 namespace TagTool.Commands
@@ -22,18 +25,18 @@ namespace TagTool.Commands
         /// Gets or sets the stringID cache.
         /// Can be <c>null</c>.
         /// </summary>
-        public StringIdCache StringIds { get; set; }
+        public StringIDCache StringIDs { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the stringID cache file.
         /// Can be <c>null</c>.
         /// </summary>
-        public FileInfo StringIdsFile { get; set; }
+        public FileInfo StringIDsFile { get; set; }
 
         /// <summary>
         /// Gets or sets the target engine version.
         /// </summary>
-        public EngineVersion Version { get; set; }
+        public GameDefinitionSet Version { get; set; }
 
         /// <summary>
         /// Gets or sets the tag serializer to use.
@@ -44,6 +47,11 @@ namespace TagTool.Commands
         /// Gets or sets the tag deserializer to use.
         /// </summary>
         public TagDeserializer Deserializer { get; set; }
+
+        /// <summary>
+        /// A dictionary of tag names.
+        /// </summary>
+        public Dictionary<int, string> TagNames { get; set; } = new Dictionary<int, string>();
 
         /// <summary>
         /// Opens the tag cache file for reading.

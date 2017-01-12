@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagTool.Commands.Editing
 {
@@ -12,9 +9,9 @@ namespace TagTool.Commands.Editing
 
         public ExitToCommand(CommandContextStack stack)
             : base( CommandFlags.Inherit,
-                  "ExitTo",
+                  "exitto",
                   "Exits each context on the stack until the specified one is found.",
-                  "ExitTo <context name>",
+                  "exitto <context name>",
                   "Exits each context on the stack until the specified one is found.")
         {
             Stack = stack;

@@ -1,47 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.TagGroups;
 
 namespace TagTool.Commands.Tags
 {
     class ExtractCommand : Command
     {
-        private readonly TagCache _cache;
-        private readonly FileInfo _fileInfo;
+        private OpenTagCache Info { get; }
 
-        public ExtractCommand(OpenTagCache info) : base(
-            CommandFlags.Inherit,
-
-            "extract",
-            "Extract a tag to a file",
-            
-            "extract <tag index> <filename>",
-            
-            "Use the \"import\" command to re-import an extracted tag.")
+        public ExtractCommand(OpenTagCache info)
+            : base(CommandFlags.Inherit,
+                  "extract",
+                  "",
+                  "extract [all] <index|group> <path>",
+                  "")
         {
-            _cache = info.Cache;
-            _fileInfo = info.CacheFile;
+            Info = info;
+        }
+
+        private void ExtractTagInstance(TagInstance tag, string path)
+        {
+            var info = new FileInfo(path);
+
+            if (!info.Directory.Exists)
+                info.Directory.Create();
+
+            byte[] data;
+
+            using (var stream = Info.OpenCacheRead())
+                data = Info.Cache.ExtractTagRaw(stream, tag);
+
+            using (var outStream = File.Open(path, FileMode.Create, FileAccess.Write))
+            {
+                outStream.Write(data, 0, data.Length);
+                Console.WriteLine("Wrote 0x{0:X} bytes to {1}.", outStream.Position, path);
+                Console.WriteLine("The tag's main struct will be at offset 0x{0:X}.", tag.MainStructOffset);
+            }
         }
 
         public override bool Execute(List<string> args)
         {
-            if (args.Count != 2 && args.Count != 3)
-                return false; // 3 arguments are allowed to prevent breaking old scripts that use "full"
-            var tag = ArgumentParser.ParseTagIndex(_cache, args[0]);
-            if (tag == null)
+            if (args.Count < 2 || args.Count > 3)
                 return false;
-            var file = args[1];
-
-            byte[] data;
-            using (var stream = _fileInfo.OpenRead())
-                data = _cache.ExtractTagRaw(stream, tag);
-
-            using (var outStream = File.Open(file, FileMode.Create, FileAccess.Write))
+            
+            if (args.Count == 3)
             {
-                outStream.Write(data, 0, data.Length);
-                Console.WriteLine("Wrote 0x{0:X} bytes to {1}.", outStream.Position, file);
-                Console.WriteLine("The tag's main struct will be at offset 0x{0:X}.", tag.MainStructOffset);
+                if (args[0] != "all")
+                    return false;
+
+                var groupTag = ArgumentParser.ParseGroupTag(Info.StringIDs, args[1]);
+                var path = args[2];
+
+                foreach (var instance in Info.Cache.Tags.FindAllInGroup(groupTag))
+                {
+                    if (instance == null)
+                        continue;
+
+                    ExtractTagInstance(instance, Path.Combine(path, $"0x{instance.Index:X}.{groupTag}"));
+                }
             }
+            else
+            {
+                var instance = ArgumentParser.ParseTagIndex(Info, args[0]);
+
+                if (instance == null)
+                    return false;
+
+                var path = args[1];
+
+                ExtractTagInstance(instance, Path.Combine(path, $"0x{instance.Index:X}.{instance.Group.Tag}"));
+            }
+
             return true;
         }
     }

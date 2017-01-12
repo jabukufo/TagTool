@@ -3,44 +3,42 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.IO;
 
 namespace TagTool.Commands.Tags
 {
     class AddressCommand : Command
     {
-        public AddressCommand() : base(
-            CommandFlags.Inherit,
-
-            "address",
-            "Get the address of a tag in memory",
-
-            "address <tag index> [process id]",
-
-            "Gets the address of the given tag in memory.\n" +
-            "By default, this will read the memory of the first eldorado.exe process found.\n" +
-            "Specify a process ID in hexadecimal to read the memory of a specific process.\n")
+        public AddressCommand()
+            : base(CommandFlags.Inherit,
+                  "address",
+                  "Get the address of a tag in memory",
+                  "address <tag index> [process id]",
+                  "Gets the address of the given tag in memory.\n" +
+                  "By default, this will read the memory of the first eldorado.exe process found.\n" +
+                  "Specify a process ID in hexadecimal to read the memory of a specific process.\n")
         {
         }
 
         public override bool Execute(List<string> args)
         {
-            if (args.Count != 1 && args.Count != 2)
-                return false;
-            int tagIndex;
-            if (!int.TryParse(args[0], NumberStyles.HexNumber, null, out tagIndex) || tagIndex < 0)
+            if (args.Count < 1 || args.Count > 2)
                 return false;
 
-            // Get the process to open
+            int tagIndex;
+
+            if (!int.TryParse(args[0], NumberStyles.HexNumber, null, out tagIndex) || tagIndex < 0)
+                return false;
+            
             Process process;
+
             if (args.Count == 2)
             {
-                // Get process by ID
                 int processId;
+
                 if (!int.TryParse(args[1], NumberStyles.HexNumber, null, out processId) || processId < 0)
                     return false;
+
                 try
                 {
                     process = Process.GetProcessById(processId);
@@ -53,23 +51,27 @@ namespace TagTool.Commands.Tags
             }
             else
             {
-                // Find first eldorado process
                 var processes = Process.GetProcessesByName("eldorado");
+
                 if (processes.Length == 0)
                 {
                     Console.Error.WriteLine("Unable to find any eldorado.exe processes.");
                     return true;
                 }
+
                 process = processes[0];
             }
+
             using (var stream = new ProcessMemoryStream(process))
             {
                 var address = GetTagAddress(stream, tagIndex);
+
                 if (address != 0)
                     Console.WriteLine("Tag 0x{0:X} is loaded at 0x{1:X8} in process 0x{2:X}.", tagIndex, address, process.Id);
                 else
                     Console.Error.WriteLine("Tag 0x{0:X} is not loaded in process 0x{1:X}.", tagIndex, process.Id);
             }
+
             return true;
         }
 

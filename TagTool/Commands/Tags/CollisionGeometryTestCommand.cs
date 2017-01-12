@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagTool.Resources.Geometry;
+using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.Tags
 {
@@ -48,7 +46,7 @@ namespace TagTool.Commands.Tags
             }
             else
             {
-                tag = ArgumentParser.ParseTagIndex(Info.Cache, args[1]);
+                tag = ArgumentParser.ParseTagIndex(Info, args[1]);
                 if (tag == null)
                 {
                     return false;
@@ -132,7 +130,7 @@ namespace TagTool.Commands.Tags
                     }
                 }
 
-                var context = new TagSerializationContext(stream, Info.Cache, Info.StringIds, tag);
+                var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
                 Info.Serializer.Serialize(context, coll);
 
             }

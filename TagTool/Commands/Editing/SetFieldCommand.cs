@@ -4,26 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using TagTool.Common;
 using TagTool.Serialization;
+using TagTool.TagGroups;
 
 namespace TagTool.Commands.Editing
 {
     class SetFieldCommand : Command
     {
-        public CommandContextStack Stack { get; }
-
-        public OpenTagCache Info { get; }
-
-        public TagInstance Tag { get; }
+        private CommandContextStack Stack { get; }
+        private OpenTagCache Info { get; }
+        private TagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
-
         public object Owner { get; set; }
 
         public SetFieldCommand(CommandContextStack stack, OpenTagCache info, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
-                  "SetField",
+                  "setfield",
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.",
-                  "SetField <field name> <field value>",
+                  "setfield <field name> <field value>",
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.")
         {
             Stack = stack;
@@ -107,8 +105,8 @@ namespace TagTool.Commands.Editing
                 fieldType.Name;
 
             var valueString =
-                fieldType == typeof(StringId) ?
-                    Info.StringIds.GetString((StringId)fieldValue) :
+                fieldType == typeof(StringID) ?
+                    Info.StringIDs.GetString((StringID)fieldValue) :
                 fieldType.GetInterface(typeof(IList).Name) != null ?
                     (((IList)fieldValue).Count != 0 ?
                         $"{{...}}[{((IList)fieldValue).Count}]" :
@@ -225,13 +223,13 @@ namespace TagTool.Commands.Editing
             {
                 if (args.Count != 1)
                     return false;
-                output = ArgumentParser.ParseTagIndex(Info.Cache, input);
+                output = ArgumentParser.ParseTagIndex(Info, input);
             }
-            else if (type == typeof(StringId))
+            else if (type == typeof(StringID))
             {
                 if (args.Count != 1)
                     return false;
-                output = Info.StringIds.GetStringId(input);
+                output = Info.StringIDs.GetStringID(input);
             }
             else if (type == typeof(Angle))
             {
@@ -368,7 +366,7 @@ namespace TagTool.Commands.Editing
                 type == typeof(float) ||
                 type == typeof(string) ||
                 type == typeof(TagInstance) ||
-                type == typeof(StringId) ||
+                type == typeof(StringID) ||
                 type == typeof(Angle))
                 return 1;
             else if (type == typeof(Euler2))

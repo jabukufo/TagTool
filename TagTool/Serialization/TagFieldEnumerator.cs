@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.GameDefinitions;
 
 namespace TagTool.Serialization
 {
@@ -43,14 +42,14 @@ namespace TagTool.Serialization
         public TagFieldAttribute Attribute { get; private set; }
 
         /// <summary>
-        /// Gets the lowest engine version which supports this property, or <see cref="EngineVersion.Unknown"/> if unbounded.
+        /// Gets the lowest engine version which supports this property, or <see cref="GameDefinitionSet.Unknown"/> if unbounded.
         /// </summary>
-        public EngineVersion MinVersion { get; private set; }
+        public GameDefinitionSet MinVersion { get; private set; }
 
         /// <summary>
-        /// Gets the highest engine version which supports this property, or <see cref="EngineVersion.Unknown"/> if unbounded.
+        /// Gets the highest engine version which supports this property, or <see cref="GameDefinitionSet.Unknown"/> if unbounded.
         /// </summary>
-        public EngineVersion MaxVersion { get; private set; }
+        public GameDefinitionSet MaxVersion { get; private set; }
 
         /// <summary>
         /// Moves to the next tag field in the structure.
@@ -94,9 +93,9 @@ namespace TagTool.Serialization
             // Read version restrictions, if any
             var minVersionAttrib = Field.GetCustomAttributes(typeof(MinVersionAttribute), false).FirstOrDefault() as MinVersionAttribute;
             var maxVersionAttrib = Field.GetCustomAttributes(typeof(MaxVersionAttribute), false).FirstOrDefault() as MaxVersionAttribute;
-            MinVersion = (minVersionAttrib != null) ? minVersionAttrib.Version : EngineVersion.Unknown;
-            MaxVersion = (maxVersionAttrib != null) ? maxVersionAttrib.Version : EngineVersion.Unknown;
-            return VersionDetection.IsBetween(Info.Version, MinVersion, MaxVersion);
+            MinVersion = (minVersionAttrib != null) ? minVersionAttrib.Version : GameDefinitionSet.Unknown;
+            MaxVersion = (maxVersionAttrib != null) ? maxVersionAttrib.Version : GameDefinitionSet.Unknown;
+            return GameDefinition.IsBetween(Info.Version, MinVersion, MaxVersion);
         }
     }
 }

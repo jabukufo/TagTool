@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagTool.Analysis
+﻿namespace TagTool.Analysis
 {
     /// <summary>
     /// Interface for a class which can visit tag element guesses.

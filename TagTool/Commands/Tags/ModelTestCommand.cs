@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assimp;
 using TagTool.Common;
-using TagTool.Resources;
-using TagTool.Resources.Geometry;
+using TagTool.Cache;
+using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.TagStructures;
-using PrimitiveType = TagTool.Resources.Geometry.PrimitiveType;
+using TagTool.Tags.TagDefinitions;
+using PrimitiveType = TagTool.Geometry.PrimitiveType;
+using TagTool.TagGroups;
 
 namespace TagTool.Commands.Tags
 {
     class ModelTestCommand : Command
     {
-        private readonly OpenTagCache _info;
-        private readonly TagCache _cache;
-        private readonly FileInfo _fileInfo;
-        private readonly StringIdCache _stringIds;
+        private OpenTagCache Info { get; }
 
         public ModelTestCommand(OpenTagCache info) : base(
             CommandFlags.Inherit,
@@ -27,27 +23,67 @@ namespace TagTool.Commands.Tags
             "modeltest",
             "Model injection test",
 
-            "modeltest [tag index] <model file>",
+            "modeltest [location = resources] [tag index = 0x3317] <model file>",
 
             "Injects the model over the traffic cone.\n" +
             "The model must only have a single material and no nodes.")
         {
-            _info = info;
-            _cache = info.Cache;
-            _fileInfo = info.CacheFile;
-            _stringIds = info.StringIds;
+            Info = info;
         }
 
         public override bool Execute(List<string> args)
         {
-            if (args.Count < 1 || args.Count > 2)
+            if (args.Count < 1 || args.Count > 3)
                 return false;
 
-            TagInstance destination = _cache.Tags[0x3317];
+            ResourceLocation location = ResourceLocation.Resources;
+            TagInstance destination = Info.Cache.Tags[0x3317];
+
+            if (args.Count == 3)
+            {
+                var value = args[0];
+
+                switch (value)
+                {
+                    case "resources":
+                        location = ResourceLocation.Resources;
+                        break;
+
+                    case "textures":
+                        location = ResourceLocation.Textures;
+                        break;
+
+                    case "textures_b":
+                        location = ResourceLocation.TexturesB;
+                        break;
+
+                    case "audio":
+                        location = ResourceLocation.Audio;
+                        break;
+
+                    case "video":
+                        location = ResourceLocation.Video;
+                        break;
+
+                    case "render_models":
+                        location = ResourceLocation.RenderModels;
+                        break;
+
+                    case "lightmaps":
+                        location = ResourceLocation.Lightmaps;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid resource location: " + value);
+                        return false;
+                }
+
+                args.RemoveAt(0);
+            }
 
             if (args.Count == 2)
             {
-                destination = ArgumentParser.ParseTagIndex(_cache, args[0]);
+                destination = ArgumentParser.ParseTagIndex(Info, args[0]);
 
                 if (!destination.IsInGroup("mode"))
                 {
@@ -55,15 +91,15 @@ namespace TagTool.Commands.Tags
                     return false;
                 }
 
-                args = args.Skip(1).ToList();
+                args.RemoveAt(0);
             }
 
-            var builder = new RenderModelBuilder(_info.Version);
+            var builder = new RenderModelBuilder(Info.Version);
 
             // Add a root node
             var node = builder.AddNode(new RenderModel.Node
             {
-                Name = _stringIds.GetStringId("street_cone"),
+                Name = Info.StringIDs.GetStringID("street_cone"),
                 ParentNode = -1,
                 FirstChildNode = -1,
                 NextSiblingNode = -1,
@@ -75,8 +111,8 @@ namespace TagTool.Commands.Tags
             });
 
             // Begin building the default region and permutation
-            builder.BeginRegion(_stringIds.GetStringId("default"));
-            builder.BeginPermutation(_stringIds.GetStringId("default"));
+            builder.BeginRegion(Info.StringIDs.GetStringID("default"));
+            builder.BeginPermutation(Info.StringIDs.GetStringID("default"));
 
             using (var importer = new AssimpContext())
             {
@@ -129,9 +165,13 @@ namespace TagTool.Commands.Tags
                     // Define a material and part for this mesh
                     var material = builder.AddMaterial(new RenderMaterial
                     {
-                        RenderMethod = _cache.Tags[0x101F],
+                        RenderMethod = Info.Cache.Tags[0x101F],
                     });
-                    builder.DefinePart(material, partStartIndex, (ushort)meshIndices.Length, (ushort)mesh.VertexCount);
+
+
+                    builder.BeginPart(material, partStartIndex, (ushort)meshIndices.Length, (ushort)mesh.VertexCount);
+                    builder.DefineSubPart(partStartIndex, (ushort)meshIndices.Length, (ushort)mesh.VertexCount);
+                    builder.EndPart();
 
                     // Move to the next part
                     partStartVertex += (ushort)mesh.VertexCount;
@@ -150,25 +190,27 @@ namespace TagTool.Commands.Tags
             Console.WriteLine("Building Blam mesh data...");
 
             var resourceStream = new MemoryStream();
-            var renderModel = builder.Build(_info.Serializer, resourceStream);
+            var renderModel = builder.Build(Info.Serializer, resourceStream);
 
             Console.WriteLine("Writing resource data...");
 
             // Add a new resource for the model data
             var resources = new ResourceDataManager();
-            resources.LoadCachesFromDirectory(_fileInfo.DirectoryName);
+            resources.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
             resourceStream.Position = 0;
-            resources.Add(renderModel.Geometry.Resource, ResourceLocation.Resources, resourceStream);
+            resources.Add(renderModel.Geometry.Resource, location, resourceStream);
 
             Console.WriteLine("Writing tag data...");
 
-            using (var cacheStream = _fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = Info.OpenCacheReadWrite())
             {
                 var tag = destination;
-                var context = new TagSerializationContext(cacheStream, _cache, _stringIds, tag);
-                _info.Serializer.Serialize(context, renderModel);
+                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, tag);
+                Info.Serializer.Serialize(context, renderModel);
             }
+
             Console.WriteLine("Model imported successfully!");
+
             return true;
         }
     }

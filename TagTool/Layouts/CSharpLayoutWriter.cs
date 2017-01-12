@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagTool.Common;
 
 namespace TagTool.Layouts
@@ -207,8 +204,8 @@ namespace TagTool.Layouts
                         return "Vector4";
                     case BasicFieldType.Angle:
                         return "Angle";
-                    case BasicFieldType.StringId:
-                        return "StringId";
+                    case BasicFieldType.StringID:
+                        return "StringID";
                     case BasicFieldType.TagReference:
                     case BasicFieldType.ShortTagReference:
                         return "TagInstance";

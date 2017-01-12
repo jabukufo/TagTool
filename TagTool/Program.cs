@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using TagTool.Cache;
 using TagTool.Commands;
 using TagTool.Commands.Tags;
+using TagTool.GameDefinitions;
+using TagTool.IO;
 using TagTool.Serialization;
-using System.Globalization;
 
 namespace TagTool
 {
@@ -14,9 +17,8 @@ namespace TagTool
     {
         static void Main(string[] args)
         {
-            ConsoleHistory.Initialize();
-
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            ConsoleHistory.Initialize();
 
             // Get the file path from the first argument
             // If no argument is given, load tags.dat
@@ -29,10 +31,10 @@ namespace TagTool
 
             if (autoexecCommand == null)
             {
-                Console.WriteLine("Halo Online Tag Tool [{0}]", Assembly.GetExecutingAssembly().GetName().Version);
+                Console.WriteLine("Tag Tool [{0}]", Assembly.GetExecutingAssembly().GetName().Version);
                 Console.WriteLine();
                 Console.WriteLine("Please report any bugs and feature requests at");
-                Console.WriteLine("<https://github.com/ElDewrito/HaloOnlineTagTool/issues>.");
+                Console.WriteLine("<https://github.com/TheGuardians/TagTool/issues>.");
                 Console.WriteLine();
                 Console.Write("Reading tags...");
             }
@@ -47,7 +49,7 @@ namespace TagTool
                 using (var stream = fileInfo.Open(FileMode.Open, FileAccess.Read))
                     cache = new TagCache(stream);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("ERROR: " + e.Message);
                 ConsoleHistory.Dump("hott_*_tags_init.log");
@@ -58,33 +60,33 @@ namespace TagTool
                 Console.WriteLine("{0} tags loaded.", cache.Tags.Count);
 
             // Version detection
-            EngineVersion closestVersion;
-            var version = VersionDetection.DetectVersion(cache, out closestVersion);
-            if (version != EngineVersion.Unknown)
+            GameDefinitionSet closestVersion;
+            var version = GameDefinition.Detect(cache, out closestVersion);
+            if (version != GameDefinitionSet.Unknown)
             {
                 if (autoexecCommand == null)
                 {
                     var buildDate = DateTime.FromFileTime(cache.Timestamp);
-                    Console.WriteLine("- Detected target engine version {0}.", VersionDetection.GetVersionString(closestVersion));
+                    Console.WriteLine("- Detected target engine version {0}.", GameDefinition.GetVersionString(closestVersion));
                     Console.WriteLine("- This cache file was built on {0} at {1}.", buildDate.ToShortDateString(), buildDate.ToShortTimeString());
                 }
             }
             else
             {
                 Console.WriteLine("WARNING: The cache file's version was not recognized!");
-                Console.WriteLine("Using the closest known version {0}.", VersionDetection.GetVersionString(closestVersion));
+                Console.WriteLine("Using the closest known version {0}.", GameDefinition.GetVersionString(closestVersion));
                 version = closestVersion;
             }
 
             // Load stringIDs
             Console.Write("Reading stringIDs...");
             var stringIdPath = Path.Combine(fileInfo.DirectoryName ?? "", "string_ids.dat");
-            var resolver = StringIdResolverFactory.Create(version);
-            StringIdCache stringIds = null;
+            var resolver = StringIDResolverFactory.Create(version);
+            StringIDCache stringIds = null;
             try
             {
                 using (var stream = File.OpenRead(stringIdPath))
-                    stringIds = new StringIdCache(stream, resolver);
+                    stringIds = new StringIDCache(stream, resolver);
             }
             catch (IOException)
             {
@@ -108,12 +110,52 @@ namespace TagTool
             {
                 Cache = cache,
                 CacheFile = fileInfo,
-                StringIds = stringIds,
-                StringIdsFile = (stringIds != null) ? new FileInfo(stringIdPath) : null,
+                StringIDs = stringIds,
+                StringIDsFile = (stringIds != null) ? new FileInfo(stringIdPath) : null,
                 Version = version,
                 Serializer = new TagSerializer(version),
                 Deserializer = new TagDeserializer(version),
             };
+
+            var tagNamesPath = "Tags\\tagnames_" + GameDefinition.GetVersionString(version) + ".csv";
+
+            if (File.Exists(tagNamesPath))
+            {
+                using (var tagNamesStream = File.Open(tagNamesPath, FileMode.Open, FileAccess.Read))
+                {
+                    var reader = new StreamReader(tagNamesStream);
+
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var separatorIndex = line.IndexOf(',');
+                        var indexString = line.Substring(2, separatorIndex - 2);
+
+                        int tagIndex;
+                        if (!int.TryParse(indexString, NumberStyles.HexNumber, null, out tagIndex))
+                            tagIndex = -1;
+
+                        if (tagIndex < 0 || tagIndex >= cache.Tags.Count)
+                            continue;
+
+                        var nameString = line.Substring(separatorIndex + 1);
+
+                        if (nameString.Contains(" "))
+                        {
+                            var lastSpaceIndex = nameString.LastIndexOf(' ');
+                            nameString = nameString.Substring(lastSpaceIndex + 1, nameString.Length - lastSpaceIndex - 1);
+                        }
+
+                        info.TagNames[tagIndex] = nameString;
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            foreach (var tag in info.Cache.Tags)
+                if (tag != null && !info.TagNames.ContainsKey(tag.Index))
+                    info.TagNames[tag.Index] = $"0x{tag.Index:X4}";
 
             // Create command context
             var contextStack = new CommandContextStack();
@@ -206,6 +248,7 @@ namespace TagTool
         {
             if (command.Execute(args))
                 return;
+
             Console.WriteLine("{0}: {1}", command.Name, command.Description);
             Console.WriteLine();
             Console.WriteLine("Usage:");

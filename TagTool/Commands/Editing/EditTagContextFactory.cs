@@ -1,6 +1,4 @@
-﻿using TagTool.Commands.Animation;
-using TagTool.Commands.Bitmaps;
-using TagTool.Commands.BSP;
+﻿using TagTool.Commands.Bitmaps;
 using TagTool.Commands.Models;
 using TagTool.Commands.RenderModels;
 using TagTool.Commands.RenderMethods;
@@ -8,7 +6,10 @@ using TagTool.Commands.Scenarios;
 using TagTool.Commands.Unicode;
 using TagTool.Commands.VFiles;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.Tags.TagDefinitions;
+using TagTool.TagGroups;
+using TagTool.Commands.Animations;
+using TagTool.Commands.BSPs;
 
 namespace TagTool.Commands.Editing
 {
@@ -16,35 +17,50 @@ namespace TagTool.Commands.Editing
     {
         public static CommandContext Create(CommandContextStack stack, OpenTagCache info, TagInstance tag)
         {
-            var groupName = info.StringIds.GetString(tag.Group.Name);
+            var groupName = info.StringIDs.GetString(tag.Group.Name);
+
+            var tagName = $"0x{tag.Index:X4}";
+
+            if (info.TagNames.ContainsKey(tag.Index))
+            {
+                tagName = info.TagNames[tag.Index];
+                tagName = $"(0x{tag.Index:X4}) {tagName.Substring(tagName.LastIndexOf('\\') + 1)}";
+            }
 
             var context = new CommandContext(stack.Context,
-                string.Format("0x{0:X4}.{1}", tag.Index, groupName));
+                string.Format("{0}.{1}", tagName, groupName));
+
+            object value = null;
+
+            using (var stream = info.OpenCacheRead())
+                value = info.Deserializer.Deserialize(
+                    new TagSerializationContext(stream, info.Cache, info.StringIDs, tag),
+                    TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
             switch (tag.Group.Tag.ToString())
             {
                 case "vfsl": // vfiles_list
-                    EditVFilesList(context, info, tag);
+                    VFilesContextFactory.Populate(context, info, tag, (VFilesList)value);
                     break;
 
                 case "unic": // multilingual_unicode_string_list
-                    EditMultilingualUnicodeStringList(context, info, tag);
+                    UnicodeContextFactory.Populate(context, info, tag, (MultilingualUnicodeStringList)value);
                     break;
 
                 case "bitm": // bitmap
-                    EditBitmap(context, info, tag);
+                    BitmapContextFactory.Populate(context, info, tag, (Bitmap)value);
                     break;
 
                 case "hlmt": // model
-                    EditModel(context, info, tag);
+                    ModelContextFactory.Populate(context, info, tag, (Model)value);
                     break;
 
                 case "mode": // render_model
-                    EditRenderModel(context, info, tag);
+                    RenderModelContextFactory.Populate(context, info, tag, (RenderModel)value);
                     break;
 
-                case "jmad": // model_animation_graph
-                    EditAnimations(context, info, tag);
+                case "jmad":
+                    AnimationContextFactory.Populate(context, info, tag, (ModelAnimationGraph)value);
                     break;
 
                 case "rm  ": // render_method
@@ -57,24 +73,17 @@ namespace TagTool.Commands.Editing
                 case "rmw ": // shader_water
                 case "rmzo": // shader_zonly
                 case "rmcs": // shader_custom
-                    EditRenderMethod(context, info, tag);
+                    RenderMethodContextFactory.Populate(context, info, tag, (RenderMethod)value);
                     break;
 
                 case "scnr":
-                    EditScenario(context, info, tag);
+                    ScnrContextFactory.Populate(context, info, tag, (Scenario)value);
                     break;
 
                 case "sbsp":
-                    EditBSP(context, info, tag);
+                    BSPContextFactory.Populate(context, info, tag, (ScenarioStructureBsp)value);
                     break;
             }
-
-            object value = null;
-
-            using (var stream = info.OpenCacheRead())
-                value = info.Deserializer.Deserialize(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag),
-                    TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
             var structure = new TagStructureInfo(
                 TagStructureTypes.FindByGroupTag(tag.Group.Tag));
@@ -82,105 +91,14 @@ namespace TagTool.Commands.Editing
             context.AddCommand(new ListFieldsCommand(info, structure, value));
             context.AddCommand(new SetFieldCommand(stack, info, tag, structure, value));
             context.AddCommand(new EditBlockCommand(stack, info, tag, value));
-            context.AddCommand(new AddToBlockCommand(stack, info, tag, structure, value));
-            context.AddCommand(new RemoveFromBlockCommand(stack, info, tag, structure, value));
+            context.AddCommand(new AddToCommand(stack, info, tag, structure, value));
+            context.AddCommand(new RemoveFromCommand(stack, info, tag, structure, value));
+            context.AddCommand(new CopyElementsCommand(stack, info, tag, structure, value));
+            context.AddCommand(new PasteElementsCommand(stack, info, tag, structure, value));
             context.AddCommand(new SaveChangesCommand(info, tag, value));
             context.AddCommand(new ExitToCommand(stack));
 
             return context;
-        }
-
-        private static void EditVFilesList(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            VFilesList vfsl;
-
-            using (var stream = info.OpenCacheRead())
-                vfsl = info.Deserializer.Deserialize<VFilesList>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            VFilesContextFactory.Populate(context, info, tag, vfsl);
-        }
-
-        private static void EditMultilingualUnicodeStringList(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            MultilingualUnicodeStringList unic;
-
-            using (var stream = info.OpenCacheRead())
-                unic = info.Deserializer.Deserialize<MultilingualUnicodeStringList>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            UnicodeContextFactory.Populate(context, info, tag, unic);
-        }
-
-        private static void EditBitmap(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            Bitmap bitmap;
-
-            using (var stream = info.OpenCacheRead())
-                bitmap = info.Deserializer.Deserialize<Bitmap>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            BitmapContextFactory.Populate(context, info, tag, bitmap);
-        }
-
-        private static void EditModel(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            Model model;
-
-            using (var stream = info.OpenCacheRead())
-                model = info.Deserializer.Deserialize<Model>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            ModelContextFactory.Populate(context, info, tag, model);
-        }
-
-        private static void EditRenderModel(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            RenderModel renderModel;
-
-            using (var stream = info.OpenCacheRead())
-                renderModel = info.Deserializer.Deserialize<RenderModel>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            RenderModelContextFactory.Populate(context, info, tag, renderModel);
-        }
-
-        private static void EditAnimations(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            ModelAnimationGraph jmad;
-
-            using (var stream = info.OpenCacheRead())
-                jmad = info.Deserializer.Deserialize<ModelAnimationGraph>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            AnimationContextFactory.Populate(context, info, tag, jmad);
-        }
-
-        private static void EditRenderMethod(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            RenderMethodContextFactory.Populate(context, info, tag);
-        }
-
-        private static void EditScenario(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            Scenario scenario;
-
-            using (var stream = info.OpenCacheRead())
-                scenario = info.Deserializer.Deserialize<Scenario>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            ScnrContextFactory.Populate(context, info, tag, scenario);
-        }
-
-        private static void EditBSP(CommandContext context, OpenTagCache info, TagInstance tag)
-        {
-            ScenarioStructureBsp bsp;
-
-            using (var stream = info.OpenCacheRead())
-                bsp = info.Deserializer.Deserialize<ScenarioStructureBsp>(
-                    new TagSerializationContext(stream, info.Cache, info.StringIds, tag));
-
-            BSPContextFactory.Populate(context, info, tag, bsp);
         }
     }
 }

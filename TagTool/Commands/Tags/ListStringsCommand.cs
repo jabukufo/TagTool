@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.Tags
 {
@@ -46,8 +43,8 @@ namespace TagTool.Commands.Tags
             {
                 foreach (var unicTag in _info.Cache.Tags.FindAllInGroup("unic"))
                 {
-                    var unic = _info.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, _info.Cache, _info.StringIds, unicTag));
-                    var strings = LocalizedStringPrinter.PrepareForDisplay(unic, _info.StringIds, unic.Strings, language, filter);
+                    var unic = _info.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, _info.Cache, _info.StringIDs, unicTag));
+                    var strings = LocalizedStringPrinter.PrepareForDisplay(unic, _info.StringIDs, unic.Strings, language, filter);
                     if (strings.Count == 0)
                         continue;
                     if (found)

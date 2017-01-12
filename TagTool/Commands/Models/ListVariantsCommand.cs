@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.TagStructures;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.Models
 {
@@ -12,12 +12,9 @@ namespace TagTool.Commands.Models
 
         public ListVariantsCommand(OpenTagCache info, Model model) : base(
             CommandFlags.Inherit,
-
             "listvariants",
             "List available variants of the current model definition.",
-
             "listvariants",
-
             "Lists available variants of the current model definition which can be used with \"extractmodel\".")
         {
             Info = info;
@@ -28,7 +25,7 @@ namespace TagTool.Commands.Models
         {
             if (args.Count != 0)
                 return false;
-            var variantNames = Definition.Variants.Select(v => Info.StringIds.GetString(v.Name) ?? v.Name.ToString()).OrderBy(n => n).ToList();
+            var variantNames = Definition.Variants.Select(v => Info.StringIDs.GetString(v.Name) ?? v.Name.ToString()).OrderBy(n => n).ToList();
             if (variantNames.Count == 0)
             {
                 Console.WriteLine("Model has no variants");

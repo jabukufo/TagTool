@@ -1,4 +1,5 @@
-﻿using TagTool.TagStructures;
+﻿using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.VFiles
 {
@@ -6,7 +7,7 @@ namespace TagTool.Commands.VFiles
     {
         public static CommandContext Create(CommandContext parent, OpenTagCache info, TagInstance tag, VFilesList vfsl)
         {
-            var groupName = info.StringIds.GetString(tag.Group.Name);
+            var groupName = info.StringIDs.GetString(tag.Group.Name);
 
             var context = new CommandContext(parent,
                 string.Format("{0:X8}.{1}", tag.Index, groupName));

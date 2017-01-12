@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.RenderMethods
 {
@@ -15,9 +15,9 @@ namespace TagTool.Commands.RenderMethods
 
         public ListBitmapsCommand(OpenTagCache info, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
-                 "ListBitmaps",
+                 "listbitmaps",
                  "Lists the bitmaps used by the render_method.",
-                 "ListBitmaps",
+                 "listbitmaps",
                  "Lists the bitmaps used by the render_method.")
         {
             Info = info;
@@ -36,7 +36,7 @@ namespace TagTool.Commands.RenderMethods
 
                 using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
-                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIds, property.Template);
+                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, property.Template);
                     template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
                 }
 
@@ -44,7 +44,7 @@ namespace TagTool.Commands.RenderMethods
                 {
                     var mapTemplate = template.ShaderMaps[i];
 
-                    Console.WriteLine($"Bitmap {i} ({Info.StringIds.GetString(mapTemplate.Name)}): {property.ShaderMaps[i].Bitmap.Group.Tag} 0x{property.ShaderMaps[i].Bitmap.Index:X4}");
+                    Console.WriteLine($"Bitmap {i} ({Info.StringIDs.GetString(mapTemplate.Name)}): {property.ShaderMaps[i].Bitmap.Group.Tag} 0x{property.ShaderMaps[i].Bitmap.Index:X4}");
                 }
             }
 

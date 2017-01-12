@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.RenderMethods
 {
@@ -14,9 +16,9 @@ namespace TagTool.Commands.RenderMethods
 
         public SpecifyBitmapsCommand(OpenTagCache info, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
-                 "SpecifyBitmaps",
+                 "specifybitmaps",
                  "Allows the bitmaps of the render_method to be respecified.",
-                 "SpecifyBitmaps",
+                 "specifybitmaps",
                  "Allows the bitmaps of the render_method to be respecified.")
         {
             Info = info;
@@ -29,7 +31,7 @@ namespace TagTool.Commands.RenderMethods
             if (args.Count != 0)
                 return false;
             
-            var shaderMaps = new Dictionary<StringId, TagInstance>();
+            var shaderMaps = new Dictionary<StringID, TagInstance>();
 
             foreach (var property in Definition.ShaderProperties)
             {
@@ -37,7 +39,7 @@ namespace TagTool.Commands.RenderMethods
 
                 using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
-                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIds, property.Template);
+                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, property.Template);
                     template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
                 }
 
@@ -45,8 +47,8 @@ namespace TagTool.Commands.RenderMethods
                 {
                     var mapTemplate = template.ShaderMaps[i];
 
-                    Console.Write(string.Format("Please enter the {0} index: ", Info.StringIds.GetString(mapTemplate.Name)));
-                    shaderMaps[mapTemplate.Name] = ArgumentParser.ParseTagIndex(Info.Cache, Console.ReadLine());
+                    Console.Write(string.Format("Please enter the {0} index: ", Info.StringIDs.GetString(mapTemplate.Name)));
+                    shaderMaps[mapTemplate.Name] = ArgumentParser.ParseTagIndex(Info, Console.ReadLine());
                     property.ShaderMaps[i].Bitmap = shaderMaps[mapTemplate.Name];
                 }
             }
@@ -57,7 +59,7 @@ namespace TagTool.Commands.RenderMethods
 
             using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIds, Tag);
+                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Tag);
                 Info.Serializer.Serialize(context, Definition);
             }
 

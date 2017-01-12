@@ -2,8 +2,10 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.Tags
 {
@@ -83,9 +85,9 @@ namespace TagTool.Commands.Tags
             if (tagNames.ContainsKey(tag.Index))
                 return;
 
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIds, tag);
+            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
             var definition = Info.Deserializer.Deserialize<RenderModel>(context);
-            tagNames[tag.Index] = $"{Info.StringIds.GetString(definition.Name)}";
+            tagNames[tag.Index] = $"{Info.StringIDs.GetString(definition.Name)}";
         }
 
         private void SetModelName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
@@ -93,7 +95,7 @@ namespace TagTool.Commands.Tags
             if (tag == null || tagNames.ContainsKey(tag.Index))
                 return;
 
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIds, tag);
+            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
             var definition = Info.Deserializer.Deserialize<Model>(context);
 
             if (definition.RenderModel == null)
@@ -117,22 +119,22 @@ namespace TagTool.Commands.Tags
 
         private void SetGameObjectName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
         {
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIds, tag);
+            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
             var definition = (GameObject)Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
             if (definition.Model == null)
                 return;
 
-            context = new TagSerializationContext(stream, Info.Cache, Info.StringIds, definition.Model);
+            context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, definition.Model);
             var modelDefinition = Info.Deserializer.Deserialize<Model>(context);
 
             if (modelDefinition.RenderModel == null)
                 return;
 
-            context = new TagSerializationContext(stream, Info.Cache, Info.StringIds, modelDefinition.RenderModel);
+            context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, modelDefinition.RenderModel);
             var renderModelDefinition = Info.Deserializer.Deserialize<RenderModel>(context);
 
-            var objectName = Info.StringIds.GetString(renderModelDefinition.Name);
+            var objectName = Info.StringIDs.GetString(renderModelDefinition.Name);
 
             if (tag.Group.Tag == new Tag("bipd"))
             {
@@ -367,10 +369,10 @@ namespace TagTool.Commands.Tags
 
         private void SetScenarioName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
         {
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIds, tag);
+            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
             var definition = Info.Deserializer.Deserialize<Scenario>(context);
 
-            var tagName = Info.StringIds.GetString(definition.ScenarioZonesetGroups[0].Name);
+            var tagName = Info.StringIDs.GetString(definition.ScenarioZonesetGroups[0].Name);
             var slashIndex = tagName.LastIndexOf('\\');
             var scenarioName = tagName.Substring(slashIndex + 1);
 

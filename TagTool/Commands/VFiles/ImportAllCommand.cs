@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.VFiles
 {
@@ -12,16 +13,13 @@ namespace TagTool.Commands.VFiles
         private TagInstance Tag { get; }
         private VFilesList Definition { get; }
 
-        public ImportAllCommand(OpenTagCache info, TagInstance tag, VFilesList definition) : base(
-            CommandFlags.None,
-            
-            "importall",
-            "Replace all files stored in the tag",
-
-            "importall [directory]",
-            
-            "Replaces all file stored in the tag. The tag will be resized as necessary.\n" +
-            "If no directory is specified, files will be loaded from the current directory.")
+        public ImportAllCommand(OpenTagCache info, TagInstance tag, VFilesList definition)
+            : base(CommandFlags.None,
+                  "importall",
+                  "Replace all files stored in the tag",
+                  "importall [directory]",
+                  "Replaces all file stored in the tag. The tag will be resized as necessary.\n" +
+                  "If no directory is specified, files will be loaded from the current directory.")
         {
             Info = info;
             Tag = tag;
@@ -55,7 +53,7 @@ namespace TagTool.Commands.VFiles
                 imported++;
             }
             using (var stream = Info.OpenCacheReadWrite())
-                Info.Serializer.Serialize(new TagSerializationContext(stream, Info.Cache, Info.StringIds, Tag), Definition);
+                Info.Serializer.Serialize(new TagSerializationContext(stream, Info.Cache, Info.StringIDs, Tag), Definition);
 
             Console.WriteLine("Imported {0} files.", imported);
 

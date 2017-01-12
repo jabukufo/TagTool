@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagTool.Resources;
-using TagTool.Resources.Bitmaps;
-using TagTool.Resources.Geometry;
+using TagTool.IO;
+using TagTool.Cache;
+using TagTool.Bitmaps;
+using TagTool.Geometry;
+using TagTool.TagGroups;
+using TagTool.Common;
 
 namespace TagTool.Serialization
 {

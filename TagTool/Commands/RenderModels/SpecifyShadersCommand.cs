@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Serialization;
-using TagTool.TagStructures;
+using TagTool.TagGroups;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands.RenderModels
 {
@@ -14,9 +15,9 @@ namespace TagTool.Commands.RenderModels
 
         public SpecifyShadersCommand(OpenTagCache info, TagInstance tag, RenderModel definition)
             : base(CommandFlags.Inherit,
-                  "SpecifyShaders",
+                  "specifyshaders",
                   "Allows the shaders of a render_model to be respecified.",
-                  "SpecifyShaders",
+                  "specifyshaders",
                   "Allows the shaders of a render_model to be respecified.")
         {
             Info = info;
@@ -28,15 +29,17 @@ namespace TagTool.Commands.RenderModels
         {
             foreach (var material in Definition.Materials)
             {
-                Console.Write("Please enter the replacement {0:X8} index: ",
-                    material.RenderMethod.Index);
+                if (material.RenderMethod != null)
+                    Console.Write("Please enter the replacement {0:X8} index: ", material.RenderMethod.Index);
+                else
+                    Console.Write("Please enter the replace material #{0} index: ", Definition.Materials.IndexOf(material));
 
-                material.RenderMethod = ArgumentParser.ParseTagIndex(Info.Cache, Console.ReadLine());
+                material.RenderMethod = ArgumentParser.ParseTagIndex(Info, Console.ReadLine());
             }
 
             using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIds, Tag);
+                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Tag);
                 Info.Serializer.Serialize(context, Definition);
             }
 

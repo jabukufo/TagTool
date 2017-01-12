@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.TagStructures;
+using TagTool.Cache;
+using TagTool.Common;
+using TagTool.Tags.TagDefinitions;
 
 namespace TagTool.Commands
 {
@@ -16,7 +18,7 @@ namespace TagTool.Commands
         /// <param name="language">The language to display strings from.</param>
         /// <param name="filter">The filter to match strings and stringIDs against. Can be <c>null</c> to display everything.</param>
         /// <returns>The strings to print.</returns>
-        public static List<DisplayString> PrepareForDisplay(MultilingualUnicodeStringList unic, StringIdCache stringIds, IEnumerable<LocalizedString> strings, GameLanguage language, string filter)
+        public static List<DisplayString> PrepareForDisplay(MultilingualUnicodeStringList unic, StringIDCache stringIds, IEnumerable<LocalizedString> strings, GameLanguage language, string filter)
         {
             // Filter the input strings
             var display = new List<DisplayString>();
@@ -25,30 +27,30 @@ namespace TagTool.Commands
                 var str = unic.GetString(localizedString, language);
                 if (str == null)
                     continue;
-                var stringId = stringIds.GetString(localizedString.StringId);
+                var stringId = stringIds.GetString(localizedString.StringID);
                 if (filter != null && !str.Contains(filter) && !stringId.Contains(filter))
                     continue;
                 display.Add(new DisplayString
                 {
-                    StringId = stringId,
+                    StringID = stringId,
                     String = str
                 });
             }
-            display.Sort((a, b) => String.Compare(a.StringId, b.StringId, StringComparison.Ordinal));
+            display.Sort((a, b) => String.Compare(a.StringID, b.StringID, StringComparison.Ordinal));
             return display;
         }
 
         public static void PrintStrings(ICollection<DisplayString> strings)
         {
-            var stringIdWidth = strings.Max(s => s.StringId.Length);
+            var stringIdWidth = strings.Max(s => s.StringID.Length);
             var format = string.Format("{{0,-{0}}}  {{1}}", stringIdWidth);
             foreach (var str in strings)
-                Console.WriteLine(format, str.StringId, str.String);
+                Console.WriteLine(format, str.StringID, str.String);
         }
 
         public class DisplayString
         {
-            public string StringId { get; set; }
+            public string StringID { get; set; }
 
             public string String { get; set; }
         }

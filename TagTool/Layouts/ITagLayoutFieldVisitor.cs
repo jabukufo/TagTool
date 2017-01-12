@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagTool.Layouts
+﻿namespace TagTool.Layouts
 {
     /// <summary>
     /// Interface for a tag layout field visitor.

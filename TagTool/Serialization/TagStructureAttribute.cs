@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagTool.GameDefinitions;
 
 namespace TagTool.Serialization
 {
@@ -15,8 +12,8 @@ namespace TagTool.Serialization
     {
         public TagStructureAttribute()
         {
-            MinVersion = EngineVersion.Unknown;
-            MaxVersion = EngineVersion.Unknown;
+            MinVersion = GameDefinitionSet.Unknown;
+            MaxVersion = GameDefinitionSet.Unknown;
         }
 
         /// <summary>
@@ -36,15 +33,15 @@ namespace TagTool.Serialization
 
         /// <summary>
         /// Gets or sets the minimum engine version which the structure applies to.
-        /// Can be <see cref="EngineVersion.Unknown"/> (default) if unbounded.
+        /// Can be <see cref="GameDefinitionSet.Unknown"/> (default) if unbounded.
         /// </summary>
-        public EngineVersion MinVersion { get; set; }
+        public GameDefinitionSet MinVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum engine version which the structure applies to.
-        /// Can be <see cref="EngineVersion.Unknown"/> (default) if unbounded.
+        /// Can be <see cref="GameDefinitionSet.Unknown"/> (default) if unbounded.
         /// </summary>
-        public EngineVersion MaxVersion { get; set; }
+        public GameDefinitionSet MaxVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the power of two to align the block to.

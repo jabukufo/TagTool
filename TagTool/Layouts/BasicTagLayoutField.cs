@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagTool.Layouts
+﻿namespace TagTool.Layouts
 {
     /// <summary>
     /// A basic field in a tag layout.
@@ -44,7 +38,7 @@ namespace TagTool.Layouts
         Vector3,
         Vector4,
         Angle,
-        StringId,
+        StringID,
         TagReference,
         ShortTagReference, // Tag reference which is just a 4-byte index
         DataReference,

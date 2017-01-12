@@ -8,9 +8,9 @@ namespace TagTool.Commands.Core
     {
         public SetLocaleCommand()
             : base(CommandFlags.Inherit,
-                  "SetLocale",
+                  "setlocale",
                   "Changes the parsing locale of numbers to the specified locale.",
-                  "SetLocale <locale>",
+                  "setlocale <locale>",
                   "Use a culture name from https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo(vs.71).aspx")
         {
         }
@@ -19,6 +19,7 @@ namespace TagTool.Commands.Core
         {
             if (args.Count < 1)
                 return false;
+
             CultureInfo ci;
             try
             {
@@ -29,7 +30,9 @@ namespace TagTool.Commands.Core
                 Console.WriteLine(e.Message);
                 return false;
             }
+
             CultureInfo.DefaultThreadCurrentCulture = ci;
+
             return true;
         }
     }
