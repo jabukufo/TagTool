@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Tags
 {
     class CollisionGeometryTestCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public CollisionGeometryTestCommand(OpenTagCache info)
+        public CollisionGeometryTestCommand(GameCacheContext info)
             : base(CommandFlags.None,
             "colltest",
             "Collision Geometry Import Command (Test)",

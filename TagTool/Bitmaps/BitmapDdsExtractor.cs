@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.IO;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Bitmaps
 {

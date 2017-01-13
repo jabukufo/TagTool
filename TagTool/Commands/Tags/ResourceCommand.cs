@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {

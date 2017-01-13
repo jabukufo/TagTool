@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Tags
 {
     class ListStringsCommand : Command
     {
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
 
-        public ListStringsCommand(OpenTagCache info) : base(
+        public ListStringsCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "liststrings",
@@ -29,6 +31,14 @@ namespace TagTool.Commands.Tags
             _info = info;
         }
 
+        public GameCacheContext Info
+        {
+            get
+            {
+                return _info;
+            }
+        }
+
         public override bool Execute(List<string> args)
         {
             if (args.Count != 1 && args.Count != 2)
@@ -39,12 +49,12 @@ namespace TagTool.Commands.Tags
             var filter = (args.Count == 2) ? args[1] : null;
 
             var found = false;
-            using (var stream = _info.OpenCacheRead())
+            using (var stream = Info.OpenCacheRead())
             {
-                foreach (var unicTag in _info.Cache.Tags.FindAllInGroup("unic"))
+                foreach (var unicTag in Info.Cache.Tags.FindAllInGroup("unic"))
                 {
-                    var unic = _info.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, _info.Cache, _info.StringIDs, unicTag));
-                    var strings = LocalizedStringPrinter.PrepareForDisplay(unic, _info.StringIDs, unic.Strings, language, filter);
+                    var unic = Info.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, Info.Cache, Info.StringIDs, unicTag));
+                    var strings = LocalizedStringPrinter.PrepareForDisplay(unic, Info.StringIDs, unic.Strings, language, filter);
                     if (strings.Count == 0)
                         continue;
                     if (found)

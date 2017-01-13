@@ -2,22 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
     class SetFieldCommand : Command
     {
         private CommandContextStack Stack { get; }
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
 
-        public SetFieldCommand(CommandContextStack stack, OpenTagCache info, TagInstance tag, TagStructureInfo structure, object owner)
+        public SetFieldCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
                   "setfield",
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.",

@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.RenderModels
 {
     class SpecifyShadersCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private RenderModel Definition { get; }
 
-        public SpecifyShadersCommand(OpenTagCache info, TagInstance tag, RenderModel definition)
+        public SpecifyShadersCommand(GameCacheContext info, TagInstance tag, RenderModel definition)
             : base(CommandFlags.Inherit,
                   "specifyshaders",
                   "Allows the shaders of a render_model to be respecified.",

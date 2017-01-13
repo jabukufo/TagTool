@@ -6,8 +6,9 @@ using TagTool.IO;
 using TagTool.Cache;
 using TagTool.Bitmaps;
 using TagTool.Geometry;
-using TagTool.TagGroups;
+using TagTool.Tags;
 using TagTool.Common;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Serialization
 {

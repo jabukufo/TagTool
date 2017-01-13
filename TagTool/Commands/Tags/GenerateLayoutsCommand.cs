@@ -4,17 +4,18 @@ using System.IO;
 using System.Linq;
 using TagTool.Analysis;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Layouts;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
 {
     class GenerateLayoutsCommand : Command
     {
         private readonly TagCache _cache;
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
 
-        public GenerateLayoutsCommand(OpenTagCache info) : base(
+        public GenerateLayoutsCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "genlayouts",

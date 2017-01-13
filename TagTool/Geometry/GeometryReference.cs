@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 
 namespace TagTool.Geometry
@@ -38,11 +39,11 @@ namespace TagTool.Geometry
         /// <summary>
         /// The resource containing the raw geometry data.
         /// </summary>
-        [MinVersion(GameDefinitions.GameDefinitionSet.HaloOnline106708)]
+        [MinVersion(Cache.CacheVersion.HaloOnline106708)]
         public ResourceReference Resource;
-        [MaxVersion(GameDefinitions.GameDefinitionSet.HaloODST)]
+        [MaxVersion(Cache.CacheVersion.HaloODST)]
         public ushort ZoneAssetSalt;
-        [MaxVersion(GameDefinitions.GameDefinitionSet.HaloODST)]
+        [MaxVersion(Cache.CacheVersion.HaloODST)]
         public ushort ZoneAssetIndex;
 
         public int Padding;

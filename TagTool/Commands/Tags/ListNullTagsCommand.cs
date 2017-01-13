@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ListNullTagsCommand : Command
     {
-        public OpenTagCache Info { get; }
+        public GameCacheContext Info { get; }
 
-        public ListNullTagsCommand(OpenTagCache info)
+        public ListNullTagsCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   "listnulltags",
                   "Lists all null tag indices in the current tag cache",

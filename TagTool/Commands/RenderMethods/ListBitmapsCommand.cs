@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.RenderMethods
 {
     class ListBitmapsCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private RenderMethod Definition { get; }
 
-        public ListBitmapsCommand(OpenTagCache info, TagInstance tag, RenderMethod definition)
+        public ListBitmapsCommand(GameCacheContext info, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
                  "listbitmaps",
                  "Lists the bitmaps used by the render_method.",

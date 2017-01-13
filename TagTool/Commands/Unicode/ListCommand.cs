@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Unicode
 {
     class ListCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private MultilingualUnicodeStringList Definition { get; }
 
-        public ListCommand(OpenTagCache info, MultilingualUnicodeStringList definition)
+        public ListCommand(GameCacheContext info, MultilingualUnicodeStringList definition)
             : base(CommandFlags.Inherit,
                   "list",
                   "List strings",

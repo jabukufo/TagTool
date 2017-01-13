@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Scenarios
 {
     class CopyForgePaletteCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private Scenario Definition { get; }
 
-        public CopyForgePaletteCommand(OpenTagCache info, Scenario definition)
+        public CopyForgePaletteCommand(GameCacheContext info, Scenario definition)
             : base(CommandFlags.Inherit,
                  "copyforgepalette",
                  "Copies the forge palette from the current scenario to another scenario",

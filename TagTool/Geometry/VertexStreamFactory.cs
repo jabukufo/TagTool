@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using TagTool.GameDefinitions;
+using TagTool.Cache;
 
 namespace TagTool.Geometry
 {
@@ -11,11 +11,11 @@ namespace TagTool.Geometry
         /// <param name="version">The engine version.</param>
         /// <param name="stream">The base stream.</param>
         /// <returns>The created vertex stream.</returns>
-        public static IVertexStream Create(GameDefinitionSet version, Stream stream)
+        public static IVertexStream Create(CacheVersion version, Stream stream)
         {
-            if (GameDefinition.Compare(version, GameDefinitionSet.HaloOnline235640) >= 0)
-                return new GameDefinitions.HaloOnline235640.VertexStream(stream);
-            return new GameDefinitions.HaloOnline106708.VertexStream(stream);
+            if (CacheVersionDetection.Compare(version, CacheVersion.HaloOnline235640) >= 0)
+                return new Cache.HaloOnline.MS25.VertexStream(stream);
+            return new Cache.HaloOnline.MS23.VertexStream(stream);
         }
     }
 }

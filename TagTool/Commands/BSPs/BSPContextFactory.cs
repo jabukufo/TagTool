@@ -1,11 +1,13 @@
-﻿using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+﻿using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.BSPs
 {
     static class BSPContextFactory
     {
-        public static CommandContext Create(CommandContext parent, OpenTagCache info, TagInstance tag, ScenarioStructureBsp bsp)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, ScenarioStructureBsp bsp)
         {
             var groupName = info.StringIDs.GetString(tag.Group.Name);
 
@@ -17,7 +19,7 @@ namespace TagTool.Commands.BSPs
             return context;
         }
 
-        public static void Populate(CommandContext context, OpenTagCache info, TagInstance tag, ScenarioStructureBsp bsp)
+        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, ScenarioStructureBsp bsp)
         {
             context.AddCommand(new LoadResourcesCommand(info, tag, bsp));
             context.AddCommand(new CollisionTestCommand(info, tag, bsp));

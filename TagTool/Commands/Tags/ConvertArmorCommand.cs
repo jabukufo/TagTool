@@ -2,23 +2,23 @@
 using System.IO;
 using TagTool.Cache;
 using TagTool.Common;
-using TagTool.GameDefinitions;
 using TagTool.Serialization;
 using static System.Console;
 using static System.IO.Path;
-using static TagTool.Cache.StringIDResolverFactory;
+using static TagTool.Cache.HaloOnline.StringIdResolverFactory;
 using static TagTool.Commands.ArgumentParser;
 using static TagTool.Common.TagVersionMap;
-using static TagTool.GameDefinitions.GameDefinition;
-using static TagTool.GameDefinitions.GameDefinitionSet;
+using static TagTool.Cache.CacheVersionDetection;
+using static TagTool.Cache.CacheVersion;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ConvertArmorCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ConvertArmorCommand(OpenTagCache info)
+        public ConvertArmorCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   "convertarmor",
                   "",
@@ -106,7 +106,7 @@ namespace TagTool.Commands.Tags
             using (var stream = destTagsFile.OpenRead())
                 destTagCache = new TagCache(stream);
             
-            GameDefinitionSet guessedVersion;
+            CacheVersion guessedVersion;
             var destVersion = Detect(destTagCache, out guessedVersion);
             if (destVersion == Unknown)
             {
@@ -116,9 +116,9 @@ namespace TagTool.Commands.Tags
 
             WriteLine($"Destination cache version: {GetVersionString(destVersion)}");
 
-            StringIDCache destStringIDCache;
+            StringIdCache destStringIdCache;
             using (var stream = destStringIDsFile.OpenRead())
-                destStringIDCache = new StringIDCache(stream, Create(destVersion));
+                destStringIdCache = new StringIdCache(stream, Create(destVersion));
 
             var destResources = new ResourceDataManager();
             destResources.LoadCachesFromDirectory(destDir.FullName);

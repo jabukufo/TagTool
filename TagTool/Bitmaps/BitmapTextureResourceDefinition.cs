@@ -1,4 +1,5 @@
 ﻿using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
 

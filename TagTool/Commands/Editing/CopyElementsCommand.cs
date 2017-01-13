@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
     class CopyElementsCommand : Command
     {
         private CommandContextStack Stack { get; }
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private TagStructureInfo Structure { get; set; }
         private object Owner { get; set; }
@@ -17,7 +19,7 @@ namespace TagTool.Commands.Editing
         public static Type ElementType { get; set; } = null;
         public static List<object> Elements { get; set; } = null;
 
-        public CopyElementsCommand(CommandContextStack stack, OpenTagCache info, TagInstance tag, TagStructureInfo structure, object owner)
+        public CopyElementsCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.None,
                   "copyelements",
                   "Copies block elements from one tag to another.",

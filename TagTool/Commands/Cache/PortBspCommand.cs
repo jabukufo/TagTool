@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.GameDefinitions.Base;
 using TagTool.Cache;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Cache
 {
     class PortBspCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private CacheFile BlamCache { get; }
 
-        public PortBspCommand(OpenTagCache info, CacheFile blamCache)
+        public PortBspCommand(GameCacheContext info, CacheFile blamCache)
             : base(CommandFlags.Inherit,
                   "portbsp",
                   "",

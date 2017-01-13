@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Collections;
 using TagTool.Serialization;
 using TagTool.Common;
-using TagTool.TagGroups;
+using TagTool.Tags;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Editing
 {
     class ListFieldsCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private 
+            GameCacheContext Info { get; }
         private TagStructureInfo Structure { get; }
         private object Value { get; }
 
-        public ListFieldsCommand(OpenTagCache info, TagStructureInfo structure, object value)
+        public ListFieldsCommand(GameCacheContext info, TagStructureInfo structure, object value)
             : base(CommandFlags.Inherit,
                   "listfields",
                   $"Lists the fields in the current {structure.Types[0].Name} definition.",

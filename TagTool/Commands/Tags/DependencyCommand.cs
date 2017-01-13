@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.TagGroups;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
 {
@@ -10,9 +12,9 @@ namespace TagTool.Commands.Tags
     /// </summary>
     class DependencyCommand : Command
     {
-        public OpenTagCache Info { get; }
+        public GameCacheContext Info { get; }
 
-        public DependencyCommand(OpenTagCache info) : base(
+        public DependencyCommand(GameCacheContext info) : base(
             CommandFlags.None,
 
             "dep",

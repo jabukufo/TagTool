@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using TagTool.Common;
-using TagTool.GameDefinitions.Base;
-using TagTool.TagGroups;
+using TagTool.Tags;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {

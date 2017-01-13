@@ -4,15 +4,16 @@ using System.IO;
 using TagTool.Cache;
 using TagTool.Bitmaps;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ExtractBitmapsCommand : Command
     {
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
 
-        public ExtractBitmapsCommand(OpenTagCache info) : base(
+        public ExtractBitmapsCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "extractbitmaps",

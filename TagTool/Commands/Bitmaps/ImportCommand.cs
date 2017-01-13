@@ -5,18 +5,19 @@ using System.IO;
 using TagTool.Cache;
 using TagTool.Bitmaps;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
-using TagTool.TagGroups;
+using TagTool.Tags.Definitions;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Bitmaps
 {
     class ImportCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private Bitmap Bitmap { get; }
 
-        public ImportCommand(OpenTagCache info, TagInstance tag, Bitmap bitmap)
+        public ImportCommand(GameCacheContext info, TagInstance tag, Bitmap bitmap)
             : base(CommandFlags.None,
                   "import",
                   "Imports an image from a DDS file.",

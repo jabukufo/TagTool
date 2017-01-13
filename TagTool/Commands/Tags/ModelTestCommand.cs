@@ -7,17 +7,18 @@ using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 using PrimitiveType = TagTool.Geometry.PrimitiveType;
-using TagTool.TagGroups;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ModelTestCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ModelTestCommand(OpenTagCache info) : base(
+        public ModelTestCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "modeltest",

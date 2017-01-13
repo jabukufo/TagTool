@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
 using TagTool.Commands.Cache;
-using TagTool.GameDefinitions;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class OpenCacheCommand : Command
     {
         private CommandContextStack Stack { get; }
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public OpenCacheCommand(CommandContextStack stack, OpenTagCache info)
+        public OpenCacheCommand(CommandContextStack stack, GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "opencache",
                   "Opens a cache file format comparison and porting",

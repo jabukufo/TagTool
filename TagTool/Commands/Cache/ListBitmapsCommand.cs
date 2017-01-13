@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using TagTool.GameDefinitions.Base;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Cache
 {
     class ListBitmapsCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private CacheFile BlamCache { get; }
 
-        public ListBitmapsCommand(OpenTagCache info, CacheFile blamCache)
+        public ListBitmapsCommand(GameCacheContext info, CacheFile blamCache)
             : base(CommandFlags.None,
                   "listbitmaps",
                   "",

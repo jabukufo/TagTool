@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands
 {
@@ -18,7 +19,7 @@ namespace TagTool.Commands
         /// <param name="language">The language to display strings from.</param>
         /// <param name="filter">The filter to match strings and stringIDs against. Can be <c>null</c> to display everything.</param>
         /// <returns>The strings to print.</returns>
-        public static List<DisplayString> PrepareForDisplay(MultilingualUnicodeStringList unic, StringIDCache stringIds, IEnumerable<LocalizedString> strings, GameLanguage language, string filter)
+        public static List<DisplayString> PrepareForDisplay(MultilingualUnicodeStringList unic, StringIdCache stringIds, IEnumerable<LocalizedString> strings, GameLanguage language, string filter)
         {
             // Filter the input strings
             var display = new List<DisplayString>();

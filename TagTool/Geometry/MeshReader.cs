@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.Cache;
-using TagTool.GameDefinitions;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Geometry
 {
@@ -15,7 +15,7 @@ namespace TagTool.Geometry
         private const int StreamCount = 5;
         private const int IndexBufferCount = 2;
 
-        private readonly GameDefinitionSet _version;
+        private readonly CacheVersion _version;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MeshReader"/> class.
@@ -23,7 +23,7 @@ namespace TagTool.Geometry
         /// <param name="version">The engine version to target.</param>
         /// <param name="mesh">The mesh.</param>
         /// <param name="definition">The mesh's definition data.</param>
-        public MeshReader(GameDefinitionSet version, Mesh mesh, RenderGeometryResourceDefinition definition)
+        public MeshReader(CacheVersion version, Mesh mesh, RenderGeometryResourceDefinition definition)
         {
             _version = version;
             Mesh = mesh;

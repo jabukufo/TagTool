@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Layouts;
 
@@ -11,9 +13,9 @@ namespace TagTool.Commands.Tags
 {
     class ConvertPluginsCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ConvertPluginsCommand(OpenTagCache info)
+        public ConvertPluginsCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "convertplugins",
                   "Convert Assembly plugins to tag layout structures",

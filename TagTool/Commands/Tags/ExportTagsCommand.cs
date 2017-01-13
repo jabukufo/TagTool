@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ExportTagsCommand : Command
     {
-        public OpenTagCache Info { get; }
+        public GameCacheContext Info { get; }
 
-        public ExportTagsCommand(OpenTagCache info)
+        public ExportTagsCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   "exporttags",
                   "Exports all tags in the current tag cache to a specific directory.",

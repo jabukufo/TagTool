@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Bitmaps
 {
     public class BitmapDdsInjector
     {
         private readonly ResourceDataManager _resourceManager;
-
+        
         public BitmapDdsInjector(ResourceDataManager resourceManager)
         {
             _resourceManager = resourceManager;

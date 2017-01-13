@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class InfoCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public InfoCommand(OpenTagCache info) : base(
+        public InfoCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "info",

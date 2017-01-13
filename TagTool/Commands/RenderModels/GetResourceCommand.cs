@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.RenderModels
 {
     class GetResourceCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private RenderModel Definition { get; }
 
-        public GetResourceCommand(OpenTagCache info, TagInstance tag, RenderModel definition)
+        public GetResourceCommand(GameCacheContext info, TagInstance tag, RenderModel definition)
             : base(CommandFlags.None,
                   "getresource",
                   "",

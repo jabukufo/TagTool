@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
-using TagTool.TagGroups;
+using TagTool.Tags.Definitions;
+using TagTool.Tags;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class NewTagCommand : Command
     {
-        public OpenTagCache Info { get; }
+        public GameCacheContext Info { get; }
 
-        public NewTagCommand(OpenTagCache info)
+        public NewTagCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "newtag",
                   "Creates a new tag of the specified tag group in the current tag cache.",

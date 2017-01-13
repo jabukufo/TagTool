@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.TagGroups;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
 {
     class ExtractCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ExtractCommand(OpenTagCache info)
+        public ExtractCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "extract",
                   "",

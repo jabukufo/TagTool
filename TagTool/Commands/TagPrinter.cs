@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Commands
 {

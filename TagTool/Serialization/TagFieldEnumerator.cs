@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TagTool.GameDefinitions;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {
@@ -42,14 +42,14 @@ namespace TagTool.Serialization
         public TagFieldAttribute Attribute { get; private set; }
 
         /// <summary>
-        /// Gets the lowest engine version which supports this property, or <see cref="GameDefinitionSet.Unknown"/> if unbounded.
+        /// Gets the lowest engine version which supports this property, or <see cref="CacheVersion.Unknown"/> if unbounded.
         /// </summary>
-        public GameDefinitionSet MinVersion { get; private set; }
+        public CacheVersion MinVersion { get; private set; }
 
         /// <summary>
-        /// Gets the highest engine version which supports this property, or <see cref="GameDefinitionSet.Unknown"/> if unbounded.
+        /// Gets the highest engine version which supports this property, or <see cref="CacheVersion.Unknown"/> if unbounded.
         /// </summary>
-        public GameDefinitionSet MaxVersion { get; private set; }
+        public CacheVersion MaxVersion { get; private set; }
 
         /// <summary>
         /// Moves to the next tag field in the structure.
@@ -93,9 +93,9 @@ namespace TagTool.Serialization
             // Read version restrictions, if any
             var minVersionAttrib = Field.GetCustomAttributes(typeof(MinVersionAttribute), false).FirstOrDefault() as MinVersionAttribute;
             var maxVersionAttrib = Field.GetCustomAttributes(typeof(MaxVersionAttribute), false).FirstOrDefault() as MaxVersionAttribute;
-            MinVersion = (minVersionAttrib != null) ? minVersionAttrib.Version : GameDefinitionSet.Unknown;
-            MaxVersion = (maxVersionAttrib != null) ? maxVersionAttrib.Version : GameDefinitionSet.Unknown;
-            return GameDefinition.IsBetween(Info.Version, MinVersion, MaxVersion);
+            MinVersion = (minVersionAttrib != null) ? minVersionAttrib.Version : CacheVersion.Unknown;
+            MaxVersion = (maxVersionAttrib != null) ? maxVersionAttrib.Version : CacheVersion.Unknown;
+            return CacheVersionDetection.IsBetween(Info.Version, MinVersion, MaxVersion);
         }
     }
 }

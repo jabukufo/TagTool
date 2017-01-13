@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Models
 {
     class ListVariantsCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private Model Definition { get; }
 
-        public ListVariantsCommand(OpenTagCache info, Model model) : base(
+        public ListVariantsCommand(GameCacheContext info, Model model) : base(
             CommandFlags.Inherit,
             "listvariants",
             "List available variants of the current model definition.",

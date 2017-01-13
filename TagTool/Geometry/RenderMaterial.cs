@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using TagTool.Common;
-using TagTool.GameDefinitions;
+using TagTool.Cache;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Geometry
 {
     /// <summary>
     /// A material describing how a mesh part should be rendered.
     /// </summary>
-    [TagStructure(Size = 0x24, MaxVersion = GameDefinitionSet.HaloOnline571627)]
-    [TagStructure(Size = 0x30, MinVersion = GameDefinitionSet.HaloOnline700123)]
+    [TagStructure(Size = 0x24, MaxVersion = CacheVersion.HaloOnline571627)]
+    [TagStructure(Size = 0x30, MinVersion = CacheVersion.HaloOnline700123)]
     public class RenderMaterial
     {
         /// <summary>
@@ -18,7 +18,7 @@ namespace TagTool.Geometry
         /// </summary>
         public TagInstance RenderMethod;
 
-        [MinVersion(GameDefinitionSet.HaloOnline700123)] public List<Skin> Skins;
+        [MinVersion(CacheVersion.HaloOnline700123)] public List<Skin> Skins;
         public List<Property> Properties;
         public int Unknown;
         public sbyte BreakableSurfaceIndex;

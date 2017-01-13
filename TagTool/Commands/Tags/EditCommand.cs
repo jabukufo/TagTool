@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Commands.Editing;
 
 namespace TagTool.Commands.Tags
@@ -9,9 +10,9 @@ namespace TagTool.Commands.Tags
     {
         private readonly CommandContextStack _stack;
         private readonly TagCache _cache;
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
 
-        public EditCommand(CommandContextStack stack, OpenTagCache info) : base(
+        public EditCommand(CommandContextStack stack, GameCacheContext info) : base(
             CommandFlags.None,
 
             "edit",

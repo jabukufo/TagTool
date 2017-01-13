@@ -1,11 +1,13 @@
-﻿using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+﻿using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.RenderModels
 {
     static class RenderModelContextFactory
     {
-        public static CommandContext Create(CommandContext parent, OpenTagCache info, TagInstance tag, RenderModel renderModel)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, RenderModel renderModel)
         {
             var groupName = info.StringIDs.GetString(tag.Group.Name);
 
@@ -17,7 +19,7 @@ namespace TagTool.Commands.RenderModels
             return context;
         }
 
-        public static void Populate(CommandContext context, OpenTagCache info, TagInstance tag, RenderModel renderModel)
+        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, RenderModel renderModel)
         {
             context.AddCommand(new SpecifyShadersCommand(info, tag, renderModel));
             context.AddCommand(new GetResourceCommand(info, tag, renderModel));

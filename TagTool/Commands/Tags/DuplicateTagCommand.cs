@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.TagGroups;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
 {
     class DuplicateTagCommand : Command
     {
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
 
-        public DuplicateTagCommand(OpenTagCache info) : base(
+        public DuplicateTagCommand(GameCacheContext info) : base(
             CommandFlags.None,
 
             "duplicate",

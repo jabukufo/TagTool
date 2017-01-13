@@ -4,16 +4,17 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 
 namespace TagTool.Commands.Tags
 {
     class StringIDCommand : Command
     {
-        private readonly OpenTagCache _info;
-        private readonly StringIDCache _stringIds;
+        private readonly GameCacheContext _info;
+        private readonly StringIdCache _stringIds;
 
-        public StringIDCommand(OpenTagCache info) : base(
+        public StringIDCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "stringid",

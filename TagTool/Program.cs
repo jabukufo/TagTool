@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Commands;
 using TagTool.Commands.Tags;
-using TagTool.GameDefinitions;
 using TagTool.IO;
 using TagTool.Serialization;
 
@@ -60,33 +60,33 @@ namespace TagTool
                 Console.WriteLine("{0} tags loaded.", cache.Tags.Count);
 
             // Version detection
-            GameDefinitionSet closestVersion;
-            var version = GameDefinition.Detect(cache, out closestVersion);
-            if (version != GameDefinitionSet.Unknown)
+            CacheVersion closestVersion;
+            var version = CacheVersionDetection.Detect(cache, out closestVersion);
+            if (version != CacheVersion.Unknown)
             {
                 if (autoexecCommand == null)
                 {
                     var buildDate = DateTime.FromFileTime(cache.Timestamp);
-                    Console.WriteLine("- Detected target engine version {0}.", GameDefinition.GetVersionString(closestVersion));
+                    Console.WriteLine("- Detected target engine version {0}.", CacheVersionDetection.GetVersionString(closestVersion));
                     Console.WriteLine("- This cache file was built on {0} at {1}.", buildDate.ToShortDateString(), buildDate.ToShortTimeString());
                 }
             }
             else
             {
                 Console.WriteLine("WARNING: The cache file's version was not recognized!");
-                Console.WriteLine("Using the closest known version {0}.", GameDefinition.GetVersionString(closestVersion));
+                Console.WriteLine("Using the closest known version {0}.", CacheVersionDetection.GetVersionString(closestVersion));
                 version = closestVersion;
             }
 
             // Load stringIDs
             Console.Write("Reading stringIDs...");
             var stringIdPath = Path.Combine(fileInfo.DirectoryName ?? "", "string_ids.dat");
-            var resolver = StringIDResolverFactory.Create(version);
-            StringIDCache stringIds = null;
+            var resolver = StringIdResolverFactory.Create(version);
+            StringIdCache stringIds = null;
             try
             {
                 using (var stream = File.OpenRead(stringIdPath))
-                    stringIds = new StringIDCache(stream, resolver);
+                    stringIds = new StringIdCache(stream, resolver);
             }
             catch (IOException)
             {
@@ -106,7 +106,7 @@ namespace TagTool
                 Console.WriteLine();
             }
 
-            var info = new OpenTagCache
+            var cacheContext = new GameCacheContext
             {
                 Cache = cache,
                 CacheFile = fileInfo,
@@ -117,7 +117,7 @@ namespace TagTool
                 Deserializer = new TagDeserializer(version),
             };
 
-            var tagNamesPath = "Tags\\tagnames_" + GameDefinition.GetVersionString(version) + ".csv";
+            var tagNamesPath = "Tags\\tagnames_" + CacheVersionDetection.GetVersionString(version) + ".csv";
 
             if (File.Exists(tagNamesPath))
             {
@@ -146,20 +146,20 @@ namespace TagTool
                             nameString = nameString.Substring(lastSpaceIndex + 1, nameString.Length - lastSpaceIndex - 1);
                         }
 
-                        info.TagNames[tagIndex] = nameString;
+                        cacheContext.TagNames[tagIndex] = nameString;
                     }
 
                     reader.Close();
                 }
             }
 
-            foreach (var tag in info.Cache.Tags)
-                if (tag != null && !info.TagNames.ContainsKey(tag.Index))
-                    info.TagNames[tag.Index] = $"0x{tag.Index:X4}";
-
+            foreach (var tag in cacheContext.Cache.Tags)
+                if (tag != null && !cacheContext.TagNames.ContainsKey(tag.Index))
+                    cacheContext.TagNames[tag.Index] = $"0x{tag.Index:X4}";
+            
             // Create command context
             var contextStack = new CommandContextStack();
-            var tagsContext = TagCacheContextFactory.Create(contextStack, info);
+            var tagsContext = TagCacheContextFactory.Create(contextStack, cacheContext);
             contextStack.Push(tagsContext);
 
             // If autoexecuting a command, just run it and return

@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Unicode
 {
     class SetCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private MultilingualUnicodeStringList Definition { get; }
 
-        public SetCommand(OpenTagCache info, TagInstance tag, MultilingualUnicodeStringList unic)
+        public SetCommand(GameCacheContext info, TagInstance tag, MultilingualUnicodeStringList unic)
             : base(CommandFlags.None,
                   "set",
                   "Set the value of a string",

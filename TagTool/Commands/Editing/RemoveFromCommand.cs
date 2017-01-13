@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
     class RemoveFromCommand : Command
     {
         private CommandContextStack Stack { get; }
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private TagStructureInfo Structure { get; set; }
         private object Owner { get; set; }
 
-        public RemoveFromCommand(CommandContextStack stack, OpenTagCache info, TagInstance tag, TagStructureInfo structure, object owner)
+        public RemoveFromCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
                   "removefrom",
                   $"Removes block element(s) from a specified index of a specific tag block in the current {structure.Types[0].Name} definition.",

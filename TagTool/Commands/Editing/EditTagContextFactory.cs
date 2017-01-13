@@ -6,16 +6,18 @@ using TagTool.Commands.Scenarios;
 using TagTool.Commands.Unicode;
 using TagTool.Commands.VFiles;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
-using TagTool.TagGroups;
+using TagTool.Tags.Definitions;
+using TagTool.Tags;
 using TagTool.Commands.Animations;
 using TagTool.Commands.BSPs;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Editing
 {
     static class EditTagContextFactory
     {
-        public static CommandContext Create(CommandContextStack stack, OpenTagCache info, TagInstance tag)
+        public static CommandContext Create(CommandContextStack stack, GameCacheContext info, TagInstance tag)
         {
             var groupName = info.StringIDs.GetString(tag.Group.Name);
 
@@ -96,6 +98,7 @@ namespace TagTool.Commands.Editing
             context.AddCommand(new CopyElementsCommand(stack, info, tag, structure, value));
             context.AddCommand(new PasteElementsCommand(stack, info, tag, structure, value));
             context.AddCommand(new SaveChangesCommand(info, tag, value));
+            context.AddCommand(new ExecuteCommand(info, tag, value));
             context.AddCommand(new ExitToCommand(stack));
 
             return context;

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.GameDefinitions.Base;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Cache
 {
     class PortShaderCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private CacheFile BlamCache { get; }
 
-        public PortShaderCommand(OpenTagCache info, CacheFile blamCache)
+        public PortShaderCommand(GameCacheContext info, CacheFile blamCache)
             : base(CommandFlags.None,
                   "portshader",
                   "",

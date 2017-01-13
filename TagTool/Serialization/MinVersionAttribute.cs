@@ -1,5 +1,5 @@
 ﻿using System;
-using TagTool.GameDefinitions;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {
@@ -9,11 +9,11 @@ namespace TagTool.Serialization
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class MinVersionAttribute : Attribute
     {
-        public MinVersionAttribute(GameDefinitionSet version)
+        public MinVersionAttribute(CacheVersion version)
         {
             Version = version;
         }
 
-        public GameDefinitionSet Version { get; set; }
+        public CacheVersion Version { get; set; }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.TagGroups;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
 {
     class ListCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ListCommand(OpenTagCache info)
+        public ListCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "list",
                   "Lists tag instances that are of the specified tag group.",

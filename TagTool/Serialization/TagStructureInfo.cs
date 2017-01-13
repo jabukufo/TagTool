@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TagTool.Common;
-using TagTool.GameDefinitions;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {
@@ -16,7 +16,7 @@ namespace TagTool.Serialization
         /// </summary>
         /// <param name="structureType">The tag structure type to analyze.</param>
         public TagStructureInfo(Type structureType)
-            : this(structureType, GameDefinitionSet.Unknown)
+            : this(structureType, CacheVersion.Unknown)
         {
         }
 
@@ -25,7 +25,7 @@ namespace TagTool.Serialization
         /// </summary>
         /// <param name="structureType">The tag structure type to analyze.</param>
         /// <param name="version">The engine version to compare attributes against.</param>
-        public TagStructureInfo(Type structureType, GameDefinitionSet version)
+        public TagStructureInfo(Type structureType, CacheVersion version)
         {
             Version = version;
             GroupTag = new Tag(-1);
@@ -37,7 +37,7 @@ namespace TagTool.Serialization
         /// <summary>
         /// Gets the engine version that was used to construct the info object.
         /// </summary>
-        public GameDefinitionSet Version { get; private set; }
+        public CacheVersion Version { get; private set; }
 
         /// <summary>
         /// Gets the structure types in the structure's inheritance hierarchy in order from child to base.
@@ -70,7 +70,7 @@ namespace TagTool.Serialization
         /// </summary>
         public Tag GrandparentGroupTag { get; private set; }
 
-        private void Analyze(Type mainType, GameDefinitionSet version)
+        private void Analyze(Type mainType, CacheVersion version)
         {
             // Get the attribute for the main structure type
             Structure = GetStructureAttribute(mainType, version);
@@ -101,18 +101,18 @@ namespace TagTool.Serialization
             }
         }
 
-        private static TagStructureAttribute GetStructureAttribute(Type type, GameDefinitionSet version)
+        private static TagStructureAttribute GetStructureAttribute(Type type, CacheVersion version)
         {
             // First match against any TagStructureAttributes that have version restrictions
             var attrib = type.GetCustomAttributes(typeof(TagStructureAttribute), false)
                 .Cast<TagStructureAttribute>()
-                .Where(a => a.MinVersion != GameDefinitionSet.Unknown || a.MaxVersion != GameDefinitionSet.Unknown)
-                .FirstOrDefault(a => GameDefinition.IsBetween(version, a.MinVersion, a.MaxVersion));
+                .Where(a => a.MinVersion != CacheVersion.Unknown || a.MaxVersion != CacheVersion.Unknown)
+                .FirstOrDefault(a => CacheVersionDetection.IsBetween(version, a.MinVersion, a.MaxVersion));
 
             // If nothing was found, find the first attribute without any version restrictions
             return attrib ?? type.GetCustomAttributes(typeof(TagStructureAttribute), false)
                 .Cast<TagStructureAttribute>()
-                .FirstOrDefault(a => a.MinVersion == GameDefinitionSet.Unknown && a.MaxVersion == GameDefinitionSet.Unknown);
+                .FirstOrDefault(a => a.MinVersion == CacheVersion.Unknown && a.MaxVersion == CacheVersion.Unknown);
         }
     }
 }

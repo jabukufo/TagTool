@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.VFiles
 {
     class ImportCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private VFilesList Definition { get; }
 
-        public ImportCommand(OpenTagCache info, TagInstance tag, VFilesList definition)
+        public ImportCommand(GameCacheContext info, TagInstance tag, VFilesList definition)
             : base(CommandFlags.None,
                   "import",
                   "Replace a file stored in the tag",

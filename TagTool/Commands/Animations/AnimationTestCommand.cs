@@ -4,18 +4,19 @@ using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
-using TagTool.TagGroups;
+using TagTool.Tags.Definitions;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Animations
 {
     class AnimationTestCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private ModelAnimationGraph JMAD { get; }
 
-        public AnimationTestCommand(OpenTagCache info, TagInstance tag, ModelAnimationGraph jmad)
+        public AnimationTestCommand(GameCacheContext info, TagInstance tag, ModelAnimationGraph jmad)
             : base(CommandFlags.Inherit, "animation_test", "", "", "")
         {
             Info = info;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TagTool.Common;
-using TagTool.GameDefinitions;
 using TagTool.Cache;
-using TagTool.TagGroups;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Serialization
 {
@@ -14,13 +14,13 @@ namespace TagTool.Serialization
     /// </summary>
     public class TagDeserializer
     {
-        public readonly GameDefinitionSet _version;
+        public readonly CacheVersion _version;
 
         /// <summary>
         /// Constructs a tag deserializer for a specific engine version.
         /// </summary>
         /// <param name="version">The engine version to target.</param>
-        public TagDeserializer(GameDefinitionSet version)
+        public TagDeserializer(CacheVersion version)
         {
             _version = version;
         }

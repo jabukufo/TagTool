@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TagTool.Cache;
-using TagTool.GameDefinitions;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
 using static System.Console;
 using static System.IO.Path;
-using static TagTool.Cache.StringIDResolverFactory;
-using static TagTool.GameDefinitions.GameDefinition;
-using static TagTool.GameDefinitions.GameDefinitionSet;
+using static TagTool.Cache.CacheVersionDetection;
+using static TagTool.Cache.CacheVersion;
+using static TagTool.Cache.HaloOnline.StringIdResolverFactory;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class GenerateCacheCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public GenerateCacheCommand(OpenTagCache info)
+        public GenerateCacheCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "generatecache",
                   "Generates an empty set of cache files.",
@@ -135,7 +135,7 @@ namespace TagTool.Commands.Tags
             using (var stream = destTagsFile.OpenRead())
                 destTagCache = new TagCache(stream);
 
-            GameDefinitionSet guessedVersion;
+            CacheVersion guessedVersion;
             var destVersion = Detect(destTagCache, out guessedVersion);
             if (destVersion == Unknown)
             {
@@ -145,9 +145,9 @@ namespace TagTool.Commands.Tags
 
             WriteLine($"Destination cache version: {GetVersionString(destVersion)}");
 
-            StringIDCache destStringIDCache;
+            StringIdCache destStringIdCache;
             using (var stream = destStringIDsFile.OpenRead())
-                destStringIDCache = new StringIDCache(stream, Create(destVersion));
+                destStringIdCache = new StringIdCache(stream, Create(destVersion));
 
             var destResources = new ResourceDataManager();
             destResources.LoadCachesFromDirectory(destDir.FullName);
@@ -158,11 +158,11 @@ namespace TagTool.Commands.Tags
             var destSerializer = new TagSerializer(destVersion);
             var destDeserializer = new TagDeserializer(destVersion);
 
-            var destInfo = new OpenTagCache
+            var destInfo = new GameCacheContext
             {
                 Cache = destTagCache,
                 CacheFile = destTagsFile,
-                StringIDs = destStringIDCache,
+                StringIDs = destStringIdCache,
                 StringIDsFile = destStringIDsFile,
                 Version = destVersion,
                 Serializer = destSerializer,

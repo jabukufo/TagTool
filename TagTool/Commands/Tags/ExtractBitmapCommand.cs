@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using TagTool.Bitmaps;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Tags
 {
     class ExtractBitmapCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ExtractBitmapCommand(OpenTagCache info)
+        public ExtractBitmapCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   "extractbitmap",
                   "Extracts a bitmap to a file.",

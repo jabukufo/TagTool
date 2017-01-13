@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
-using TagTool.TagGroups;
+using TagTool.Tags.Definitions;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.BSPs
 {
     class LoadResourcesCommand : Command
     {
-        public OpenTagCache Info { get; }
+        public GameCacheContext Info { get; }
         public TagInstance Tag { get; }
         public ScenarioStructureBsp BSP { get; }
 
-        public LoadResourcesCommand(OpenTagCache info, TagInstance tag, ScenarioStructureBsp bsp)
+        public LoadResourcesCommand(GameCacheContext info, TagInstance tag, ScenarioStructureBsp bsp)
             : base(CommandFlags.Inherit,
                   "loadresources",
                   "",

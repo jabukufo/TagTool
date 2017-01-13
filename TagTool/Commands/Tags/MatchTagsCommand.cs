@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using TagTool.Cache;
 using TagTool.Common;
-using TagTool.GameDefinitions;
 using TagTool.Serialization;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
@@ -30,9 +30,9 @@ namespace TagTool.Commands.Tags
             400, // shrine
         };
 
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
 
-        public MatchTagsCommand(OpenTagCache info) : base(
+        public MatchTagsCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "matchtags",
@@ -55,21 +55,21 @@ namespace TagTool.Commands.Tags
             var outputPath = args[0];
 
             // Load each file and do version detection
-            var infos = new List<OpenTagCache>();
+            var infos = new List<GameCacheContext>();
             foreach (var path in args.Skip(1))
             {
                 Console.WriteLine("Loading {0}...", path);
 
                 // Load the cache file
-                var info = new OpenTagCache { CacheFile = new FileInfo(path) };
+                var info = new GameCacheContext { CacheFile = new FileInfo(path) };
                 using (var stream = info.OpenCacheRead())
                     info.Cache = new TagCache(stream);
 
                 // Do version detection, and don't accept the closest version
                 // because that might not work
-                GameDefinitionSet closestVersion;
-                info.Version = GameDefinition.Detect(info.Cache, out closestVersion);
-                if (info.Version == GameDefinitionSet.Unknown)
+                CacheVersion closestVersion;
+                info.Version = CacheVersionDetection.Detect(info.Cache, out closestVersion);
+                if (info.Version == CacheVersion.Unknown)
                 {
                     Console.WriteLine("- Unrecognized version! Ignoring.");
                     continue;
@@ -151,7 +151,7 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private static void CompareBlocks(object leftData, GameDefinitionSet leftVersion, object rightData, GameDefinitionSet rightVersion, TagVersionMap result, Queue<QueuedTag> tagQueue)
+        private static void CompareBlocks(object leftData, CacheVersion leftVersion, object rightData, CacheVersion rightVersion, TagVersionMap result, Queue<QueuedTag> tagQueue)
         {
             if (leftData == null || rightData == null)
                 return;
@@ -211,14 +211,14 @@ namespace TagTool.Commands.Tags
                 while (left.Next() && right.Next())
                 {
                     // Keep going on the left until the field is on the right
-                    while (!GameDefinition.IsBetween(rightVersion, left.MinVersion, left.MaxVersion))
+                    while (!CacheVersionDetection.IsBetween(rightVersion, left.MinVersion, left.MaxVersion))
                     {
                         if (!left.Next())
                             return;
                     }
 
                     // Keep going on the right until the field is on the left
-                    while (!GameDefinition.IsBetween(leftVersion, right.MinVersion, right.MaxVersion))
+                    while (!CacheVersionDetection.IsBetween(leftVersion, right.MinVersion, right.MaxVersion))
                     {
                         if (!right.Next())
                             return;
@@ -234,7 +234,7 @@ namespace TagTool.Commands.Tags
             }
         }
 
-        private static List<QueuedTag> FindScenarios(OpenTagCache info, Stream stream)
+        private static List<QueuedTag> FindScenarios(GameCacheContext info, Stream stream)
         {
             // Get a dictionary of scenarios by map ID
             var scenarios = new Dictionary<int, QueuedTag>();

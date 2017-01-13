@@ -3,18 +3,19 @@ using System.IO;
 using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
-using TagTool.TagGroups;
+using TagTool.Tags.Definitions;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.BSPs
 {
     class CollisionTestCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private ScenarioStructureBsp BSP { get; }
 
-        public CollisionTestCommand(OpenTagCache info, TagInstance tag, ScenarioStructureBsp bsp)
+        public CollisionTestCommand(GameCacheContext info, TagInstance tag, ScenarioStructureBsp bsp)
             : base(CommandFlags.Inherit, "collision_test", "", "", "")
         {
             Info = info;

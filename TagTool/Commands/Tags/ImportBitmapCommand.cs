@@ -5,15 +5,16 @@ using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Bitmaps;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ImportBitmapCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ImportBitmapCommand(OpenTagCache info) : base(
+        public ImportBitmapCommand(GameCacheContext info) : base(
             CommandFlags.Inherit,
 
             "importbitmap",

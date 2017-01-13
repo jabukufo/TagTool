@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.Common;
-using TagTool.GameDefinitions;
-using TagTool.IO;
 using TagTool.Cache;
+using TagTool.IO;
 using TagTool.Geometry;
 using TagTool.Shaders;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
-using TagTool.TagGroups;
+using TagTool.Tags.Definitions;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ConvertCommand : Command
     {
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
         private bool _isDecalShader = false;
 
-        public ConvertCommand(OpenTagCache info) : base(
+        public ConvertCommand(GameCacheContext info) : base(
             CommandFlags.None,
 
             "convert",
@@ -56,21 +56,21 @@ namespace TagTool.Commands.Tags
             // Load destination files
             Console.WriteLine("Loading the target tags.dat...");
             var destCachePath = Path.Combine(targetDir, "tags.dat");
-            var destInfo = new OpenTagCache { CacheFile = new FileInfo(destCachePath) };
+            var destInfo = new GameCacheContext { CacheFile = new FileInfo(destCachePath) };
             using (var stream = destInfo.OpenCacheRead())
                 destInfo.Cache = new TagCache(stream);
 
             // Do version detection
-            GameDefinitionSet guessedVersion;
-            destInfo.Version = GameDefinition.Detect(destInfo.Cache, out guessedVersion);
-            if (destInfo.Version == GameDefinitionSet.Unknown)
+            CacheVersion guessedVersion;
+            destInfo.Version = CacheVersionDetection.Detect(destInfo.Cache, out guessedVersion);
+            if (destInfo.Version == CacheVersion.Unknown)
             {
                 Console.WriteLine("Unrecognized target version!");
                 return true;
             }
-            Console.WriteLine("- Detected version {0}", GameDefinition.GetVersionString(destInfo.Version));
+            Console.WriteLine("- Detected version {0}", CacheVersionDetection.GetVersionString(destInfo.Version));
 
-            if (_info.Version != GameDefinitionSet.HaloOnline498295 && destInfo.Version != GameDefinitionSet.HaloOnline106708)
+            if (_info.Version != CacheVersion.HaloOnline498295 && destInfo.Version != CacheVersion.HaloOnline106708)
             {
                 Console.Error.WriteLine("Conversion is only supported from 11.1.498295 Live to 1.106708 cert_ms23.");
                 return true;
@@ -83,13 +83,13 @@ namespace TagTool.Commands.Tags
             // Load stringIDs
             Console.WriteLine("Loading the target string_ids.dat...");
 
-            var resolver = StringIDResolverFactory.Create(destInfo.Version);
+            var resolver = StringIdResolverFactory.Create(destInfo.Version);
 
             var destStringIDsPath = Path.Combine(targetDir, "string_ids.dat");
             destInfo.StringIDsFile = new FileInfo(destStringIDsPath);
 
             using (var stream = destInfo.StringIDsFile.OpenRead())
-                destInfo.StringIDs = new StringIDCache(stream, resolver);
+                destInfo.StringIDs = new StringIdCache(stream, resolver);
 
             // Load resources for the target build
             Console.WriteLine("Loading target resources...");
@@ -102,7 +102,7 @@ namespace TagTool.Commands.Tags
             srcResources.LoadCachesFromDirectory(_info.CacheFile.DirectoryName);
 
             Console.WriteLine();
-            Console.WriteLine("CONVERTING FROM VERSION {0} TO {1}", GameDefinition.GetVersionString(_info.Version), GameDefinition.GetVersionString(destInfo.Version));
+            Console.WriteLine("CONVERTING FROM VERSION {0} TO {1}", CacheVersionDetection.GetVersionString(_info.Version), CacheVersionDetection.GetVersionString(destInfo.Version));
             Console.WriteLine();
 
             TagInstance resultTag;
@@ -135,7 +135,7 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private TagInstance ConvertTag(TagInstance srcTag, OpenTagCache srcInfo, Stream srcStream, ResourceDataManager srcResources, OpenTagCache destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private TagInstance ConvertTag(TagInstance srcTag, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             TagPrinter.PrintTagShort(srcTag);
 
@@ -186,7 +186,7 @@ namespace TagTool.Commands.Tags
             return newTag;
         }
 
-        private object Convert(object data, OpenTagCache srcInfo, Stream srcStream, ResourceDataManager srcResources, OpenTagCache destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private object Convert(object data, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             if (data == null)
                 return null;
@@ -210,7 +210,7 @@ namespace TagTool.Commands.Tags
             return data;
         }
 
-        private Array ConvertArray(Array array, OpenTagCache srcInfo, Stream srcStream, ResourceDataManager srcResources, OpenTagCache destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private Array ConvertArray(Array array, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             if (array.GetType().GetElementType().IsPrimitive)
                 return array;
@@ -223,7 +223,7 @@ namespace TagTool.Commands.Tags
             return array;
         }
 
-        private object ConvertList(object list, Type type, OpenTagCache srcInfo, Stream srcStream, ResourceDataManager srcResources, OpenTagCache destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private object ConvertList(object list, Type type, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             if (type.GenericTypeArguments[0].IsPrimitive)
                 return list;
@@ -239,7 +239,7 @@ namespace TagTool.Commands.Tags
             return list;
         }
 
-        private object ConvertStructure(object data, Type type, OpenTagCache srcInfo, Stream srcStream, ResourceDataManager srcResources, OpenTagCache destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private object ConvertStructure(object data, Type type, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             // Convert each field
             var enumerator = new TagFieldEnumerator(new TagStructureInfo(type, destInfo.Version));
@@ -260,7 +260,7 @@ namespace TagTool.Commands.Tags
             return data;
         }
 
-        private StringID ConvertStringID(StringID stringId, OpenTagCache srcInfo, OpenTagCache destInfo)
+        private StringID ConvertStringID(StringID stringId, GameCacheContext srcInfo, GameCacheContext destInfo)
         {
             if (stringId == StringID.Null)
                 return stringId;
@@ -273,7 +273,7 @@ namespace TagTool.Commands.Tags
             return destStringID;
         }
 
-        private ResourceReference ConvertResource(ResourceReference resource, OpenTagCache srcInfo, ResourceDataManager srcResources, OpenTagCache destInfo, ResourceDataManager destResources)
+        private ResourceReference ConvertResource(ResourceReference resource, GameCacheContext srcInfo, ResourceDataManager srcResources, GameCacheContext destInfo, ResourceDataManager destResources)
         {
             if (resource == null)
                 return null;
@@ -284,9 +284,9 @@ namespace TagTool.Commands.Tags
             return resource;
         }
 
-        private ResourceLocation FixResourceLocation(ResourceLocation location, GameDefinitionSet srcVersion, GameDefinitionSet destVersion)
+        private ResourceLocation FixResourceLocation(ResourceLocation location, CacheVersion srcVersion, CacheVersion destVersion)
         {
-            if (GameDefinition.Compare(destVersion, GameDefinitionSet.HaloOnline235640) >= 0)
+            if (CacheVersionDetection.Compare(destVersion, CacheVersion.HaloOnline235640) >= 0)
                 return location;
             switch (location)
             {
@@ -298,14 +298,14 @@ namespace TagTool.Commands.Tags
             return location;
         }
 
-        private GeometryReference ConvertGeometry(GeometryReference geometry, OpenTagCache srcInfo, ResourceDataManager srcResources, OpenTagCache destInfo, ResourceDataManager destResources)
+        private GeometryReference ConvertGeometry(GeometryReference geometry, GameCacheContext srcInfo, ResourceDataManager srcResources, GameCacheContext destInfo, ResourceDataManager destResources)
         {
             if (geometry == null || geometry.Resource == null || geometry.Resource.Index < 0)
                 return geometry;
 
             // The format changed starting with version 1.235640, so if both versions are on the same side then they can be converted normally
-            var srcCompare = GameDefinition.Compare(srcInfo.Version, GameDefinitionSet.HaloOnline235640);
-            var destCompare = GameDefinition.Compare(destInfo.Version, GameDefinitionSet.HaloOnline235640);
+            var srcCompare = CacheVersionDetection.Compare(srcInfo.Version, CacheVersion.HaloOnline235640);
+            var destCompare = CacheVersionDetection.Compare(destInfo.Version, CacheVersion.HaloOnline235640);
             if ((srcCompare < 0 && destCompare < 0) || (srcCompare >= 0 && destCompare >= 0))
             {
                 geometry.Resource = ConvertResource(geometry.Resource, srcInfo, srcResources, destInfo, destResources);
@@ -427,7 +427,7 @@ namespace TagTool.Commands.Tags
                 writeFunc(readFunc());
         }
 
-        private void FixObjectTypes(object data, Type type, OpenTagCache srcInfo)
+        private void FixObjectTypes(object data, Type type, GameCacheContext srcInfo)
         {
             // The object type enum changed in 11.1.498295 because a new armor type was added at value 3.
             // These are a bunch of hacks to fix this in most cases.
@@ -435,7 +435,7 @@ namespace TagTool.Commands.Tags
             var newObjectTypeField = type.GetField("ObjectTypeNew");
             if (oldObjectTypeField != null && newObjectTypeField != null)
             {
-                if (GameDefinition.Compare(srcInfo.Version, GameDefinitionSet.HaloOnline498295) < 0)
+                if (CacheVersionDetection.Compare(srcInfo.Version, CacheVersion.HaloOnline498295) < 0)
                 {
                     var oldType = (ObjectTypeValueOld)oldObjectTypeField.GetValue(data);
                     newObjectTypeField.SetValue(data, ConvertObjectType(oldType));
@@ -519,7 +519,7 @@ namespace TagTool.Commands.Tags
 
         private void FixShaders(object data)
         {
-            if (_info.Version <= GameDefinitionSet.HaloOnline235640)
+            if (_info.Version <= CacheVersion.HaloOnline235640)
                 return;
 
             var template = data as RenderMethodTemplate;
@@ -717,7 +717,7 @@ namespace TagTool.Commands.Tags
             }
         }
 
-        private void FixDecalSystems(OpenTagCache destInfo, int firstNewIndex)
+        private void FixDecalSystems(GameCacheContext destInfo, int firstNewIndex)
         {
             // decs tags need to be updated to use the old rmdf for decals,
             // because the decal planes seem to be generated by the engine and

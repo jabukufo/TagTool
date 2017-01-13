@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TagTool.Common;
-using TagTool.GameDefinitions;
-using TagTool.IO;
 using TagTool.Cache;
-using TagTool.TagGroups;
+using TagTool.IO;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Serialization
 {
@@ -17,13 +17,13 @@ namespace TagTool.Serialization
     {
         private const int DefaultBlockAlign = 4;
 
-        private readonly GameDefinitionSet _version;
+        private readonly CacheVersion _version;
 
         /// <summary>
         /// Constructs a tag serializer for a specific engine version.
         /// </summary>
         /// <param name="version">The engine version to target.</param>
-        public TagSerializer(GameDefinitionSet version)
+        public TagSerializer(CacheVersion version)
         {
             _version = version;
         }

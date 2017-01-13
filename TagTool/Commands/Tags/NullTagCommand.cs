@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using static TagTool.Commands.ArgumentParser;
 
 namespace TagTool.Commands.Tags
 {
     class NullTagCommand : Command
     {
-        public OpenTagCache Info { get; }
+        public GameCacheContext Info { get; }
 
-        public NullTagCommand(OpenTagCache info)
+        public NullTagCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   "nulltag",
                   "Nulls a tag in the current tag cache.",

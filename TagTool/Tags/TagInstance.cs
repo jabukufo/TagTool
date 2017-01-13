@@ -2,9 +2,10 @@
 using System.IO;
 using System.Linq;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 
-namespace TagTool.TagGroups
+namespace TagTool.Tags
 {
     /// <summary>
     /// Describes a tag in a tag cache.

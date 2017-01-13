@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Models
 {
     class ExtractModelCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private Model Definition { get; }
 
-        public ExtractModelCommand(OpenTagCache info, Model model)
+        public ExtractModelCommand(GameCacheContext info, Model model)
             : base(CommandFlags.Inherit,
                   "extractmodel",
                   "Extracts a render model from the current model definition.",

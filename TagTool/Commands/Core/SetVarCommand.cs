@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Core
 {
     class SetVarCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public SetVarCommand(OpenTagCache info)
+        public SetVarCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "setvar",
                   "Assigns a value to a variable.",

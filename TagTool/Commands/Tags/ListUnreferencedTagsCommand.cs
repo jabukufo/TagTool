@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ListUnreferencedTagsCommand : Command
     {
-        public OpenTagCache Info { get; }
+        public GameCacheContext Info { get; }
 
-        public ListUnreferencedTagsCommand(OpenTagCache info)
+        public ListUnreferencedTagsCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   "listunreferencedtags",
                   "Lists all unreferenced tags in the current tag cache",

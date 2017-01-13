@@ -1,0 +1,81 @@
+﻿using System.Collections.Generic;
+using System.IO;
+using TagTool.Serialization;
+
+namespace TagTool.Cache.HaloOnline
+{
+    /// <summary>
+    /// Holds information about an open tag cache file.
+    /// </summary>
+    public class GameCacheContext
+    {
+        /// <summary>
+        /// Gets or sets the tag cache.
+        /// </summary>
+        public TagCache Cache { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the tag cache file.
+        /// </summary>
+        public FileInfo CacheFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stringID cache.
+        /// Can be <c>null</c>.
+        /// </summary>
+        public StringIdCache StringIDs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the stringID cache file.
+        /// Can be <c>null</c>.
+        /// </summary>
+        public FileInfo StringIDsFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target engine version.
+        /// </summary>
+        public CacheVersion Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tag serializer to use.
+        /// </summary>
+        public TagSerializer Serializer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tag deserializer to use.
+        /// </summary>
+        public TagDeserializer Deserializer { get; set; }
+
+        /// <summary>
+        /// A dictionary of tag names.
+        /// </summary>
+        public Dictionary<int, string> TagNames { get; set; } = new Dictionary<int, string>();
+
+        /// <summary>
+        /// Opens the tag cache file for reading.
+        /// </summary>
+        /// <returns>The stream that was opened.</returns>
+        public Stream OpenCacheRead()
+        {
+            return CacheFile.OpenRead();
+        }
+
+        /// <summary>
+        /// Opens the tag cache file for writing.
+        /// </summary>
+        /// <returns>The stream that was opened.</returns>
+        public Stream OpenCacheWrite()
+        {
+            return CacheFile.Open(FileMode.Open, FileAccess.Write);
+        }
+
+        /// <summary>
+        /// Opens the tag cache file for reading and writing.
+        /// </summary>
+        /// <returns>The stream that was opened.</returns>
+        public Stream OpenCacheReadWrite()
+        {
+            return CacheFile.Open(FileMode.Open, FileAccess.ReadWrite);
+        }
+    }
+}

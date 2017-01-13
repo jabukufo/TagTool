@@ -5,7 +5,8 @@ using System.Linq;
 using TagTool.Common;
 using TagTool.IO;
 using TagTool.Cache;
-using TagTool.TagGroups;
+using TagTool.Tags;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Serialization
 {
@@ -18,7 +19,7 @@ namespace TagTool.Serialization
 
         private readonly Stream _stream;
         private readonly TagCache _cache;
-        private readonly StringIDCache _stringIds;
+        private readonly StringIdCache _stringIds;
         private TagData _data;
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace TagTool.Serialization
         /// <param name="cache">The cache file to write to.</param>
         /// <param name="stringIds">The stringID source to use.</param>
         /// <param name="tag">The tag to overwrite.</param>
-        public TagSerializationContext(Stream stream, TagCache cache, StringIDCache stringIds, TagInstance tag)
+        public TagSerializationContext(Stream stream, TagCache cache, StringIdCache stringIds, TagInstance tag)
         {
             _stream = stream;
             _cache = cache;

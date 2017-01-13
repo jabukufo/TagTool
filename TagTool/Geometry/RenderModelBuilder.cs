@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using TagTool.Cache;
 using TagTool.Common;
-using TagTool.GameDefinitions;
 using TagTool.IO;
 using TagTool.Serialization;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags.Definitions;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Geometry
 {
@@ -16,7 +16,7 @@ namespace TagTool.Geometry
     /// </summary>
     public class RenderModelBuilder
     {
-        private readonly GameDefinitionSet _version;
+        private readonly CacheVersion _version;
         private readonly RenderModel _model = new RenderModel();
         private RenderModel.Region _currentRegion;
         private RenderModel.Region.Permutation _currentPermutation;
@@ -28,7 +28,7 @@ namespace TagTool.Geometry
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderModelBuilder"/> class for a particular engine version.
         /// </summary>
-        public RenderModelBuilder(GameDefinitionSet version)
+        public RenderModelBuilder(CacheVersion version)
         {
             _version = version;
             _model.Regions = new List<RenderModel.Region>();

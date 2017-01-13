@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.TagGroups;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
 {
     class ImportCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
 
-        public ImportCommand(OpenTagCache info)
+        public ImportCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   "import",
                   "",

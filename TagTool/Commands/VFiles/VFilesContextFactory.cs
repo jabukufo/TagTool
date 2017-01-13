@@ -1,11 +1,13 @@
-﻿using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+﻿using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.VFiles
 {
     static class VFilesContextFactory
     {
-        public static CommandContext Create(CommandContext parent, OpenTagCache info, TagInstance tag, VFilesList vfsl)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, VFilesList vfsl)
         {
             var groupName = info.StringIDs.GetString(tag.Group.Name);
 
@@ -15,7 +17,7 @@ namespace TagTool.Commands.VFiles
             return context;
         }
 
-        public static void Populate(CommandContext context, OpenTagCache info, TagInstance tag, VFilesList vfsl)
+        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, VFilesList vfsl)
         {
             context.AddCommand(new ListCommand(vfsl));
             context.AddCommand(new ExtractCommand(vfsl));

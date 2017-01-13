@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using TagTool.GameDefinitions;
+using TagTool.Cache;
 
 namespace TagTool.Common
 {
@@ -11,7 +11,7 @@ namespace TagTool.Common
     /// </summary>
     public class TagVersionMap
     {
-        private readonly Dictionary<GameDefinitionSet, VersionMap> _versionMaps = new Dictionary<GameDefinitionSet, VersionMap>();
+        private readonly Dictionary<CacheVersion, VersionMap> _versionMaps = new Dictionary<CacheVersion, VersionMap>();
         private int _nextGlobalTagIndex = 0;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace TagTool.Common
         /// <param name="index1">The tag index in the first version.</param>
         /// <param name="version2">The second version.</param>
         /// <param name="index2">The tag index in the second version.</param>
-        public void Add(GameDefinitionSet version1, int index1, GameDefinitionSet version2, int index2)
+        public void Add(CacheVersion version1, int index1, CacheVersion version2, int index2)
         {
             // Get both version maps, creating them if they don't exist
             VersionMap map1, map2;
@@ -58,7 +58,7 @@ namespace TagTool.Common
         /// <param name="index1">The tag index.</param>
         /// <param name="version2">The version to get the equivalent tag index in.</param>
         /// <returns>The equivalent tag index if found, or -1 otherwise.</returns>
-        public int Translate(GameDefinitionSet version1, int index1, GameDefinitionSet version2)
+        public int Translate(CacheVersion version1, int index1, CacheVersion version2)
         {
             // Get both version maps and fail if one doesn't exist
             VersionMap map1, map2;
@@ -81,10 +81,10 @@ namespace TagTool.Common
         public void WriteCsv(TextWriter writer)
         {
             // Write a list of versions being represented
-            writer.WriteLine(string.Join(",", _versionMaps.Keys.Select(GameDefinition.GetVersionString)));
+            writer.WriteLine(string.Join(",", _versionMaps.Keys.Select(CacheVersionDetection.GetVersionString)));
 
             // Write a list of timestamps for the versions
-            writer.WriteLine(string.Join(",", _versionMaps.Keys.Select(v => GameDefinition.GetTimestamp(v).ToString("X16"))));
+            writer.WriteLine(string.Join(",", _versionMaps.Keys.Select(v => CacheVersionDetection.GetTimestamp(v).ToString("X16"))));
 
             // Now write out each tag
             for (var i = 0; i < _nextGlobalTagIndex; i++)
@@ -120,8 +120,8 @@ namespace TagTool.Common
             });
             var versions = timestamps.Select(t =>
             {
-                GameDefinitionSet closest;
-                return GameDefinition.DetectFromTimestamp(t, out closest);
+                CacheVersion closest;
+                return CacheVersionDetection.DetectFromTimestamp(t, out closest);
             }).ToArray();
 
             // Read each line and store the tag indexes in the result map

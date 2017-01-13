@@ -2,21 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
     class EditBlockCommand : Command
     {
         private CommandContextStack Stack { get; }
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
         
-        public EditBlockCommand(CommandContextStack stack, OpenTagCache info, TagInstance tag, object value)
+        public EditBlockCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, object value)
             : base(CommandFlags.Inherit,
                   "edit",
                   "Edit the fields of a particular block element.",

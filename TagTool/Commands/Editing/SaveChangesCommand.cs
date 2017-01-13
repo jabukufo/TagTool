@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
     class SaveChangesCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private GameCacheContext Info { get; }
         private TagInstance Tag { get; }
         private object Value { get; }
 
-        public SaveChangesCommand(OpenTagCache info, TagInstance tag, object value)
+        public SaveChangesCommand(GameCacheContext info, TagInstance tag, object value)
             : base(CommandFlags.Inherit,
                   "savechanges",
                   $"Saves changes made to the current {info.StringIDs.GetString(tag.Group.Name)} definition.",

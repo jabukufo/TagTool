@@ -2,18 +2,21 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Tags
 {
     class GenerateTagNamesCommand : Command
     {
-        private OpenTagCache Info { get; }
+        private 
+            GameCacheContext Info { get; }
 
-        public GenerateTagNamesCommand(OpenTagCache info)
+        public GenerateTagNamesCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
                   "gentagnames",
                   "Generates tag names into a csv file (overwriting existing entries).",

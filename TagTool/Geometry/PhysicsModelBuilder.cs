@@ -1,9 +1,9 @@
-﻿using TagTool.Tags.TagDefinitions;
+﻿using TagTool.Tags.Definitions;
 using SimpleJSON;
 using System;
 using System.Collections.Generic;
-using ShapeTypes = TagTool.Tags.TagDefinitions.PhysicsModel.RigidBody.ShapeTypeValue;
-using MotionTypeValue = TagTool.Tags.TagDefinitions.PhysicsModel.RigidBody.MotionTypeValue;
+using ShapeTypes = TagTool.Tags.Definitions.PhysicsModel.RigidBody.ShapeTypeValue;
+using MotionTypeValue = TagTool.Tags.Definitions.PhysicsModel.RigidBody.MotionTypeValue;
 using TagTool.Common;
 
 namespace TagTool.Geometry

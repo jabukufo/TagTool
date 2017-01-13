@@ -4,9 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
-using TagTool.TagGroups;
-using TagTool.Tags.TagDefinitions;
+using TagTool.Tags;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands
 {
@@ -83,7 +84,7 @@ namespace TagTool.Commands
             return results;
         }
 
-        public static TagInstance ParseTagName(OpenTagCache info, string name)
+        public static TagInstance ParseTagName(GameCacheContext info, string name)
         {
             if (name.Length == 0 || !char.IsLetter(name[0]) || !name.Contains('.'))
                 throw new Exception($"Invalid tag name: {name}");
@@ -111,7 +112,7 @@ namespace TagTool.Commands
             return null;
         }
 
-        public static TagInstance ParseTagIndex(OpenTagCache info, string arg)
+        public static TagInstance ParseTagIndex(GameCacheContext info, string arg)
         {
             if (!(arg == "*" || arg == "null" || char.IsLetter(arg[0]) || arg.StartsWith("0x")))
             {
@@ -141,7 +142,7 @@ namespace TagTool.Commands
             return info.Cache.Tags[tagIndex];
         }
 
-        public static Tag ParseGroupTag(StringIDCache stringIDs, string groupName)
+        public static Tag ParseGroupTag(StringIdCache stringIDs, string groupName)
         {
             if (TagStructureTypes.IsGroupTag(groupName))
                 return new Tag(groupName);
@@ -155,7 +156,7 @@ namespace TagTool.Commands
             return Tag.Null;
         }
 
-        public static List<Tag> ParseGroupTags(StringIDCache stringIDs, IEnumerable<string> classNames)
+        public static List<Tag> ParseGroupTags(StringIdCache stringIDs, IEnumerable<string> classNames)
         {
             var searchClasses = classNames.Select(a => ParseGroupTag(stringIDs, a)).ToList();
 

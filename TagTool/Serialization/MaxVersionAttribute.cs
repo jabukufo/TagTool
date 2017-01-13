@@ -1,5 +1,5 @@
 ﻿using System;
-using TagTool.GameDefinitions;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {
@@ -9,11 +9,11 @@ namespace TagTool.Serialization
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class MaxVersionAttribute : Attribute
     {
-        public MaxVersionAttribute(GameDefinitionSet version)
+        public MaxVersionAttribute(CacheVersion version)
         {
             Version = version;
         }
 
-        public GameDefinitionSet Version { get; set; }
+        public CacheVersion Version { get; set; }
     }
 }

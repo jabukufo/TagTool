@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.Common;
-using TagTool.Tags.TagDefinitions;
-using BSP = TagTool.Tags.TagDefinitions.CollisionModel.Region.Permutation.Bsp;
+using TagTool.Tags.Definitions;
+using BSP = TagTool.Tags.Definitions.CollisionModel.Region.Permutation.Bsp;
 
 namespace TagTool.Geometry
 {

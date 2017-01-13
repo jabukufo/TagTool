@@ -2,15 +2,17 @@
 using System;
 using System.Collections.Generic;
 using TagTool.Serialization;
-using TagTool.TagGroups;
+using TagTool.Tags;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class PhysicsModelTestCommand : Command
     {
-        private readonly OpenTagCache _info;
+        private readonly GameCacheContext _info;
 
-        public PhysicsModelTestCommand(OpenTagCache info): base(
+        public PhysicsModelTestCommand(GameCacheContext info): base(
             CommandFlags.None,
             "phmotest",
             "Physics Model Import Command (Test)",
