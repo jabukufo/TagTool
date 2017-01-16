@@ -19,11 +19,11 @@ namespace TagTool.Geometry
             public short FrameCount;
             public sbyte NodeCount;
             public GroupMemberMovementDataType MovementDataType;
-            public sbyte unknown0;
-            public sbyte unknown1;
-            public short unknown2;
+            public sbyte Unknown0;
+            public sbyte Unknown1;
+            public short Unknown2;
             public uint FramesBlockOffset;
-            public int unknown3;
+            public int Unknown3;
             public uint NodesFlagsOffset;
             
             // public PrimaryNodeFlags StaticNodesPrimary;
