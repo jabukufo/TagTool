@@ -147,11 +147,11 @@ namespace TagTool.Geometry
                 public uint unknown10;
 
                 // this used to be footer
-                public NodesBitfield nodes_with_default_rotation; 
-                public NodesBitfield nodes_with_default_position;
-                public NodesBitfield which_node_is_camera;
-                public NodesBitfield which_nodes_have_frames;
-                public NodesBitfield which_nodes_have_camera_frames;
+                public NodesBitfield StaticNodesPrimary; 
+                public NodesBitfield StaticNodesSecondary;
+                public NodesBitfield UnknownBitfield; // might not be a bitfield, but its right between bitfields so assuming so
+                public NodesBitfield AnimatedNodesPrimary;
+                public NodesBitfield AnimatedNodesSecondary;
                 public uint unknown11;
             }
 
