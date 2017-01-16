@@ -31,7 +31,7 @@ namespace TagTool.Geometry
             // public PrimaryNodeFlags AnimatedNodesPrimary;
             // public SecondaryNodeFlags AnimatedNodesSecondary;
 
-            public ResourceDataReference AnimationData;
+            public ResourceDataReference AnimationData; // this will point to an Animation object
 
             public enum GroupMemberMovementDataType : sbyte
             {
@@ -118,6 +118,67 @@ namespace TagTool.Geometry
                 Node61 = 1 << 61,
                 Node62 = 1 << 62,
                 Node63 = 1 << 63
+            }
+
+            public class Animation
+            {
+                // idk if this is the best way to declare this byte, honestly
+                public byte[] unknown = new byte[0xc];
+
+                // this used to be default_block
+                public uint rotational_positional_size;
+                public uint default_block_size;
+                public Rotation[] default_node_rotations;
+                public Position[] default_node_positions;
+                public byte unknown1;
+                public byte unknown2;
+                public byte unknown3;
+                public byte unknown4;
+                public float unknown5;
+                public float unknown6;
+
+                // this used to be frames_block
+                public uint camera_frames_size; // the size of all camera frames
+                public uint frames_block_size; // the size of all frames, plus this header + the footer
+                public uint unknown1;
+                public uint unknown2;
+                public uint unknown3;
+                public Frame[] frames;
+                public uint unknown4;
+
+                // this used to be footer
+                public NodesBitfield nodes_with_default_rotation; 
+                public NodesBitfield nodes_with_default_position;
+                public NodesBitfield which_node_is_camera;
+                public NodesBitfield which_nodes_have_frames;
+                public NodesBitfield which_nodes_have_camera_frames;
+                public uint unknown4;
+            }
+
+            public class Rotation
+            {
+                public short x;
+                public short y;
+                public short z;
+                public short w;
+            }
+
+            public class Position
+            {
+                public float x;
+                public float y;
+                public float z;
+            }
+
+            public class Frame
+            {
+                public Rotation rotational_data;
+            }
+
+            public class NodesBitfield
+            {
+                public PrimaryNodeFlags primary;
+                public SecondaryNodeFlags secondary;
             }
         }
     }
