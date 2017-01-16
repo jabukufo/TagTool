@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using TagTool.Cache;
+using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
 
@@ -24,11 +26,7 @@ namespace TagTool.Geometry
             public uint Unknown2;
             public uint Unknown3;
             public uint Unknown4;
-            public uint Unknown5;
-            public uint Unknown6;
-            public uint Unknown7;
-            public uint Unknown8;
-            public uint Unknown9;
+            public ResourceDataReference AnimationData;
 
             public enum GroupMemberMovementDataType : sbyte
             {

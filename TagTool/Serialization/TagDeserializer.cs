@@ -114,7 +114,7 @@ namespace TagTool.Serialization
         /// <param name="valueType">The type of the value to deserialize.</param>
         /// <returns>The deserialized value.</returns>
         /// <exception cref="System.ArgumentException">Unsupported type</exception>
-        public static object DeserializePrimitiveValue(BinaryReader reader, Type valueType)
+        public object DeserializePrimitiveValue(BinaryReader reader, Type valueType)
         {
             switch (Type.GetTypeCode(valueType))
             {
@@ -306,7 +306,7 @@ namespace TagTool.Serialization
         /// <param name="context">The serialization context to use.</param>
         /// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
         /// <returns>The deserialized tag reference.</returns>
-        public static TagInstance DeserializeTagReference(BinaryReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
+        public TagInstance DeserializeTagReference(BinaryReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
         {
             if (valueInfo == null || (valueInfo.Flags & TagFieldFlags.Short) == 0)
                 reader.BaseStream.Position += 0xC; // Skip the class name and zero bytes, it's not important
@@ -320,7 +320,7 @@ namespace TagTool.Serialization
         /// <param name="reader">The reader.</param>
         /// <param name="context">The serialization context to use.</param>
         /// <returns>The deserialized data reference.</returns>
-        public static byte[] DeserializeDataReference(BinaryReader reader, ISerializationContext context)
+        public byte[] DeserializeDataReference(BinaryReader reader, ISerializationContext context)
         {
             // Read size and pointer
             var startOffset = reader.BaseStream.Position;
@@ -370,7 +370,7 @@ namespace TagTool.Serialization
         /// <param name="reader">The reader.</param>
         /// <param name="valueInfo">The value information.</param>
         /// <returns>The deserialized string.</returns>
-        public static string DeserializeString(BinaryReader reader, TagFieldAttribute valueInfo)
+        public string DeserializeString(BinaryReader reader, TagFieldAttribute valueInfo)
         {
             if (valueInfo == null || valueInfo.Length == 0)
                 throw new ArgumentException("Cannot deserialize a string with no length set");

@@ -32,22 +32,27 @@ namespace TagTool.Commands.Animations
             var name = Info.StringIDs.GetString(new StringID(0x1818));
 
             var jmadDefinitions = new List<ModelAnimationResourceDefinition>();
+            var jmadAnimationGroups = new List<List<byte[]>>();
 
             foreach (var resourceGroup in JMAD.ResourceGroups)
             {
                 var context = new ResourceSerializationContext(resourceGroup.Resource);
                 var jmadDefinition = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition>(context);
+                var jmadAnimationGroup = new List<byte[]>();
 
                 using (var resourceDataStream = new MemoryStream())
                 using (var reader = new BinaryReader(resourceDataStream))
                 {
                     resources.Extract(resourceGroup.Resource, resourceDataStream);
 
-                    //
-                    // TODO: Load data from the extracted resource
-                    //
+                    foreach (var groupMember in jmadDefinition.GroupMembers)
+                    {
+                        reader.BaseStream.Position = groupMember.AnimationData.Address.Offset;
+                        jmadAnimationGroup.Add(reader.ReadBytes(groupMember.AnimationData.Size));
+                    }
                 }
 
+                jmadAnimationGroups.Add(jmadAnimationGroup);
                 jmadDefinitions.Add(jmadDefinition);
             }
 
