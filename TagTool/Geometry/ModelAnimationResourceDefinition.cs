@@ -140,11 +140,11 @@ namespace TagTool.Geometry
                 // this used to be frames_block
                 public uint camera_frames_size; // the size of all camera frames
                 public uint frames_block_size; // the size of all frames, plus this header + the footer
-                public uint unknown1;
-                public uint unknown2;
-                public uint unknown3;
+                public uint unknown7;
+                public uint unknown8;
+                public uint unknown9;
                 public Frame[] frames;
-                public uint unknown4;
+                public uint unknown10;
 
                 // this used to be footer
                 public NodesBitfield nodes_with_default_rotation; 
@@ -152,7 +152,7 @@ namespace TagTool.Geometry
                 public NodesBitfield which_node_is_camera;
                 public NodesBitfield which_nodes_have_frames;
                 public NodesBitfield which_nodes_have_camera_frames;
-                public uint unknown4;
+                public uint unknown11;
             }
 
             public class Rotation
