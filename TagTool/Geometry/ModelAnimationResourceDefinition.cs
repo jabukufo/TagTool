@@ -39,6 +39,7 @@ namespace TagTool.Geometry
             [Flags]
             public enum PrimaryNodeFlags : int
             {
+                None = 0,
                 Node0 = 1 << 0,
                 Node1 = 1 << 1,
                 Node2 = 1 << 2,
@@ -73,8 +74,10 @@ namespace TagTool.Geometry
                 Node31 = 1 << 31
             }
 
+            [Flags]
             public enum SecondaryNodeFlags : int
             {
+                None = 0,
                 Node32 = 1 << 32,
                 Node33 = 1 << 33,
                 Node34 = 1 << 34,
