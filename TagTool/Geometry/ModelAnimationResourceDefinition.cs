@@ -120,47 +120,15 @@ namespace TagTool.Geometry
                 Node63 = 1 << 63
             }
 
+            [TagStructure]
             public class Animation
             {
-                public sbyte animationType; // base/overlay/replacement?
-                public sbyte numStaticNodesPrimary; // number of static primary nodes in the animation, used in calculation of StaticNodesPrimary
-                public sbyte numStaticNodesSecondary; // number of static secondary noes in the animation, used in calculation of StaticNodesSecondary
-                public sbyte unknownbyte3;
-                public StringID name; // only on overlay anims
-                public uint checksum; // only on overlay anims
-                public uint StaticNodesSecondaryOffset; 
-                public uint FramesBlockOffset;
-                public uint unknown1;
-                public uint unknown2;
-                public uint unknown3;
-                public Rotation[] StaticNodesPrimary; // size = 8 * numStaticNodes
-                public Position[] StaticNodesSecondary; // size = 12 * numSecondaryNodes
-
-                // frames of the animation begin here
-                public sbyte animationType2; // base/overlay/replacement?
-                public sbyte numAnimatedNodesPrimary; // the number of animated primary nodes, used in calculation of animatedNodesPrimary 
-                public sbyte numAnimatedNodesSecondary; // the number of animated secondary nodes, used in calculation of animatedNodesSecondary
-                public sbyte unknownbyte6;
-                public StringID name2; // only on overlay anims
-                public uint checksum2; // only on overlay anims
-                public uint AnimatedNodesSecondaryOffset; // again, relative offsets to animationType2
-                public uint NodesFlagsOffset;
-                public uint unknown4;
-                public uint unknown5;
-                public uint unknown6;
-                public Rotation[] AnimatedNodesPrimary; // size = 8 * numAnimatednodes * frame count
-                public Position[] AnimatedNodesSecondary; // size = 12 * numSecondaryNodes * frame count
-
-                // bitfields so the game knows which nodes to apply the animation frames to
-                // pointed to by NodeFlagsOffset
-                public NodesBitfield StaticNodesPrimaryBitfield; 
-                public NodesBitfield StaticNodesSecondaryBitfield;
-                public NodesBitfield UnknownBitfield; // might not be a bitfield, but its right between bitfields so assuming so
-                public NodesBitfield AnimatedNodesPrimaryBitField;
-                public NodesBitfield AnimatedNodesSecondaryBitField;
-                public uint unknown11;
+                public int Unknown1;
+                public ResourceAddress Unknown2;
+                public int Unknown3;
             }
 
+            [TagStructure]
             public class Rotation
             {
                 public short x;
@@ -169,6 +137,7 @@ namespace TagTool.Geometry
                 public short w;
             }
 
+            [TagStructure]
             public class Position
             {
                 public float x;
@@ -176,11 +145,13 @@ namespace TagTool.Geometry
                 public float z;
             }
 
+            [TagStructure]
             public class Frame
             {
                 public Rotation rotational_data;
             }
 
+            [TagStructure]
             public class NodesBitfield
             {
                 public PrimaryNodeFlags primary;

@@ -218,6 +218,7 @@
     <Compile Include="Cache\HaloOnline\MS25\VertexStream.cs" />
     <Compile Include="Cache\HaloOnline\MS28\StringIdResolver.cs" />
     <Compile Include="Cache\HaloOnline\MS30\StringIdResolver.cs" />
+    <Compile Include="Serialization\DataSerializationContext.cs" />
     <Compile Include="Tags\TagConverter.cs" />
     <Compile Include="Geometry\BlenderPhmoReader.cs" />
     <Compile Include="Geometry\CollisionBspResourceDefinition.cs" />
