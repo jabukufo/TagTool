@@ -122,36 +122,42 @@ namespace TagTool.Geometry
 
             public class Animation
             {
-                // idk if this is the best way to declare this byte, honestly
-                public byte[] unknown = new byte[0xc];
+                public sbyte animationType; // base/overlay/replacement?
+                public sbyte numStaticNodesPrimary; // number of static primary nodes in the animation, used in calculation of StaticNodesPrimary
+                public sbyte numStaticNodesSecondary; // number of static secondary noes in the animation, used in calculation of StaticNodesSecondary
+                public sbyte unknownbyte3;
+                public StringID name; // only on overlay anims
+                public uint checksum; // only on overlay anims
+                public uint StaticNodesSecondaryOffset; 
+                public uint FramesBlockOffset;
+                public uint unknown1;
+                public uint unknown2;
+                public uint unknown3;
+                public Rotation[] StaticNodesPrimary; // size = 8 * numStaticNodes
+                public Position[] StaticNodesSecondary; // size = 12 * numSecondaryNodes
 
-                // this used to be default_block
-                public uint rotational_positional_size;
-                public uint default_block_size;
-                public Rotation[] default_node_rotations;
-                public Position[] default_node_positions;
-                public byte unknown1;
-                public byte unknown2;
-                public byte unknown3;
-                public byte unknown4;
-                public float unknown5;
-                public float unknown6;
+                // frames of the animation begin here
+                public sbyte animationType2; // base/overlay/replacement?
+                public sbyte numAnimatedNodesPrimary; // the number of animated primary nodes, used in calculation of animatedNodesPrimary 
+                public sbyte numAnimatedNodesSecondary; // the number of animated secondary nodes, used in calculation of animatedNodesSecondary
+                public sbyte unknownbyte6;
+                public StringID name2; // only on overlay anims
+                public uint checksum2; // only on overlay anims
+                public uint AnimatedNodesSecondaryOffset; // again, relative offsets to animationType2
+                public uint NodesFlagsOffset;
+                public uint unknown4;
+                public uint unknown5;
+                public uint unknown6;
+                public Rotation[] AnimatedNodesPrimary; // size = 8 * numAnimatednodes * frame count
+                public Position[] AnimatedNodesSecondary; // size = 12 * numSecondaryNodes * frame count
 
-                // this used to be frames_block
-                public uint camera_frames_size; // the size of all camera frames
-                public uint frames_block_size; // the size of all frames, plus this header + the footer
-                public uint unknown7;
-                public uint unknown8;
-                public uint unknown9;
-                public Frame[] frames;
-                public uint unknown10;
-
-                // this used to be footer
-                public NodesBitfield StaticNodesPrimary; 
-                public NodesBitfield StaticNodesSecondary;
+                // bitfields so the game knows which nodes to apply the animation frames to
+                // pointed to by NodeFlagsOffset
+                public NodesBitfield StaticNodesPrimaryBitfield; 
+                public NodesBitfield StaticNodesSecondaryBitfield;
                 public NodesBitfield UnknownBitfield; // might not be a bitfield, but its right between bitfields so assuming so
-                public NodesBitfield AnimatedNodesPrimary;
-                public NodesBitfield AnimatedNodesSecondary;
+                public NodesBitfield AnimatedNodesPrimaryBitField;
+                public NodesBitfield AnimatedNodesSecondaryBitField;
                 public uint unknown11;
             }
 
