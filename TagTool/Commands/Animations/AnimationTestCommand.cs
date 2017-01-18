@@ -50,7 +50,42 @@ namespace TagTool.Commands.Animations
                     foreach (var groupMember in jmadDefinition.GroupMembers)
                     {
                         reader.BaseStream.Position = groupMember.AnimationData.Address.Offset;
-                        var animation = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Animation>(context);
+                        var animation = new ModelAnimationResourceDefinition.GroupMember.Animation();
+
+                        animation.StaticHeader = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.AnimationHeader>(dataContext);
+
+                        animation.StaticRotations = new ModelAnimationResourceDefinition.GroupMember.Rotation[animation.StaticHeader.RotationCount];
+
+                        for (var i = 0; i < animation.StaticHeader.RotationCount; i++)
+                        {
+                            animation.StaticRotations[i] = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Rotation>(dataContext);
+                        }
+
+                        animation.StaticPositions = new ModelAnimationResourceDefinition.GroupMember.Position[animation.StaticHeader.PositionCount];
+
+                        for (var i = 0; i < animation.StaticHeader.PositionCount; i++)
+                        {
+                            animation.StaticPositions[i] = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Position>(dataContext);
+                        }
+
+                        animation.AnimatedHeader = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.AnimationHeader>(dataContext);
+
+                        animation.AnimatedRotations = new ModelAnimationResourceDefinition.GroupMember.Rotation[animation.AnimatedHeader.RotationCount];
+
+                        for (var i = 0; i < animation.AnimatedHeader.RotationCount; i++)
+                        {
+                            animation.AnimatedRotations[i] = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Rotation>(dataContext);
+                        }
+
+                        animation.AnimatedPositions = new ModelAnimationResourceDefinition.GroupMember.Position[animation.AnimatedHeader.PositionCount];
+
+                        for (var i = 0; i < animation.AnimatedHeader.PositionCount; i++)
+                        {
+                            animation.AnimatedPositions[i] = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Position>(dataContext);
+                        }
+
+                        animation.Footer = Info.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.AnimationFooter>(dataContext);
+
                         jmadAnimationGroup.Add(animation);
                     }
                 }

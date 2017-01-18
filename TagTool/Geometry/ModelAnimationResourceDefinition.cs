@@ -121,41 +121,71 @@ namespace TagTool.Geometry
             }
 
             [TagStructure]
+            public class AnimationHeader
+            {
+                public sbyte AnimationType; // base/overlay/replacement?
+                public sbyte RotationCount; // number of static primary nodes in the animation, used in calculation of StaticNodesPrimary
+                public sbyte PositionCount; // number of static secondary noes in the animation, used in calculation of StaticNodesSecondary
+                public sbyte Unknown1;
+                public StringID Name; // only on overlay anims
+                public uint Checksum; // only on overlay anims
+                public uint NodesSecondaryOffset;
+                public uint NextOffset;
+                public uint Unknown2;
+                public uint Unknown3;
+                public uint Unknown4;
+            }
+
+            [TagStructure]
+            public class AnimationFooter
+            {
+                public NodesBitfield StaticNodesPrimaryBitfield;
+                public NodesBitfield StaticNodesSecondaryBitfield;
+                public NodesBitfield UnknownBitfield; // might not be a bitfield, but its right between bitfields so assuming so
+                public NodesBitfield AnimatedNodesPrimaryBitField;
+                public NodesBitfield AnimatedNodesSecondaryBitField;
+                public uint Unknown;
+            }
+
             public class Animation
             {
-                public int Unknown1;
-                public ResourceAddress Unknown2;
-                public int Unknown3;
+                public AnimationHeader StaticHeader;
+                public Rotation[] StaticRotations;
+                public Position[] StaticPositions;
+                public AnimationHeader AnimatedHeader;
+                public Rotation[] AnimatedRotations;
+                public Position[] AnimatedPositions;
+                public AnimationFooter Footer;
             }
 
             [TagStructure]
             public class Rotation
             {
-                public short x;
-                public short y;
-                public short z;
-                public short w;
+                public short X;
+                public short Y;
+                public short Z;
+                public short W;
             }
 
             [TagStructure]
             public class Position
             {
-                public float x;
-                public float y;
-                public float z;
+                public float X;
+                public float Y;
+                public float Z;
             }
 
             [TagStructure]
             public class Frame
             {
-                public Rotation rotational_data;
+                public Rotation RotationData;
             }
 
             [TagStructure]
             public class NodesBitfield
             {
-                public PrimaryNodeFlags primary;
-                public SecondaryNodeFlags secondary;
+                public PrimaryNodeFlags Primary;
+                public SecondaryNodeFlags Secondary;
             }
         }
     }
