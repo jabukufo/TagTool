@@ -244,7 +244,7 @@ namespace TagTool.Cache.HaloOnline
                 if (i <= 0)
                     continue;
 
-                for (var j = i - 1; j > 0; j--)
+                for (var j = i - 1; j >= 0; j--)
                 {
                     if (_resources[j].Offset != 0xFFFFFFFF)
                     {
@@ -255,7 +255,7 @@ namespace TagTool.Cache.HaloOnline
             }
 
             // Compute size of last resource
-            for (var j = resourceCount - 1; j > 0; j--)
+            for (var j = resourceCount - 1; j >= 0; j--)
             {
                 if (_resources[j].Offset != 0xFFFFFFFF)
                 {
