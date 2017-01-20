@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagTool.Cache.HaloOnline;
+using TagTool.IO;
 using TagTool.Tags;
 
 namespace TagTool.Serialization
 {
     public class DataSerializationContext : ISerializationContext
     {
-        public BinaryReader Reader { get; }
+        public EndianReader Reader { get; }
 
-        public DataSerializationContext(BinaryReader reader)
+        public DataSerializationContext(EndianReader reader)
         {
             Reader = reader;
         }
@@ -23,7 +24,7 @@ namespace TagTool.Serialization
             return (uint)new ResourceAddress(address).Offset;
         }
 
-        public BinaryReader BeginDeserialize(TagStructureInfo info)
+        public EndianReader BeginDeserialize(TagStructureInfo info)
         {
             return Reader;
         }

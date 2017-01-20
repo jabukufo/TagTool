@@ -14,7 +14,7 @@ namespace TagTool.IO
 
         public long Origin { get; set; }
         
-        public EndianReader(Stream stream, EndianFormat format)
+        public EndianReader(Stream stream, EndianFormat format = EndianFormat.Little)
             : base(stream)
         {
             Format = format;

@@ -11,9 +11,9 @@ namespace TagTool.Commands.Cache
     class PortBspCommand : Command
     {
         private GameCacheContext Info { get; }
-        private CacheFile BlamCache { get; }
+        private CacheFileOld BlamCache { get; }
 
-        public PortBspCommand(GameCacheContext info, CacheFile blamCache)
+        public PortBspCommand(GameCacheContext info, CacheFileOld blamCache)
             : base(CommandFlags.Inherit,
                   "portbsp",
                   "",
@@ -36,7 +36,7 @@ namespace TagTool.Commands.Cache
             var bspName = args[0];
             var newTagIndex = ArgumentParser.ParseTagIndex(Info, args[1]);
 
-            CacheFile.IndexItem item = null;
+            CacheFileOld.IndexItem item = null;
 
             Console.WriteLine("Verifying xbox tag...");
 

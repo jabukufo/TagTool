@@ -1,524 +1,195 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TagTool.Common;
 using TagTool.IO;
+using TagTool.Serialization;
 
 namespace TagTool.Cache
 {
-    public abstract class CacheFile
+    public class CacheFile
     {
-        public string Filename;
-        public string FilePath
-        {
-            get { return Directory.GetParent(Filename).FullName; }
-        }
-        public EndianReader Reader;
-        public CacheHeader Header;
-        public CacheIndexHeader IndexHeader;
-        public IndexTable IndexItems;
-        public StringTable Strings;
-        public List<LocaleTable> LocaleTables;
-        public CacheVersion Version;
-
-        public string Build;
-        public int HeaderSize;
-        public string PluginDir;
-
-        public int Magic;
+        public CacheFileHeader Header { get; private set; }
+        public CacheFileIndexHeader IndexHeader { get; private set; }
         
-        public string localesKey, stringsKey, tagsKey, networkKey;
-        public string stringMods;
-
-        public XmlNode buildNode;
-        public XmlNode versionNode;
-        public XmlNode vertexNode;
-
-        public CacheFile(string Filename, string Build)
+        public CacheFile(FileInfo file)
         {
-            this.Filename = Filename;
-            this.Build = Build;
-            var fs = new FileStream(Filename, FileMode.Open, FileAccess.Read);
-            Reader = new EndianReader((Stream)fs, EndianFormat.Big);
-
-            #region Read XML
-            buildNode = GetBuildNode(Build);
-            PluginDir = buildNode.Attributes["plugins"].Value;
-            versionNode = GetVersionNode(buildNode.Attributes["version"].Value);
-            HeaderSize = int.Parse(buildNode.Attributes["headerSize"].Value);
-            stringMods = buildNode.Attributes["stringMods"].Value;
-
-            tagsKey = buildNode.Attributes["tagsKey"].Value;
-            stringsKey = buildNode.Attributes["stringsKey"].Value;
-            localesKey = buildNode.Attributes["localesKey"].Value;
-            networkKey = buildNode.Attributes["networkKey"].Value;
-
-            vertexNode = GetVertexNode(buildNode.Attributes["vertDef"].Value);
-            #endregion
-        }
-
-        #region Classes
-        public class CacheHeader
-        {
-            #region Declarations
-            public int Magic;
-
-            public int fileSize;
-            public int indexOffset;
-
-            public int stringCount;
-            public int stringTableSize;
-            public int stringTableIndexOffset;
-            public int stringTableOffset;
-
-            public string scenarioName;
-
-            public int fileCount;
-            public int fileTableOffset;
-            public int fileTableSize;
-            public int fileTableIndexOffset;
-
-            public int virtualBaseAddress;
-            public int rawTableOffset;
-            public int localeModifier;
-            public int rawTableSize;
-            public int tagDataAddress;
-
-            protected CacheFile cache;
-            #endregion
-        }
-
-        public class CacheIndexHeader
-        {
-            #region Declarations
-            public int tagClassCount;
-            public int tagClassIndexOffset;
-
-            public int tagCount;
-
-            public int tagInfoOffset;
-            public int tagInfoHeaderCount;
-            public int tagInfoHeaderOffset;
-            public int tagInfoHeaderCount2;
-            public int tagInfoHeaderOffset2;
-
-            protected CacheFile cache;
-            #endregion
-        }
-
-        public class StringTable : List<string>
-        {
-            protected CacheFile cache;
-
-            public StringTable(CacheFile Cache)
+            if (!file.Exists)
+                throw new FileNotFoundException(file.FullName);
+            
+            using (var stream = file.OpenRead())
+            using (var reader = new EndianReader(stream, EndianFormat.Little))
             {
-                cache = Cache;
-                var Reader = cache.Reader;
-                var CH = cache.Header;
+                var headString = new string(reader.ReadChars(4));
 
-                #region Read Indices
-                Reader.SeekTo(CH.stringTableIndexOffset);
-                int[] indices = new int[CH.stringCount];
-                for (int i = 0; i < CH.stringCount; i++)
-                {
-                    indices[i] = Reader.ReadInt32();
-                    this.Add("");
-                }
-                #endregion
+                if (headString == "head")
+                    reader.Format = EndianFormat.Big;
 
-                #region Read Names
-                Reader.SeekTo(CH.stringTableOffset);
-                EndianReader newReader = (cache.stringsKey == "" || cache.stringsKey == null)
-                    ? new EndianReader(new MemoryStream(Reader.ReadBytes(CH.stringTableSize)), EndianFormat.Big)
-                    : AES.DecryptSegment(Reader, CH.stringTableOffset, CH.stringTableSize, cache.stringsKey);
+                reader.BaseStream.Position = 0;
 
-                for (int i = 0; i < indices.Length; i++)
-                {
-                    if (indices[i] == -1)
-                    {
-                        this[i] = "<null>";
-                        continue;
-                    }
+                var deserializer = new TagDeserializer(CacheVersion.Unknown);
+                var context = new DataSerializationContext(reader);
 
-                    newReader.SeekTo(indices[i]);
+                Header = deserializer.Deserialize<CacheFileHeader>(context);
 
-                    int length;
-                    if (i == indices.Length - 1)
-                        length = CH.stringTableSize - indices[i];
-                    else
-                        length = (indices[i + 1] != -1)
-                            ? indices[i + 1] - indices[i]
-                            : indices[i + 2] - indices[i];
-
-                    if (length == 1)
-                    {
-                        this[i] = "<blank>";
-                        continue;
-                    }
-
-                    this[i] = newReader.ReadString(length);
-                }
-                newReader.Close();
-                newReader.Dispose();
-                #endregion
-            }
-
-            public string GetItemByID(int ID)
-            {
-                //go through the modifiers, if the ID matches a modifer return the correct string
-                string[] mods = cache.stringMods.Split(';');
-                try
-                {
-                    foreach (string mod in mods)
-                    {
-                        string[] Params = mod.Split(','); //[0] - check, [1] - change
-                        int check = int.Parse(Params[0]);
-                        int change = int.Parse(Params[1]);
-
-                        if (check < 0)
-                        {
-                            if (ID < check)
-                            {
-                                ID += change;
-                                return this[ID];
-                            }
-                        }
-                        else
-                        {
-                            if (ID > check)
-                            {
-                                ID += change;
-                                return this[ID];
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    return "invalid";
-                }
-
-                //if no matching modifier, return the string at index of ID, or null if out of bounds
-                try { return this[ID]; }
-                catch { return ""; }
+                if (Header.Version == CacheFileVersion.HaloOnline)
+                    throw new NotSupportedException(Header.Version.ToString());
             }
         }
+    }
 
-        public class LocaleTable : List<string>
-        {
-            protected CacheFile cache;
+    public enum CacheFileVersion : int
+    {
+        Unknown = -1,
+        Halo3Retail = 11,
+        HaloOnline = 18
+    }
 
-            public LocaleTable(CacheFile Cache, GameLanguage Lang)
-            {
-                cache = Cache;
-                EndianReader Reader = cache.Reader;
-                CacheHeader CH = cache.Header;
+    public enum CacheFileType : short
+    {
+        None = -1,
+        Campaign,
+        Multiplayer,
+        MainMenu,
+        Shared,
+        SharedCampaign,
 
-                #region Get Info
-                int matgOffset = -1;
-                foreach (IndexItem item in cache.IndexItems)
-                    if (item.ClassCode == "matg")
-                    {
-                        matgOffset = item.Offset;
-                        break;
-                    }
+        Unknown5,
+        Unknown6
+    }
 
-                if (matgOffset == -1) return;
+    public enum CacheFileSharedType : short
+    {
+        None = -1,
+        MainMenu = 0,
+        Shared,
+        Campaign
+    }
 
-                int localeStart = int.Parse(cache.buildNode.Attributes["localesStart"].Value);
-                Reader.SeekTo(matgOffset + localeStart + (int)Lang * int.Parse(cache.buildNode.Attributes["languageSize"].Value));
+    [TagStructure(Size = 0x3000)]
+    public class CacheFileHeader
+    {
+        public Tag HeadTag;
+        public CacheFileVersion Version;
+        public int FileLength;
+        public int Unknown1;
+        public uint TagIndexAddress;
+        public int MemoryBufferOffset;
+        public int MemoryBufferSize;
+        [TagField(Length = 256)]
+        public string SourceFile;
+        [TagField(Length = 32)]
+        public string Build;
+        public CacheFileType CacheType;
+        public CacheFileSharedType SharedType;
+        public bool Unknown2;
+        public bool TrackedBuild;
+        public bool Unknown3;
+        public byte Unknown4;
+        public int Unknown5;
+        public int Unknown6;
+        public int Unknown7;
+        public int Unknown8;
+        public int Unknown9;
+        public int StringIDsCount;
+        public int StringIDsBufferSize;
+        public int StringIDsIndicesOffset;
+        public int StringIDsBufferOffset;
+        public int ExternalDependencies;
+        public int HighDateTime;
+        public int LowDateTime;
+        public int MainMenuDependencies;
+        public int Unknown10;
+        public int SharedDependencies;
+        public int Unknown11;
+        public int CampaignDependencies;
+        public int Unknown12;
+        [TagField(Length = 32)]
+        public string Name;
+        public int Unknown13;
+        [TagField(Length = 256)]
+        public string ScenarioPath;
+        public int MinorVersion;
+        public int TagNamesCount;
+        public int TagNamesBufferOffset;
+        public int TagNamesBufferSize;
+        public int TagNamesIndicesOffset;
+        public uint Checksum;
+        public int Unknown14;
+        public int Unknown15;
+        public int Unknown16;
+        public int Unknown17;
+        public int Unknown18;
+        public int Unknown19;
+        public int Unknown20;
+        public int Unknown21;
+        public uint BaseAddress;
+        public int XDKVersion;
+        public uint CacheResourceBufferAddress;
+        public int CacheResourceBufferSize;
+        public uint SoundCacheResourceBufferAddress;
+        public int SoundCacheResourceBufferSize;
+        public uint GlobalTagsBufferAddress;
+        public int GlobalTagsBufferSize;
+        public uint SharedTagsBufferAddress;
+        public int SharedTagsBufferSize;
+        public uint BaseBufferAddress;
+        public int BaseBufferSize;
+        public uint MapTagsBufferAddress;
+        public int MapTagsBufferSize;
+        public int CountUnknown1;
+        public int Unknown22;
+        public int Unknown23;
+        public int Unknown24;
+        [TagField(Count = 5)]
+        public int[] SHA1_A;
+        [TagField(Count = 5)]
+        public int[] SHA1_B;
+        [TagField(Count = 5)]
+        public int[] SHA1_C;
+        [TagField(Count = 64)]
+        public int[] RSA;
+        public uint ResourceBaseAddress;
+        public int DebugSectionSize;
+        public uint RuntimeBaseAddress;
+        public uint UnknownBaseAddress;
+        public uint DebugCacheSectionVirtualAddress;
+        public int DebugCacheSectionSize;
+        public uint ResourceCacheSectionVirtualAddress;
+        public int ResourceCacheSectionSize;
+        public uint TagCacheSectionVirtualAddress;
+        public int TagCacheSectionSize;
+        public uint LocalizationCacheSectionVirtualAddress;
+        public int LocalizationCacheSectionSize;
+        [TagField(Count = 4)]
+        public int[] GUID;
+        public short Unknown108;
+        public short CountUnknown2;
+        public int Unknown109;
+        [TagField(Count = 4)]
+        public int[] CompressionGUID;
+        [TagField(Size = 0x2300)]
+        public byte[] Elements1;
+        [TagField(Size = 0x708)]
+        public byte[] Elements2;
+        [TagField(Size = 0x12C)]
+        public byte[] Unknown114;
+        public uint Unknown115;
+        public Tag FootTag;
+    }
 
-                int localeCount = Reader.ReadInt32();
-                int tableSize = Reader.ReadInt32();
-                int indexOffset = Reader.ReadInt32() + CH.localeModifier;
-                int tableOffset = Reader.ReadInt32() + CH.localeModifier;
-                #endregion
-
-                #region Read Indices
-                Reader.SeekTo(indexOffset);
-                int[] indices = new int[localeCount];
-                for (int i = 0; i < localeCount; i++)
-                {
-                    this.Add("");
-                    Reader.ReadInt32();
-                    indices[i] = Reader.ReadInt32();
-                }
-                #endregion
-
-                #region Read Names
-                Reader.SeekTo(tableOffset);
-                EndianReader newReader = (cache.localesKey == "" || cache.localesKey == null)
-                    ? new EndianReader(new MemoryStream(Reader.ReadBytes(tableSize)), EndianFormat.Big)
-                    : AES.DecryptSegment(Reader, tableOffset, tableSize, cache.localesKey);
-
-                for (int i = 0; i < indices.Length; i++)
-                {
-                    if (indices[i] == -1)
-                    {
-                        this[i] = "<null>";
-                        continue;
-                    }
-
-                    newReader.SeekTo(indices[i]);
-
-                    int length;
-                    if (i == indices.Length - 1)
-                        length = tableSize - indices[i];
-                    else
-                        length = (indices[i + 1] != -1)
-                            ? indices[i + 1] - indices[i]
-                            : indices[i + 2] - indices[i];
-
-                    if (length == 1)
-                    {
-                        this[i] = "<blank>";
-                        continue;
-                    }
-
-                    this[i] = newReader.ReadString(length);
-                }
-                newReader.Close();
-                newReader.Dispose();
-                #endregion
-            }
-        }
-
-        public class IndexItem
-        {
-            public CacheFile Cache;
-            public string ClassCode
-            {
-                get { return (ClassIndex == -1) ? "____" : Cache.IndexItems.ClassList[ClassIndex].ClassCode; }
-            }
-            public string ClassName
-            {
-                get
-                {
-                    return ClassCode;
-                }
-            }
-            public string ParentClass
-            {
-                get
-                {
-                    try { return (ClassIndex == -1) ? "____" : Cache.IndexItems.ClassList[ClassIndex].Parent; }
-                    catch { return ClassCode; }
-                }
-            }
-            public string ParentClass2
-            {
-                get
-                {
-                    try { return (ClassIndex == -1) ? "____" : Cache.IndexItems.ClassList[ClassIndex].Parent2; }
-                    catch { return ClassCode; }
-                }
-            }
-            public string Filename;
-            public int ID;
-            public int Offset;
-            public int ClassIndex;
-            public int metaIndex;
-            public int Magic;
-
-            public override string ToString()
-            {
-                return "[" + ClassCode + "] " + Filename;
-            }
-        }
-
-        public class IndexTable : List<IndexItem>
-        {
-            protected CacheFile cache;
-            public List<TagClass> ClassList;
-
-            public IndexItem GetItemByID(int ID)
-            {
-                if (ID == -1)
-                    return null;
-                return this[ID & 0xFFFF];
-            }
-        }
-
-        public class TagClass
-        {
-            public string ClassCode;
-            public string Parent;
-            public string Parent2;
-            public int StringID;
-
-            public override string ToString()
-            {
-                return ClassCode;
-            }
-        }
-        #endregion
-
-        public virtual void Close()
-        {
-            Reader.Close();
-            Reader.Dispose();
-            LocaleTables.Clear();
-            Strings.Clear();
-            IndexItems.Clear();
-            buildNode = null;
-            versionNode = null;
-            vertexNode = null;
-            Header = null;
-            IndexHeader = null;
-        }
-
-        public void LoadPlayZone()
-        {
-            throw new NotImplementedException();
-            /*
-            foreach (IndexItem item in IndexItems)
-                if (item.ClassCode == "play")
-                {
-                    if (item.Offset > Reader.Length)
-                    {
-                        foreach (IndexItem item2 in IndexItems)
-                            if (item2.ClassCode == "zone")
-                            {
-                                //fix for H4 prologue, play address is out of 
-                                //bounds and data is held inside the zone tag 
-                                //instead so make a fake play tag using zone data
-                                item.Offset = item2.Offset + 28;
-                                break;
-                            }
-                    }
-
-                    play = DefinitionsManager.play(this, item);
-                    break;
-                }
-
-            foreach (IndexItem item in IndexItems)
-                if (item.ClassCode == "zone")
-                {
-                    zone = DefinitionsManager.zone(this, item);
-                    break;
-                }
-
-            foreach (IndexItem item in IndexItems)
-                if (item.ClassCode == "ugh!")
-                {
-                    ugh_ = DefinitionsManager.ugh_(this, item);
-                    break;
-                }
-            */
-        }
-
-        public byte[] GetRawFromID(int ID)
-        {
-            return GetRawFromID(ID, -1);
-        }
-
-        public virtual byte[] GetRawFromID(int ID, int DataLength)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual byte[] GetSoundRaw(int ID, int size)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Deserialize<T>(string path, string group, CacheFile cache)
-        {
-            CacheFile.IndexItem item = null;
-
-            Console.WriteLine("Deserializing " + path + "...");
-
-            foreach (var tag in cache.IndexItems)
-            {
-                if ((tag.ParentClass == group) && tag.Filename == path)
-                {
-                    item = tag;
-                    break;
-                }
-            }
-
-            Console.WriteLine("Found tag of group "+group);
-
-            return default(T);
-        }
-        public static XmlNode GetBuildNode(string build)
-        {
-            XmlNode retNode = null;
-            using (var xml = new FileStream("Cache\\Builds.xml", FileMode.Open, FileAccess.Read))
-            {
-                var xmlDoc = new XmlDocument();
-                xmlDoc.Load(xml);
-                var element = xmlDoc.DocumentElement;
-
-                for (int i = 0; i < element.ChildNodes.Count; i++)
-                {
-                    if (element.ChildNodes[i].Name.ToLower() != "build") continue;
-
-                    if (element.ChildNodes[i].Attributes["string"].Value == build)
-                    {
-                        if (element.ChildNodes[i].Attributes["inherits"].Value != "")
-                            return GetBuildNode(element.ChildNodes[i].Attributes["inherits"].Value);
-
-                        retNode = element.ChildNodes[i];
-                        break;
-                    }
-                }
-            }
-
-            if (retNode == null)
-                throw new Exception("Build " + "\"" + build + "\"" + " was not found!");
-
-            return retNode;
-        }
-
-        public static XmlNode GetVersionNode(string ver)
-        {
-            XmlNode retNode = null;
-            using (var xml = new FileStream("Cache\\Versions.xml", FileMode.Open, FileAccess.Read))
-            {
-                var xmlDoc = new XmlDocument();
-                xmlDoc.Load(xml);
-                var element = xmlDoc.DocumentElement;
-
-                for (int i = 0; i < element.ChildNodes.Count; i++)
-                {
-                    if (element.ChildNodes[i].Name.ToLower() != "version") continue;
-
-                    if (element.ChildNodes[i].Attributes["name"].Value == ver)
-                    {
-                        retNode = element.ChildNodes[i];
-                        break;
-                    }
-                }
-            }
-
-            if (retNode == null)
-                throw new Exception("Version " + "\"" + ver + "\"" + " was not found!");
-
-            return retNode;
-        }
-
-        public static XmlNode GetVertexNode(string ver)
-        {
-            XmlNode retNode = null;
-            using (var xml = new FileStream("Cache\\VertexBuffer.xml", FileMode.Open, FileAccess.Read))
-            {
-                var xmlDoc = new XmlDocument();
-                xmlDoc.Load(xml);
-                var element = xmlDoc.DocumentElement;
-
-                foreach (XmlNode node in element.ChildNodes)
-                {
-                    if (node.Attributes["Game"].Value == ver)
-                    {
-                        retNode = node;
-                        break;
-                    }
-                }
-            }
-
-            return retNode;
-        }
+    [TagStructure(Size = 0x1C)]
+    public class CacheFileIndexHeader
+    {
+        public int TagGroupCount;
+        public uint TagGroupTableAddress;
+        public int TagCount;
+        public uint TagTableAddress;
+        public int TagHeirarchyCount;
+        public uint TagHeirarchyTableAddress;
+        public int Magic;
     }
 }

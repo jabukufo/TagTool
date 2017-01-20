@@ -6,6 +6,7 @@ using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Tags;
 using TagTool.Cache.HaloOnline;
+using TagTool.IO;
 
 namespace TagTool.Serialization
 {
@@ -60,7 +61,7 @@ namespace TagTool.Serialization
         /// <param name="info">Information about the structure to deserialize.</param>
         /// <returns>The deserialized structure.</returns>
         /// <exception cref="System.InvalidOperationException">Target type must have TagStructureAttribute</exception>
-        public object DeserializeStruct(BinaryReader reader, ISerializationContext context, TagStructureInfo info)
+        public object DeserializeStruct(EndianReader reader, ISerializationContext context, TagStructureInfo info)
         {
             var baseOffset = reader.BaseStream.Position;
             var instance = Activator.CreateInstance(info.Types[0]);
@@ -81,7 +82,7 @@ namespace TagTool.Serialization
         /// <param name="enumerator">The active element enumerator.</param>
         /// <param name="baseOffset">The offset of the start of the structure.</param>
         /// <exception cref="System.InvalidOperationException">Offset for property is outside of its structure</exception>
-        public void DeserializeProperty(BinaryReader reader, ISerializationContext context, object instance, TagFieldEnumerator enumerator, long baseOffset)
+        public void DeserializeProperty(EndianReader reader, ISerializationContext context, object instance, TagFieldEnumerator enumerator, long baseOffset)
         {
             // Seek to the value if it has an offset specified and then read it
             if (enumerator.Attribute.Offset >= 0)
@@ -100,7 +101,7 @@ namespace TagTool.Serialization
         /// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
         /// <param name="valueType">The type of the value to deserialize.</param>
         /// <returns>The deserialized value.</returns>
-        public object DeserializeValue(BinaryReader reader, ISerializationContext context, TagFieldAttribute valueInfo, Type valueType)
+        public object DeserializeValue(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo, Type valueType)
         {
             if (valueType.IsPrimitive)
                 return DeserializePrimitiveValue(reader, valueType);
@@ -114,7 +115,7 @@ namespace TagTool.Serialization
         /// <param name="valueType">The type of the value to deserialize.</param>
         /// <returns>The deserialized value.</returns>
         /// <exception cref="System.ArgumentException">Unsupported type</exception>
-        public object DeserializePrimitiveValue(BinaryReader reader, Type valueType)
+        public object DeserializePrimitiveValue(EndianReader reader, Type valueType)
         {
             switch (Type.GetTypeCode(valueType))
             {
@@ -153,7 +154,7 @@ namespace TagTool.Serialization
         /// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
         /// <param name="valueType">The type of the value to deserialize.</param>
         /// <returns>The deserialized value.</returns>
-        public object DeserializeComplexValue(BinaryReader reader, ISerializationContext context, TagFieldAttribute valueInfo, Type valueType)
+        public object DeserializeComplexValue(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo, Type valueType)
         {
             // Indirect objects
             // TODO: Remove ResourceReference hax, the Indirect flag wasn't available when I generated the tag structures
@@ -249,7 +250,7 @@ namespace TagTool.Serialization
         /// <param name="context">The serialization context to use.</param>
         /// <param name="valueType">The type of the value to deserialize.</param>
         /// <returns>The deserialized tag block.</returns>
-        public object DeserializeTagBlock(BinaryReader reader, ISerializationContext context, Type valueType)
+        public object DeserializeTagBlock(EndianReader reader, ISerializationContext context, Type valueType)
         {
             var elementType = valueType.GenericTypeArguments[0];
             var result = Activator.CreateInstance(valueType);
@@ -284,7 +285,7 @@ namespace TagTool.Serialization
         /// <param name="context">The serialization context to use.</param>
         /// <param name="valueType">The type of the value to deserialize.</param>
         /// <returns>The deserialized value.</returns>
-        public object DeserializeIndirectValue(BinaryReader reader, ISerializationContext context, Type valueType)
+        public object DeserializeIndirectValue(EndianReader reader, ISerializationContext context, Type valueType)
         {
             // Read the pointer
             var pointer = reader.ReadUInt32();
@@ -306,7 +307,7 @@ namespace TagTool.Serialization
         /// <param name="context">The serialization context to use.</param>
         /// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
         /// <returns>The deserialized tag reference.</returns>
-        public TagInstance DeserializeTagReference(BinaryReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
+        public TagInstance DeserializeTagReference(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
         {
             if (valueInfo == null || (valueInfo.Flags & TagFieldFlags.Short) == 0)
                 reader.BaseStream.Position += 0xC; // Skip the class name and zero bytes, it's not important
@@ -320,7 +321,7 @@ namespace TagTool.Serialization
         /// <param name="reader">The reader.</param>
         /// <param name="context">The serialization context to use.</param>
         /// <returns>The deserialized data reference.</returns>
-        public byte[] DeserializeDataReference(BinaryReader reader, ISerializationContext context)
+        public byte[] DeserializeDataReference(EndianReader reader, ISerializationContext context)
         {
             // Read size and pointer
             var startOffset = reader.BaseStream.Position;
@@ -350,7 +351,7 @@ namespace TagTool.Serialization
         /// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
         /// <param name="valueType">The type of the value to deserialize.</param>
         /// <returns>The deserialized array.</returns>
-        public Array DeserializeInlineArray(BinaryReader reader, ISerializationContext context, TagFieldAttribute valueInfo, Type valueType)
+        public Array DeserializeInlineArray(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo, Type valueType)
         {
             if (valueInfo == null || valueInfo.Count == 0)
                 throw new ArgumentException("Cannot deserialize an inline array with no count set");
@@ -370,7 +371,7 @@ namespace TagTool.Serialization
         /// <param name="reader">The reader.</param>
         /// <param name="valueInfo">The value information.</param>
         /// <returns>The deserialized string.</returns>
-        public string DeserializeString(BinaryReader reader, TagFieldAttribute valueInfo)
+        public string DeserializeString(EndianReader reader, TagFieldAttribute valueInfo)
         {
             if (valueInfo == null || valueInfo.Length == 0)
                 throw new ArgumentException("Cannot deserialize a string with no length set");
@@ -396,7 +397,7 @@ namespace TagTool.Serialization
         /// <param name="context">The serialization context to use.</param>
         /// <param name="rangeType">The range's type.</param>
         /// <returns>The deserialized range.</returns>
-        public object DeserializeRange(BinaryReader reader, ISerializationContext context, Type rangeType)
+        public object DeserializeRange(EndianReader reader, ISerializationContext context, Type rangeType)
         {
             var boundsType = rangeType.GenericTypeArguments[0];
             var min = DeserializeValue(reader, context, null, boundsType);

@@ -73,6 +73,7 @@
     <Compile Include="Bitmaps\BitmapFormat.cs" />
     <Compile Include="Bitmaps\BitmapTextureResourceDefinition.cs" />
     <Compile Include="Bitmaps\BitmapType.cs" />
+    <Compile Include="Cache\CacheFile.cs" />
     <Compile Include="Cache\HaloOnline\ResourceAddress.cs" />
     <Compile Include="Cache\HaloOnline\ResourceBlockReference.cs" />
     <Compile Include="Cache\HaloOnline\ResourceCache.cs" />
@@ -208,11 +209,11 @@
     <Compile Include="Common\Vertex.cs" />
     <Compile Include="Common\XCompress.cs" />
     <Compile Include="Cache\AES.cs" />
-    <Compile Include="Cache\CacheFile.cs" />
+    <Compile Include="Cache\CacheFileOld.cs" />
     <Compile Include="Cache\CacheManager.cs" />
     <Compile Include="Cache\CacheVersionDetection.cs" />
-    <Compile Include="Cache\Halo3\CacheFile.cs" />
-    <Compile Include="Cache\HaloODST\CacheFile.cs" />
+    <Compile Include="Cache\Halo3\CacheFileOld.cs" />
+    <Compile Include="Cache\HaloODST\CacheFileOld.cs" />
     <Compile Include="Cache\HaloOnline\MS23\StringIdResolver.cs" />
     <Compile Include="Cache\HaloOnline\MS23\VertexStream.cs" />
     <Compile Include="Cache\HaloOnline\MS25\VertexStream.cs" />

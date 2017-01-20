@@ -8,9 +8,9 @@ namespace TagTool.Commands.Cache
     class ListBitmapsCommand : Command
     {
         private GameCacheContext Info { get; }
-        private CacheFile BlamCache { get; }
+        private CacheFileOld BlamCache { get; }
 
-        public ListBitmapsCommand(GameCacheContext info, CacheFile blamCache)
+        public ListBitmapsCommand(GameCacheContext info, CacheFileOld blamCache)
             : base(CommandFlags.None,
                   "listbitmaps",
                   "",

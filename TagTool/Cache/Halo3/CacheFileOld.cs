@@ -6,9 +6,9 @@ using TagTool.IO;
 
 namespace TagTool.Cache.Halo3
 {
-    public class CacheFile : Cache.CacheFile
+    public class CacheFileOld : Cache.CacheFileOld
     {
-        public CacheFile(string Filename, string Build)
+        public CacheFileOld(string Filename, string Build)
             : base(Filename, Build)
         {
             Version = CacheVersion.Halo3;
@@ -27,9 +27,9 @@ namespace TagTool.Cache.Halo3
             catch { LocaleTables.Clear(); }
         }
 
-        new public class CacheHeader : Cache.CacheFile.CacheHeader
+        new public class CacheHeader : Cache.CacheFileOld.CacheHeader
         {
-            public CacheHeader(Cache.CacheFile Cache)
+            public CacheHeader(Cache.CacheFileOld Cache)
             {
                 cache = Cache;
                 var Reader = cache.Reader;
@@ -138,9 +138,9 @@ namespace TagTool.Cache.Halo3
             }
         }
 
-        new public class CacheIndexHeader : Cache.CacheFile.CacheIndexHeader
+        new public class CacheIndexHeader : Cache.CacheFileOld.CacheIndexHeader
         {
-            public CacheIndexHeader(Cache.CacheFile Cache)
+            public CacheIndexHeader(Cache.CacheFileOld Cache)
             {
                 cache = Cache;
                 var Reader = cache.Reader;
@@ -191,9 +191,9 @@ namespace TagTool.Cache.Halo3
             }
         }
 
-        new public class IndexTable : Cache.CacheFile.IndexTable
+        new public class IndexTable : Cache.CacheFileOld.IndexTable
         {
-            public IndexTable(Cache.CacheFile Cache)
+            public IndexTable(Cache.CacheFileOld Cache)
             {
                 cache = Cache;
 

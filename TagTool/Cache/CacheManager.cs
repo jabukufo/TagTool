@@ -6,9 +6,9 @@ namespace TagTool.Cache
 {
     public static class CacheManager
     {
-        public static CacheFile GetCache(string Filename)
+        public static CacheFileOld GetCache(string Filename)
         {
-            CacheFile retCache = null;
+            CacheFileOld retCache = null;
             using (var fs = new FileStream(Filename, FileMode.Open, FileAccess.Read))
             {
                 var Reader = new EndianReader((Stream)fs, EndianFormat.Big);
@@ -42,11 +42,11 @@ namespace TagTool.Cache
                 }
 
                 var build = Reader.ReadString(32);
-                var node = CacheFile.GetBuildNode(build);
+                var node = CacheFileOld.GetBuildNode(build);
                 switch (node.Attributes["definitions"].Value)
                 {
-                    case "Halo3": retCache = new Halo3.CacheFile(Filename, build); break;
-                    case "HaloODST":   retCache = new HaloODST.CacheFile(Filename, build); break;
+                    case "Halo3": retCache = new Halo3.CacheFileOld(Filename, build); break;
+                    case "HaloODST":   retCache = new HaloODST.CacheFileOld(Filename, build); break;
                 }
             }
 

@@ -36,6 +36,8 @@ namespace TagTool.Commands.Tags
                 return false;
             }
 
+            var cacheFile = new CacheFile(new FileInfo(mapFilePath));
+
             Stack.Push(CacheContextFactory.Create(Stack.Context, Info, CacheManager.GetCache(mapFilePath)));
 
             return true;

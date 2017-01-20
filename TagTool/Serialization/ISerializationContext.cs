@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using TagTool.IO;
 using TagTool.Tags;
 
 namespace TagTool.Serialization
@@ -27,7 +28,7 @@ namespace TagTool.Serialization
         /// </summary>
         /// <param name="info">Information about the structure that is being deserialized.</param>
         /// <returns>The reader to read from.</returns>
-        BinaryReader BeginDeserialize(TagStructureInfo info);
+        EndianReader BeginDeserialize(TagStructureInfo info);
 
         /// <summary>
         /// Finishes deserializing tag data.

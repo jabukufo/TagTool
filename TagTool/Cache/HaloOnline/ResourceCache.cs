@@ -64,7 +64,7 @@ namespace TagTool.Cache.HaloOnline
             ImportRaw(inStream, resourceIndex, rawData);
             return resourceIndex;
         }
-
+        
         /// <summary>
         /// Extracts raw, compressed resource data.
         /// </summary>
@@ -84,6 +84,14 @@ namespace TagTool.Cache.HaloOnline
             return result;
         }
 
+        public void SeekToRaw(Stream inStream, int resourceIndex)
+        {
+            if (resourceIndex < 0 || resourceIndex >= _resources.Count)
+                throw new ArgumentOutOfRangeException("resourceIndex");
+
+            inStream.Position = _resources[resourceIndex].Offset;
+        }
+
         /// <summary>
         /// Overwrites a resource with raw, pre-compressed data.
         /// </summary>
@@ -101,6 +109,8 @@ namespace TagTool.Cache.HaloOnline
             inStream.Write(data, 0, data.Length);
             StreamUtil.Fill(inStream, 0, (int)(roundedSize - data.Length)); // Padding
         }
+
+        public uint GetResourceSize(int resourceIndex) => _resources[resourceIndex].Size;
 
         /// <summary>
         /// Decompresses a resource.

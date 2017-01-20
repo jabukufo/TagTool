@@ -45,7 +45,7 @@ namespace TagTool.Serialization
             _resource.DefinitionAddress = new ResourceAddress(ResourceAddressType.Definition, (int)mainStructOffset);
         }
 
-        public BinaryReader BeginDeserialize(TagStructureInfo info)
+        public EndianReader BeginDeserialize(TagStructureInfo info)
         {
             if (_resource.DefinitionAddress.Value == 0 || _resource.DefinitionAddress.Type != ResourceAddressType.Definition)
                 throw new InvalidOperationException("Invalid resource definition address");
@@ -62,7 +62,7 @@ namespace TagTool.Serialization
                 writer.Write(fixup.Address.Value);
             }
             stream.Position = _resource.DefinitionAddress.Offset;
-            return new BinaryReader(stream);
+            return new EndianReader(stream);
         }
 
         public void EndDeserialize(TagStructureInfo info, object obj)

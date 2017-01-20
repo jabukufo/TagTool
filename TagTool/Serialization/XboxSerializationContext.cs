@@ -3,14 +3,15 @@ using System.IO;
 using TagTool.Common;
 using TagTool.Tags;
 using TagTool.Cache;
+using TagTool.IO;
 
 namespace TagTool.Serialization
 {
     public class XboxSerializationContext : ISerializationContext
     {
-        private readonly CacheFile.IndexItem _tag;
+        private readonly CacheFileOld.IndexItem _tag;
 
-        public XboxSerializationContext(CacheFile.IndexItem tag)
+        public XboxSerializationContext(CacheFileOld.IndexItem tag)
         {
             _tag = tag;
         }
@@ -20,7 +21,7 @@ namespace TagTool.Serialization
             return (uint)(address - _tag.Cache.Magic);
         }
 
-        public BinaryReader BeginDeserialize(TagStructureInfo info)
+        public EndianReader BeginDeserialize(TagStructureInfo info)
         {
             var reader = _tag.Cache.Reader;
             reader.SeekTo(_tag.Offset);

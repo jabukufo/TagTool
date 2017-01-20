@@ -10,6 +10,7 @@ using static TagTool.Cache.CacheVersion;
 using static TagTool.Cache.HaloOnline.StringIdResolverFactory;
 using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
+using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Tags
 {
@@ -98,7 +99,7 @@ namespace TagTool.Commands.Tags
                 WriteLine("done.");
             }
 
-            var dependencies = new Dictionary<int, TagInstance>();
+            var dependencies = new HashSet<int>();
             LoadTagDependencies(0, ref dependencies);
             LoadTagDependencies(0x16, ref dependencies);
             LoadTagDependencies(0x27D7, ref dependencies);
@@ -169,25 +170,88 @@ namespace TagTool.Commands.Tags
                 Deserializer = destDeserializer
             };
 
-            using (Stream srcStream = Info.OpenCacheRead(), destStream = destInfo.OpenCacheReadWrite())
+            using (var srcStream = Info.OpenCacheRead())
+            using (var destStream = destInfo.OpenCacheReadWrite())
+            using (var destWriter = new BinaryWriter(destStream))
             {
-                var maxDependency = dependencies.Keys.Max();
-                for (var i = 0; i <= maxDependency; i++)
+                var lastTagIndex = dependencies.Max();
+
+                for (var i = 0; i < (lastTagIndex + 1); i++)
                 {
-                    var srcTag = Info.Cache.Tags[i];
-                    if (srcTag == null)
+                    var oldTag = Info.Cache.Tags[i];
+                    var newTag = destInfo.Cache.AllocateTag(oldTag != null ? oldTag.Group : TagGroup.Null);
+
+                    if (oldTag == null)
                     {
-                        destInfo.Cache.AllocateTag();
+                        destInfo.Cache.Tags[i] = null;
                         continue;
                     }
 
-                    var srcData = Info.Cache.ExtractTagRaw(srcStream, srcTag);
+                    var srcContext = new TagSerializationContext(srcStream, Info.Cache, Info.StringIDs, oldTag);
+                    var destContext = new TagSerializationContext(destStream, destInfo.Cache, Info.StringIDs, newTag);
 
-                    var destTag = destInfo.Cache.AllocateTag(srcTag.Group);
-                    destInfo.Cache.SetTagDataRaw(destStream, destTag, srcData);
+                    var tagDefinition = Info.Deserializer.Deserialize(srcContext, TagStructureTypes.FindByGroupTag(oldTag.Group.Tag));
 
-                    srcData = new byte[0];
+                    //
+                    // TODO: Extract the resources below from srcResources and import them to destResources...
+                    // TODO 2: Update each resource reference to its new index
+                    //
+
+                    if (oldTag.IsInGroup("bink"))
+                    {
+                        var location = ((Bink)tagDefinition).Resource.GetLocation();
+                        var index = ((Bink)tagDefinition).Resource.Index;
+                    }
+                    else if (oldTag.IsInGroup("bitm"))
+                    {
+                        foreach (var resource in ((Bitmap)tagDefinition).Resources)
+                        {
+                            var location = resource.Resource.GetLocation();
+                            var index = resource.Resource.Index;
+                        }
+                    }
+                    else if (oldTag.IsInGroup("jmad"))
+                    {
+                        foreach (var resourceGroup in ((ModelAnimationGraph)tagDefinition).ResourceGroups)
+                        {
+                            var location = resourceGroup.Resource.GetLocation();
+                            var index = resourceGroup.Resource.Index;
+                        }
+                    }
+                    else if (oldTag.IsInGroup("Lbsp"))
+                    {
+                        var location = ((ScenarioLightmapBspData)tagDefinition).Geometry.Resource.GetLocation();
+                        var index = ((ScenarioLightmapBspData)tagDefinition).Geometry.Resource.Index;
+                    }
+                    else if (oldTag.IsInGroup("mode"))
+                    {
+                        var location = ((RenderModel)tagDefinition).Geometry.Resource.GetLocation();
+                        var index = ((RenderModel)tagDefinition).Geometry.Resource.Index;
+                    }
+                    else if(oldTag.IsInGroup("sbsp"))
+                    {
+                        var geometryLocation = ((ScenarioStructureBsp)tagDefinition).Geometry.Resource.GetLocation();
+                        var geometryIndex = ((ScenarioStructureBsp)tagDefinition).Geometry.Resource.Index;
+
+                        var geometry2Location = ((ScenarioStructureBsp)tagDefinition).Geometry2.Resource.GetLocation();
+                        var geometry2Index = ((ScenarioStructureBsp)tagDefinition).Geometry2.Resource.Index;
+
+                        var collisionLocation = ((ScenarioStructureBsp)tagDefinition).CollisionBSPResource.GetLocation();
+                        var collisionIndex = ((ScenarioStructureBsp)tagDefinition).CollisionBSPResource.Index;
+
+                        var resource4Location = ((ScenarioStructureBsp)tagDefinition).Resource4.GetLocation();
+                        var resource4Index = ((ScenarioStructureBsp)tagDefinition).Resource4.Index;
+                    }
+                    else if (oldTag.IsInGroup("snd!"))
+                    {
+                        var location = ((Sound)tagDefinition).Resource.GetLocation();
+                        var index = ((Sound)tagDefinition).Resource.Index;
+                    }
+
+                    Info.Serializer.Serialize(destContext, tagDefinition);
                 }
+
+                destInfo.Cache.UpdateTagOffsets(destWriter);
             }
             
             WriteLine($"Done generating cache files in \"{destDir.FullName}\".");
@@ -195,7 +259,8 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private void LoadTagDependencies(int index, ref Dictionary<int, TagInstance> tags)
+
+        private void LoadTagDependencies(int index, ref HashSet<int> tags)
         {
             var queue = new List<int> { index };
 
@@ -205,10 +270,14 @@ namespace TagTool.Commands.Tags
 
                 foreach (var entry in queue)
                 {
-                    if (!tags.ContainsKey(entry))
+                    if (!tags.Contains(entry))
                     {
-                        tags[entry] = Info.Cache.Tags[entry];
-                        foreach (var dependency in tags[entry].Dependencies)
+                        if (Info.Cache.Tags[entry] == null)
+                            continue;
+
+                        tags.Add(entry);
+
+                        foreach (var dependency in Info.Cache.Tags[entry].Dependencies)
                             if (!nextQueue.Contains(dependency))
                                 nextQueue.Add(dependency);
                     }

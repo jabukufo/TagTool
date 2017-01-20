@@ -22,6 +22,12 @@ namespace TagTool.Cache.HaloOnline
 
         private readonly Dictionary<ResourceLocation, LoadedCache> _loadedCaches = new Dictionary<ResourceLocation, LoadedCache>();
 
+        public ResourceCache GetCache(ResourceLocation location) => _loadedCaches[location].Cache;
+
+        public FileStream OpenCacheRead(ResourceLocation location) => _loadedCaches[location].File.OpenRead();
+
+        public FileStream OpenCacheReadWrite(ResourceLocation location) => _loadedCaches[location].File.Open(FileMode.Open, FileAccess.ReadWrite);
+
         /// <summary>
         /// Loads a resource cache from a file.
         /// </summary>

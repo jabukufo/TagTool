@@ -64,10 +64,10 @@ namespace TagTool.Serialization
             _data = null;
         }
 
-        public BinaryReader BeginDeserialize(TagStructureInfo info)
+        public EndianReader BeginDeserialize(TagStructureInfo info)
         {
             var data = _cache.ExtractTagRaw(_stream, Tag);
-            var reader = new BinaryReader(new MemoryStream(data));
+            var reader = new EndianReader(new MemoryStream(data));
             reader.BaseStream.Position = Tag.MainStructOffset;
             return reader;
         }

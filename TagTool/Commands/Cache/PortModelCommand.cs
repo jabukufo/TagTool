@@ -8,9 +8,9 @@ namespace TagTool.Commands.Cache
     class PortModelCommand : Command
     {
         private GameCacheContext Info { get; }
-        private CacheFile BlamCache { get; }
+        private CacheFileOld BlamCache { get; }
 
-        public PortModelCommand(GameCacheContext info, CacheFile blamCache)
+        public PortModelCommand(GameCacheContext info, CacheFileOld blamCache)
             : base(CommandFlags.Inherit,
                   "portmodel",
                   "",

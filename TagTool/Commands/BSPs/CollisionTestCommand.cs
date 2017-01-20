@@ -6,6 +6,7 @@ using TagTool.Serialization;
 using TagTool.Tags.Definitions;
 using TagTool.Tags;
 using TagTool.Cache.HaloOnline;
+using TagTool.IO;
 
 namespace TagTool.Commands.BSPs
 {
@@ -36,7 +37,7 @@ namespace TagTool.Commands.BSPs
             var resourceDataStream = new MemoryStream();
             resources.Extract(BSP.CollisionBSPResource, resourceDataStream);
 
-            using (var reader = new BinaryReader(resourceDataStream))
+            using (var reader = new EndianReader(resourceDataStream))
             {
                 #region collision bsps
 

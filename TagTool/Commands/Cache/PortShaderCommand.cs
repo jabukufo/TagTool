@@ -8,9 +8,9 @@ namespace TagTool.Commands.Cache
     class PortShaderCommand : Command
     {
         private GameCacheContext Info { get; }
-        private CacheFile BlamCache { get; }
+        private CacheFileOld BlamCache { get; }
 
-        public PortShaderCommand(GameCacheContext info, CacheFile blamCache)
+        public PortShaderCommand(GameCacheContext info, CacheFileOld blamCache)
             : base(CommandFlags.None,
                   "portshader",
                   "",

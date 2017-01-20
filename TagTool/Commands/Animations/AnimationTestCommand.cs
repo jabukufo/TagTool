@@ -7,6 +7,7 @@ using TagTool.Serialization;
 using TagTool.Tags.Definitions;
 using TagTool.Tags;
 using TagTool.Cache.HaloOnline;
+using TagTool.IO;
 
 namespace TagTool.Commands.Animations
 {
@@ -41,7 +42,7 @@ namespace TagTool.Commands.Animations
                 var jmadAnimationGroup = new List<ModelAnimationResourceDefinition.GroupMember.Animation>();
 
                 using (var resourceDataStream = new MemoryStream())
-                using (var reader = new BinaryReader(resourceDataStream))
+                using (var reader = new EndianReader(resourceDataStream))
                 {
                     var dataContext = new DataSerializationContext(reader);
 
