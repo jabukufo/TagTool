@@ -62,6 +62,7 @@ namespace TagTool.Commands.Tags
                 writer.Write((int)0); // padding
                 writer.Write((long)130713360239499012); // timestamp
                 writer.Write((long)0); // padding
+                writer.Write((long)0); // padding
             }
             WriteLine("done.");
 
@@ -99,10 +100,10 @@ namespace TagTool.Commands.Tags
                 WriteLine("done.");
             }
 
-            var dependencies = new HashSet<int>();
-            LoadTagDependencies(0, ref dependencies);
-            LoadTagDependencies(0x16, ref dependencies);
-            LoadTagDependencies(0x27D7, ref dependencies);
+            var globalTags = new HashSet<int>();
+            LoadTagDependencies(0, ref globalTags);
+            LoadTagDependencies(0x16, ref globalTags);
+            LoadTagDependencies(0x27D7, ref globalTags);
             
             var destResourcesFile = new FileInfo(Combine(destDir.FullName, "resources.dat"));
             if (!destResourcesFile.Exists)
@@ -174,18 +175,20 @@ namespace TagTool.Commands.Tags
             using (var destStream = destInfo.OpenCacheReadWrite())
             using (var destWriter = new BinaryWriter(destStream))
             {
-                var lastTagIndex = dependencies.Max();
+                var lastTagIndex = globalTags.Max();
 
                 for (var i = 0; i < (lastTagIndex + 1); i++)
                 {
                     var oldTag = Info.Cache.Tags[i];
-                    var newTag = destInfo.Cache.AllocateTag(oldTag != null ? oldTag.Group : TagGroup.Null);
 
-                    if (oldTag == null)
+                    if (oldTag == null || !globalTags.Contains(i))
                     {
+                        destInfo.Cache.AllocateTag();
                         destInfo.Cache.Tags[i] = null;
                         continue;
                     }
+
+                    var newTag = destInfo.Cache.AllocateTag(oldTag.Group);
 
                     var srcContext = new TagSerializationContext(srcStream, Info.Cache, Info.StringIDs, oldTag);
                     var destContext = new TagSerializationContext(destStream, destInfo.Cache, Info.StringIDs, newTag);
@@ -230,17 +233,33 @@ namespace TagTool.Commands.Tags
                     }
                     else if(oldTag.IsInGroup("sbsp"))
                     {
-                        var geometryLocation = ((ScenarioStructureBsp)tagDefinition).Geometry.Resource.GetLocation();
-                        var geometryIndex = ((ScenarioStructureBsp)tagDefinition).Geometry.Resource.Index;
+                        try
+                        {
+                            var geometryLocation = ((ScenarioStructureBsp)tagDefinition).Geometry.Resource.GetLocation();
+                            var geometryIndex = ((ScenarioStructureBsp)tagDefinition).Geometry.Resource.Index;
+                        }
+                        catch { }
 
-                        var geometry2Location = ((ScenarioStructureBsp)tagDefinition).Geometry2.Resource.GetLocation();
-                        var geometry2Index = ((ScenarioStructureBsp)tagDefinition).Geometry2.Resource.Index;
+                        try
+                        {
+                            var geometry2Location = ((ScenarioStructureBsp)tagDefinition).Geometry2.Resource.GetLocation();
+                            var geometry2Index = ((ScenarioStructureBsp)tagDefinition).Geometry2.Resource.Index;
+                        }
+                        catch { }
 
-                        var collisionLocation = ((ScenarioStructureBsp)tagDefinition).CollisionBSPResource.GetLocation();
-                        var collisionIndex = ((ScenarioStructureBsp)tagDefinition).CollisionBSPResource.Index;
+                        try
+                        {
+                            var collisionLocation = ((ScenarioStructureBsp)tagDefinition).CollisionBSPResource.GetLocation();
+                            var collisionIndex = ((ScenarioStructureBsp)tagDefinition).CollisionBSPResource.Index;
+                        }
+                        catch { }
 
-                        var resource4Location = ((ScenarioStructureBsp)tagDefinition).Resource4.GetLocation();
-                        var resource4Index = ((ScenarioStructureBsp)tagDefinition).Resource4.Index;
+                        try
+                        {
+                            var resource4Location = ((ScenarioStructureBsp)tagDefinition).Resource4.GetLocation();
+                            var resource4Index = ((ScenarioStructureBsp)tagDefinition).Resource4.Index;
+                        }
+                        catch { }
                     }
                     else if (oldTag.IsInGroup("snd!"))
                     {
