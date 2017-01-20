@@ -236,15 +236,33 @@ namespace TagTool.Cache.HaloOnline
             for (var i = 0; i < resourceCount; i++)
             {
                 // Read offset
-                _resources.Add(new Resource { Offset = reader.ReadUInt32() });
+                var offset = reader.ReadUInt32();
+
+                _resources.Add(new Resource { Offset = offset });
 
                 // Compute size of previous resource
-                if (i > 0)
-                    _resources[i - 1].Size = _resources[i].Offset - _resources[i - 1].Offset;
+                if (i <= 0)
+                    continue;
+
+                for (var j = i - 1; j > 0; j--)
+                {
+                    if (_resources[j].Offset != 0xFFFFFFFF)
+                    {
+                        _resources[j].Size = _resources[i].Offset - _resources[j].Offset;
+                        break;
+                    }
+                }
             }
 
             // Compute size of last resource
-            _resources[resourceCount - 1].Size = tableOffset - _resources[resourceCount - 1].Offset;
+            for (var j = resourceCount - 1; j > 0; j--)
+            {
+                if (_resources[j].Offset != 0xFFFFFFFF)
+                {
+                    _resources[j].Size = tableOffset - _resources[j].Offset;
+                    break;
+                }
+            }
         }
 
         public void UpdateResourceTable(BinaryWriter writer)

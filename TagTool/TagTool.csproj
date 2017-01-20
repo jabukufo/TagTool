@@ -138,6 +138,7 @@
     <Compile Include="Commands\Scenarios\ScenarioContextFactory.cs" />
     <Compile Include="Commands\TagPrinter.cs" />
     <Compile Include="Commands\Tags\AddressCommand.cs" />
+    <Compile Include="Commands\Tags\CleanCsvCommand.cs" />
     <Compile Include="Commands\Tags\CollisionGeometryTestCommand.cs" />
     <Compile Include="Commands\Tags\ConvertArmorCommand.cs" />
     <Compile Include="Commands\Tags\ConvertCommand.cs" />

@@ -180,15 +180,13 @@ namespace TagTool.Commands.Tags
                 for (var i = 0; i < (lastTagIndex + 1); i++)
                 {
                     var oldTag = Info.Cache.Tags[i];
+                    var newTag = destInfo.Cache.AllocateTag(oldTag != null ? oldTag.Group : TagGroup.Null);
 
                     if (oldTag == null || !globalTags.Contains(i))
                     {
-                        destInfo.Cache.AllocateTag();
                         destInfo.Cache.Tags[i] = null;
                         continue;
                     }
-
-                    var newTag = destInfo.Cache.AllocateTag(oldTag.Group);
 
                     var srcContext = new TagSerializationContext(srcStream, Info.Cache, Info.StringIDs, oldTag);
                     var destContext = new TagSerializationContext(destStream, destInfo.Cache, Info.StringIDs, newTag);
