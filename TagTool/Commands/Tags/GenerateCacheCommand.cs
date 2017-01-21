@@ -3,11 +3,6 @@ using System.IO;
 using System.Linq;
 using TagTool.Serialization;
 using TagTool.Tags;
-using static System.Console;
-using static System.IO.Path;
-using static TagTool.Cache.CacheVersionDetection;
-using static TagTool.Cache.CacheVersion;
-using static TagTool.Cache.HaloOnline.StringIdResolverFactory;
 using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Tags.Definitions;
@@ -37,8 +32,8 @@ namespace TagTool.Commands.Tags
             var destDir = new DirectoryInfo(args[0]);
             if (!destDir.Exists)
             {
-                Write("Destination directory does not exist. Create it? [y/n] ");
-                var answer = ReadLine().ToLower();
+                Console.Write("Destination directory does not exist. Create it? [y/n] ");
+                var answer = Console.ReadLine().ToLower();
 
                 if (answer.Length == 0 || !(answer.StartsWith("y") || answer.StartsWith("n")))
                     return false;
@@ -53,7 +48,6 @@ namespace TagTool.Commands.Tags
             LoadTagDependencies(0, ref globalTags);
             LoadTagDependencies(0x16, ref globalTags);
             LoadTagDependencies(0x27D7, ref globalTags);
-            LoadTagDependencies(0x2E8A, ref globalTags);
 
             for (var i = 0; i < Info.Cache.Tags.Count; i++)
             {
@@ -91,11 +85,11 @@ namespace TagTool.Commands.Tags
 
             Console.WriteLine($"Last non-null tag: 0x{lastTag:X4}");
 
-            WriteLine($"Generating cache files in \"{destDir.FullName}\"...");
+            Console.WriteLine($"Generating cache files in \"{destDir.FullName}\"...");
 
-            var destTagsFile = new FileInfo(Combine(destDir.FullName, "tags.dat"));
+            var destTagsFile = new FileInfo(Path.Combine(destDir.FullName, "tags.dat"));
 
-            Write($"Generating {destTagsFile.FullName}...");
+            Console.Write($"Generating {destTagsFile.FullName}...");
             using (var tagCacheStream = destTagsFile.Create())
             using (var writer = new BinaryWriter(tagCacheStream))
             {
@@ -107,63 +101,65 @@ namespace TagTool.Commands.Tags
                 writer.Write((long)0); // padding
                 writer.Write((long)0); // padding
             }
-            WriteLine("done.");
+            Console.WriteLine("done.");
 
-            var destStringIDsFile = new FileInfo(Combine(destDir.FullName, "string_ids.dat"));
+            var destStringIDsFile = new FileInfo(Path.Combine(destDir.FullName, "string_ids.dat"));
 
-            Write($"Generating {destStringIDsFile.FullName}...");
+            Console.Write($"Generating {destStringIDsFile.FullName}...");
             Info.StringIDsFile.CopyTo(destStringIDsFile.FullName);
 
             var resourceCachePaths = new string[]
             {
-                Combine(destDir.FullName, "audio.dat"),
-                Combine(destDir.FullName, "resources.dat"),
-                Combine(destDir.FullName, "textures.dat"),
-                Combine(destDir.FullName, "textures_b.dat"),
-                Combine(destDir.FullName, "video.dat")
+                Path.Combine(destDir.FullName, "audio.dat"),
+                Path.Combine(destDir.FullName, "resources.dat"),
+                Path.Combine(destDir.FullName, "textures.dat"),
+                Path.Combine(destDir.FullName, "textures_b.dat"),
+                Path.Combine(destDir.FullName, "video.dat")
             };
 
             foreach (var resourceCachePath in resourceCachePaths)
             {
-                Write($"Generating {resourceCachePath}...");
+                Console.Write($"Generating {resourceCachePath}...");
                 using (var resourceCacheStream = File.Create(resourceCachePath))
                 using (var writer = new BinaryWriter(resourceCacheStream))
                 {
                     writer.Write((int)0); // padding
-                    writer.Write((int)0); // table offset
-                    writer.Write((int)0); // resource count
+                    writer.Write((int)0x1C); // table offset
+                    writer.Write((int)1); // resource count
                     writer.Write((int)0); // padding
-                    writer.Write((long)130713360239499012); // timestamp
+                    writer.Write((long)130713360241169179); //timestamp
                     writer.Write((long)0); // padding
+                    writer.Write((int)0); // null resource padding
+                    writer.Write((int)-1); // null resource offset
                 }
-                WriteLine("done.");
+                Console.WriteLine("done.");
             }
 
-            var destResourcesFile = new FileInfo(Combine(destDir.FullName, "resources.dat"));
+            var destResourcesFile = new FileInfo(Path.Combine(destDir.FullName, "resources.dat"));
             if (!destResourcesFile.Exists)
             {
-                WriteLine($"Destination resource cache file does not exist: {destResourcesFile.FullName}");
+                Console.WriteLine($"Destination resource cache file does not exist: {destResourcesFile.FullName}");
                 return false;
             }
 
-            var destTexturesFile = new FileInfo(Combine(destDir.FullName, "textures.dat"));
+            var destTexturesFile = new FileInfo(Path.Combine(destDir.FullName, "textures.dat"));
             if (!destTexturesFile.Exists)
             {
-                WriteLine($"Destination texture cache file does not exist: {destTexturesFile.FullName}");
+                Console.WriteLine($"Destination texture cache file does not exist: {destTexturesFile.FullName}");
                 return false;
             }
 
-            var destTexturesBFile = new FileInfo(Combine(destDir.FullName, "textures_b.dat"));
+            var destTexturesBFile = new FileInfo(Path.Combine(destDir.FullName, "textures_b.dat"));
             if (!destTexturesBFile.Exists)
             {
-                WriteLine($"Destination texture cache file does not exist: {destTexturesBFile.FullName}");
+                Console.WriteLine($"Destination texture cache file does not exist: {destTexturesBFile.FullName}");
                 return false;
             }
 
-            var destAudioFile = new FileInfo(Combine(destDir.FullName, "audio.dat"));
+            var destAudioFile = new FileInfo(Path.Combine(destDir.FullName, "audio.dat"));
             if (!destAudioFile.Exists)
             {
-                WriteLine($"Destination audio cache file does not exist: {destAudioFile.FullName}");
+                Console.WriteLine($"Destination audio cache file does not exist: {destAudioFile.FullName}");
                 return false;
             }
             
@@ -172,18 +168,18 @@ namespace TagTool.Commands.Tags
                 destTagCache = new TagCache(stream);
 
             CacheVersion guessedVersion;
-            var destVersion = Detect(destTagCache, out guessedVersion);
-            if (destVersion == Unknown)
+            var destVersion = CacheVersionDetection.Detect(destTagCache, out guessedVersion);
+            if (destVersion == CacheVersion.Unknown)
             {
-                WriteLine($"Unrecognized target version! (guessed {GetVersionString(guessedVersion)})");
+                Console.WriteLine($"Unrecognized target version! (guessed {CacheVersionDetection.GetVersionString(guessedVersion)})");
                 return true;
             }
 
-            WriteLine($"Destination cache version: {GetVersionString(destVersion)}");
+            Console.WriteLine($"Destination cache version: {CacheVersionDetection.GetVersionString(destVersion)}");
 
             StringIdCache destStringIdCache;
             using (var stream = destStringIDsFile.OpenRead())
-                destStringIdCache = new StringIdCache(stream, Create(destVersion));
+                destStringIdCache = new StringIdCache(stream, StringIdResolverFactory.Create(destVersion));
 
             var destResources = new ResourceDataManager();
             destResources.LoadCachesFromDirectory(destDir.FullName);
@@ -204,7 +200,7 @@ namespace TagTool.Commands.Tags
                 Serializer = destSerializer,
                 Deserializer = destDeserializer
             };
-
+            
             using (var srcStream = Info.OpenCacheRead())
             using (var destStream = destInfo.OpenCacheReadWrite())
             using (var destWriter = new BinaryWriter(destStream))
@@ -220,6 +216,11 @@ namespace TagTool.Commands.Tags
                         continue;
                     }
 
+                    var tagName = Info.TagNames[oldTag.Index];
+                    var groupName = Info.StringIDs.GetString(oldTag.Group.Name);
+
+                    Console.WriteLine($"Copying {tagName}.{groupName}...");
+
                     var newTag = destInfo.Cache.AllocateTag(oldTag.Group);
 
                     var srcContext = new TagSerializationContext(srcStream, Info.Cache, Info.StringIDs, oldTag);
@@ -232,60 +233,158 @@ namespace TagTool.Commands.Tags
                         var bink = (Bink)tagDefinition;
 
                         if (bink.Resource.Index != -1)
-                            destResources.AddRaw(bink.Resource, bink.Resource.GetLocation(), srcResources.ExtractRaw(bink.Resource));
+                        {
+                            Console.Write($"> Copying {groupName} resource...");
+
+                            destResources.AddRaw(
+                                bink.Resource,
+                                bink.Resource.GetLocation(),
+                                srcResources.ExtractRaw(bink.Resource));
+
+                            Console.WriteLine("done.");
+                        }
                     }
                     else if (oldTag.IsInGroup("bitm"))
                     {
-                        foreach (var resource in ((Bitmap)tagDefinition).Resources)
+                        var bitmap = ((Bitmap)tagDefinition);
+
+                        for (var j = 0; j < bitmap.Resources.Count; j++)
                         {
+                            var resource = bitmap.Resources[j];
+
                             if (resource.Resource.Index != -1)
-                                destResources.AddRaw(resource.Resource, resource.Resource.GetLocation(), srcResources.ExtractRaw(resource.Resource));
+                            {
+                                Console.Write($"> Copying {groupName} resource {j}...");
+
+                                destResources.AddRaw(
+                                    resource.Resource,
+                                    resource.Resource.GetLocation(),
+                                    srcResources.ExtractRaw(resource.Resource));
+
+                                Console.WriteLine("done.");
+                            }
                         }
                     }
                     else if (oldTag.IsInGroup("jmad"))
                     {
-                        foreach (var resourceGroup in ((ModelAnimationGraph)tagDefinition).ResourceGroups)
+                        var modelAnimationGraph = ((ModelAnimationGraph)tagDefinition);
+
+                        for (var j = 0; j < modelAnimationGraph.ResourceGroups.Count; j++)
                         {
+                            var resourceGroup = modelAnimationGraph.ResourceGroups[j];
+
                             if (resourceGroup.Resource.Index != -1)
-                                destResources.AddRaw(resourceGroup.Resource, resourceGroup.Resource.GetLocation(), srcResources.ExtractRaw(resourceGroup.Resource));
+                            {
+                                Console.Write($"> Copying {groupName} resource group {j}...");
+
+                                destResources.AddRaw(
+                                    resourceGroup.Resource,
+                                    resourceGroup.Resource.GetLocation(),
+                                    srcResources.ExtractRaw(resourceGroup.Resource));
+
+                                Console.WriteLine("done.");
+                            }
                         }
                     }
                     else if (oldTag.IsInGroup("Lbsp"))
                     {
-                        var geometry = ((ScenarioLightmapBspData)tagDefinition).Geometry;
+                        var scenarioLightmapBspData = (ScenarioLightmapBspData)tagDefinition;
 
-                        if (geometry.Resource.Index != -1)
-                            destResources.AddRaw(geometry.Resource, geometry.Resource.GetLocation(), srcResources.ExtractRaw(geometry.Resource));
+                        if (scenarioLightmapBspData.Geometry.Resource.Index != -1)
+                        {
+                            Console.Write($"> Copying {groupName} geometry resource...");
+
+                            destResources.AddRaw(
+                                scenarioLightmapBspData.Geometry.Resource,
+                                scenarioLightmapBspData.Geometry.Resource.GetLocation(),
+                                srcResources.ExtractRaw(scenarioLightmapBspData.Geometry.Resource));
+
+                            Console.WriteLine("done.");
+                        }
                     }
                     else if (oldTag.IsInGroup("mode"))
                     {
-                        var geometry = ((RenderModel)tagDefinition).Geometry;
+                        var renderModel = (RenderModel)tagDefinition;
 
-                        if (geometry.Resource.Index != -1)
-                            destResources.AddRaw(geometry.Resource, geometry.Resource.GetLocation(), srcResources.ExtractRaw(geometry.Resource));
+                        if (renderModel.Geometry.Resource.Index != -1)
+                        {
+                            Console.Write($"> Copying {groupName} geometry resource...");
+
+                            destResources.AddRaw(
+                                renderModel.Geometry.Resource,
+                                renderModel.Geometry.Resource.GetLocation(),
+                                srcResources.ExtractRaw(renderModel.Geometry.Resource));
+
+                            Console.WriteLine("done.");
+                        }
                     }
                     else if (oldTag.IsInGroup("sbsp"))
                     {
-                        var bsp = (ScenarioStructureBsp)tagDefinition;
+                        var scenarioStructureBsp = (ScenarioStructureBsp)tagDefinition;
 
-                        if (bsp.Geometry.Resource.Index != -1)
-                            destResources.AddRaw(bsp.Geometry.Resource, bsp.Geometry.Resource.GetLocation(), srcResources.ExtractRaw(bsp.Geometry.Resource));
+                        if (scenarioStructureBsp.Geometry.Resource.Index != -1)
+                        {
+                            Console.Write($"> Copying {groupName} geometry resource...");
 
-                        if (bsp.Geometry2.Resource.Index != -1)
-                            destResources.AddRaw(bsp.Geometry2.Resource, bsp.Geometry2.Resource.GetLocation(), srcResources.ExtractRaw(bsp.Geometry2.Resource));
+                            destResources.AddRaw(
+                                scenarioStructureBsp.Geometry.Resource,
+                                scenarioStructureBsp.Geometry.Resource.GetLocation(),
+                                srcResources.ExtractRaw(scenarioStructureBsp.Geometry.Resource));
 
-                        if (bsp.CollisionBSPResource.Index != -1)
-                            destResources.AddRaw(bsp.CollisionBSPResource, bsp.CollisionBSPResource.GetLocation(), srcResources.ExtractRaw(bsp.CollisionBSPResource));
+                            Console.WriteLine("done.");
+                        }
 
-                        if (bsp.Resource4.Index != -1)
-                            destResources.AddRaw(bsp.Resource4, bsp.Resource4.GetLocation(), srcResources.ExtractRaw(bsp.Resource4));
+                        if (scenarioStructureBsp.Geometry2.Resource.Index != -1)
+                        {
+                            Console.Write($"> Copying {groupName} geometry resource...");
+
+                            destResources.AddRaw(
+                                scenarioStructureBsp.Geometry2.Resource,
+                                scenarioStructureBsp.Geometry2.Resource.GetLocation(),
+                                srcResources.ExtractRaw(scenarioStructureBsp.Geometry2.Resource));
+
+                            Console.WriteLine("done.");
+                        }
+
+                        if (scenarioStructureBsp.CollisionBspResource.Index != -1)
+                        {
+                            Console.Write($"> Copying {groupName} collision resource...");
+
+                            destResources.AddRaw(
+                                scenarioStructureBsp.CollisionBspResource,
+                                scenarioStructureBsp.CollisionBspResource.GetLocation(),
+                                srcResources.ExtractRaw(scenarioStructureBsp.CollisionBspResource));
+
+                            Console.WriteLine("done.");
+                        }
+
+                        if (scenarioStructureBsp.Resource4.Index != -1)
+                        {
+                            Console.Write($"> Copying {groupName} unknown resource...");
+
+                            destResources.AddRaw(
+                                scenarioStructureBsp.Resource4,
+                                scenarioStructureBsp.Resource4.GetLocation(),
+                                srcResources.ExtractRaw(scenarioStructureBsp.Resource4));
+
+                            Console.WriteLine("done.");
+                        }
                     }
                     else if (oldTag.IsInGroup("snd!"))
                     {
                         var sound = (Sound)tagDefinition;
 
                         if (sound.Resource.Index != -1)
-                            destResources.AddRaw(sound.Resource, sound.Resource.GetLocation(), srcResources.ExtractRaw(sound.Resource));
+                        {
+                            Console.Write($"> Copying {groupName} resource...");
+
+                            destResources.AddRaw(
+                                sound.Resource,
+                                sound.Resource.GetLocation(),
+                                srcResources.ExtractRaw(sound.Resource));
+
+                            Console.WriteLine("done.");
+                        }
                     }
 
                     Info.Serializer.Serialize(destContext, tagDefinition);
@@ -294,12 +393,11 @@ namespace TagTool.Commands.Tags
                 destInfo.Cache.UpdateTagOffsets(destWriter);
             }
             
-            WriteLine($"Done generating cache files in \"{destDir.FullName}\".");
+            Console.WriteLine($"Done generating cache files in \"{destDir.FullName}\".");
 
             return true;
         }
-
-
+        
         private void LoadTagDependencies(int index, ref HashSet<int> tags)
         {
             var queue = new List<int> { index };

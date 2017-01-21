@@ -64,7 +64,7 @@ namespace TagTool.Cache.HaloOnline
             ImportRaw(inStream, resourceIndex, rawData);
             return resourceIndex;
         }
-        
+
         /// <summary>
         /// Extracts raw, compressed resource data.
         /// </summary>
@@ -82,14 +82,6 @@ namespace TagTool.Cache.HaloOnline
             var result = new byte[compressedSize];
             inStream.Read(result, 0, result.Length);
             return result;
-        }
-
-        public void SeekToRaw(Stream inStream, int resourceIndex)
-        {
-            if (resourceIndex < 0 || resourceIndex >= _resources.Count)
-                throw new ArgumentOutOfRangeException("resourceIndex");
-
-            inStream.Position = _resources[resourceIndex].Offset;
         }
 
         /// <summary>
@@ -110,8 +102,6 @@ namespace TagTool.Cache.HaloOnline
             StreamUtil.Fill(inStream, 0, (int)(roundedSize - data.Length)); // Padding
         }
 
-        public uint GetResourceSize(int resourceIndex) => _resources[resourceIndex].Size;
-
         /// <summary>
         /// Decompresses a resource.
         /// </summary>
@@ -123,7 +113,7 @@ namespace TagTool.Cache.HaloOnline
         {
             if (resourceIndex < 0 || resourceIndex >= _resources.Count)
                 throw new ArgumentOutOfRangeException("resourceIndex");
-            
+
             var reader = new BinaryReader(inStream);
             var resource = _resources[resourceIndex];
             reader.BaseStream.Position = resource.Offset;
@@ -236,33 +226,15 @@ namespace TagTool.Cache.HaloOnline
             for (var i = 0; i < resourceCount; i++)
             {
                 // Read offset
-                var offset = reader.ReadUInt32();
-
-                _resources.Add(new Resource { Offset = offset });
+                _resources.Add(new Resource { Offset = reader.ReadUInt32() });
 
                 // Compute size of previous resource
-                if (i <= 0)
-                    continue;
-
-                for (var j = i - 1; j >= 0; j--)
-                {
-                    if (_resources[j].Offset != 0xFFFFFFFF)
-                    {
-                        _resources[j].Size = _resources[i].Offset - _resources[j].Offset;
-                        break;
-                    }
-                }
+                if (i > 0)
+                    _resources[i - 1].Size = _resources[i].Offset - _resources[i - 1].Offset;
             }
 
             // Compute size of last resource
-            for (var j = resourceCount - 1; j >= 0; j--)
-            {
-                if (_resources[j].Offset != 0xFFFFFFFF)
-                {
-                    _resources[j].Size = tableOffset - _resources[j].Offset;
-                    break;
-                }
-            }
+            _resources[resourceCount - 1].Size = tableOffset - _resources[resourceCount - 1].Offset;
         }
 
         public void UpdateResourceTable(BinaryWriter writer)

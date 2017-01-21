@@ -46,14 +46,14 @@ namespace TagTool.Commands.BSPs
                 return true;
             }
 
-            if (BSP.CollisionBSPResource == null)
+            if (BSP.CollisionBspResource == null)
             {
                 Console.WriteLine("Collision BSP does not have a resource associated with it.");
                 return true;
             }
 
             // Deserialize the collision resource definition
-            var resourceContext = new ResourceSerializationContext(BSP.CollisionBSPResource);
+            var resourceContext = new ResourceSerializationContext(BSP.CollisionBspResource);
             var definition = Info.Deserializer.Deserialize<CollisionBspResourceDefinition>(resourceContext);
 
             // Reserialize the collision resource definition

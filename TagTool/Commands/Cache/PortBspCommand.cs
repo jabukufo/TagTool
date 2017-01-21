@@ -72,7 +72,7 @@ namespace TagTool.Commands.Cache
             // Set the resource refs in the tag to the blank ones we just made
             sbsp.Geometry.Resource = Resource1;
             sbsp.Geometry2.Resource = Resource2;
-            sbsp.CollisionBSPResource = Resource3;
+            sbsp.CollisionBspResource = Resource3;
             sbsp.Resource4 = Resource4;
 
             using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))

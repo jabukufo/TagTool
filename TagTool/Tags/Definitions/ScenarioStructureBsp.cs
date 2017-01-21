@@ -139,7 +139,7 @@ namespace TagTool.Tags.Definitions
         public uint Unknown89;
         public uint Unknown90;
         [MinVersion(CacheVersion.HaloOnline106708)]
-        public ResourceReference CollisionBSPResource;
+        public ResourceReference CollisionBspResource;
         [MaxVersion(CacheVersion.HaloODST)]
         public ushort ZoneAssetSalt3;
         [MaxVersion(CacheVersion.HaloODST)]

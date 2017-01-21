@@ -30,12 +30,12 @@ namespace TagTool.Commands.BSPs
             resources.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
 
             // Deserialize the definition data
-            var resourceContext = new ResourceSerializationContext(BSP.CollisionBSPResource);
+            var resourceContext = new ResourceSerializationContext(BSP.CollisionBspResource);
             var definition = Info.Deserializer.Deserialize<CollisionBspResourceDefinition>(resourceContext);
 
             // Extract the resource data
             var resourceDataStream = new MemoryStream();
-            resources.Extract(BSP.CollisionBSPResource, resourceDataStream);
+            resources.Extract(BSP.CollisionBspResource, resourceDataStream);
 
             using (var reader = new EndianReader(resourceDataStream))
             {
