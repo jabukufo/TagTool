@@ -10,7 +10,6 @@ using TagTool.Tags.Definitions;
 using TagTool.Tags;
 using TagTool.Commands.Animations;
 using TagTool.Commands.BSPs;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Editing
@@ -36,7 +35,7 @@ namespace TagTool.Commands.Editing
 
             using (var stream = info.OpenCacheRead())
                 value = info.Deserializer.Deserialize(
-                    new TagSerializationContext(stream, info.Cache, info.StringIDs, tag),
+                    new TagSerializationContext(stream, info, tag),
                     TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
             switch (tag.Group.Tag.ToString())

@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
@@ -88,7 +87,7 @@ namespace TagTool.Commands.Tags
             if (tagNames.ContainsKey(tag.Index))
                 return;
 
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
+            var context = new TagSerializationContext(stream, Info, tag);
             var definition = Info.Deserializer.Deserialize<RenderModel>(context);
             tagNames[tag.Index] = $"{Info.StringIDs.GetString(definition.Name)}";
         }
@@ -98,7 +97,7 @@ namespace TagTool.Commands.Tags
             if (tag == null || tagNames.ContainsKey(tag.Index))
                 return;
 
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
+            var context = new TagSerializationContext(stream, Info, tag);
             var definition = Info.Deserializer.Deserialize<Model>(context);
 
             if (definition.RenderModel == null)
@@ -122,19 +121,19 @@ namespace TagTool.Commands.Tags
 
         private void SetGameObjectName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
         {
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
+            var context = new TagSerializationContext(stream, Info, tag);
             var definition = (GameObject)Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
             if (definition.Model == null)
                 return;
 
-            context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, definition.Model);
+            context = new TagSerializationContext(stream, Info, definition.Model);
             var modelDefinition = Info.Deserializer.Deserialize<Model>(context);
 
             if (modelDefinition.RenderModel == null)
                 return;
 
-            context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, modelDefinition.RenderModel);
+            context = new TagSerializationContext(stream, Info, modelDefinition.RenderModel);
             var renderModelDefinition = Info.Deserializer.Deserialize<RenderModel>(context);
 
             var objectName = Info.StringIDs.GetString(renderModelDefinition.Name);
@@ -372,7 +371,7 @@ namespace TagTool.Commands.Tags
 
         private void SetScenarioName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
         {
-            var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
+            var context = new TagSerializationContext(stream, Info, tag);
             var definition = Info.Deserializer.Deserialize<Scenario>(context);
 
             var tagName = Info.StringIDs.GetString(definition.ScenarioZonesetGroups[0].Name);

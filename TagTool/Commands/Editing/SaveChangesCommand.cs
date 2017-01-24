@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 using TagTool.Tags;
@@ -29,7 +28,7 @@ namespace TagTool.Commands.Editing
         {
             using (var stream = Info.OpenCacheReadWrite())
             {
-                var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, Tag);
+                var context = new TagSerializationContext(stream, Info, Tag);
                 Info.Serializer.Serialize(context, Value);
             }
 

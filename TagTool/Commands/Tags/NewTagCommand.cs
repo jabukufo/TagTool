@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
 using TagTool.Tags;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
@@ -37,7 +36,7 @@ namespace TagTool.Commands.Tags
             using (var stream = Info.OpenCacheReadWrite())
             {
                 instance = Info.Cache.AllocateTag(TagGroup.Instances[groupTag]);
-                var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, instance);
+                var context = new TagSerializationContext(stream, Info, instance);
                 var data = Activator.CreateInstance(TagStructureTypes.FindByGroupTag(groupTag));
                 Info.Serializer.Serialize(context, data);
             }

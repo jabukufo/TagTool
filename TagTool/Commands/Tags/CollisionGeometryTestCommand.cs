@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Geometry;
 using TagTool.Serialization;
@@ -132,7 +131,7 @@ namespace TagTool.Commands.Tags
                     }
                 }
 
-                var context = new TagSerializationContext(stream, Info.Cache, Info.StringIDs, tag);
+                var context = new TagSerializationContext(stream, Info, tag);
                 Info.Serializer.Serialize(context, coll);
 
             }

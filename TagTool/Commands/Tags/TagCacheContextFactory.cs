@@ -1,5 +1,4 @@
-﻿using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
+﻿using TagTool.Cache.HaloOnline;
 using TagTool.Commands.Core;
 
 namespace TagTool.Commands.Tags
@@ -26,10 +25,9 @@ namespace TagTool.Commands.Tags
             context.AddCommand(new AddressCommand());
             context.AddCommand(new ResourceCommand());
             context.AddCommand(new TestCommand(cacheContext));
-            context.AddCommand(new NullTagCommand(cacheContext));
+            context.AddCommand(new CleanCacheCommand(cacheContext));
             context.AddCommand(new ListUnreferencedTagsCommand(cacheContext));
             context.AddCommand(new ListNullTagsCommand(cacheContext));
-            context.AddCommand(new GenerateCacheCommand(cacheContext));
             context.AddCommand(new NewTagCommand(cacheContext));
             context.AddCommand(new ExportTagsCommand(cacheContext));
 

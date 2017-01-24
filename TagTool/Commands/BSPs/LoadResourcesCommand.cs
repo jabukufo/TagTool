@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -62,7 +61,7 @@ namespace TagTool.Commands.BSPs
             // Reserialize the tag definition
             using (var cacheStream = Info.OpenCacheReadWrite())
             {
-                var tagContext = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Tag);
+                var tagContext = new TagSerializationContext(cacheStream, Info, Tag);
                 Info.Serializer.Serialize(tagContext, BSP);
             }
 

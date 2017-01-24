@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using TagTool.Common;
 using TagTool.IO;
-using TagTool.Cache;
 using TagTool.Tags;
 using TagTool.Cache.HaloOnline;
 
@@ -17,10 +16,9 @@ namespace TagTool.Serialization
     {
         private const int DefaultBlockAlign = 4;
 
-        private readonly Stream _stream;
-        private readonly TagCache _cache;
-        private readonly StringIdCache _stringIds;
-        private TagData _data;
+        private Stream Stream { get; }
+        private GameCacheContext Context { get; }
+        private TagData Data { get; set; }
 
         /// <summary>
         /// Creates a tag serialization context which serializes data into a tag.
@@ -29,11 +27,10 @@ namespace TagTool.Serialization
         /// <param name="cache">The cache file to write to.</param>
         /// <param name="stringIds">The stringID source to use.</param>
         /// <param name="tag">The tag to overwrite.</param>
-        public TagSerializationContext(Stream stream, TagCache cache, StringIdCache stringIds, TagInstance tag)
+        public TagSerializationContext(Stream stream, GameCacheContext context, TagInstance tag)
         {
-            _stream = stream;
-            _cache = cache;
-            _stringIds = stringIds;
+            Stream = stream;
+            Context = context;
             Tag = tag;
         }
 
@@ -44,29 +41,29 @@ namespace TagTool.Serialization
 
         public void BeginSerialize(TagStructureInfo info)
         {
-            _data = new TagData
+            Data = new TagData
             {
                 Group = new TagGroup
                 (
                     tag: info.GroupTag,
                     parentTag: info.ParentGroupTag,
                     grandparentTag: info.GrandparentGroupTag,
-                    name: (info.Structure.Name != null) ? _stringIds.GetStringID(info.Structure.Name) : StringID.Null
+                    name: (info.Structure.Name != null) ? Context.StringIDs.GetStringID(info.Structure.Name) : StringID.Null
                 ),
             };
         }
 
         public void EndSerialize(TagStructureInfo info, byte[] data, uint mainStructOffset)
         {
-            _data.MainStructOffset = mainStructOffset;
-            _data.Data = data;
-            _cache.SetTagData(_stream, Tag, _data);
-            _data = null;
+            Data.MainStructOffset = mainStructOffset;
+            Data.Data = data;
+            Context.Cache.SetTagData(Stream, Tag, Data);
+            Data = null;
         }
 
         public EndianReader BeginDeserialize(TagStructureInfo info)
         {
-            var data = _cache.ExtractTagRaw(_stream, Tag);
+            var data = Context.Cache.ExtractTagRaw(Stream, Tag);
             var reader = new EndianReader(new MemoryStream(data));
             reader.BaseStream.Position = Tag.MainStructOffset;
             return reader;
@@ -83,7 +80,7 @@ namespace TagTool.Serialization
 
         public TagInstance GetTagByIndex(int index)
         {
-            return (index >= 0 && index < _cache.Tags.Count) ? _cache.Tags[index] : null;
+            return (index >= 0 && index < Context.Cache.Tags.Count) ? Context.Cache.Tags[index] : null;
         }
 
         public IDataBlock CreateBlock()
@@ -144,7 +141,7 @@ namespace TagTool.Serialization
                     // Object is a tag reference - add it as a dependency
                     var referencedTag = obj as TagInstance;
                     if (referencedTag != null && referencedTag != _context.Tag)
-                        _context._data.Dependencies.Add(referencedTag.Index);
+                        _context.Data.Dependencies.Add(referencedTag.Index);
                 }
                 return obj;
             }
@@ -163,8 +160,8 @@ namespace TagTool.Serialization
                 StreamUtil.Align(outStream, DefaultBlockAlign);
 
                 // Adjust fixups and add them to the tag
-                _context._data.PointerFixups.AddRange(_fixups.Select(f => FinalizeFixup(f, dataOffset)));
-                _context._data.ResourcePointerOffsets.AddRange(_resourceOffsets.Select(o => o + dataOffset));
+                _context.Data.PointerFixups.AddRange(_fixups.Select(f => FinalizeFixup(f, dataOffset)));
+                _context.Data.ResourcePointerOffsets.AddRange(_resourceOffsets.Select(o => o + dataOffset));
 
                 // Free the block data
                 Writer.Close();

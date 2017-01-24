@@ -50,7 +50,8 @@ namespace TagTool.Commands.Tags
             // Load the CSV
             Console.WriteLine("Reading {0}...", csvPath);
             TagVersionMap tagMap;
-            using (var reader = new StreamReader(File.OpenRead(csvPath)))
+            
+            using (var reader = new StreamReader(File.Exists(csvPath) ? File.OpenRead(csvPath) : File.Create(csvPath)))
                 tagMap = TagVersionMap.ParseTagVersionMap(reader);
 
             // Load destination files
@@ -105,7 +106,35 @@ namespace TagTool.Commands.Tags
             Console.WriteLine("CONVERTING FROM VERSION {0} TO {1}", CacheVersionDetection.GetVersionString(_info.Version), CacheVersionDetection.GetVersionString(destInfo.Version));
             Console.WriteLine();
 
-            TagInstance resultTag;
+            using (var stream = _info.OpenCacheReadWrite())
+            {
+                foreach (var scnr in _info.Cache.Tags.FindAllInGroup("scnr"))
+                {
+                    var scnrContext = new TagSerializationContext(stream, _info, scnr);
+                    var scnrDefinition = _info.Deserializer.Deserialize<Scenario>(scnrContext);
+
+                    foreach (var biped in scnrDefinition.BipedPalette)
+                        biped.Biped = null;
+
+                    foreach (var vehicle in scnrDefinition.VehiclePalette)
+                        vehicle.Vehicle = null;
+
+                    foreach (var weapon in scnrDefinition.WeaponPalette)
+                        weapon.Weapon = null;
+
+                    scnrDefinition.SandboxEquipment.Clear();
+                    scnrDefinition.SandboxGoalObjects.Clear();
+                    scnrDefinition.SandboxScenery.Clear();
+                    scnrDefinition.SandboxSpawning.Clear();
+                    scnrDefinition.SandboxTeleporters.Clear();
+                    scnrDefinition.SandboxVehicles.Clear();
+                    scnrDefinition.SandboxWeapons.Clear();
+
+                    _info.Serializer.Serialize(scnrContext, scnrDefinition);
+                }
+            }
+
+                TagInstance resultTag;
             using (Stream srcStream = _info.OpenCacheRead(), destStream = destInfo.OpenCacheReadWrite())
                 resultTag = ConvertTag(srcTag, _info, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
 
@@ -139,6 +168,9 @@ namespace TagTool.Commands.Tags
         {
             TagPrinter.PrintTagShort(srcTag);
 
+            if (srcTag.IsInGroup("bipd") || srcTag.IsInGroup("eqip") || srcTag.IsInGroup("vehi") || srcTag.IsInGroup("proj"))
+                return null;
+
             // Uncomment this to use 0x101F for all shaders
             /*if (srcTag.IsClass("rm  "))
                 return destInfo.Cache.Tags[0x101F];*/
@@ -153,8 +185,10 @@ namespace TagTool.Commands.Tags
 
             // Deserialize the tag from the source cache
             var structureType = TagStructureTypes.FindByGroupTag(srcTag.Group.Tag);
-            var srcContext = new TagSerializationContext(srcStream, srcInfo.Cache, srcInfo.StringIDs, srcTag);
+            var srcContext = new TagSerializationContext(srcStream, srcInfo, srcTag);
             var tagData = srcInfo.Deserializer.Deserialize(srcContext, structureType);
+
+
 
             // Uncomment this to use 0x101F in place of shaders that need conversion
             /*if (tagData is RenderMethod)
@@ -181,7 +215,7 @@ namespace TagTool.Commands.Tags
                 _isDecalShader = false;
 
             // Re-serialize into the destination cache
-            var destContext = new TagSerializationContext(destStream, destInfo.Cache, destInfo.StringIDs, newTag);
+            var destContext = new TagSerializationContext(destStream, destInfo, newTag);
             destInfo.Serializer.Serialize(destContext, tagData);
             return newTag;
         }
@@ -733,12 +767,12 @@ namespace TagTool.Commands.Tags
                 return;
             using (var stream = destInfo.OpenCacheReadWrite())
             {
-                var firstDecalSystemContext = new TagSerializationContext(stream, destInfo.Cache, destInfo.StringIDs, firstDecalSystemTag);
+                var firstDecalSystemContext = new TagSerializationContext(stream, destInfo, firstDecalSystemTag);
                 var firstDecalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(firstDecalSystemContext);
                 foreach (var decalSystemTag in destInfo.Cache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
                 {
                     TagPrinter.PrintTagShort(decalSystemTag);
-                    var context = new TagSerializationContext(stream, destInfo.Cache, destInfo.StringIDs, decalSystemTag);
+                    var context = new TagSerializationContext(stream, destInfo, decalSystemTag);
                     var decalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(context);
                     foreach (var system in decalSystem.DecalSystem2)
                         system.BaseRenderMethod = firstDecalSystem.DecalSystem2[0].BaseRenderMethod;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.Analysis;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Layouts;
 using TagTool.Tags;

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using TagTool.IO;
+﻿using TagTool.IO;
 using TagTool.Tags;
 
 namespace TagTool.Serialization

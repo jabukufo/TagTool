@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 using TagTool.Tags;
@@ -38,7 +37,7 @@ namespace TagTool.Commands.RenderMethods
 
                 using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
-                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, property.Template);
+                    var context = new TagSerializationContext(cacheStream, Info, property.Template);
                     template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
                 }
 

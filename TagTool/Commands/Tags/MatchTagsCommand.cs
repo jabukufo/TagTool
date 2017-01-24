@@ -116,7 +116,7 @@ namespace TagTool.Commands.Tags
                             if (data == null)
                             {
                                 // No data yet - deserialize it
-                                var context = new TagSerializationContext(stream, info.Cache, info.StringIDs, tag.Tag);
+                                var context = new TagSerializationContext(stream, info, tag.Tag);
                                 var type = TagStructureTypes.FindByGroupTag(tag.Tag.Group.Tag);
                                 data = info.Deserializer.Deserialize(context, type);
                             }
@@ -129,7 +129,7 @@ namespace TagTool.Commands.Tags
                             if (!baseTagData.TryGetValue(baseTag, out baseData))
                             {
                                 // No data yet - deserialize it
-                                var context = new TagSerializationContext(baseStream, _info.Cache, _info.StringIDs, _info.Cache.Tags[baseTag]);
+                                var context = new TagSerializationContext(baseStream, _info, _info.Cache.Tags[baseTag]);
                                 var type = TagStructureTypes.FindByGroupTag(tag.Tag.Group.Tag);
                                 baseData = _info.Deserializer.Deserialize(context, type);
                                 baseTagData[baseTag] = baseData;
@@ -240,7 +240,7 @@ namespace TagTool.Commands.Tags
             var scenarios = new Dictionary<int, QueuedTag>();
             foreach (var scenarioTag in info.Cache.Tags.FindAllInGroup("scnr"))
             {
-                var context = new TagSerializationContext(stream, info.Cache, info.StringIDs, scenarioTag);
+                var context = new TagSerializationContext(stream, info, scenarioTag);
                 var scenario = info.Deserializer.Deserialize<Scenario>(context);
                 scenarios[scenario.MapId] = new QueuedTag { Tag = scenarioTag, Data = scenario };
             }

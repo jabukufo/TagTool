@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 using TagTool.Tags;
@@ -41,7 +40,7 @@ namespace TagTool.Commands.RenderModels
 
             using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Tag);
+                var context = new TagSerializationContext(cacheStream, Info, Tag);
                 Info.Serializer.Serialize(context, Definition);
             }
 

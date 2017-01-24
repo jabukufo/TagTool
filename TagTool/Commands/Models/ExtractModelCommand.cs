@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Geometry;
 using TagTool.Serialization;
@@ -50,7 +49,7 @@ namespace TagTool.Commands.Models
             RenderModel renderModel;
             using (var cacheStream = Info.CacheFile.OpenRead())
             {
-                var renderModelContext = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Definition.RenderModel);
+                var renderModelContext = new TagSerializationContext(cacheStream, Info, Definition.RenderModel);
                 renderModel = Info.Deserializer.Deserialize<RenderModel>(renderModelContext);
             }
 
@@ -254,7 +253,7 @@ namespace TagTool.Commands.Models
             RenderModel renderModel;
             using (var cacheStream = Info.CacheFile.OpenRead())
             {
-                var renderModelContext = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Definition.RenderModel);
+                var renderModelContext = new TagSerializationContext(cacheStream, Info, Definition.RenderModel);
                 renderModel = Info.Deserializer.Deserialize<RenderModel>(renderModelContext);
             }
 

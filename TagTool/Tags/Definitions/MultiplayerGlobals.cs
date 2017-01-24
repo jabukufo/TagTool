@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.Tags;
 
 namespace TagTool.Tags.Definitions
 {
@@ -1709,7 +1708,7 @@ namespace TagTool.Tags.Definitions
                 public class Weapon
                 {
                     public TagInstance Weapon2;
-                    public float Unknown;
+                    public float Unknown1;
                     public float Unknown2;
                     public float Unknown3;
                     public float Unknown4;
@@ -1719,7 +1718,7 @@ namespace TagTool.Tags.Definitions
                 public class Vehicle
                 {
                     public TagInstance Vehicle2;
-                    public float Unknown;
+                    public float Unknown1;
                     public float Unknown2;
                     public float Unknown3;
                     public float Unknown4;

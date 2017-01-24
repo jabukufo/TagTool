@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TagTool.Common;
-using TagTool.Cache;
 using TagTool.Serialization;
-using TagTool.Tags;
 using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Tags.Definitions

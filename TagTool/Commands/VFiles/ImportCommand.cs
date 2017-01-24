@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 using TagTool.Tags;
@@ -57,7 +56,7 @@ namespace TagTool.Commands.VFiles
             Definition.Replace(file, data);
 
             using (var stream = Info.OpenCacheReadWrite())
-                Info.Serializer.Serialize(new TagSerializationContext(stream, Info.Cache, Info.StringIDs, Tag), Definition);
+                Info.Serializer.Serialize(new TagSerializationContext(stream, Info, Tag), Definition);
 
             Console.WriteLine("Imported 0x{0:X} bytes.", data.Length);
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -69,7 +68,7 @@ namespace TagTool.Commands.Scenarios
             
             using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var scenarioContext = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, destinationTag);
+                var scenarioContext = new TagSerializationContext(cacheStream, Info, destinationTag);
                 destinationScenario = Info.Deserializer.Deserialize<Scenario>(scenarioContext);
             }
 
@@ -106,7 +105,7 @@ namespace TagTool.Commands.Scenarios
 
             using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var scenarioContext = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, destinationTag);
+                var scenarioContext = new TagSerializationContext(cacheStream, Info, destinationTag);
                 Info.Serializer.Serialize(scenarioContext, destinationScenario);
             }
 

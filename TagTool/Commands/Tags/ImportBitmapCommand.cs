@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Common;
-using TagTool.Cache;
 using TagTool.Bitmaps;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -75,7 +74,7 @@ namespace TagTool.Commands.Tags
 
             using (var tagsStream = Info.OpenCacheReadWrite())
             {
-                var tagContext = new TagSerializationContext(tagsStream, Info.Cache, Info.StringIDs, tag);
+                var tagContext = new TagSerializationContext(tagsStream, Info, tag);
                 Info.Serializer.Serialize(tagContext, bitmap);
             }
 

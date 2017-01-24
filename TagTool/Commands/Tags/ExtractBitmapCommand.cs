@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Bitmaps;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -69,7 +68,7 @@ namespace TagTool.Commands.Tags
             {
                 try
                 {
-                    var tagContext = new TagSerializationContext(tagsStream, Info.Cache, Info.StringIDs, tag);
+                    var tagContext = new TagSerializationContext(tagsStream, Info, tag);
                     var bitmap = Info.Deserializer.Deserialize<Bitmap>(tagContext);
                     var ddsOutDir = directory;
                     if (bitmap.Images.Count > 1)

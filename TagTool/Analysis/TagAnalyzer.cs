@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 

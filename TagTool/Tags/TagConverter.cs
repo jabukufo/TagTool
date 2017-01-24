@@ -24,7 +24,7 @@ namespace TagTool.Tags
             
             // Deserialize the tag from the source cache
             var structureType = TagStructureTypes.FindByGroupTag(srcTag.Group.Tag);
-            var srcContext = new TagSerializationContext(srcStream, srcInfo.Cache, srcInfo.StringIDs, srcTag);
+            var srcContext = new TagSerializationContext(srcStream, srcInfo, srcTag);
             var tagData = srcInfo.Deserializer.Deserialize(srcContext, structureType);
 
             // Acquire the destination tag
@@ -41,7 +41,7 @@ namespace TagTool.Tags
                 IsDecalShader = false;
 
             // Re-serialize into the destination cache
-            var destContext = new TagSerializationContext(destStream, destInfo.Cache, destInfo.StringIDs, destTag);
+            var destContext = new TagSerializationContext(destStream, destInfo, destTag);
             destInfo.Serializer.Serialize(destContext, tagData);
             
             return destTag;
@@ -594,12 +594,12 @@ namespace TagTool.Tags
                 return;
             using (var stream = destInfo.OpenCacheReadWrite())
             {
-                var firstDecalSystemContext = new TagSerializationContext(stream, destInfo.Cache, destInfo.StringIDs, firstDecalSystemTag);
+                var firstDecalSystemContext = new TagSerializationContext(stream, destInfo, firstDecalSystemTag);
                 var firstDecalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(firstDecalSystemContext);
                 foreach (var decalSystemTag in destInfo.Cache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
                 {
                     TagPrinter.PrintTagShort(decalSystemTag);
-                    var context = new TagSerializationContext(stream, destInfo.Cache, destInfo.StringIDs, decalSystemTag);
+                    var context = new TagSerializationContext(stream, destInfo, decalSystemTag);
                     var decalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(context);
                     foreach (var system in decalSystem.DecalSystem2)
                         system.BaseRenderMethod = firstDecalSystem.DecalSystem2[0].BaseRenderMethod;

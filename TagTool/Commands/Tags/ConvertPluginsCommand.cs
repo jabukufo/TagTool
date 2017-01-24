@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Layouts;

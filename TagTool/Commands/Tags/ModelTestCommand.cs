@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Assimp;
 using TagTool.Common;
-using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -206,7 +205,7 @@ namespace TagTool.Commands.Tags
             using (var cacheStream = Info.OpenCacheReadWrite())
             {
                 var tag = destination;
-                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, tag);
+                var context = new TagSerializationContext(cacheStream, Info, tag);
                 Info.Serializer.Serialize(context, renderModel);
             }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
@@ -53,7 +52,7 @@ namespace TagTool.Commands.Tags
             {
                 foreach (var unicTag in Info.Cache.Tags.FindAllInGroup("unic"))
                 {
-                    var unic = Info.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, Info.Cache, Info.StringIDs, unicTag));
+                    var unic = Info.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, Info, unicTag));
                     var strings = LocalizedStringPrinter.PrepareForDisplay(unic, Info.StringIDs, unic.Strings, language, filter);
                     if (strings.Count == 0)
                         continue;

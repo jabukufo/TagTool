@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using TagTool.Common;
 using TagTool.Tags;
 using TagTool.Cache;

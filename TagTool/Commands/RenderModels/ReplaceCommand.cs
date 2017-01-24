@@ -137,7 +137,7 @@ namespace TagTool.Commands.RenderModels
             RenderModel destDefinition;
             using (var destStream = destInfo.OpenCacheRead())
             {
-                var context = new TagSerializationContext(destStream, destInfo.Cache, destInfo.StringIDs, destTag);
+                var context = new TagSerializationContext(destStream, destInfo, destTag);
                 destDefinition = destInfo.Deserializer.Deserialize<RenderModel>(context);
             }
 

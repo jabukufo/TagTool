@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using TagTool.Serialization;
 using TagTool.Tags;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
@@ -86,7 +85,7 @@ namespace TagTool.Commands.Tags
                     }
                 }
 
-                var context = new TagSerializationContext(stream, _info.Cache, _info.StringIDs, tag);
+                var context = new TagSerializationContext(stream, _info, tag);
                 _info.Serializer.Serialize(context, phmo);
 
             }

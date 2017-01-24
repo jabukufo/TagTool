@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Serialization;
-using TagTool.Tags;
 
 namespace TagTool.Tags.Definitions
 {
@@ -515,7 +514,7 @@ namespace TagTool.Tags.Definitions
             public float SecondsToStart;
             public float SecondsToFullSpeed;
             public float DecayRate;
-            public float FullSpeedMultiplierS1X;
+            public float FullSpeedMultiplier;
             public float PeggedMagnitude;
             public float PeggedAngularThreshold;
             public uint Unknown;

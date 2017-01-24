@@ -1,5 +1,4 @@
 ﻿using TagTool.Serialization;
-using TagTool.Tags;
 
 namespace TagTool.Tags.Definitions
 {

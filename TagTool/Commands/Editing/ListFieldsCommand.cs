@@ -4,7 +4,6 @@ using System.Collections;
 using TagTool.Serialization;
 using TagTool.Common;
 using TagTool.Tags;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Editing

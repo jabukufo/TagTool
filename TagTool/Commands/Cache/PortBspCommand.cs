@@ -79,7 +79,7 @@ namespace TagTool.Commands.Cache
             {
                 Console.WriteLine("Writing ElDewrito tag to tag " + newTagIndex+"...");
 
-                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Info.Cache.Tags[newTagIndex.Index]);
+                var context = new TagSerializationContext(cacheStream, Info, Info.Cache.Tags[newTagIndex.Index]);
                 Info.Serializer.Serialize(context, sbsp);
             }
 
