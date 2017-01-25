@@ -49,10 +49,12 @@ namespace TagTool.Commands.Tags
                 {
                     if (!tags.Contains(entry))
                     {
+                        if (Info.TagCache.Tags[entry] == null)
                             continue;
 
                         tags.Add(entry);
 
+                        foreach (var dependency in Info.TagCache.Tags[entry].Dependencies)
                             if (!nextQueue.Contains(dependency))
                                 nextQueue.Add(dependency);
                     }
@@ -95,13 +97,18 @@ namespace TagTool.Commands.Tags
 
         private void NullTags(Stream stream, ref HashSet<int> tags, ref HashSet<int> retainedTags)
         {
+            for (var i = 0; i < Info.TagCache.Tags.Count; i++)
             {
+                var tag = Info.TagCache.Tags[i];
 
                 if (tag == null)
                     continue;
 
                 if (!retainedTags.Contains(i) && tags.Contains(i))
                 {
+                    Console.Write($"Nulling {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
+                    Info.TagCache.Tags[tag.Index] = null;
+                    Info.TagCache.SetTagDataRaw(stream, tag, new byte[] { });
                 }
                 else
                 {
@@ -109,12 +116,14 @@ namespace TagTool.Commands.Tags
 
                     if (tag.IsInGroup("bink"))
                     {
+                        Console.Write($"Loading {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
                         var tagDefinition = Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing video resource for recache...");
                         AddResource(((Bink)tagDefinition).Resource);
                     }
                     else if (tag.IsInGroup("bitm"))
                     {
+                        Console.Write($"Loading {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
                         var tagDefinition = Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing bitmap resources for recache...");
 
@@ -123,6 +132,7 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("jmad"))
                     {
+                        Console.Write($"Loading {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
                         var tagDefinition = Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing animation resources for recache...");
 
@@ -131,18 +141,21 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("Lbsp"))
                     {
+                        Console.Write($"Loading {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
                         var tagDefinition = Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing geometry resource for recache...");
                         AddResource(((ScenarioLightmapBspData)tagDefinition).Geometry.Resource);
                     }
                     else if (tag.IsInGroup("mode"))
                     {
+                        Console.Write($"Loading {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
                         var tagDefinition = Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing geometry resource for recache...");
                         AddResource(((RenderModel)tagDefinition).Geometry.Resource);
                     }
                     else if (tag.IsInGroup("sbsp"))
                     {
+                        Console.Write($"Loading {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
                         var tagDefinition = Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
                         try
@@ -175,6 +188,7 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("snd!"))
                     {
+                        Console.Write($"Loading {Info.TagNames[tag.Index]}.{Info.StringIdCache.GetString(tag.Group.Name)}...");
                         var tagDefinition = Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing sound resource for recache...");
                         AddResource(((Sound)tagDefinition).Resource);
@@ -192,6 +206,7 @@ namespace TagTool.Commands.Tags
             //
 
             Console.WriteLine("Deserializing audio.dat");
+            var resourceFile = new ResourceFile(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "audio.dat")));
 
             foreach (var resource in resourceFile.Resources)
             {
@@ -202,12 +217,15 @@ namespace TagTool.Commands.Tags
                 }
             }
 
+            Console.WriteLine($"Serializing to {Info.TagCacheFile.Directory}/audio.dat");
+            resourceFile.Serialize(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "audio.dat")));
 
             //
             // Main Resources
             //
 
             Console.WriteLine("Deserializing resources.dat");
+            resourceFile = new ResourceFile(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "resources.dat")));
 
             foreach (var resource in resourceFile.Resources)
             {
@@ -218,12 +236,15 @@ namespace TagTool.Commands.Tags
                 }
             }
 
+            Console.WriteLine($"Serializing to {Info.TagCacheFile.Directory}/resources.dat");
+            resourceFile.Serialize(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "resources.dat")));
 
             //
             // Textures Resources
             //
 
             Console.WriteLine("Deserializing textures.dat");
+            resourceFile = new ResourceFile(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "textures.dat")));
 
             foreach (var resource in resourceFile.Resources)
             {
@@ -234,12 +255,15 @@ namespace TagTool.Commands.Tags
                 }
             }
 
+            Console.WriteLine($"Serializing to {Info.TagCacheFile.Directory}/textures.dat");
+            resourceFile.Serialize(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "textures.dat")));
 
             //
             // TexturesB Resources
             //
 
             Console.WriteLine("Deserializing textures_b.dat");
+            resourceFile = new ResourceFile(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "textures_b.dat")));
 
             foreach (var resource in resourceFile.Resources)
             {
@@ -250,12 +274,15 @@ namespace TagTool.Commands.Tags
                 }
             }
 
+            Console.WriteLine($"Serializing to {Info.TagCacheFile.Directory}/textures_b.dat");
+            resourceFile.Serialize(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "textures_b.dat")));
 
             //
             // Video Resources
             //
 
             Console.WriteLine("Deserializing video.dat");
+            resourceFile = new ResourceFile(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "video.dat")));
 
             foreach (var resource in resourceFile.Resources)
             {
@@ -266,6 +293,8 @@ namespace TagTool.Commands.Tags
                 }
             }
 
+            Console.WriteLine($"Serializing to {Info.TagCacheFile.Directory}/video.dat");
+            resourceFile.Serialize(new FileInfo(Path.Combine(Info.TagCacheFile.DirectoryName, "video.dat")));
         }
 
         public override bool Execute(List<string> args)
@@ -281,7 +310,9 @@ namespace TagTool.Commands.Tags
             using (var stream = Info.OpenCacheReadWrite())
             {
                 var retainedTags = new HashSet<int>();
+                LoadTagDependencies(Info.TagCache.Tags.FindFirstInGroup("cfgt").Index, ref retainedTags);
 
+                foreach (var scnr in Info.TagCache.Tags.FindAllInGroup("scnr"))
                     LoadTagDependencies(scnr.Index, ref retainedTags);
 
                 var tags = new HashSet<int>();
