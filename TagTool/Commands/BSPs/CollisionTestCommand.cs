@@ -26,7 +26,7 @@ namespace TagTool.Commands.BSPs
         public override bool Execute(List<string> args)
         {
             var resources = new ResourceDataManager();
-            resources.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+            resources.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
 
             // Deserialize the definition data
             var resourceContext = new ResourceSerializationContext(BSP.CollisionBspResource);

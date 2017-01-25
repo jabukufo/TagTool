@@ -28,8 +28,8 @@ namespace TagTool.Tags
             var tagData = srcInfo.Deserializer.Deserialize(srcContext, structureType);
 
             // Acquire the destination tag
-            var destTag = destInfo.Cache.AllocateTag(srcTag.Group);
-            tagMap.Add(srcInfo.CacheFile.FullName, srcTag.Index, destInfo.CacheFile.FullName, destTag.Index);
+            var destTag = destInfo.TagCache.AllocateTag(srcTag.Group);
+            tagMap.Add(srcInfo.TagCacheFile.FullName, srcTag.Index, destInfo.TagCacheFile.FullName, destTag.Index);
 
             if (srcTag.IsInGroup("decs") || srcTag.IsInGroup("rmd "))
                 IsDecalShader = true;
@@ -125,12 +125,12 @@ namespace TagTool.Tags
         {
             if (stringId == StringID.Null)
                 return stringId;
-            var srcString = srcInfo.StringIDs.GetString(stringId);
+            var srcString = srcInfo.StringIdCache.GetString(stringId);
             if (srcString == null)
                 return StringID.Null;
-            var destStringID = destInfo.StringIDs.GetStringID(srcString);
+            var destStringID = destInfo.StringIdCache.GetStringID(srcString);
             if (destStringID == StringID.Null)
-                destStringID = destInfo.StringIDs.Add(srcString);
+                destStringID = destInfo.StringIdCache.Add(srcString);
             return destStringID;
         }
 
@@ -589,14 +589,14 @@ namespace TagTool.Tags
             // pass, but we'd have to store the rmdf somewhere and frankly I'm
             // too lazy to do that...
 
-            var firstDecalSystemTag = destInfo.Cache.Tags.FindFirstInGroup("decs");
+            var firstDecalSystemTag = destInfo.TagCache.Tags.FindFirstInGroup("decs");
             if (firstDecalSystemTag == null)
                 return;
             using (var stream = destInfo.OpenCacheReadWrite())
             {
                 var firstDecalSystemContext = new TagSerializationContext(stream, destInfo, firstDecalSystemTag);
                 var firstDecalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(firstDecalSystemContext);
-                foreach (var decalSystemTag in destInfo.Cache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
+                foreach (var decalSystemTag in destInfo.TagCache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
                 {
                     TagPrinter.PrintTagShort(decalSystemTag);
                     var context = new TagSerializationContext(stream, destInfo, decalSystemTag);

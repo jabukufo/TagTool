@@ -5,18 +5,21 @@ using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
-    class ExportTagsCommand : Command
+    class ExtractTagsCommand : Command
     {
-        public GameCacheContext Info { get; }
+        public GameCacheContext CacheContext { get; }
 
-        public ExportTagsCommand(GameCacheContext info)
+        public ExtractTagsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
-                  "exporttags",
-                  "Exports all tags in the current tag cache to a specific directory.",
-                  "exporttags <output directory>",
-                  "Exports all tags in the current tag cache to a specific directory.")
+
+                  "extract-tags",
+                  "Extracts all tags in the current tag cache to a specific directory.",
+
+                  "extract-tags <output directory>",
+
+                  "Extracts all tags in the current tag cache to a specific directory.")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -40,14 +43,14 @@ namespace TagTool.Commands.Tags
                     return false;
             }
 
-            using (var cacheStream = Info.OpenCacheRead())
+            using (var cacheStream = CacheContext.OpenCacheRead())
             {
-                foreach (var instance in Info.Cache.Tags)
+                foreach (var instance in CacheContext.TagCache.Tags)
                 {
                     if (instance == null)
                         continue;
 
-                    var tagName = Info.TagNames[instance.Index] + "." + Info.StringIDs.GetString(instance.Group.Name);
+                    var tagName = CacheContext.TagNames[instance.Index] + "." + CacheContext.StringIdCache.GetString(instance.Group.Name);
                     var tagPath = Path.Combine(directory, tagName);
                     var tagDirectory = Path.GetDirectoryName(tagPath);
 
@@ -57,7 +60,7 @@ namespace TagTool.Commands.Tags
                     using (var tagStream = File.Create(tagPath))
                     using (var writer = new BinaryWriter(tagStream))
                     {
-                        writer.Write(Info.Cache.ExtractTagRaw(cacheStream, instance));
+                        writer.Write(CacheContext.TagCache.ExtractTagRaw(cacheStream, instance));
                     }
 
                     Console.WriteLine($"Exported {tagName}");

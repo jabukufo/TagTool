@@ -4,32 +4,36 @@ using System.IO;
 using TagTool.Bitmaps;
 using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
+using TagTool.Tags;
 using TagTool.Tags.Definitions;
 
-namespace TagTool.Commands.Tags
+namespace TagTool.Commands.Bitmaps
 {
     class ExtractBitmapCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
+        private TagInstance Tag { get; }
+        private Bitmap Bitmap { get; }
 
-        public ExtractBitmapCommand(GameCacheContext info)
+        public ExtractBitmapCommand(GameCacheContext cacheContext, TagInstance tag, Bitmap bitmap)
             : base(CommandFlags.None,
-                  "extractbitmap",
+
+                  "extract-bitmap",
                   "Extracts a bitmap to a file.",
-                  "extractbitmap <tag index> <output directory>",
+
+                  "extract-bitmap <output directory>",
+
                   "Extracts a bitmap to a file.")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
         {
-            if (args.Count != 2)
+            if (args.Count != 1)
                 return false;
-
-            var tag = ArgumentParser.ParseTagIndex(Info, args[0]);
-
-            if (tag == null)
+            
+            if (Tag == null)
                 return false;
 
             var directory = args[1];
@@ -50,9 +54,10 @@ namespace TagTool.Commands.Tags
 
             Console.Write("Loading resource caches...");
             var resourceManager = new ResourceDataManager();
+
             try
             {
-                resourceManager.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+                resourceManager.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
             }
             catch
             {
@@ -60,29 +65,32 @@ namespace TagTool.Commands.Tags
                 Console.WriteLine("Make sure that they all exist and are valid.");
                 return true;
             }
+
             Console.WriteLine("done.");
 
             var extractor = new BitmapDdsExtractor(resourceManager);
 
-            using (var tagsStream = Info.OpenCacheRead())
+            using (var tagsStream = CacheContext.OpenCacheRead())
             {
                 try
                 {
-                    var tagContext = new TagSerializationContext(tagsStream, Info, tag);
-                    var bitmap = Info.Deserializer.Deserialize<Bitmap>(tagContext);
+                    var tagContext = new TagSerializationContext(tagsStream, CacheContext, Tag);
+                    var bitmap = CacheContext.Deserializer.Deserialize<Bitmap>(tagContext);
                     var ddsOutDir = directory;
+
                     if (bitmap.Images.Count > 1)
                     {
-                        ddsOutDir = Path.Combine(directory, tag.Index.ToString("X8"));
+                        ddsOutDir = Path.Combine(directory, Tag.Index.ToString("X8"));
                         Directory.CreateDirectory(ddsOutDir);
                     }
+
                     for (var i = 0; i < bitmap.Images.Count; i++)
                     {
-                        var outPath = Path.Combine(ddsOutDir,
-                            ((bitmap.Images.Count > 1) ? i.ToString() : tag.Index.ToString("X8")) + ".dds");
+                        var outPath = Path.Combine(ddsOutDir, ((bitmap.Images.Count > 1) ? i.ToString() : Tag.Index.ToString("X8")) + ".dds");
+
                         using (var outStream = File.Open(outPath, FileMode.Create, FileAccess.Write))
                         {
-                            extractor.ExtractDds(Info.Deserializer, bitmap, i, outStream);
+                            extractor.ExtractDds(CacheContext.Deserializer, bitmap, i, outStream);
                         }
                     }
                 }
@@ -92,11 +100,7 @@ namespace TagTool.Commands.Tags
                 }
             }
 
-            var tagName = Info.TagNames.ContainsKey(tag.Index) ?
-                Info.TagNames[tag.Index] :
-                $"0x{tag.Index:X4}";
-
-            Console.WriteLine($"Extracted [Index: 0x{tag.Index:X4}, Offset: 0x{tag.HeaderOffset:X8}, Size: 0x{tag.TotalSize:X4}] {tagName}.{Info.StringIDs.GetString(tag.Group.Name)} to '{directory}'");
+            Console.WriteLine("Done!");
 
             return true;
         }

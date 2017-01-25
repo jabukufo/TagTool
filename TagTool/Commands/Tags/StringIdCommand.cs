@@ -28,7 +28,7 @@ namespace TagTool.Commands.Tags
             "\"stringid list\" will list stringIDs, optionally filtering them.")
         {
             _info = info;
-            _stringIds = info.StringIDs;
+            _stringIds = info.StringIdCache;
         }
 
         public override bool Execute(List<string> args)
@@ -53,7 +53,7 @@ namespace TagTool.Commands.Tags
                 return false;
             var str = args[1];
             var id = _stringIds.Add(str);
-            using (var stream = _info.StringIDsFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var stream = _info.StringIdCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
                 _stringIds.Save(stream);
             
             Console.WriteLine("Added string \"{0}\" as {1}.", str, id);

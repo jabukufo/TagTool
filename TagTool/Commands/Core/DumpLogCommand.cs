@@ -8,9 +8,12 @@ namespace TagTool.Commands.Core
     {
         public DumpLogCommand()
             : base(CommandFlags.Inherit,
-                  "dumplog",
+
+                  "dump-log",
                   "Dumps the current log into the logs directory.",
-                  "dumplog [name = hott_*_crash.log]",
+
+                  "dump-log [name = hott_*_crash.log]",
+
                   "Dumps the current log into the logs directory.")
         {
         }

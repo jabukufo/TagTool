@@ -48,7 +48,7 @@ namespace TagTool.Serialization
                     tag: info.GroupTag,
                     parentTag: info.ParentGroupTag,
                     grandparentTag: info.GrandparentGroupTag,
-                    name: (info.Structure.Name != null) ? Context.StringIDs.GetStringID(info.Structure.Name) : StringID.Null
+                    name: (info.Structure.Name != null) ? Context.StringIdCache.GetStringID(info.Structure.Name) : StringID.Null
                 ),
             };
         }
@@ -57,13 +57,13 @@ namespace TagTool.Serialization
         {
             Data.MainStructOffset = mainStructOffset;
             Data.Data = data;
-            Context.Cache.SetTagData(Stream, Tag, Data);
+            Context.TagCache.SetTagData(Stream, Tag, Data);
             Data = null;
         }
 
         public EndianReader BeginDeserialize(TagStructureInfo info)
         {
-            var data = Context.Cache.ExtractTagRaw(Stream, Tag);
+            var data = Context.TagCache.ExtractTagRaw(Stream, Tag);
             var reader = new EndianReader(new MemoryStream(data));
             reader.BaseStream.Position = Tag.MainStructOffset;
             return reader;
@@ -80,7 +80,7 @@ namespace TagTool.Serialization
 
         public TagInstance GetTagByIndex(int index)
         {
-            return (index >= 0 && index < Context.Cache.Tags.Count) ? Context.Cache.Tags[index] : null;
+            return (index >= 0 && index < Context.TagCache.Tags.Count) ? Context.TagCache.Tags[index] : null;
         }
 
         public IDataBlock CreateBlock()

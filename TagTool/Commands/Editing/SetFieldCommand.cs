@@ -11,22 +11,25 @@ namespace TagTool.Commands.Editing
 {
     class SetFieldCommand : Command
     {
-        private CommandContextStack Stack { get; }
-        private GameCacheContext Info { get; }
+        private CommandContextStack ContextStack { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
 
-        public SetFieldCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
+        public SetFieldCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
-                  "setfield",
+
+                  "set-field",
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.",
-                  "setfield <field name> <field value>",
+
+                  "set-field <field name> <field value>",
+
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.")
         {
-            Stack = stack;
-            Info = info;
+            ContextStack = contextStack;
+            CacheContext = cacheContext;
             Tag = tag;
             Structure = structure;
             Owner = owner;
@@ -40,7 +43,7 @@ namespace TagTool.Commands.Editing
             var fieldName = args[0];
             var fieldNameLow = fieldName.ToLower();
 
-            var previousContext = Stack.Context;
+            var previousContext = ContextStack.Context;
             var previousOwner = Owner;
             var previousStructure = Structure;
 
@@ -51,24 +54,24 @@ namespace TagTool.Commands.Editing
                 fieldName = fieldName.Substring(lastIndex + 1, (fieldName.Length - lastIndex) - 1);
                 fieldNameLow = fieldName.ToLower();
 
-                var command = new EditBlockCommand(Stack, Info, Tag, Owner);
+                var command = new EditBlockCommand(ContextStack, CacheContext, Tag, Owner);
 
                 if (!command.Execute(new List<string> { blockName }))
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
                 }
 
-                command = (Stack.Context.GetCommand("Edit") as EditBlockCommand);
+                command = (ContextStack.Context.GetCommand("Edit") as EditBlockCommand);
 
                 Owner = command.Owner;
                 Structure = command.Structure;
 
                 if (Owner == null)
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
@@ -81,7 +84,7 @@ namespace TagTool.Commands.Editing
             if (field == null)
             {
                 Console.WriteLine("ERROR: {0} does not contain a field named \"{1}\".", Structure.Types[0].Name, fieldName);
-                while (Stack.Context != previousContext) Stack.Pop();
+                while (ContextStack.Context != previousContext) ContextStack.Pop();
                 Owner = previousOwner;
                 Structure = previousStructure;
                 return false;
@@ -92,7 +95,7 @@ namespace TagTool.Commands.Editing
 
             if (fieldValue != null && fieldValue.Equals(false))
             {
-                while (Stack.Context != previousContext) Stack.Pop();
+                while (ContextStack.Context != previousContext) ContextStack.Pop();
                 Owner = previousOwner;
                 Structure = previousStructure;
                 return false;
@@ -107,7 +110,7 @@ namespace TagTool.Commands.Editing
 
             var valueString =
                 fieldType == typeof(StringID) ?
-                    Info.StringIDs.GetString((StringID)fieldValue) :
+                    CacheContext.StringIdCache.GetString((StringID)fieldValue) :
                 fieldType.GetInterface(typeof(IList).Name) != null ?
                     (((IList)fieldValue).Count != 0 ?
                         $"{{...}}[{((IList)fieldValue).Count}]" :
@@ -118,7 +121,7 @@ namespace TagTool.Commands.Editing
 
             Console.WriteLine("{0}: {1} = {2}", field.Name, typeString, valueString);
 
-            while (Stack.Context != previousContext) Stack.Pop();
+            while (ContextStack.Context != previousContext) ContextStack.Pop();
             Owner = previousOwner;
             Structure = previousStructure;
 
@@ -224,13 +227,13 @@ namespace TagTool.Commands.Editing
             {
                 if (args.Count != 1)
                     return false;
-                output = ArgumentParser.ParseTagIndex(Info, input);
+                output = ArgumentParser.ParseTagIndex(CacheContext, input);
             }
             else if (type == typeof(StringID))
             {
                 if (args.Count != 1)
                     return false;
-                output = Info.StringIDs.GetStringID(input);
+                output = CacheContext.StringIdCache.GetStringID(input);
             }
             else if (type == typeof(Angle))
             {

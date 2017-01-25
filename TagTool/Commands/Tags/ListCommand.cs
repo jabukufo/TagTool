@@ -26,16 +26,16 @@ namespace TagTool.Commands.Tags
 
         public override bool Execute(List<string> args)
         {
-            var searchClasses = ArgumentParser.ParseGroupTags(Info.StringIDs, args);
+            var searchClasses = ArgumentParser.ParseGroupTags(Info.StringIdCache, args);
 
             if (searchClasses == null)
                 return false;
 
             TagInstance[] tags;
             if (args.Count > 0)
-                tags = Info.Cache.Tags.FindAllInGroups(searchClasses).ToArray();
+                tags = Info.TagCache.Tags.FindAllInGroups(searchClasses).ToArray();
             else
-                tags = Info.Cache.Tags.NonNull().ToArray();
+                tags = Info.TagCache.Tags.NonNull().ToArray();
 
             if (tags.Length == 0)
             {
@@ -49,7 +49,7 @@ namespace TagTool.Commands.Tags
                     Info.TagNames[tag.Index] :
                     $"0x{tag.Index:X4}";
 
-                Console.WriteLine($"[Index: 0x{tag.Index:X4}, Offset: 0x{tag.HeaderOffset:X8}, Size: 0x{tag.TotalSize:X4}] {tagName}.{Info.StringIDs.GetString(tag.Group.Name)}");
+                Console.WriteLine($"[Index: 0x{tag.Index:X4}, Offset: 0x{tag.HeaderOffset:X8}, Size: 0x{tag.TotalSize:X4}] {tagName}.{Info.StringIdCache.GetString(tag.Group.Name)}");
             }
 
             return true;

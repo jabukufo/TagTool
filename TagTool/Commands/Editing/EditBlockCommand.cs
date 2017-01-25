@@ -10,24 +10,27 @@ namespace TagTool.Commands.Editing
 {
     class EditBlockCommand : Command
     {
-        private CommandContextStack Stack { get; }
-        private GameCacheContext Info { get; }
+        private CommandContextStack ContextStack { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
         
-        public EditBlockCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, object value)
+        public EditBlockCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, object value)
             : base(CommandFlags.Inherit,
-                  "edit",
+
+                  "edit-block",
                   "Edit the fields of a particular block element.",
-                  "edit <block name> [block index (if block)]",
+
+                  "edit-block <name> [element-index (if block)]",
+
                   "Edit the fields of a particular block element.")
         {
-            Info = info;
-            Stack = stack;
+            CacheContext = cacheContext;
+            ContextStack = contextStack;
             Tag = tag;
-            Structure = new TagStructureInfo(value.GetType(), Info.Version);
+            Structure = new TagStructureInfo(value.GetType(), CacheContext.Version);
             Owner = value;
         }
 
@@ -121,16 +124,16 @@ namespace TagTool.Commands.Editing
 
             var blockStructure = new TagStructureInfo(blockValue.GetType());
 
-            var blockContext = new CommandContext(Stack.Context, contextName);
-            blockContext.AddCommand(new ListFieldsCommand(Info, blockStructure, blockValue));
-            blockContext.AddCommand(new SetFieldCommand(Stack, Info, Tag, blockStructure, blockValue));
-            blockContext.AddCommand(new EditBlockCommand(Stack, Info, Tag, blockValue));
-            blockContext.AddCommand(new AddToCommand(Stack, Info, Tag, blockStructure, blockValue));
-            blockContext.AddCommand(new RemoveFromCommand(Stack, Info, Tag, blockStructure, blockValue));
-            blockContext.AddCommand(new CopyElementsCommand(Stack, Info, Tag, blockStructure, blockValue));
-            blockContext.AddCommand(new PasteElementsCommand(Stack, Info, Tag, blockStructure, blockValue));
-            blockContext.AddCommand(new ExitToCommand(Stack));
-            Stack.Push(blockContext);
+            var blockContext = new CommandContext(ContextStack.Context, contextName);
+            blockContext.AddCommand(new ListFieldsCommand(CacheContext, blockStructure, blockValue));
+            blockContext.AddCommand(new SetFieldCommand(ContextStack, CacheContext, Tag, blockStructure, blockValue));
+            blockContext.AddCommand(new EditBlockCommand(ContextStack, CacheContext, Tag, blockValue));
+            blockContext.AddCommand(new AddBlockElementsCommand(ContextStack, CacheContext, Tag, blockStructure, blockValue));
+            blockContext.AddCommand(new RemoveBlockElementsCommand(ContextStack, CacheContext, Tag, blockStructure, blockValue));
+            blockContext.AddCommand(new CopyBlockElementsCommand(ContextStack, CacheContext, Tag, blockStructure, blockValue));
+            blockContext.AddCommand(new PasteBlockElementsCommand(ContextStack, CacheContext, Tag, blockStructure, blockValue));
+            blockContext.AddCommand(new ExitToCommand(ContextStack));
+            ContextStack.Push(blockContext);
 
             if (deferredNames.Count != 0)
             {
@@ -143,7 +146,7 @@ namespace TagTool.Commands.Editing
                 args = new List<string> { name };
                 args.AddRange(deferredArgs);
 
-                var command = new EditBlockCommand(Stack, Info, Tag, blockValue);
+                var command = new EditBlockCommand(ContextStack, CacheContext, Tag, blockValue);
                 return command.Execute(args);
             }
             

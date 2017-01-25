@@ -37,7 +37,7 @@ namespace TagTool.Commands.Tags
                 return false;
 
             ResourceLocation location = ResourceLocation.Resources;
-            TagInstance destination = Info.Cache.Tags[0x3317];
+            TagInstance destination = Info.TagCache.Tags[0x3317];
 
             if (args.Count == 3)
             {
@@ -99,7 +99,7 @@ namespace TagTool.Commands.Tags
             // Add a root node
             var node = builder.AddNode(new RenderModel.Node
             {
-                Name = Info.StringIDs.GetStringID("street_cone"),
+                Name = Info.StringIdCache.GetStringID("street_cone"),
                 ParentNode = -1,
                 FirstChildNode = -1,
                 NextSiblingNode = -1,
@@ -111,8 +111,8 @@ namespace TagTool.Commands.Tags
             });
 
             // Begin building the default region and permutation
-            builder.BeginRegion(Info.StringIDs.GetStringID("default"));
-            builder.BeginPermutation(Info.StringIDs.GetStringID("default"));
+            builder.BeginRegion(Info.StringIdCache.GetStringID("default"));
+            builder.BeginPermutation(Info.StringIdCache.GetStringID("default"));
 
             using (var importer = new AssimpContext())
             {
@@ -165,7 +165,7 @@ namespace TagTool.Commands.Tags
                     // Define a material and part for this mesh
                     var material = builder.AddMaterial(new RenderMaterial
                     {
-                        RenderMethod = Info.Cache.Tags[0x101F],
+                        RenderMethod = Info.TagCache.Tags[0x101F],
                     });
 
 
@@ -196,7 +196,7 @@ namespace TagTool.Commands.Tags
 
             // Add a new resource for the model data
             var resources = new ResourceDataManager();
-            resources.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+            resources.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
             resourceStream.Position = 0;
             resources.Add(renderModel.Geometry.Resource, location, resourceStream);
 

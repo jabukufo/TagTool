@@ -9,18 +9,21 @@ namespace TagTool.Commands.Tags
 {
     class PhysicsModelTestCommand : Command
     {
-        private readonly GameCacheContext _info;
+        private GameCacheContext CacheContext { get; }
 
-        public PhysicsModelTestCommand(GameCacheContext info): base(
-            CommandFlags.None,
-            "phmotest",
-            "Physics Model Import Command (Test)",
-            "phmotest <filepath> <index>|<new> [force]",
-            "injects a physics model from the file specified exported from Blender in JSON format.\n" +
-            "A tag-index can be specified to override an existing tag, or 'new' can be used to create a new tag.\n" +
+        public PhysicsModelTestCommand(GameCacheContext cacheContext)
+            : base(CommandFlags.None,
+                  
+                  "physics-model-test",
+                  "Physics model import command (Test)",
+                  
+                  "physics-model-test <filepath> <index>|<new> [force]",
+                  
+                  "Imports a physics model from the file specified exported from Blender in JSON format.\n" +
+                  "A tag-index can be specified to override an existing tag, or 'new' can be used to create a new tag.\n" +
             "Tags that are not type- 'phmo' will not be overridden unless the third argument is specified- 'force'. ")
         {
-            _info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -42,7 +45,7 @@ namespace TagTool.Commands.Tags
             }
             else
             {
-                tag = ArgumentParser.ParseTagIndex(_info, args[1]);
+                tag = ArgumentParser.ParseTagIndex(CacheContext, args[1]);
                 if (tag == null)
                 {
                     return false;
@@ -71,13 +74,13 @@ namespace TagTool.Commands.Tags
                 return false;
             }
 
-            using (var stream = _info.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenCacheReadWrite())
             {
 
                 if (b_duplicate)
                 {
                     //duplicate an existing tag, trashcan phmo
-                    tag = _info.Cache.DuplicateTag(stream, _info.Cache.Tags[0x4436]);
+                    tag = CacheContext.TagCache.DuplicateTag(stream, CacheContext.TagCache.Tags[0x4436]);
                     if (tag == null)
                     {
                         Console.WriteLine("Failed tag duplication.");
@@ -85,8 +88,8 @@ namespace TagTool.Commands.Tags
                     }
                 }
 
-                var context = new TagSerializationContext(stream, _info, tag);
-                _info.Serializer.Serialize(context, phmo);
+                var context = new TagSerializationContext(stream, CacheContext, tag);
+                CacheContext.Serializer.Serialize(context, phmo);
 
             }
 

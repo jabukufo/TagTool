@@ -7,7 +7,7 @@ using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
-    class RemoveFromCommand : Command
+    class AddBlockElementsCommand : Command
     {
         private CommandContextStack Stack { get; }
         private GameCacheContext Info { get; }
@@ -15,12 +15,15 @@ namespace TagTool.Commands.Editing
         private TagStructureInfo Structure { get; set; }
         private object Owner { get; set; }
 
-        public RemoveFromCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
+        public AddBlockElementsCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
-                  "removefrom",
-                  $"Removes block element(s) from a specified index of a specific tag block in the current {structure.Types[0].Name} definition.",
-                  "removefrom <tag block name> [* | <tag block index> [* | amount = 1]]",
-                  $"Removes block element(s) from a specified index of a specific tag block in the current {structure.Types[0].Name} definition.")
+
+                  "add-block-elements",
+                  $"Adds/inserts block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.",
+
+                  "add-block-elements <block name> [amount = 1] [index = *]",
+
+                  $"Adds/inserts block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.")
         {
             Stack = stack;
             Info = info;
@@ -72,6 +75,25 @@ namespace TagTool.Commands.Editing
                 }
             }
 
+            var count = 1;
+
+            if ((args.Count > 1 && !int.TryParse(args[1], out count)) || count < 1)
+            {
+                Console.WriteLine($"Invalid amount specified: {args[1]}");
+                return false;
+            }
+
+            var index = -1;
+
+            if (args.Count > 2)
+            {
+                if (args[2] != "*" && (!int.TryParse(args[2], out index) || index < 0))
+                {
+                    Console.WriteLine($"Invalid index specified: {args[2]}");
+                    return false;
+                }
+            }
+
             var enumerator = new TagFieldEnumerator(Structure);
             var field = enumerator.Find(f => f.Name == fieldName || f.Name.ToLower() == fieldNameLow);
             var fieldType = field.FieldType;
@@ -94,71 +116,24 @@ namespace TagTool.Commands.Editing
                 blockValue = Activator.CreateInstance(field.FieldType) as IList;
                 field.SetValue(Owner, blockValue);
             }
-
-            var elementType = field.FieldType.GenericTypeArguments[0];
-
-            var index = blockValue.Count - 1;
-            var count = 1;
-
-            var genericIndex = false;
-            var genericCount = false;
-
-            if (args.Count == 1)
+            
+            if (index > blockValue.Count)
             {
-                count = 1;
-            }
-            else
-            {
-                if (args.Count >= 2)
-                {
-                    if (args[1] == "*")
-                    {
-                        genericIndex = true;
-                        index = blockValue.Count;
-                    }
-                    else if (!int.TryParse(args[1], out index) || index < 0 || index >= blockValue.Count)
-                    {
-                        Console.WriteLine($"Invalid index specified: {args[1]}");
-                        return false;
-                    }
-                }
-
-                if (args.Count == 3)
-                {
-                    if (args[2] == "*")
-                    {
-                        genericCount = true;
-                        count = blockValue.Count - index;
-                    }
-                    else if (!int.TryParse(args[2], out count) || count < 1)
-                    {
-                        Console.WriteLine($"Invalid number specified: {args[2]}");
-                        return false;
-                    }
-                }
-            }
-
-            if (genericIndex && genericCount)
-            {
-                index = 0;
-                count = blockValue.Count;
-            }
-            else if (genericIndex)
-            {
-                index -= count;
-
-                if (index < 0)
-                    index = 0;
-            }
-
-            if (index + count > blockValue.Count)
-            {
-                Console.WriteLine($"ERROR: Too many block elements specified to be removed: {count}. Maximum at index {index} can be {blockValue.Count - index}");
+                Console.WriteLine($"Invalid index specified: {args[2]}");
                 return false;
             }
 
+            var elementType = field.FieldType.GenericTypeArguments[0];
+            
             for (var i = 0; i < count; i++)
-                blockValue.RemoveAt(index);
+            {
+                var element = CreateElement(elementType);
+
+                if (index == -1)
+                    blockValue.Add(element);
+                else
+                    blockValue.Insert(index + i, element);
+            }
 
             field.SetValue(Owner, blockValue);
 
@@ -174,7 +149,7 @@ namespace TagTool.Commands.Editing
                     $"{{...}}[{((IList)blockValue).Count}]" :
                 "null";
 
-            Console.WriteLine($"Successfully removed {count} {itemString} from {field.Name} at index {index}: {typeString}");
+            Console.WriteLine($"Successfully added {count} {itemString} to {field.Name}: {typeString}");
             Console.WriteLine(valueString);
 
             while (Stack.Context != previousContext) Stack.Pop();
@@ -182,6 +157,46 @@ namespace TagTool.Commands.Editing
             Structure = previousStructure;
 
             return true;
+        }
+
+        private object CreateElement(Type elementType)
+        {
+            var element = Activator.CreateInstance(elementType);
+
+            var isTagStructure = Attribute.IsDefined(elementType, typeof(TagStructureAttribute));
+
+            if (isTagStructure)
+            {
+                var enumerator = new TagFieldEnumerator(
+                    new TagStructureInfo(elementType));
+
+                while (enumerator.Next())
+                {
+                    var fieldType = enumerator.Field.FieldType;
+
+                    if (fieldType.IsArray && enumerator.Attribute.Count > 0)
+                    {
+                        var array = (IList)Activator.CreateInstance(enumerator.Field.FieldType,
+                            new object[] { enumerator.Attribute.Count });
+
+                        for (var i = 0; i < enumerator.Attribute.Count; i++)
+                            array[i] = CreateElement(fieldType.GetElementType());
+                    }
+                    else
+                    {
+                        try
+                        {
+                            enumerator.Field.SetValue(element, CreateElement(enumerator.Field.FieldType));
+                        }
+                        catch
+                        {
+                            enumerator.Field.SetValue(element, null);
+                        }
+                    }
+                }
+            }
+
+            return element;
         }
     }
 }

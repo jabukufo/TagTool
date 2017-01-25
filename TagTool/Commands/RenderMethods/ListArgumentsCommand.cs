@@ -33,7 +33,7 @@ namespace TagTool.Commands.RenderMethods
             {
                 RenderMethodTemplate template = null;
 
-                using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
+                using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
                     var context = new TagSerializationContext(cacheStream, Info, property.Template);
                     template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
@@ -43,7 +43,7 @@ namespace TagTool.Commands.RenderMethods
                 {
                     Console.WriteLine("");
 
-                    var argumentName = Info.StringIDs.GetString(template.Arguments[i].Name);
+                    var argumentName = Info.StringIdCache.GetString(template.Arguments[i].Name);
                     var argumentValue = new Vector4(
                         property.Arguments[i].Arg1,
                         property.Arguments[i].Arg2,

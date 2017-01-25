@@ -14,7 +14,7 @@ namespace TagTool.Tags.Definitions
         public uint Unknown;
         public uint Unknown2;
 
-        [MaxVersion(CacheVersion.HaloOnline571627)]
+        [MaxVersion(CacheVersion.HaloOnline106708)]
         public uint Unknown3;
     }
 }

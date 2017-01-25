@@ -39,7 +39,7 @@ namespace TagTool.Commands.Unicode
                 return false;
 
             var filter = (args.Count == 2) ? args[1] : null;
-            var strings = LocalizedStringPrinter.PrepareForDisplay(Definition, Info.StringIDs, Definition.Strings, language, filter);
+            var strings = LocalizedStringPrinter.PrepareForDisplay(Definition, Info.StringIdCache, Definition.Strings, language, filter);
 
             if (strings.Count > 0)
                 LocalizedStringPrinter.PrintStrings(strings);

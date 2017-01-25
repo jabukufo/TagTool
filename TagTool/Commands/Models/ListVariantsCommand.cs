@@ -26,7 +26,7 @@ namespace TagTool.Commands.Models
         {
             if (args.Count != 0)
                 return false;
-            var variantNames = Definition.Variants.Select(v => Info.StringIDs.GetString(v.Name) ?? v.Name.ToString()).OrderBy(n => n).ToList();
+            var variantNames = Definition.Variants.Select(v => Info.StringIdCache.GetString(v.Name) ?? v.Name.ToString()).OrderBy(n => n).ToList();
             if (variantNames.Count == 0)
             {
                 Console.WriteLine("Model has no variants");

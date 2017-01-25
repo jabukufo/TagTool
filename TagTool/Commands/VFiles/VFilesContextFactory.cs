@@ -8,7 +8,7 @@ namespace TagTool.Commands.VFiles
     {
         public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, VFilesList vfsl)
         {
-            var groupName = info.StringIDs.GetString(tag.Group.Name);
+            var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
             var context = new CommandContext(parent,
                 string.Format("{0:X8}.{1}", tag.Index, groupName));

@@ -12,24 +12,29 @@ namespace TagTool.Cache.HaloOnline
         /// <summary>
         /// Gets or sets the tag cache.
         /// </summary>
-        public TagCache Cache { get; set; }
+        public TagCache TagCache { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the tag cache file.
         /// </summary>
-        public FileInfo CacheFile { get; set; }
+        public FileInfo TagCacheFile { get; set; }
+
+        /// <summary>
+        /// Gets the directory of the current cache context.
+        /// </summary>
+        public DirectoryInfo Directory => TagCacheFile.Directory;
 
         /// <summary>
         /// Gets or sets the stringID cache.
         /// Can be <c>null</c>.
         /// </summary>
-        public StringIdCache StringIDs { get; set; }
+        public StringIdCache StringIdCache { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the stringID cache file.
         /// Can be <c>null</c>.
         /// </summary>
-        public FileInfo StringIDsFile { get; set; }
+        public FileInfo StringIdCacheFile { get; set; }
 
         /// <summary>
         /// Gets or sets the target engine version.
@@ -57,7 +62,7 @@ namespace TagTool.Cache.HaloOnline
         /// <returns>The stream that was opened.</returns>
         public Stream OpenCacheRead()
         {
-            return CacheFile.OpenRead();
+            return TagCacheFile.OpenRead();
         }
 
         /// <summary>
@@ -66,7 +71,7 @@ namespace TagTool.Cache.HaloOnline
         /// <returns>The stream that was opened.</returns>
         public Stream OpenCacheWrite()
         {
-            return CacheFile.Open(FileMode.Open, FileAccess.Write);
+            return TagCacheFile.Open(FileMode.Open, FileAccess.Write);
         }
 
         /// <summary>
@@ -75,7 +80,7 @@ namespace TagTool.Cache.HaloOnline
         /// <returns>The stream that was opened.</returns>
         public Stream OpenCacheReadWrite()
         {
-            return CacheFile.Open(FileMode.Open, FileAccess.ReadWrite);
+            return TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite);
         }
     }
 }

@@ -7,23 +7,26 @@ using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
-    class PasteElementsCommand : Command
+    class PasteBlockElementsCommand : Command
     {
-        private CommandContextStack Stack { get; }
-        private GameCacheContext Info { get; }
+        private CommandContextStack ContextStack { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private TagStructureInfo Structure { get; set; }
         private object Owner { get; set; }
 
-        public PasteElementsCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
+        public PasteBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
-                  "pasteelements",
+
+                  "paste-block-elements",
                   $"Pastes block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.",
-                  "pasteelements <tag block name> [index = *]",
+
+                  "paste-block-elements <tag block name> [index = *]",
+
                   $"Pastes block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.")
         {
-            Stack = stack;
-            Info = info;
+            ContextStack = contextStack;
+            CacheContext = cacheContext;
             Tag = tag;
             Structure = structure;
             Owner = owner;
@@ -34,7 +37,7 @@ namespace TagTool.Commands.Editing
             if (args.Count < 1 || args.Count > 2)
                 return false;
 
-            if (CopyElementsCommand.Elements == null)
+            if (CopyBlockElementsCommand.Elements == null)
             {
                 Console.WriteLine("ERROR: No elements are available in the clipboard.");
                 return false;
@@ -43,7 +46,7 @@ namespace TagTool.Commands.Editing
             var fieldName = args[0];
             var fieldNameLow = fieldName.ToLower();
 
-            var previousContext = Stack.Context;
+            var previousContext = ContextStack.Context;
             var previousOwner = Owner;
             var previousStructure = Structure;
 
@@ -54,24 +57,24 @@ namespace TagTool.Commands.Editing
                 fieldName = fieldName.Substring(lastIndex + 1, (fieldName.Length - lastIndex) - 1);
                 fieldNameLow = fieldName.ToLower();
 
-                var command = new EditBlockCommand(Stack, Info, Tag, Owner);
+                var command = new EditBlockCommand(ContextStack, CacheContext, Tag, Owner);
 
                 if (!command.Execute(new List<string> { blockName }))
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
                 }
 
-                command = (Stack.Context.GetCommand("Edit") as EditBlockCommand);
+                command = (ContextStack.Context.GetCommand("Edit") as EditBlockCommand);
 
                 Owner = command.Owner;
                 Structure = command.Structure;
 
                 if (Owner == null)
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
@@ -98,7 +101,7 @@ namespace TagTool.Commands.Editing
                 (fieldType.GetInterface("IList") == null))
             {
                 Console.WriteLine("ERROR: {0} does not contain a tag block named \"{1}\".", Structure.Types[0].Name, args[0]);
-                while (Stack.Context != previousContext) Stack.Pop();
+                while (ContextStack.Context != previousContext) ContextStack.Pop();
                 Owner = previousOwner;
                 Structure = previousStructure;
                 return false;
@@ -106,7 +109,7 @@ namespace TagTool.Commands.Editing
 
             var elementType = field.FieldType.GenericTypeArguments[0];
 
-            if (elementType != CopyElementsCommand.ElementType)
+            if (elementType != CopyBlockElementsCommand.ElementType)
             {
                 Console.WriteLine("Invalid block element type!");
                 return false;
@@ -126,9 +129,9 @@ namespace TagTool.Commands.Editing
                 return false;
             }
 
-            for (var i = 0; i < CopyElementsCommand.Elements.Count; i++)
+            for (var i = 0; i < CopyBlockElementsCommand.Elements.Count; i++)
             {
-                var element = CopyElementsCommand.Elements[i];
+                var element = CopyBlockElementsCommand.Elements[i];
 
                 if (index == -1)
                     blockValue.Add(element);
@@ -143,17 +146,17 @@ namespace TagTool.Commands.Editing
                     $"{fieldType.Name}<{fieldType.GenericTypeArguments[0].Name}>" :
                 fieldType.Name;
 
-            var itemString = CopyElementsCommand.Elements.Count < 2 ? "element" : "elements";
+            var itemString = CopyBlockElementsCommand.Elements.Count < 2 ? "element" : "elements";
 
             var valueString =
                 ((IList)blockValue).Count != 0 ?
                     $"{{...}}[{((IList)blockValue).Count}]" :
                 "null";
 
-            Console.WriteLine($"Successfully pasted {CopyElementsCommand.Elements.Count} {itemString} to {field.Name}: {typeString}");
+            Console.WriteLine($"Successfully pasted {CopyBlockElementsCommand.Elements.Count} {itemString} to {field.Name}: {typeString}");
             Console.WriteLine(valueString);
 
-            while (Stack.Context != previousContext) Stack.Pop();
+            while (ContextStack.Context != previousContext) ContextStack.Pop();
             Owner = previousOwner;
             Structure = previousStructure;
 

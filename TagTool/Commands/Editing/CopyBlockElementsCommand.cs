@@ -7,10 +7,10 @@ using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
-    class CopyElementsCommand : Command
+    class CopyBlockElementsCommand : Command
     {
-        private CommandContextStack Stack { get; }
-        private GameCacheContext Info { get; }
+        private CommandContextStack ContextStack { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private TagStructureInfo Structure { get; set; }
         private object Owner { get; set; }
@@ -18,15 +18,18 @@ namespace TagTool.Commands.Editing
         public static Type ElementType { get; set; } = null;
         public static List<object> Elements { get; set; } = null;
 
-        public CopyElementsCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
+        public CopyBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.None,
-                  "copyelements",
+
+                  "copy-block-elements",
                   "Copies block elements from one tag to another.",
-                  "copyelements <block name> [count = *] [index = 0]",
+
+                  "copy-block-elements <block name> [count = *] [index = 0]",
+
                   "Copies block elements from one tag to another.")
         {
-            Stack = stack;
-            Info = info;
+            ContextStack = contextStack;
+            CacheContext = cacheContext;
             Tag = tag;
             Structure = structure;
             Owner = owner;
@@ -44,7 +47,7 @@ namespace TagTool.Commands.Editing
             var fieldName = args[0];
             var fieldNameLow = fieldName.ToLower();
 
-            var previousContext = Stack.Context;
+            var previousContext = ContextStack.Context;
             var previousOwner = Owner;
             var previousStructure = Structure;
 
@@ -55,24 +58,24 @@ namespace TagTool.Commands.Editing
                 fieldName = fieldName.Substring(lastIndex + 1, (fieldName.Length - lastIndex) - 1);
                 fieldNameLow = fieldName.ToLower();
 
-                var command = new EditBlockCommand(Stack, Info, Tag, Owner);
+                var command = new EditBlockCommand(ContextStack, CacheContext, Tag, Owner);
 
                 if (!command.Execute(new List<string> { blockName }))
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
                 }
 
-                command = (Stack.Context.GetCommand("Edit") as EditBlockCommand);
+                command = (ContextStack.Context.GetCommand("Edit") as EditBlockCommand);
 
                 Owner = command.Owner;
                 Structure = command.Structure;
 
                 if (Owner == null)
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
@@ -110,7 +113,7 @@ namespace TagTool.Commands.Editing
                 (fieldType.GetInterface("IList") == null))
             {
                 Console.WriteLine("ERROR: {0} does not contain a tag block named \"{1}\".", Structure.Types[0].Name, args[0]);
-                while (Stack.Context != previousContext) Stack.Pop();
+                while (ContextStack.Context != previousContext) ContextStack.Pop();
                 Owner = previousOwner;
                 Structure = previousStructure;
                 return false;
@@ -144,7 +147,7 @@ namespace TagTool.Commands.Editing
             var itemString = index < 2 ? "element" : "elements";
             Console.WriteLine($"Successfully copied {count} {itemString}.");
             
-            while (Stack.Context != previousContext) Stack.Pop();
+            while (ContextStack.Context != previousContext) ContextStack.Pop();
             Owner = previousOwner;
             Structure = previousStructure;
 

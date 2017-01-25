@@ -10,10 +10,10 @@ namespace TagTool.Commands
         public MapCommand() : base(
             CommandFlags.Inherit,
 
-            "map",
+            "display-map-info",
             "Get information about a map",
             
-            "map <filename>",
+            "display-map-info <filename>",
             
             "Loads a .map file and displays information about it.\n" +
             "Currently only displays the scenario tag index.\n" +
@@ -26,6 +26,7 @@ namespace TagTool.Commands
         {
             if (args.Count != 1)
                 return false;
+
             try
             {
                 using (var mapReader = new BinaryReader(File.OpenRead(args[0])))
@@ -35,6 +36,7 @@ namespace TagTool.Commands
                         Console.Error.WriteLine("Invalid map file");
                         return true;
                     }
+
                     mapReader.BaseStream.Position = 0x2DF0;
                     var scnrIndex = mapReader.ReadInt32();
                     Console.WriteLine("Scenario tag index: {0:X8}", scnrIndex);
@@ -44,6 +46,7 @@ namespace TagTool.Commands
             {
                 Console.Error.WriteLine("Unable to open the map file for reading.");
             }
+
             return true;
         }
     }

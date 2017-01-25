@@ -38,7 +38,7 @@ namespace TagTool.Commands.RenderMethods
             {
                 RenderMethodTemplate template = null;
 
-                using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
+                using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
                     var context = new TagSerializationContext(cacheStream, Info, property.Template);
                     template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
@@ -48,7 +48,7 @@ namespace TagTool.Commands.RenderMethods
                 {
                     var mapTemplate = template.ShaderMaps[i];
 
-                    Console.Write(string.Format("Please enter the {0} index: ", Info.StringIDs.GetString(mapTemplate.Name)));
+                    Console.Write(string.Format("Please enter the {0} index: ", Info.StringIdCache.GetString(mapTemplate.Name)));
                     shaderMaps[mapTemplate.Name] = ArgumentParser.ParseTagIndex(Info, Console.ReadLine());
                     property.ShaderMaps[i].Bitmap = shaderMaps[mapTemplate.Name];
                 }
@@ -58,7 +58,7 @@ namespace TagTool.Commands.RenderMethods
                 if (shaderMaps.ContainsKey(import.MaterialType))
                     import.Bitmap = shaderMaps[import.MaterialType];
 
-            using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
                 var context = new TagSerializationContext(cacheStream, Info, Tag);
                 Info.Serializer.Serialize(context, Definition);

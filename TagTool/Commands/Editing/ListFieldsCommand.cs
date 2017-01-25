@@ -10,19 +10,21 @@ namespace TagTool.Commands.Editing
 {
     class ListFieldsCommand : Command
     {
-        private 
-            GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private TagStructureInfo Structure { get; }
         private object Value { get; }
 
-        public ListFieldsCommand(GameCacheContext info, TagStructureInfo structure, object value)
+        public ListFieldsCommand(GameCacheContext cacheContext, TagStructureInfo structure, object value)
             : base(CommandFlags.Inherit,
-                  "listfields",
+
+                  "list-fields",
                   $"Lists the fields in the current {structure.Types[0].Name} definition.",
-                  "listfields",
+
+                  "list-fields",
+
                   $"Lists the fields in the current {structure.Types[0].Name} definition.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Structure = structure;
             Value = value;
         }
@@ -62,9 +64,9 @@ namespace TagTool.Commands.Editing
                             $"{{...}}[{((IList)fieldValue).Count}]" :
                         "null";
                 else if (fieldType == typeof(StringID))
-                    valueString = Info.StringIDs.GetString((StringID)fieldValue);
+                    valueString = CacheContext.StringIdCache.GetString((StringID)fieldValue);
                 else if (fieldType == typeof(TagInstance))
-                    valueString = $"[0x{((TagInstance)fieldValue).Index:X4}] {Info.TagNames[((TagInstance)fieldValue).Index]}.{Info.StringIDs.GetString(((TagInstance)fieldValue).Group.Name)}";
+                    valueString = $"[0x{((TagInstance)fieldValue).Index:X4}] {CacheContext.TagNames[((TagInstance)fieldValue).Index]}.{CacheContext.StringIdCache.GetString(((TagInstance)fieldValue).Group.Name)}";
                 else
                     valueString = fieldValue.ToString();
                 

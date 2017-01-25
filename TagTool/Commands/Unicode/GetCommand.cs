@@ -37,14 +37,14 @@ namespace TagTool.Commands.Unicode
                 return false;
 
             var stringIdStr = args[1];
-            var stringIdIndex = Info.StringIDs.Strings.IndexOf(stringIdStr);
+            var stringIdIndex = Info.StringIdCache.Strings.IndexOf(stringIdStr);
             if (stringIdIndex < 0)
             {
                 Console.WriteLine("Unable to find stringID \"{0}\".", stringIdStr);
                 return true;
             }
 
-            var stringId = Info.StringIDs.GetStringID(stringIdIndex);
+            var stringId = Info.StringIdCache.GetStringID(stringIdIndex);
             if (stringId == StringID.Null)
             {
                 Console.WriteLine("Failed to resolve the stringID.");

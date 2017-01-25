@@ -35,7 +35,7 @@ namespace TagTool.Commands.RenderMethods
             {
                 RenderMethodTemplate template = null;
 
-                using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
+                using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
                     var context = new TagSerializationContext(cacheStream, Info, property.Template);
                     template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
@@ -45,7 +45,7 @@ namespace TagTool.Commands.RenderMethods
                 {
                     var mapTemplate = template.ShaderMaps[i];
 
-                    Console.WriteLine($"Bitmap {i} ({Info.StringIDs.GetString(mapTemplate.Name)}): {property.ShaderMaps[i].Bitmap.Group.Tag} 0x{property.ShaderMaps[i].Bitmap.Index:X4}");
+                    Console.WriteLine($"Bitmap {i} ({Info.StringIdCache.GetString(mapTemplate.Name)}): {property.ShaderMaps[i].Bitmap.Group.Tag} 0x{property.ShaderMaps[i].Bitmap.Index:X4}");
                 }
             }
 

@@ -14,33 +14,33 @@ using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
-    class ConvertCommand : Command
+    class ConvertTagCommand : Command
     {
-        private readonly GameCacheContext _info;
-        private bool _isDecalShader = false;
+        private GameCacheContext CacheContext { get; }
+        private bool IsDecalShader { get; set; } = false;
 
-        public ConvertCommand(GameCacheContext info) : base(
-            CommandFlags.None,
-
-            "convert",
-            "Convert a tag and its dependencies to another engine version",
-
-            "convert <tag index> <tag map csv> <output csv> <target directory>",
-
-            "The tag map CSV should be generated using the \"matchtags\" command.\n" +
-            "If a tag is listed in the CSV file, it will not be converted.\n" +
-            "The output CSV file is used for converting multiple maps.\n" +
-            "Subsequent convert commands should use the new CSV.\n" +
-            "The target directory should be the maps folder for the target engine.")
+        public ConvertTagCommand(GameCacheContext info)
+            : base(CommandFlags.None,
+                  
+                  "convert-tag",
+                  "Convert a tag and its dependencies to another engine version",
+                  
+                  "convert-tag <tag index> <tag map csv> <output csv> <target directory>",
+                  
+                  "The tag map CSV should be generated using the \"match-tags\" command.\n" +
+                  "If a tag is listed in the CSV file, it will not be converted.\n" +
+                  "The output CSV file is used for converting multiple maps.\n" +
+                  "Subsequent convert commands should use the new CSV.\n" +
+                  "The target directory should be the maps folder for the target engine.")
         {
-            _info = info;
+            CacheContext = info;
         }
 
         public override bool Execute(List<string> args)
         {
             if (args.Count != 4)
                 return false;
-            var srcTag = ArgumentParser.ParseTagIndex(_info, args[0]);
+            var srcTag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
             if (srcTag == null)
                 return false;
             var csvPath = args[1];
@@ -57,13 +57,13 @@ namespace TagTool.Commands.Tags
             // Load destination files
             Console.WriteLine("Loading the target tags.dat...");
             var destCachePath = Path.Combine(targetDir, "tags.dat");
-            var destInfo = new GameCacheContext { CacheFile = new FileInfo(destCachePath) };
+            var destInfo = new GameCacheContext { TagCacheFile = new FileInfo(destCachePath) };
             using (var stream = destInfo.OpenCacheRead())
-                destInfo.Cache = new TagCache(stream);
+                destInfo.TagCache = new TagCache(stream);
 
             // Do version detection
             CacheVersion guessedVersion;
-            destInfo.Version = CacheVersionDetection.Detect(destInfo.Cache, out guessedVersion);
+            destInfo.Version = CacheVersionDetection.Detect(destInfo.TagCache, out guessedVersion);
             if (destInfo.Version == CacheVersion.Unknown)
             {
                 Console.WriteLine("Unrecognized target version!");
@@ -71,7 +71,7 @@ namespace TagTool.Commands.Tags
             }
             Console.WriteLine("- Detected version {0}", CacheVersionDetection.GetVersionString(destInfo.Version));
 
-            if (_info.Version != CacheVersion.HaloOnline498295 && destInfo.Version != CacheVersion.HaloOnline106708)
+            if (CacheContext.Version != CacheVersion.HaloOnline498295 && destInfo.Version != CacheVersion.HaloOnline106708)
             {
                 Console.Error.WriteLine("Conversion is only supported from 11.1.498295 Live to 1.106708 cert_ms23.");
                 return true;
@@ -87,31 +87,31 @@ namespace TagTool.Commands.Tags
             var resolver = StringIdResolverFactory.Create(destInfo.Version);
 
             var destStringIDsPath = Path.Combine(targetDir, "string_ids.dat");
-            destInfo.StringIDsFile = new FileInfo(destStringIDsPath);
+            destInfo.StringIdCacheFile = new FileInfo(destStringIDsPath);
 
-            using (var stream = destInfo.StringIDsFile.OpenRead())
-                destInfo.StringIDs = new StringIdCache(stream, resolver);
+            using (var stream = destInfo.StringIdCacheFile.OpenRead())
+                destInfo.StringIdCache = new StringIdCache(stream, resolver);
 
             // Load resources for the target build
             Console.WriteLine("Loading target resources...");
             var destResources = new ResourceDataManager();
-            destResources.LoadCachesFromDirectory(destInfo.CacheFile.DirectoryName);
+            destResources.LoadCachesFromDirectory(destInfo.TagCacheFile.DirectoryName);
 
             // Load resources for our build
             Console.WriteLine("Loading source resources...");
             var srcResources = new ResourceDataManager();
-            srcResources.LoadCachesFromDirectory(_info.CacheFile.DirectoryName);
+            srcResources.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
 
             Console.WriteLine();
-            Console.WriteLine("CONVERTING FROM VERSION {0} TO {1}", CacheVersionDetection.GetVersionString(_info.Version), CacheVersionDetection.GetVersionString(destInfo.Version));
+            Console.WriteLine("CONVERTING FROM VERSION {0} TO {1}", CacheVersionDetection.GetVersionString(CacheContext.Version), CacheVersionDetection.GetVersionString(destInfo.Version));
             Console.WriteLine();
 
-            using (var stream = _info.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenCacheReadWrite())
             {
-                foreach (var scnr in _info.Cache.Tags.FindAllInGroup("scnr"))
+                foreach (var scnr in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
                 {
-                    var scnrContext = new TagSerializationContext(stream, _info, scnr);
-                    var scnrDefinition = _info.Deserializer.Deserialize<Scenario>(scnrContext);
+                    var scnrContext = new TagSerializationContext(stream, CacheContext, scnr);
+                    var scnrDefinition = CacheContext.Deserializer.Deserialize<Scenario>(scnrContext);
 
                     foreach (var biped in scnrDefinition.BipedPalette)
                         biped.Biped = null;
@@ -130,13 +130,13 @@ namespace TagTool.Commands.Tags
                     scnrDefinition.SandboxVehicles.Clear();
                     scnrDefinition.SandboxWeapons.Clear();
 
-                    _info.Serializer.Serialize(scnrContext, scnrDefinition);
+                    CacheContext.Serializer.Serialize(scnrContext, scnrDefinition);
                 }
             }
 
                 TagInstance resultTag;
-            using (Stream srcStream = _info.OpenCacheRead(), destStream = destInfo.OpenCacheReadWrite())
-                resultTag = ConvertTag(srcTag, _info, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+            using (Stream srcStream = CacheContext.OpenCacheRead(), destStream = destInfo.OpenCacheReadWrite())
+                resultTag = ConvertTag(srcTag, CacheContext, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
 
             Console.WriteLine();
             Console.WriteLine("Repairing decal systems...");
@@ -144,8 +144,8 @@ namespace TagTool.Commands.Tags
 
             Console.WriteLine();
             Console.WriteLine("Saving stringIDs...");
-            using (var stream = destInfo.StringIDsFile.Open(FileMode.Open, FileAccess.ReadWrite))
-                destInfo.StringIDs.Save(stream);
+            using (var stream = destInfo.StringIdCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+                destInfo.StringIdCache.Save(stream);
 
             Console.WriteLine("Writing {0}...", csvOutPath);
             using (var stream = new StreamWriter(File.Open(csvOutPath, FileMode.Create, FileAccess.ReadWrite)))
@@ -167,10 +167,7 @@ namespace TagTool.Commands.Tags
         private TagInstance ConvertTag(TagInstance srcTag, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             TagPrinter.PrintTagShort(srcTag);
-
-            if (srcTag.IsInGroup("bipd") || srcTag.IsInGroup("eqip") || srcTag.IsInGroup("vehi") || srcTag.IsInGroup("proj"))
-                return null;
-
+            
             // Uncomment this to use 0x101F for all shaders
             /*if (srcTag.IsClass("rm  "))
                 return destInfo.Cache.Tags[0x101F];*/
@@ -180,7 +177,7 @@ namespace TagTool.Commands.Tags
             if (destIndex >= 0)
             {
                 Console.WriteLine("- Using already-known index {0:X4}", destIndex);
-                return destInfo.Cache.Tags[destIndex];
+                return destInfo.TagCache.Tags[destIndex];
             }
 
             // Deserialize the tag from the source cache
@@ -202,22 +199,35 @@ namespace TagTool.Commands.Tags
             }*/
 
             // Allocate a new tag and create a mapping for it
-            var newTag = destInfo.Cache.AllocateTag(srcTag.Group);
-            tagMap.Add(srcInfo.Version, srcTag.Index, destInfo.Version, newTag.Index);
+
+            TagInstance instance = null;
+
+            for (var i = 0; i < destInfo.TagCache.Tags.Count; i++)
+            {
+                if (destInfo.TagCache.Tags[i] == null)
+                {
+                    destInfo.TagCache.Tags[i] = instance = new TagInstance(i, TagGroup.Instances[srcTag.Group.Tag]);
+                    break;
+                }
+            }
+
+            if (instance == null)
+                instance = destInfo.TagCache.AllocateTag(srcTag.Group);
+            tagMap.Add(srcInfo.Version, srcTag.Index, destInfo.Version, instance.Index);
 
             if (srcTag.IsInGroup("decs") || srcTag.IsInGroup("rmd "))
-                _isDecalShader = true;
+                IsDecalShader = true;
 
             // Convert it
             tagData = Convert(tagData, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
 
             if (srcTag.IsInGroup("decs") || srcTag.IsInGroup("rmd "))
-                _isDecalShader = false;
+                IsDecalShader = false;
 
             // Re-serialize into the destination cache
-            var destContext = new TagSerializationContext(destStream, destInfo, newTag);
+            var destContext = new TagSerializationContext(destStream, destInfo, instance);
             destInfo.Serializer.Serialize(destContext, tagData);
-            return newTag;
+            return instance;
         }
 
         private object Convert(object data, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
@@ -298,12 +308,12 @@ namespace TagTool.Commands.Tags
         {
             if (stringId == StringID.Null)
                 return stringId;
-            var srcString = srcInfo.StringIDs.GetString(stringId);
+            var srcString = srcInfo.StringIdCache.GetString(stringId);
             if (srcString == null)
                 return StringID.Null;
-            var destStringID = destInfo.StringIDs.GetStringID(srcString);
+            var destStringID = destInfo.StringIdCache.GetStringID(srcString);
             if (destStringID == StringID.Null)
-                destStringID = destInfo.StringIDs.Add(srcString);
+                destStringID = destInfo.StringIdCache.Add(srcString);
             return destStringID;
         }
 
@@ -553,7 +563,7 @@ namespace TagTool.Commands.Tags
 
         private void FixShaders(object data)
         {
-            if (_info.Version <= CacheVersion.HaloOnline235640)
+            if (CacheContext.Version <= CacheVersion.HaloOnline235640)
                 return;
 
             var template = data as RenderMethodTemplate;
@@ -662,7 +672,7 @@ namespace TagTool.Commands.Tags
                 var mode = ps.DrawModes[i];
                 for (var j = 0; j < mode.Count; j++)
                 {
-                    if (i != 0 || _isDecalShader)
+                    if (i != 0 || IsDecalShader)
                     {
                         Console.WriteLine("- Recompiling pixel shader {0}...", mode.Index + j);
                         var shader = ps.PixelShaders[mode.Index + j];
@@ -762,14 +772,14 @@ namespace TagTool.Commands.Tags
             // pass, but we'd have to store the rmdf somewhere and frankly I'm
             // too lazy to do that...
 
-            var firstDecalSystemTag = destInfo.Cache.Tags.FindFirstInGroup("decs");
+            var firstDecalSystemTag = destInfo.TagCache.Tags.FindFirstInGroup("decs");
             if (firstDecalSystemTag == null)
                 return;
             using (var stream = destInfo.OpenCacheReadWrite())
             {
                 var firstDecalSystemContext = new TagSerializationContext(stream, destInfo, firstDecalSystemTag);
                 var firstDecalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(firstDecalSystemContext);
-                foreach (var decalSystemTag in destInfo.Cache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
+                foreach (var decalSystemTag in destInfo.TagCache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
                 {
                     TagPrinter.PrintTagShort(decalSystemTag);
                     var context = new TagSerializationContext(stream, destInfo, decalSystemTag);

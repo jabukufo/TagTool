@@ -5,29 +5,25 @@ using TagTool.Commands.Editing;
 
 namespace TagTool.Commands.Tags
 {
-    class EditCommand : Command
+    class EditTagCommand : Command
     {
-        private readonly CommandContextStack _stack;
-        private readonly TagCache _cache;
-        private readonly GameCacheContext _info;
+        private CommandContextStack ContextStack { get; }
+        private GameCacheContext CacheContext { get; }
 
-        public EditCommand(CommandContextStack stack, GameCacheContext info) : base(
+        public EditTagCommand(CommandContextStack contextStack, GameCacheContext cacheContext) : base(
             CommandFlags.None,
 
-            "edit",
+            "edit-tag",
             "Edit tag-specific data",
 
-            "edit <tag index>",
+            "edit-tag <tag index>",
 
             "If the tag contains data which is supported by this program,\n" +
             "this command will make special tag-specific commands available\n" +
-            "which can be used to edit or view the data in the tag.\n" +
-            "\n" +
-            "Currently-supported tag types: bitm, hlmt, unic, vfsl")
+            "which can be used to edit or view the data in the tag.")
         {
-            _stack = stack;
-            _cache = info.Cache;
-            _info = info;
+            ContextStack = contextStack;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -35,21 +31,21 @@ namespace TagTool.Commands.Tags
             if (args.Count != 1)
                 return false;
             
-            var tag = ArgumentParser.ParseTagIndex(_info, args[0]);
+            var tag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
 
             if (tag == null)
                 return false;
 
-            var oldContext = _stack.Context;
+            var oldContext = ContextStack.Context;
 
-            _stack.Push(EditTagContextFactory.Create(_stack, _info, tag));
+            ContextStack.Push(EditTagContextFactory.Create(ContextStack, CacheContext, tag));
 
-            var groupName = _info.StringIDs.GetString(tag.Group.Name);
+            var groupName = CacheContext.StringIdCache.GetString(tag.Group.Name);
             var tagName = $"0x{tag.Index:X4}";
 
-            if (_info.TagNames.ContainsKey(tag.Index))
+            if (CacheContext.TagNames.ContainsKey(tag.Index))
             {
-                tagName = _info.TagNames[tag.Index];
+                tagName = CacheContext.TagNames[tag.Index];
                 tagName = $"(0x{tag.Index:X4}) {tagName.Substring(tagName.LastIndexOf('\\') + 1)}";
             }
 

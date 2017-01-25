@@ -30,7 +30,7 @@ namespace TagTool.Commands.Tags
             byte[] data;
 
             using (var stream = Info.OpenCacheRead())
-                data = Info.Cache.ExtractTagRaw(stream, tag);
+                data = Info.TagCache.ExtractTagRaw(stream, tag);
 
             using (var outStream = File.Open(path, FileMode.Create, FileAccess.Write))
             {
@@ -50,10 +50,10 @@ namespace TagTool.Commands.Tags
                 if (args[0] != "all")
                     return false;
 
-                var groupTag = ArgumentParser.ParseGroupTag(Info.StringIDs, args[1]);
+                var groupTag = ArgumentParser.ParseGroupTag(Info.StringIdCache, args[1]);
                 var path = args[2];
 
-                foreach (var instance in Info.Cache.Tags.FindAllInGroup(groupTag))
+                foreach (var instance in Info.TagCache.Tags.FindAllInGroup(groupTag))
                 {
                     if (instance == null)
                         continue;

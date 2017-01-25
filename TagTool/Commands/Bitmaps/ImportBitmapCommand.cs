@@ -10,22 +10,25 @@ using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Bitmaps
 {
-    class ImportCommand : Command
+    class ImportBitmapCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private Bitmap Bitmap { get; }
 
-        public ImportCommand(GameCacheContext info, TagInstance tag, Bitmap bitmap)
+        public ImportBitmapCommand(GameCacheContext cacheContext, TagInstance tag, Bitmap bitmap)
             : base(CommandFlags.None,
-                  "import",
+
+                  "import-bitmap",
                   "Imports an image from a DDS file.",
-                  "import <image index> <path>",
+
+                  "import-bitmap <image index> <dds file>",
+
                   "The image index must be in hexadecimal.\n" +
                   "No conversion will be done on the data in the DDS file.\n" +
                   "The pixel format must be supported by the game.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Tag = tag;
             Bitmap = bitmap;
         }
@@ -34,21 +37,25 @@ namespace TagTool.Commands.Bitmaps
         {
             if (args.Count != 2)
                 return false;
+
             int imageIndex;
             if (!int.TryParse(args[0], NumberStyles.HexNumber, null, out imageIndex))
                 return false;
+
             if (imageIndex < 0 || imageIndex >= Bitmap.Images.Count)
             {
                 Console.Error.WriteLine("Invalid image index.");
                 return true;
             }
+
             var imagePath = args[1];
 
             Console.WriteLine("Loading resource caches...");
             var resourceManager = new ResourceDataManager();
+
             try
             {
-                resourceManager.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+                resourceManager.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
             }
             catch
             {
@@ -56,18 +63,21 @@ namespace TagTool.Commands.Bitmaps
                 Console.WriteLine("Make sure that they all exist and are valid.");
                 return true;
             }
+
             Console.WriteLine("Importing image data...");
+
             try
             {
                 using (var imageStream = File.OpenRead(imagePath))
                 {
                     var injector = new BitmapDdsInjector(resourceManager);
-                    injector.InjectDds(Info.Serializer, Info.Deserializer, Bitmap, imageIndex, imageStream);
+                    injector.InjectDds(CacheContext.Serializer, CacheContext.Deserializer, Bitmap, imageIndex, imageStream);
                 }
-                using (var tagsStream = Info.OpenCacheReadWrite())
+
+                using (var tagsStream = CacheContext.OpenCacheReadWrite())
                 {
-                    var tagContext = new TagSerializationContext(tagsStream, Info, Tag);
-                    Info.Serializer.Serialize(tagContext, Bitmap);
+                    var tagContext = new TagSerializationContext(tagsStream, CacheContext, Tag);
+                    CacheContext.Serializer.Serialize(tagContext, Bitmap);
                 }
             }
             catch (Exception ex)
@@ -75,7 +85,9 @@ namespace TagTool.Commands.Bitmaps
                 Console.WriteLine("Importing image data failed: " + ex.Message);
                 return true;
             }
+
             Console.WriteLine("Done!");
+
             return true;
         }
     }

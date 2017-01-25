@@ -8,7 +8,7 @@ namespace TagTool.Commands.Unicode
     {
         public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, MultilingualUnicodeStringList unic)
         {
-            var groupName = info.StringIDs.GetString(tag.Group.Name);
+            var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
             var context = new CommandContext(parent,
                 string.Format("{0:X8}.{1}", tag.Index, groupName));
@@ -20,7 +20,7 @@ namespace TagTool.Commands.Unicode
 
         public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, MultilingualUnicodeStringList unic)
         {
-            if (info.StringIDs == null)
+            if (info.StringIdCache == null)
                 return;
 
             context.AddCommand(new ListCommand(info, unic));

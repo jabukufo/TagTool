@@ -7,13 +7,16 @@ using TagTool.IO;
 
 namespace TagTool.Commands.Tags
 {
-    class AddressCommand : Command
+    class GetTagAddressCommand : Command
     {
-        public AddressCommand()
+        public GetTagAddressCommand()
             : base(CommandFlags.Inherit,
-                  "address",
+
+                  "get-tag-address",
                   "Get the address of a tag in memory",
-                  "address <tag index> [process id]",
+
+                  "get-tag-address <tag index> [process id]",
+
                   "Gets the address of the given tag in memory.\n" +
                   "By default, this will read the memory of the first eldorado.exe process found.\n" +
                   "Specify a process ID in hexadecimal to read the memory of a specific process.\n")

@@ -27,9 +27,9 @@ namespace TagTool.Commands.Animations
         public override bool Execute(List<string> args)
         {
             var resources = new ResourceDataManager();
-            resources.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+            resources.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
 
-            var name = Info.StringIDs.GetString(new StringID(0x1818));
+            var name = Info.StringIdCache.GetString(new StringID(0x1818));
 
             var jmadDefinitions = new List<ModelAnimationResourceDefinition>();
             var jmadAnimationGroups = new List<List<ModelAnimationResourceDefinition.GroupMember.Animation>>();

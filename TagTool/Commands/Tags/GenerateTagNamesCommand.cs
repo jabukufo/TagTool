@@ -17,9 +17,12 @@ namespace TagTool.Commands.Tags
 
         public GenerateTagNamesCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
-                  "gentagnames",
+                  
+                  "generate-tag-names",
                   "Generates tag names into a csv file (overwriting existing entries).",
-                  "gentagnames <csv file>",
+
+                  "generate-tag-names <csv file>",
+
                   "Generates tag names into a csv file (overwriting existing entries).")
         {
             Info = info;
@@ -38,24 +41,24 @@ namespace TagTool.Commands.Tags
 
             using (var cacheStream = Info.OpenCacheRead())
             {
-                var scenarioTags = Info.Cache.Tags.FindAllInGroup(new Tag("scnr"));
+                var scenarioTags = Info.TagCache.Tags.FindAllInGroup(new Tag("scnr"));
                 foreach (var scenarioTag in scenarioTags)
                     SetScenarioName(cacheStream, scenarioTag, ref tagNames);
 
-                var objectTags = Info.Cache.Tags.FindAllInGroup(new Tag("obje"));
+                var objectTags = Info.TagCache.Tags.FindAllInGroup(new Tag("obje"));
                 foreach (var objectTag in objectTags)
                     SetGameObjectName(cacheStream, objectTag, ref tagNames);
 
-                var renderModelTags = Info.Cache.Tags.FindAllInGroup(new Tag("mode"));
+                var renderModelTags = Info.TagCache.Tags.FindAllInGroup(new Tag("mode"));
                 foreach (var renderModelTag in renderModelTags)
                     SetRenderModelName(cacheStream, renderModelTag, ref tagNames);
 
-                var modelTags = Info.Cache.Tags.FindAllInGroup(new Tag("hlmt"));
+                var modelTags = Info.TagCache.Tags.FindAllInGroup(new Tag("hlmt"));
                 foreach (var modelTag in modelTags)
                     SetModelName(cacheStream, modelTag, ref tagNames);
             }
 
-            foreach (var tag in Info.Cache.Tags)
+            foreach (var tag in Info.TagCache.Tags)
                 if (!(tag == null || tagNames.ContainsKey(tag.Index)))
                     tagNames[tag.Index] = $"0x{tag.Index:X4}";
 
@@ -79,6 +82,8 @@ namespace TagTool.Commands.Tags
                 writer.Close();
             }
 
+            Info.TagNames = tagNames;
+
             return true;
         }
 
@@ -89,7 +94,7 @@ namespace TagTool.Commands.Tags
 
             var context = new TagSerializationContext(stream, Info, tag);
             var definition = Info.Deserializer.Deserialize<RenderModel>(context);
-            tagNames[tag.Index] = $"{Info.StringIDs.GetString(definition.Name)}";
+            tagNames[tag.Index] = $"{Info.StringIdCache.GetString(definition.Name)}";
         }
 
         private void SetModelName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
@@ -122,7 +127,16 @@ namespace TagTool.Commands.Tags
         private void SetGameObjectName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
         {
             var context = new TagSerializationContext(stream, Info, tag);
-            var definition = (GameObject)Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
+
+            GameObject definition = null;
+            try
+            {
+                definition = (GameObject)Info.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
+            }
+            catch
+            {
+                return;
+            }
 
             if (definition.Model == null)
                 return;
@@ -136,7 +150,7 @@ namespace TagTool.Commands.Tags
             context = new TagSerializationContext(stream, Info, modelDefinition.RenderModel);
             var renderModelDefinition = Info.Deserializer.Deserialize<RenderModel>(context);
 
-            var objectName = Info.StringIDs.GetString(renderModelDefinition.Name);
+            var objectName = Info.StringIdCache.GetString(renderModelDefinition.Name);
 
             if (tag.Group.Tag == new Tag("bipd"))
             {
@@ -374,7 +388,7 @@ namespace TagTool.Commands.Tags
             var context = new TagSerializationContext(stream, Info, tag);
             var definition = Info.Deserializer.Deserialize<Scenario>(context);
 
-            var tagName = Info.StringIDs.GetString(definition.ScenarioZonesetGroups[0].Name);
+            var tagName = Info.StringIdCache.GetString(definition.ScenarioZonesetGroups[0].Name);
             var slashIndex = tagName.LastIndexOf('\\');
             var scenarioName = tagName.Substring(slashIndex + 1);
 

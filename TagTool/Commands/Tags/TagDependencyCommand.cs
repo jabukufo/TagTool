@@ -9,27 +9,27 @@ namespace TagTool.Commands.Tags
     /// <summary>
     /// Command for managing tag dependencies.
     /// </summary>
-    class DependencyCommand : Command
+    class TagDependencyCommand : Command
     {
         public GameCacheContext Info { get; }
 
-        public DependencyCommand(GameCacheContext info) : base(
+        public TagDependencyCommand(GameCacheContext info) : base(
             CommandFlags.None,
 
-            "dep",
-            "Manage tag loading",
+            "tag-dependency",
+            "Manage tag dependencies.",
 
-            "dep add <tag index> <dependency index...>\n" +
-            "dep remove <tag index> <dependency index...>\n" +
-            "dep list <tag index>\n" +
-            "dep listall <tag index>\n" +
-            "dep liston <tag index>",
+            "tag-dependency add <tag> {... dependencies ...}\n" +
+            "tag-dependency remove <tag> {... dependencies ...}\n" +
+            "tag-dependency list <tag>\n" +
+            "tag-dependency list-all <tag>\n" +
+            "tag-dependency list-on <tag>",
 
-            "\"dep add\" will cause the first tag to load the other tags.\n" +
-            "\"dep remove\" will prevent the first tag from loading the other tags.\n" +
-            "\"dep list\" will list all immediate dependencies of a tag.\n" +
-            "\"dep listall\" will recursively list all dependencies of a tag.\n" +
-            "\"dep liston\" will list all tags that depend on a tag.\n" +
+            "\"tag-dependency add\" will cause the first tag to load the other tags.\n" +
+            "\"tag-dependency remove\" will prevent the first tag from loading the other tags.\n" +
+            "\"tag-dependency list\" will list all immediate dependencies of a tag.\n" +
+            "\"tag-dependency list-all\" will recursively list all dependencies of a tag.\n" +
+            "\"tag-dependency list-on\" will list all tags that depend on a tag.\n" +
             "\n" +
             "To add dependencies to a map, use the \"map\" command to get its scenario tag\n" +
             "index and then add dependencies to the scenario tag.")
@@ -54,10 +54,10 @@ namespace TagTool.Commands.Tags
                     return ExecuteAddRemove(tag, args);
 
                 case "list":
-                case "listall":
-                    return ExecuteList(tag, (args[0] == "listall"));
+                case "list-all":
+                    return ExecuteList(tag, (args[0] == "list-all"));
 
-                case "liston":
+                case "list-on":
                     return ExecuteListDependsOn(tag);
 
                 default:
@@ -77,7 +77,7 @@ namespace TagTool.Commands.Tags
 
             using (var stream = Info.OpenCacheReadWrite())
             {
-                var data = Info.Cache.ExtractTag(stream, tag);
+                var data = Info.TagCache.ExtractTag(stream, tag);
 
                 if (args[0] == "add")
                 {
@@ -100,7 +100,7 @@ namespace TagTool.Commands.Tags
                     }
                 }
 
-                Info.Cache.SetTagData(stream, tag, data);
+                Info.TagCache.SetTagData(stream, tag, data);
             }
 
             return true;
@@ -117,9 +117,9 @@ namespace TagTool.Commands.Tags
             IEnumerable<TagInstance> dependencies;
 
             if (all)
-                dependencies = Info.Cache.Tags.FindDependencies(tag);
+                dependencies = Info.TagCache.Tags.FindDependencies(tag);
             else
-                dependencies = tag.Dependencies.Where(i => Info.Cache.Tags.Contains(i)).Select(i => Info.Cache.Tags[i]);
+                dependencies = tag.Dependencies.Where(i => Info.TagCache.Tags.Contains(i)).Select(i => Info.TagCache.Tags[i]);
 
             foreach (var dependency in dependencies)
             {
@@ -127,7 +127,7 @@ namespace TagTool.Commands.Tags
                     Info.TagNames[dependency.Index] :
                     $"0x{dependency.Index:X4}";
 
-                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{Info.StringIDs.GetString(dependency.Group.Name)}");
+                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{Info.StringIdCache.GetString(dependency.Group.Name)}");
             }
 
             return true;
@@ -135,7 +135,7 @@ namespace TagTool.Commands.Tags
 
         private bool ExecuteListDependsOn(TagInstance tag)
         {
-            var dependsOn = Info.Cache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
+            var dependsOn = Info.TagCache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
 
             foreach (var dependency in dependsOn)
             {
@@ -143,7 +143,7 @@ namespace TagTool.Commands.Tags
                     Info.TagNames[dependency.Index] :
                     $"0x{dependency.Index:X4}";
 
-                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{Info.StringIDs.GetString(dependency.Group.Name)}");
+                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{Info.StringIdCache.GetString(dependency.Group.Name)}");
             }
 
             return true;

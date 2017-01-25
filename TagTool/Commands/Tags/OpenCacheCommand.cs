@@ -9,18 +9,21 @@ namespace TagTool.Commands.Tags
 {
     class OpenCacheCommand : Command
     {
-        private CommandContextStack Stack { get; }
-        private GameCacheContext Info { get; }
+        private CommandContextStack ContextStack { get; }
+        private GameCacheContext CacheContext { get; }
 
-        public OpenCacheCommand(CommandContextStack stack, GameCacheContext info)
+        public OpenCacheCommand(CommandContextStack contextStack, GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
-                  "opencache",
-                  "Opens a cache file format comparison and porting",
-                  "opencache <cache file>",
-                  "Opens a cache file format comparison and porting")
+
+                  "open-map-file",
+                  "Opens a .map cache file format for data comparison and tag porting.",
+
+                  "open-map-file <path>",
+
+                  "Opens a .map cache file format for data comparison and tag porting.")
         {
-            Stack = stack;
-            Info = info;
+            ContextStack = contextStack;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -38,7 +41,7 @@ namespace TagTool.Commands.Tags
 
             var cacheFile = new CacheFile(new FileInfo(mapFilePath));
 
-            Stack.Push(CacheContextFactory.Create(Stack.Context, Info, CacheManager.GetCache(mapFilePath)));
+            ContextStack.Push(CacheContextFactory.Create(ContextStack.Context, CacheContext, CacheManager.GetCache(mapFilePath)));
 
             return true;
         }

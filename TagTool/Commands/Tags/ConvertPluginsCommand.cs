@@ -12,19 +12,22 @@ namespace TagTool.Commands.Tags
 {
     class ConvertPluginsCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
 
-        public ConvertPluginsCommand(GameCacheContext info)
+        public ConvertPluginsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
-                  "convertplugins",
+
+                  "convert-plugins",
                   "Convert Assembly plugins to tag layout structures",
-                  "convertplugins <input dir> <output type> <output dir>",
+
+                  "convert-plugins <input dir> <output type> <output dir>",
+
                   "Only plugins for groups that are actually used in the tag cache will be converted.\n" +
                   "Layouts will be written to the output directory in the chosen format.\n" +
                   "\n" +
-                  "Supported output types: csharp, cpp")
+                  "Supported output types: c#, c++")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -37,10 +40,10 @@ namespace TagTool.Commands.Tags
             TagLayoutWriter writer;
             switch (type)
             {
-                case "csharp":
+                case "c#":
                     writer = new CSharpLayoutWriter();
                     break;
-                case "cpp":
+                case "c++":
                     writer = new CppLayoutWriter();
                     break;
                 default:
@@ -54,7 +57,7 @@ namespace TagTool.Commands.Tags
             // order to look up the group name without using a static table.
             var processedGroups = new HashSet<Tag>();
             var numConflicts = 0;
-            foreach (var tag in Info.Cache.Tags.NonNull().Where(tag => !processedGroups.Contains(tag.Group.Tag)))
+            foreach (var tag in CacheContext.TagCache.Tags.NonNull().Where(tag => !processedGroups.Contains(tag.Group.Tag)))
             {
                 processedGroups.Add(tag.Group.Tag);
 
@@ -71,7 +74,7 @@ namespace TagTool.Commands.Tags
 
                 // Load the plugin into a layout
                 AssemblyPluginLoadResults loadedPlugin;
-                var groupName = Info.StringIDs.GetString(tag.Group.Name);
+                var groupName = CacheContext.StringIdCache.GetString(tag.Group.Name);
                 using (var reader = XmlReader.Create(pluginPath))
                     loadedPlugin = AssemblyPluginLoader.LoadPlugin(reader, groupName, tag.Group.Tag);
 

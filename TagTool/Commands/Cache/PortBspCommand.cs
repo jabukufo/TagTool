@@ -75,11 +75,11 @@ namespace TagTool.Commands.Cache
             sbsp.CollisionBspResource = Resource3;
             sbsp.Resource4 = Resource4;
 
-            using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
                 Console.WriteLine("Writing ElDewrito tag to tag " + newTagIndex+"...");
 
-                var context = new TagSerializationContext(cacheStream, Info, Info.Cache.Tags[newTagIndex.Index]);
+                var context = new TagSerializationContext(cacheStream, Info, Info.TagCache.Tags[newTagIndex.Index]);
                 Info.Serializer.Serialize(context, sbsp);
             }
 

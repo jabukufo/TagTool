@@ -38,7 +38,7 @@ namespace TagTool.Commands.RenderModels
                 material.RenderMethod = ArgumentParser.ParseTagIndex(Info, Console.ReadLine());
             }
 
-            using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
                 var context = new TagSerializationContext(cacheStream, Info, Tag);
                 Info.Serializer.Serialize(context, Definition);

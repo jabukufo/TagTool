@@ -111,17 +111,17 @@ namespace TagTool.Commands.RenderModels
             destResources.LoadCachesFromDirectory(destDir.FullName);
 
             var srcResources = new ResourceDataManager();
-            srcResources.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+            srcResources.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
 
             var destSerializer = new TagSerializer(destVersion);
             var destDeserializer = new TagDeserializer(destVersion);
 
             var destInfo = new GameCacheContext
             {
-                Cache = destTagCache,
-                CacheFile = destTagsFile,
-                StringIDs = destStringIdCache,
-                StringIDsFile = destStringIDsFile,
+                TagCache = destTagCache,
+                TagCacheFile = destTagsFile,
+                StringIdCache = destStringIdCache,
+                StringIdCacheFile = destStringIDsFile,
                 Version = destVersion,
                 Serializer = destSerializer,
                 Deserializer = destDeserializer

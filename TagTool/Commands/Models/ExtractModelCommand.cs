@@ -35,7 +35,7 @@ namespace TagTool.Commands.Models
             var resourceManager = new ResourceDataManager();
             try
             {
-                resourceManager.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+                resourceManager.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
             }
             catch
             {
@@ -47,7 +47,7 @@ namespace TagTool.Commands.Models
             // Deserialize the render model tag
             Console.WriteLine("Reading model data...");
             RenderModel renderModel;
-            using (var cacheStream = Info.CacheFile.OpenRead())
+            using (var cacheStream = Info.TagCacheFile.OpenRead())
             {
                 var renderModelContext = new TagSerializationContext(cacheStream, Info, Definition.RenderModel);
                 renderModel = Info.Deserializer.Deserialize<RenderModel>(renderModelContext);
@@ -72,7 +72,7 @@ namespace TagTool.Commands.Models
 
                 foreach (var region in variant.Regions)
                 {
-                    regionMeshes[Info.StringIDs.GetString(region.Name)] = renderModel.Geometry.Meshes[region.RenderModelRegionIndex];
+                    regionMeshes[Info.StringIdCache.GetString(region.Name)] = renderModel.Geometry.Meshes[region.RenderModelRegionIndex];
                 }
 
                 var headerAddressList = new List<int>();
@@ -90,7 +90,7 @@ namespace TagTool.Commands.Models
                     #region Header
                     bw.Write("AMF!".ToCharArray());
                     bw.Write(2.0f); //format version
-                    bw.Write((Info.StringIDs.GetString(renderModel.Name) + "\0").ToCharArray());
+                    bw.Write((Info.StringIdCache.GetString(renderModel.Name) + "\0").ToCharArray());
 
                     bw.Write(renderModel.Nodes.Count);
                     headerAddressList.Add((int)bw.BaseStream.Position);
@@ -112,7 +112,7 @@ namespace TagTool.Commands.Models
                     headerValueList.Add((int)bw.BaseStream.Position);
                     foreach (var node in renderModel.Nodes)
                     {
-                        bw.Write((Info.StringIDs.GetString(node.Name) + "\0").ToCharArray());
+                        bw.Write((Info.StringIdCache.GetString(node.Name) + "\0").ToCharArray());
                         bw.Write((short)node.ParentNode);
                         bw.Write((short)node.FirstChildNode);
                         bw.Write((short)node.NextSiblingNode);
@@ -129,7 +129,7 @@ namespace TagTool.Commands.Models
                     headerValueList.Add((int)bw.BaseStream.Position);
                     foreach (var group in renderModel.MarkerGroups)
                     {
-                        bw.Write((Info.StringIDs.GetString(group.Name) + "\0").ToCharArray());
+                        bw.Write((Info.StringIdCache.GetString(group.Name) + "\0").ToCharArray());
                         bw.Write(group.Markers.Count);
                         markerAddressList.Add((int)bw.BaseStream.Position);
                         bw.Write(0);
@@ -158,7 +158,7 @@ namespace TagTool.Commands.Models
                     headerValueList.Add((int)bw.BaseStream.Position);
                     foreach (var region in renderModel.Regions)
                     {
-                        bw.Write((Info.StringIDs.GetString(region.Name) + "\0").ToCharArray());
+                        bw.Write((Info.StringIdCache.GetString(region.Name) + "\0").ToCharArray());
                         bw.Write(regionMeshes.Count);
                         permAddressList.Add((int)bw.BaseStream.Position);
                         bw.Write(0);
@@ -168,7 +168,7 @@ namespace TagTool.Commands.Models
                     foreach (var part in regionMeshes)
                     {
                         permValueList.Add((int)bw.BaseStream.Position);
-                        bw.Write((Info.StringIDs.GetString(variant.Name) + "\0").ToCharArray());
+                        bw.Write((Info.StringIdCache.GetString(variant.Name) + "\0").ToCharArray());
 
                         if (part.Value.Type == VertexType.Rigid)
                             bw.Write((byte)1);
@@ -223,7 +223,7 @@ namespace TagTool.Commands.Models
                 return true;
             }
 
-            var variant = Definition.Variants.FirstOrDefault(v => (Info.StringIDs.GetString(v.Name) ?? v.Name.ToString()) == variantName);
+            var variant = Definition.Variants.FirstOrDefault(v => (Info.StringIdCache.GetString(v.Name) ?? v.Name.ToString()) == variantName);
             if (variant == null && Definition.Variants.Count > 0)
             {
                 Console.WriteLine("Unable to find variant \"{0}\"", variantName);
@@ -239,7 +239,7 @@ namespace TagTool.Commands.Models
             var resourceManager = new ResourceDataManager();
             try
             {
-                resourceManager.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+                resourceManager.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
             }
             catch
             {
@@ -251,7 +251,7 @@ namespace TagTool.Commands.Models
             // Deserialize the render model tag
             Console.WriteLine("Reading model data...");
             RenderModel renderModel;
-            using (var cacheStream = Info.CacheFile.OpenRead())
+            using (var cacheStream = Info.TagCacheFile.OpenRead())
             {
                 var renderModelContext = new TagSerializationContext(cacheStream, Info, Definition.RenderModel);
                 renderModel = Info.Deserializer.Deserialize<RenderModel>(renderModelContext);
@@ -306,8 +306,8 @@ namespace TagTool.Commands.Models
                             // Extract each mesh in the permutation
                             var meshIndex = renderModelPermutation.MeshIndex;
                             var meshCount = renderModelPermutation.MeshCount;
-                            var regionName = Info.StringIDs.GetString(region.Name) ?? region.Name.ToString();
-                            var permutationName = Info.StringIDs.GetString(permutation.Name) ?? permutation.Name.ToString();
+                            var regionName = Info.StringIdCache.GetString(region.Name) ?? region.Name.ToString();
+                            var permutationName = Info.StringIdCache.GetString(permutation.Name) ?? permutation.Name.ToString();
 
                             Console.WriteLine("Extracting {0} mesh(es) for {1}:{2}...", meshCount, regionName, permutationName);
 

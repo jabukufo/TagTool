@@ -7,16 +7,19 @@ namespace TagTool.Commands.Tags
 {
     class ListUnreferencedTagsCommand : Command
     {
-        public GameCacheContext Info { get; }
+        public GameCacheContext CacheContext { get; }
 
-        public ListUnreferencedTagsCommand(GameCacheContext info)
+        public ListUnreferencedTagsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
-                  "listunreferencedtags",
+
+                  "list-unreferenced-tags",
                   "Lists all unreferenced tags in the current tag cache",
-                  "listunreferencedtags",
+
+                  "list-unreferenced-tags",
+
                   "Lists all unreferenced tags in the current tag cache")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -24,16 +27,16 @@ namespace TagTool.Commands.Tags
             if (args.Count != 0)
                 return false;
 
-            foreach (var tag in Info.Cache.Tags)
+            foreach (var tag in CacheContext.TagCache.Tags)
             {
                 if (tag == null)
                     continue;
 
-                var dependsOn = Info.Cache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
+                var dependsOn = CacheContext.TagCache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
 
                 if (dependsOn.Count() == 0)
                 {
-                    Console.Write($"{Info.TagNames[tag.Index]} ");
+                    Console.Write($"{CacheContext.TagNames[tag.Index]} ");
                     TagPrinter.PrintTagShort(tag);
                 }
             }

@@ -6,16 +6,19 @@ using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
-    class CleanCsvCommand : Command
+    class CleanCsvFileCommand : Command
     {
         public GameCacheContext CacheContext { get; }
 
-        public CleanCsvCommand(GameCacheContext cacheContext) :
+        public CleanCsvFileCommand(GameCacheContext cacheContext) :
             base(CommandFlags.Inherit,
-                "clean-csv",
-                "",
-                "clean-csv <csv file>",
-                "")
+
+                "clean-csv-file",
+                "Removes any unfound tag indices from a tag conversion .csv file.",
+
+                "clean-csv-file <csv file>",
+
+                "Removes any unfound tag indices from a tag conversion .csv file.")
         {
             CacheContext = cacheContext;
         }
@@ -57,7 +60,7 @@ namespace TagTool.Commands.Tags
                     if (!int.TryParse(tagIndices[0], NumberStyles.HexNumber, null, out tagIndex))
                         continue;
 
-                    if (tagIndex >= CacheContext.Cache.Tags.Count || CacheContext.Cache.Tags[tagIndex] == null)
+                    if (tagIndex >= CacheContext.TagCache.Tags.Count || CacheContext.TagCache.Tags[tagIndex] == null)
                         continue;
 
                     var first = true;

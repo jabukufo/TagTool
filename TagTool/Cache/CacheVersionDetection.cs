@@ -1,5 +1,4 @@
 ﻿using System;
-using TagTool.Cache;
 using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Cache
@@ -48,7 +47,7 @@ namespace TagTool.Cache
         {
             if (version == CacheVersion.Unknown)
                 return -1;
-            return VersionTimestamps[(int)version];
+            return VersionTimestamps[(int)version - 2];
         }
 
         /// <summary>

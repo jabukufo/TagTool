@@ -9,15 +9,15 @@ namespace TagTool.Commands.Tags
 {
     class ListStringsCommand : Command
     {
-        private readonly GameCacheContext _info;
+        private GameCacheContext CacheContext { get; }
 
-        public ListStringsCommand(GameCacheContext info) : base(
+        public ListStringsCommand(GameCacheContext cacheContext) : base(
             CommandFlags.Inherit,
 
-            "liststrings",
+            "list-strings",
             "Scan unic tags to find a localized string",
 
-            "liststrings <language> [filter]",
+            "list-strings <language> [filter]",
 
             "Scans all unic tags to find the strings belonging to a language.\n" +
             "If a filter is specified, only strings containing the filter will be listed.\n" +
@@ -27,42 +27,41 @@ namespace TagTool.Commands.Tags
             "english, japanese, german, french, spanish, mexican, italian, korean,\n" +
             "chinese-trad, chinese-simp, portuguese, russian")
         {
-            _info = info;
+            CacheContext = cacheContext;
         }
-
-        public GameCacheContext Info
-        {
-            get
-            {
-                return _info;
-            }
-        }
-
+        
         public override bool Execute(List<string> args)
         {
             if (args.Count != 1 && args.Count != 2)
                 return false;
+
             GameLanguage language;
             if (!ArgumentParser.ParseLanguage(args[0], out language))
                 return false;
-            var filter = (args.Count == 2) ? args[1] : null;
 
+            var filter = (args.Count == 2) ? args[1] : null;
             var found = false;
-            using (var stream = Info.OpenCacheRead())
+
+            using (var stream = CacheContext.OpenCacheRead())
             {
-                foreach (var unicTag in Info.Cache.Tags.FindAllInGroup("unic"))
+                foreach (var unicTag in CacheContext.TagCache.Tags.FindAllInGroup("unic"))
                 {
-                    var unic = Info.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, Info, unicTag));
-                    var strings = LocalizedStringPrinter.PrepareForDisplay(unic, Info.StringIDs, unic.Strings, language, filter);
+                    var unic = CacheContext.Deserializer.Deserialize<MultilingualUnicodeStringList>(new TagSerializationContext(stream, CacheContext, unicTag));
+                    var strings = LocalizedStringPrinter.PrepareForDisplay(unic, CacheContext.StringIdCache, unic.Strings, language, filter);
+
                     if (strings.Count == 0)
                         continue;
+
                     if (found)
                         Console.WriteLine();
+
                     Console.WriteLine("Strings found in {0:X8}.unic:", unicTag.Index);
                     LocalizedStringPrinter.PrintStrings(strings);
+
                     found = true;
                 }
             }
+
             if (!found)
                 Console.Error.WriteLine("No strings found.");
 

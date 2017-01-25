@@ -175,5 +175,10 @@ namespace TagTool.Cache.HaloOnline
         {
             return ((System.Collections.IEnumerable)_tags).GetEnumerator();
         }
+
+        internal void RemoveAt(int x)
+        {
+            _tags.RemoveAt(x);
+        }
     }
 }

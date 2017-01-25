@@ -36,7 +36,7 @@ namespace TagTool.Commands.BSPs
             var resourceManager = new ResourceDataManager();
             try
             {
-                resourceManager.LoadCachesFromDirectory(Info.CacheFile.DirectoryName);
+                resourceManager.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
             }
             catch
             {

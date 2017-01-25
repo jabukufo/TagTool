@@ -90,7 +90,7 @@ namespace TagTool.Commands
 
             var namePieces = name.Split('.');
 
-            var groupTag = ParseGroupTag(info.StringIDs, namePieces[1]);
+            var groupTag = ParseGroupTag(info.StringIdCache, namePieces[1]);
             if (groupTag == Tag.Null)
                 throw new Exception($"Invalid tag name: {name}");
 
@@ -100,7 +100,7 @@ namespace TagTool.Commands
             {
                 if (nameEntry.Value == tagName)
                 {
-                    var instance = info.Cache.Tags[nameEntry.Key];
+                    var instance = info.TagCache.Tags[nameEntry.Key];
 
                     if (instance.Group.Tag == groupTag)
                         return instance;
@@ -120,7 +120,7 @@ namespace TagTool.Commands
             }
 
             if (arg == "*")
-                return info.Cache.Tags.Last();
+                return info.TagCache.Tags.Last();
             else if (arg == "null")
                 return null;
             else if (char.IsLetter(arg[0]))
@@ -132,13 +132,13 @@ namespace TagTool.Commands
             if (!int.TryParse(arg, NumberStyles.HexNumber, null, out tagIndex))
                 return null;
 
-            if (!info.Cache.Tags.Contains(tagIndex))
+            if (!info.TagCache.Tags.Contains(tagIndex))
             {
                 Console.WriteLine("Unable to find tag {0:X8}.", tagIndex);
                 return null;
             }
 
-            return info.Cache.Tags[tagIndex];
+            return info.TagCache.Tags[tagIndex];
         }
 
         public static Tag ParseGroupTag(StringIdCache stringIDs, string groupName)

@@ -9,22 +9,25 @@ using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Tags
 {
-    class CollisionGeometryTestCommand : Command
+    class CollisionModelTestCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
 
-        public CollisionGeometryTestCommand(GameCacheContext info)
+        public CollisionModelTestCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
-            "colltest",
-            "Collision Geometry Import Command (Test)",
-            "colltest <filepath>|<dirpath> <index>|<new> [force]",
-            "Insert a collision_geometry tag compiled from Halo1 CE Tool.\n" +
-            "A file path can be specified to load from a single Halo 1 coll tag or a directory name " +
-            "for a directory with many coll tags can be loaded as separate BSPs.\n" +
-            "A tag-index can be specified to override an existing tag, or 'new' can be used to create a new tag.\n" +
-            "Tags that are not type- 'coll' will not be overridden unless the third argument is specified- 'force'.")
+                  
+                  "collision-model-test",
+                  "Collision geometry import command (Test)",
+                  
+                  "collision-model-test <filepath>|<dirpath> <index>|<new> [force]",
+                  
+                  "Insert a collision_geometry tag compiled from Halo1 CE Tool.\n" +
+                  "A file path can be specified to load from a single Halo 1 coll tag or a directory name " +
+                  "for a directory with many coll tags can be loaded as separate BSPs.\n" +
+                  "A tag-index can be specified to override an existing tag, or 'new' can be used to create a new tag.\n" +
+                  "Tags that are not type- 'coll' will not be overridden unless the third argument is specified- 'force'.")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -47,7 +50,7 @@ namespace TagTool.Commands.Tags
             }
             else
             {
-                tag = ArgumentParser.ParseTagIndex(Info, args[1]);
+                tag = ArgumentParser.ParseTagIndex(CacheContext, args[1]);
                 if (tag == null)
                 {
                     return false;
@@ -117,13 +120,13 @@ namespace TagTool.Commands.Tags
                 }
             }
 
-            using (var stream = Info.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenCacheReadWrite())
             {
 
                 if (b_duplicate)
                 {
                     //duplicate an existing tag, trashcan phmo
-                    tag = Info.Cache.DuplicateTag(stream, Info.Cache.Tags[0x4436]);
+                    tag = CacheContext.TagCache.DuplicateTag(stream, CacheContext.TagCache.Tags[0x4436]);
                     if (tag == null)
                     {
                         Console.WriteLine("Failed tag duplication.");
@@ -131,8 +134,8 @@ namespace TagTool.Commands.Tags
                     }
                 }
 
-                var context = new TagSerializationContext(stream, Info, tag);
-                Info.Serializer.Serialize(context, coll);
+                var context = new TagSerializationContext(stream, CacheContext, tag);
+                CacheContext.Serializer.Serialize(context, coll);
 
             }
             Console.WriteLine(
