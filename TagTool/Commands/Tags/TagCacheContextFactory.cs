@@ -46,6 +46,7 @@ namespace TagTool.Commands.Tags
                 context.AddCommand(new OpenCacheCommand(stack, cacheContext));
                 context.AddCommand(new MatchTagsCommand(cacheContext));
                 context.AddCommand(new ConvertTagCommand(cacheContext));
+                context.AddCommand(new UpdateMapFilesCommand(cacheContext));
             }
 
             return context;

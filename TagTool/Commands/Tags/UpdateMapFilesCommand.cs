@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagTool.Cache.HaloOnline;
+using TagTool.Common;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
 
@@ -31,14 +33,54 @@ namespace TagTool.Commands.Tags
             if (args.Count != 0)
                 return false;
 
+            var mapIndices = new Dictionary<int, int>();
+
             using (var cacheStream = CacheContext.OpenCacheRead())
             {
                 foreach (var scnrTag in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
                 {
                     var tagContext = new TagSerializationContext(cacheStream, CacheContext, scnrTag);
                     var scnr = CacheContext.Deserializer.Deserialize<Scenario>(tagContext);
+                    mapIndices[scnr.MapId] = scnrTag.Index;
                 }
             }
+
+            foreach (var mapFile in CacheContext.Directory.GetFiles("*.map"))
+            {
+                try
+                {
+                    using (var stream = mapFile.Open(FileMode.Open, FileAccess.ReadWrite))
+                    using (var reader = new BinaryReader(stream))
+                    using (var writer = new BinaryWriter(stream))
+                    {
+                        if (reader.ReadInt32() != new Tag("head").Value)
+                        {
+                            Console.Error.WriteLine("Invalid map file");
+                            return true;
+                        }
+
+                        reader.BaseStream.Position = 0x2DEC;
+                        var mapId = reader.ReadInt32();
+
+                        if (mapIndices.ContainsKey(mapId))
+                        {
+                            var mapIndex = mapIndices[mapId];
+
+                            writer.BaseStream.Position = 0x2DF0;
+                            writer.Write(mapIndex);
+
+                            Console.WriteLine($"Scenario tag index for {mapFile.Name}: {mapIndex:X8}");
+                        }
+
+                    }
+                }
+                catch (IOException)
+                {
+                    Console.Error.WriteLine("Unable to open the map file for reading.");
+                }
+            }
+
+            Console.WriteLine("Done!");
 
             return true;
         }
