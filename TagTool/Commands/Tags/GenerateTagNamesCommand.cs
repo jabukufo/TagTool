@@ -35,7 +35,7 @@ namespace TagTool.Commands.Tags
 
             var csvFile = (args.Count == 1) ?
                 new FileInfo(args[0]) :
-                new FileInfo($"Tags\\tagnames_{CacheVersionDetection.GetVersionString(CacheContext.Version)}.csv");
+                new FileInfo($"tagnames_{CacheVersionDetection.GetVersionString(CacheContext.Version)}.csv");
 
             var tagNames = new Dictionary<int, string>();
 
