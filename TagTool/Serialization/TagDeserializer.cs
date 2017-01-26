@@ -198,19 +198,25 @@ namespace TagTool.Serialization
                 return new Euler3(i, j, k);
             }
 
-            // Vector types
+            // Point/Vector types
+
             if (valueType == typeof(RealPoint2d))
                 return new RealPoint2d(reader.ReadSingle(), reader.ReadSingle());
             if (valueType == typeof(RealPoint3d))
                 return new RealPoint3d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+
+            if (valueType == typeof(RealVector2d))
+                return new RealVector2d(reader.ReadSingle(), reader.ReadSingle());
+            if (valueType == typeof(RealVector3d))
+                return new RealVector3d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
             if (valueType == typeof(RealVector4d))
                 return new RealVector4d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
             if (valueType == typeof(RealQuaternion))
                 return new RealQuaternion(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
-            if (valueType == typeof(Matrix4x3))
-                return new Matrix4x3(
+            if (valueType == typeof(RealMatrix4x3))
+                return new RealMatrix4x3(
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),

@@ -3,6 +3,7 @@ using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
+using System;
 
 namespace TagTool.Tags.Definitions
 {
@@ -56,7 +57,7 @@ namespace TagTool.Tags.Definitions
         [MinVersion(CacheVersion.HaloOnline498295)]
         public uint Unknown97;
         public List<DetailObject> DetailObjects;
-        public List<Cluster> Clusters;
+        public List<Cluster2> Clusters;
         public List<RenderMaterial> Materials;
         public List<short> SkyOwnerCluster;
         public uint Unknown23;
@@ -170,6 +171,13 @@ namespace TagTool.Tags.Definitions
             }
         }
 
+        [Flags]
+        public enum CollisionMaterialFlags : ushort
+        {
+            None,
+            IsSeam = 1 << 0
+        }
+
         [TagStructure(Size = 0x18)]
         public class CollisionMaterial
         {
@@ -177,7 +185,19 @@ namespace TagTool.Tags.Definitions
             public short GlobalMaterialIndex;
             public short ConveyorSurfaceIndex;
             public short SeamIndex;
-            public short Unknown;
+            public CollisionMaterialFlags Flags;
+        }
+
+        [Flags]
+        public enum ClusterPortalFlags : int
+        {
+            None = 0,
+            AiCantHearThroughThisShit = 1 << 0,
+            OneWay = 1 << 1,
+            Door = 1 << 2,
+            NoWay = 1 << 3,
+            OneWayReversed = 1 << 4,
+            NoOneCanHearThroughThis = 1 << 5
         }
 
         [TagStructure(Size = 0x28)]
@@ -188,14 +208,14 @@ namespace TagTool.Tags.Definitions
             public int PlaneIndex;
             public RealPoint3d Centroid;
             public float BoundingRadius;
-            public uint Flags;
+            public ClusterPortalFlags Flags;
             public List<RealPoint3d> Vertices;
         }
 
         [TagStructure(Size = 0x78)]
         public class UnknownBlock
         {
-            public uint Unknown;
+            public uint Unknown1;
             public uint Unknown2;
             public uint Unknown3;
             public uint Unknown4;
@@ -286,7 +306,7 @@ namespace TagTool.Tags.Definitions
 
         [TagStructure(Size = 0xDC, MaxVersion = CacheVersion.HaloOnline449175)]
         [TagStructure(Size = 0xE0, MinVersion = CacheVersion.HaloOnline498295)]
-        public class Cluster
+        public class Cluster2
         {
             public Range<float> BoundsX;
             public Range<float> BoundsY;
@@ -446,7 +466,7 @@ namespace TagTool.Tags.Definitions
         public class InstancedGeometryInstance
         {
             public float Scale;
-            public Matrix4x3 Matrix;
+            public RealMatrix4x3 Matrix;
             public short MeshIndex;
             public ushort Flags;
             public short UnknownYoIndex;

@@ -37,7 +37,7 @@ namespace TagTool.Geometry
             var material = new PhysicsModel.Material();
             //the 'default' stringid
             material.Name = new StringId(1);
-            material.Flags = -256;
+            // ??? material.Flags = -256;
             material.PhantomType = -1;
 
             _phmo.Materials.Add(material);

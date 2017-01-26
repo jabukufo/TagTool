@@ -200,15 +200,19 @@ namespace TagTool.Serialization
             else if (valueType == typeof(Euler3))
                 SerializeEulerAngles(block, (Euler3)val);
             else if (valueType == typeof(RealPoint2d))
-                SerializeVector(block, (RealPoint2d)val);
+                SerializePoint(block, (RealPoint2d)val);
             else if (valueType == typeof(RealPoint3d))
-                SerializeVector(block, (RealPoint3d)val);
+                SerializePoint(block, (RealPoint3d)val);
+            else if (valueType == typeof(RealVector2d))
+                SerializeVector(block, (RealVector2d)val);
+            else if (valueType == typeof(RealVector3d))
+                SerializeVector(block, (RealVector3d)val);
             else if (valueType == typeof(RealVector4d))
                 SerializeVector(block, (RealVector4d)val);
             else if (valueType == typeof(RealQuaternion))
                 SerializeRealQuaternion(block, (RealQuaternion)val);
-            else if (valueType == typeof(Matrix4x3))
-                SerializeMatrix(block, (Matrix4x3)val);
+            else if (valueType == typeof(RealMatrix4x3))
+                SerializeMatrix(block, (RealMatrix4x3)val);
             else if (valueType == typeof(StringId))
                 block.Writer.Write(((StringId)val).Value);
             else if (valueType == typeof(Angle))
@@ -398,17 +402,30 @@ namespace TagTool.Serialization
             block.Writer.Write(angles.Roll.Radians);
         }
 
-        private static void SerializeVector(IDataBlock block, RealPoint2d vec)
+        private static void SerializePoint(IDataBlock block, RealPoint2d point)
         {
-            block.Writer.Write(vec.X);
-            block.Writer.Write(vec.Y);
+            block.Writer.Write(point.X);
+            block.Writer.Write(point.Y);
         }
 
-        private static void SerializeVector(IDataBlock block, RealPoint3d vec)
+        private static void SerializePoint(IDataBlock block, RealPoint3d point)
         {
-            block.Writer.Write(vec.X);
-            block.Writer.Write(vec.Y);
-            block.Writer.Write(vec.Z);
+            block.Writer.Write(point.X);
+            block.Writer.Write(point.Y);
+            block.Writer.Write(point.Z);
+        }
+
+        private static void SerializeVector(IDataBlock block, RealVector2d vec)
+        {
+            block.Writer.Write(vec.I);
+            block.Writer.Write(vec.J);
+        }
+
+        private static void SerializeVector(IDataBlock block, RealVector3d vec)
+        {
+            block.Writer.Write(vec.I);
+            block.Writer.Write(vec.J);
+            block.Writer.Write(vec.K);
         }
 
         private static void SerializeVector(IDataBlock block, RealVector4d vec)
@@ -427,7 +444,7 @@ namespace TagTool.Serialization
             block.Writer.Write(quat.W);
         }
 
-        public static void SerializeMatrix(IDataBlock block, Matrix4x3 mat)
+        public static void SerializeMatrix(IDataBlock block, RealMatrix4x3 mat)
         {
             block.Writer.Write(mat.m11);
             block.Writer.Write(mat.m12);

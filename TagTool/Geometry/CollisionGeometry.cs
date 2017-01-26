@@ -56,8 +56,8 @@ namespace TagTool.Geometry
         [TagStructure(Size = 0x4)]
         public class Bsp2dReference
         {
-            public short Plane;
-            public short Bsp2dNode;
+            public short PlaneIndex;
+            public short Bsp2dNodeIndex;
         }
 
         [TagStructure(Size = 0x10)]

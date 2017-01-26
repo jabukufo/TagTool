@@ -141,7 +141,7 @@ namespace TagTool.Common
             return val;
         }
 
-        public void Point3DTransform(Matrix4x3 Transform)
+        public void Point3DTransform(RealMatrix4x3 Transform)
         {
             if (Transform.IsIdentity) return;
 
@@ -154,7 +154,7 @@ namespace TagTool.Common
             Z = newZ;
         }
 
-        public void ColorArgbTransform(Matrix4x3 Transform)
+        public void ColorArgbTransform(RealMatrix4x3 Transform)
         {
             if (Transform.IsIdentity) return;
 

@@ -3,7 +3,7 @@
 namespace TagTool.Common
 {
     /// <summary>
-    /// A 3D vector.
+    /// A 3D point.
     /// </summary>
     public struct RealPoint3d : IEquatable<RealPoint3d>
     {
@@ -21,9 +21,9 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RealPoint3d"/> struct from a 2D vector and a Z component.
+        /// Initializes a new instance of the <see cref="RealPoint3d"/> struct from a 2D point and a Z component.
         /// </summary>
-        /// <param name="xy">The vector to obtain the X and Y components from.</param>
+        /// <param name="xy">The point to obtain the X and Y components from.</param>
         /// <param name="z">The Z component.</param>
         public RealPoint3d(RealPoint2d xy, float z)
         {
@@ -44,66 +44,66 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Gets the X component of the vector.
+        /// Gets the X component of the point.
         /// </summary>
         public readonly float X;
 
         /// <summary>
-        /// Gets the Y component of the vector.
+        /// Gets the Y component of the point.
         /// </summary>
         public readonly float Y;
 
         /// <summary>
-        /// Gets the Z component of the vector.
+        /// Gets the Z component of the point.
         /// </summary>
         public readonly float Z;
 
         /// <summary>
-        /// Gets the X and Y components of the vector as a 2D vector.
+        /// Gets the X and Y components of the point as a 2D point.
         /// </summary>
         public RealPoint2d XY { get { return new RealPoint2d(X, Y); } }
 
         /// <summary>
-        /// Gets an array containing the vector's components.
+        /// Gets an array containing the point's components.
         /// </summary>
-        /// <returns>An array containing the vector's components.</returns>
+        /// <returns>An array containing the point's components.</returns>
         public float[] ToArray()
         {
             return new[] { X, Y, Z };
         }
 
         /// <summary>
-        /// Computes the squared length of the vector.
+        /// Computes the squared length of the point.
         /// </summary>
-        /// <returns>The squared length of the vector.</returns>
+        /// <returns>The squared length of the point.</returns>
         public float LengthSquared()
         {
             return X * X + Y * Y + Z * Z;
         }
 
         /// <summary>
-        /// Computes the length of the vector.
+        /// Computes the length of the point.
         /// </summary>
-        /// <returns>The length of the vector.</returns>
+        /// <returns>The length of the point.</returns>
         public float Length()
         {
             return (float)Math.Sqrt(LengthSquared());
         }
 
         /// <summary>
-        /// Computes the normalization of the vector.
+        /// Computes the normalization of the point.
         /// </summary>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized point.</returns>
         public RealPoint3d Normalize()
         {
             return this / Length();
         }
 
         /// <summary>
-        /// Computes the dot product of two vectors.
+        /// Computes the dot product of two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The dot product.</returns>
         public static float Dot(RealPoint3d lhs, RealPoint3d rhs)
         {
@@ -111,10 +111,10 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Computes the cross product of two vectors.
+        /// Computes the cross product of two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The cross product.</returns>
         public static RealPoint3d Cross(RealPoint3d lhs, RealPoint3d rhs)
         {
@@ -125,10 +125,10 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Computes the squared distance between two vectors.
+        /// Computes the squared distance between two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The squared distance.</returns>
         public static float DistanceSquared(RealPoint3d lhs, RealPoint3d rhs)
         {
@@ -139,10 +139,10 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Computes the distance between two vectors.
+        /// Computes the distance between two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The distance.</returns>
         public static float Distance(RealPoint3d lhs, RealPoint3d rhs)
         {
@@ -152,73 +152,73 @@ namespace TagTool.Common
         /// <summary>
         /// Implements the unary + operator.
         /// </summary>
-        /// <param name="vec">The vector.</param>
-        /// <returns>The vector.</returns>
-        public static RealPoint3d operator +(RealPoint3d vec)
+        /// <param name="point">The point.</param>
+        /// <returns>The point.</returns>
+        public static RealPoint3d operator +(RealPoint3d point)
         {
-            return vec;
+            return point;
         }
 
         /// <summary>
-        /// Negates the components of a vector.
+        /// Negates the components of a point.
         /// </summary>
-        /// <param name="vec">The vector.</param>
-        /// <returns>The vector with all of its components negated.</returns>
-        public static RealPoint3d operator -(RealPoint3d vec)
+        /// <param name="point">The point.</param>
+        /// <returns>The point with all of its components negated.</returns>
+        public static RealPoint3d operator -(RealPoint3d point)
         {
-            return new RealPoint3d(-vec.X, -vec.Y, -vec.Z);
+            return new RealPoint3d(-point.X, -point.Y, -point.Z);
         }
 
         /// <summary>
-        /// Adds the components of two vectors.
+        /// Adds the components of two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns>The sum of the two vectors.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns>The sum of the two points.</returns>
         public static RealPoint3d operator +(RealPoint3d lhs, RealPoint3d rhs)
         {
             return new RealPoint3d(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
         }
 
         /// <summary>
-        /// Subtracts the components of two vectors.
+        /// Subtracts the components of two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns>The difference of the two vectors.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns>The difference of the two points.</returns>
         public static RealPoint3d operator -(RealPoint3d lhs, RealPoint3d rhs)
         {
             return new RealPoint3d(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
         }
 
         /// <summary>
-        /// Multiplies the components of the vector by a scalar.
+        /// Multiplies the components of the point by a scalar.
         /// </summary>
-        /// <param name="vec">The vector.</param>
+        /// <param name="point">The point.</param>
         /// <param name="scale">The scalar.</param>
-        /// <returns>The scaled vector.</returns>
-        public static RealPoint3d operator *(RealPoint3d vec, float scale)
+        /// <returns>The scaled point.</returns>
+        public static RealPoint3d operator *(RealPoint3d point, float scale)
         {
-            return new RealPoint3d(vec.X * scale, vec.Y * scale, vec.Z * scale);
+            return new RealPoint3d(point.X * scale, point.Y * scale, point.Z * scale);
         }
 
         /// <summary>
-        /// Multiplies the components of the vector by a scalar.
+        /// Multiplies the components of the point by a scalar.
         /// </summary>
         /// <param name="scale">The scalar.</param>
-        /// <param name="vec">The vector.</param>
-        /// <returns>The scaled vector.</returns>
-        public static RealPoint3d operator *(float scale, RealPoint3d vec)
+        /// <param name="point">The point.</param>
+        /// <returns>The scaled point.</returns>
+        public static RealPoint3d operator *(float scale, RealPoint3d point)
         {
-            return vec * scale;
+            return point * scale;
         }
 
         /// <summary>
         /// Components the component-wise multiplication (Hadamard product) of
-        /// two vectors.
+        /// two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The component-wise multiplication.</returns>
         public static RealPoint3d operator *(RealPoint3d lhs, RealPoint3d rhs)
         {
@@ -226,31 +226,31 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Divides the components of the vector by a scalar.
+        /// Divides the components of the point by a scalar.
         /// </summary>
-        /// <param name="vec">The vector.</param>
+        /// <param name="point">The point.</param>
         /// <param name="divisor">The scalar.</param>
-        /// <returns>The scaled vector.</returns>
-        public static RealPoint3d operator /(RealPoint3d vec, float divisor)
+        /// <returns>The scaled point.</returns>
+        public static RealPoint3d operator /(RealPoint3d point, float divisor)
         {
-            return new RealPoint3d(vec.X / divisor, vec.Y / divisor, vec.Z / divisor);
+            return new RealPoint3d(point.X / divisor, point.Y / divisor, point.Z / divisor);
         }
 
         /// <summary>
-        /// Compares two vectors for equality.
+        /// Compares two points for equality.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns><c>true</c> if the two vectors are equal.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns><c>true</c> if the two points are equal.</returns>
         public static bool operator ==(RealPoint3d lhs, RealPoint3d rhs) =>
             lhs.Equals(rhs);
 
         /// <summary>
-        /// Compares two vectors for inequality.
+        /// Compares two points for inequality.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns><c>true</c> if the two vectors are not equal.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns><c>true</c> if the two points are not equal.</returns>
         public static bool operator !=(RealPoint3d lhs, RealPoint3d rhs) =>
             !lhs.Equals(rhs);
 

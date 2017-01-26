@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using TagTool.Geometry;
 
-namespace TagTool.Shaders
+namespace TagTool.Geometry
 {
     /// <summary>
     /// Utility class for converting shader bytecode between rendering pipelines.

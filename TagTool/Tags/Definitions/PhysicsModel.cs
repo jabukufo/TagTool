@@ -8,16 +8,6 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "physics_model", Class = "phmo", Size = 0x198)]
     public class PhysicsModel
     {
-        [Flags]
-        public enum PhysicsModelFlags : int
-        {
-            None = 0,
-            SerializedHavokData = 1 << 0,
-            MakePhysicalChildrenKeyframed = 1 << 1,
-            ShrinkRadiusByHavokComplexRadius = 1 << 2,
-            UsePhysicsForCollision = 1 << 3
-        }
-
         public PhysicsModelFlags Flags;
         public float Mass;
         public float LowFrequencyDeactivationScale;
@@ -70,6 +60,16 @@ namespace TagTool.Tags.Definitions
         public float PrismaticConstraintBlock3;
         public List<Phantom> Phantoms;
 
+        [Flags]
+        public enum PhysicsModelFlags : int
+        {
+            None = 0,
+            SerializedHavokData = 1 << 0,
+            MakePhysicalChildrenKeyframed = 1 << 1,
+            ShrinkRadiusByHavokComplexRadius = 1 << 2,
+            UsePhysicsForCollision = 1 << 3
+        }
+
         [TagStructure(Size = 0x18)]
         public class DampedSprintMotor
         {
@@ -103,7 +103,7 @@ namespace TagTool.Tags.Definitions
             // TODO: Add ignores flags
         }
 
-        public enum PhantomTypeSize : sbyte
+        public enum SizeValue : sbyte
         {
             Default,
             Tiny,
@@ -118,8 +118,8 @@ namespace TagTool.Tags.Definitions
         public class PhantomType
         {
             public PhantomTypeFlags Flags; // NOTE: This has to be adjusted when converting because of the new armor object type. The "Ignores Armor" bit was inserted at position 8.
-            public PhantomTypeSize MinimumSize;
-            public PhantomTypeSize MaximumSize;
+            public SizeValue MinimumSize;
+            public SizeValue MaximumSize;
             [TagField(Count = 2)] public sbyte[] Padding1;
             public StringId MarkerName;
             public StringId AlignmentMarkerName;
@@ -228,8 +228,8 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x4)]
                 public class LimitedHingeMotor
                 {
-                    public short Unknown;
-                    public short Unknown2;
+                    public short MotorType;
+                    public short Index;
                 }
             }
         }
@@ -241,9 +241,7 @@ namespace TagTool.Tags.Definitions
             public short Region;
             public short Permutations;
             public short Unknown;
-            public float BoundingSphereOffsetX;
-            public float BoundingSphereOffsetY;
-            public float BoundingSphereOffsetZ;
+            public RealPoint3d BoundingSphereOffset;
             public float BoundingSphereRadius;
             public ushort Flags;
             public MotionTypeValue MotionType;
@@ -296,18 +294,7 @@ namespace TagTool.Tags.Definitions
                 Keyframed,
                 Fixed,
             }
-
-            public enum SizeValue : short
-            {
-                Default,
-                Tiny,
-                Small,
-                Medium,
-                Large,
-                Huge,
-                ExtraHuge,
-            }
-
+            
             public enum ShapeTypeValue : short
             {
                 Sphere,
@@ -329,13 +316,21 @@ namespace TagTool.Tags.Definitions
             }
         }
 
+        [Flags]
+        public enum MaterialFlags : ushort
+        {
+            None = 0,
+            SupressesEffects = 1 << 0,
+            ForceEnableCollisionWithPlayer = 1 << 1
+        }
+
         [TagStructure(Size = 0xC)]
         public class Material
         {
             public StringId Name;
             public StringId MaterialName;
             public short PhantomType;
-            public short Flags;
+            public MaterialFlags Flags;
         }
 
         [TagStructure(Size = 0x70)]

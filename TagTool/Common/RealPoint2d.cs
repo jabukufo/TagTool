@@ -3,7 +3,7 @@
 namespace TagTool.Common
 {
     /// <summary>
-    /// A 2D vector.
+    /// A 2D point.
     /// </summary>
     public struct RealPoint2d : IEquatable<RealPoint2d>
     {
@@ -29,56 +29,56 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Gets the X component of the vector.
+        /// Gets the X component of the point.
         /// </summary>
         public readonly float X;
 
         /// <summary>
-        /// Gets the Y component of the vector.
+        /// Gets the Y component of the point.
         /// </summary>
         public readonly float Y;
 
         /// <summary>
-        /// Gets an array containing the vector's components.
+        /// Gets an array containing the point's components.
         /// </summary>
-        /// <returns>An array containing the vector's components.</returns>
+        /// <returns>An array containing the point's components.</returns>
         public float[] ToArray()
         {
             return new[] { X, Y };
         }
 
         /// <summary>
-        /// Computes the squared length of the vector.
+        /// Computes the squared length of the point.
         /// </summary>
-        /// <returns>The squared length of the vector.</returns>
+        /// <returns>The squared length of the point.</returns>
         public float LengthSquared()
         {
             return X * X + Y * Y;
         }
 
         /// <summary>
-        /// Computes the length of the vector.
+        /// Computes the length of the point.
         /// </summary>
-        /// <returns>The length of the vector.</returns>
+        /// <returns>The length of the point.</returns>
         public float Length()
         {
             return (float)Math.Sqrt(LengthSquared());
         }
 
         /// <summary>
-        /// Computes the normalization of the vector.
+        /// Computes the normalization of the point.
         /// </summary>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized point.</returns>
         public RealPoint2d Normalize()
         {
             return this / Length();
         }
 
         /// <summary>
-        /// Computes the dot product of two vectors.
+        /// Computes the dot product of two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The dot product.</returns>
         public static float Dot(RealPoint2d lhs, RealPoint2d rhs)
         {
@@ -86,10 +86,10 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Computes the squared distance between two vectors.
+        /// Computes the squared distance between two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The squared distance.</returns>
         public static float DistanceSquared(RealPoint2d lhs, RealPoint2d rhs)
         {
@@ -99,10 +99,10 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Computes the distance between two vectors.
+        /// Computes the distance between two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The distance.</returns>
         public static float Distance(RealPoint2d lhs, RealPoint2d rhs)
         {
@@ -112,73 +112,73 @@ namespace TagTool.Common
         /// <summary>
         /// Implements the unary + operator.
         /// </summary>
-        /// <param name="vec">The vector.</param>
-        /// <returns>The vector.</returns>
-        public static RealPoint2d operator+(RealPoint2d vec)
+        /// <param name="point">The point.</param>
+        /// <returns>The point.</returns>
+        public static RealPoint2d operator+(RealPoint2d point)
         {
-            return vec;
+            return point;
         }
 
         /// <summary>
-        /// Negates the components of a vector.
+        /// Negates the components of a point.
         /// </summary>
-        /// <param name="vec">The vector.</param>
-        /// <returns>The vector with all of its components negated.</returns>
-        public static RealPoint2d operator-(RealPoint2d vec)
+        /// <param name="point">The point.</param>
+        /// <returns>The point with all of its components negated.</returns>
+        public static RealPoint2d operator-(RealPoint2d point)
         {
-            return new RealPoint2d(-vec.X, -vec.Y);
+            return new RealPoint2d(-point.X, -point.Y);
         }
 
         /// <summary>
-        /// Adds the components of two vectors.
+        /// Adds the components of two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns>The sum of the two vectors.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns>The sum of the two points.</returns>
         public static RealPoint2d operator+(RealPoint2d lhs, RealPoint2d rhs)
         {
             return new RealPoint2d(lhs.X + rhs.X, lhs.Y + rhs.Y);
         }
 
         /// <summary>
-        /// Subtracts the components of two vectors.
+        /// Subtracts the components of two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns>The difference of the two vectors.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns>The difference of the two points.</returns>
         public static RealPoint2d operator-(RealPoint2d lhs, RealPoint2d rhs)
         {
             return new RealPoint2d(lhs.X - rhs.X, lhs.Y - rhs.Y);
         }
 
         /// <summary>
-        /// Multiplies the components of the vector by a scalar.
+        /// Multiplies the components of the point by a scalar.
         /// </summary>
-        /// <param name="vec">The vector.</param>
+        /// <param name="point">The point.</param>
         /// <param name="scale">The scalar.</param>
-        /// <returns>The scaled vector.</returns>
-        public static RealPoint2d operator*(RealPoint2d vec, float scale)
+        /// <returns>The scaled point.</returns>
+        public static RealPoint2d operator*(RealPoint2d point, float scale)
         {
-            return new RealPoint2d(vec.X * scale, vec.Y * scale);
+            return new RealPoint2d(point.X * scale, point.Y * scale);
         }
 
         /// <summary>
-        /// Multiplies the components of the vector by a scalar.
+        /// Multiplies the components of the point by a scalar.
         /// </summary>
         /// <param name="scale">The scalar.</param>
-        /// <param name="vec">The vector.</param>
-        /// <returns>The scaled vector.</returns>
-        public static RealPoint2d operator*(float scale, RealPoint2d vec)
+        /// <param name="point">The point.</param>
+        /// <returns>The scaled point.</returns>
+        public static RealPoint2d operator*(float scale, RealPoint2d point)
         {
-            return vec * scale;
+            return point * scale;
         }
 
         /// <summary>
         /// Components the component-wise multiplication (Hadamard product) of
-        /// two vectors.
+        /// two points.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
         /// <returns>The component-wise multiplication.</returns>
         public static RealPoint2d operator*(RealPoint2d lhs, RealPoint2d rhs)
         {
@@ -186,33 +186,33 @@ namespace TagTool.Common
         }
 
         /// <summary>
-        /// Divides the components of the vector by a scalar.
+        /// Divides the components of the point by a scalar.
         /// </summary>
-        /// <param name="vec">The vector.</param>
+        /// <param name="point">The point.</param>
         /// <param name="divisor">The scalar.</param>
-        /// <returns>The scaled vector.</returns>
-        public static RealPoint2d operator/(RealPoint2d vec, float divisor)
+        /// <returns>The scaled point.</returns>
+        public static RealPoint2d operator/(RealPoint2d point, float divisor)
         {
-            return new RealPoint2d(vec.X / divisor, vec.Y / divisor);
+            return new RealPoint2d(point.X / divisor, point.Y / divisor);
         }
 
         /// <summary>
-        /// Compares two vectors for equality.
+        /// Compares two points for equality.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns><c>true</c> if the two vectors are equal.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns><c>true</c> if the two points are equal.</returns>
         public static bool operator==(RealPoint2d lhs, RealPoint2d rhs)
         {
             return lhs.Equals(rhs);
         }
 
         /// <summary>
-        /// Compares two vectors for inequality.
+        /// Compares two points for inequality.
         /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns><c>true</c> if the two vectors are not equal.</returns>
+        /// <param name="lhs">The left-hand point.</param>
+        /// <param name="rhs">The right-hand point.</param>
+        /// <returns><c>true</c> if the two points are not equal.</returns>
         public static bool operator!=(RealPoint2d lhs, RealPoint2d rhs)
         {
             return !(lhs == rhs);

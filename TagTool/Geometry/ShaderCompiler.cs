@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 // ReSharper disable InconsistentNaming
 
-namespace TagTool.Shaders
+namespace TagTool.Geometry
 {
     /// <summary>
     /// Utility class for invoking the D3D shader compiler functions.

@@ -7,7 +7,6 @@ using TagTool.IO;
 using TagTool.Cache;
 using TagTool.Commands;
 using TagTool.Geometry;
-using TagTool.Shaders;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
 

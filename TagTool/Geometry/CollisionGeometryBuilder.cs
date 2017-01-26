@@ -365,13 +365,13 @@ namespace TagTool.Geometry
                 if (plane_idx < 0)
                     uplane_idx |= 0x8000;
 
-                bsp2dRef.Plane = (short)uplane_idx;
+                bsp2dRef.PlaneIndex = (short)uplane_idx;
 
                 var ubsp2dnode_idx = (bsp2dnode_idx & 0x7fff);
                 if (bsp2dnode_idx < 0)
                     ubsp2dnode_idx |= 0x8000;
 
-                bsp2dRef.Bsp2dNode = (short)ubsp2dnode_idx;
+                bsp2dRef.Bsp2dNodeIndex = (short)ubsp2dnode_idx;
 
                 bsp.Geometry.Bsp2dReferences.Add(bsp2dRef);
             }
