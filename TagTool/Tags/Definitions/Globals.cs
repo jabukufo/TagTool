@@ -786,15 +786,15 @@ namespace TagTool.Tags.Definitions
             public float StunMovementPenalty;
             public float StunTurningPenalty;
             public float StunJumpingPenalty;
-            public Range<float> StunTimeRange;
-            public Range<float> FirstPersonIdleTimeRange;
+            public Bounds<float> StunTimeRange;
+            public Bounds<float> FirstPersonIdleTimeRange;
             public float FirstPersonSkipFraction;
             public uint Unknown;
             public TagInstance Unknown2;
             public TagInstance Unknown3;
             public TagInstance Unknown4;
             public int BinocularsZoomCount;
-            public Range<float> BinocularZoomRange;
+            public Bounds<float> BinocularZoomRange;
             public uint Unknown5;
             public uint Unknown6;
             public TagInstance FlashlightOn;

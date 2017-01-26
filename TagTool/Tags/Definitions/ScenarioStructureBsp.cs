@@ -28,9 +28,9 @@ namespace TagTool.Tags.Definitions
         public uint Unknown9;
         public List<CollisionMaterial> CollisionMaterials;
         public List<byte> UnknownRaw3rd;
-        public Range<float> WorldBoundsX;
-        public Range<float> WorldBoundsY;
-        public Range<float> WorldBoundsZ;
+        public Bounds<float> WorldBoundsX;
+        public Bounds<float> WorldBoundsY;
+        public Bounds<float> WorldBoundsZ;
         public uint Unknown10;
         public uint Unknown11;
         public uint Unknown12;
@@ -112,9 +112,9 @@ namespace TagTool.Tags.Definitions
         public uint Unknown68;
         public List<CollisionMoppCode> CollisionMoppCodes;
         public uint Unknown69;
-        public Range<float> CollisionWorldBoundsX;
-        public Range<float> CollisionWorldBoundsY;
-        public Range<float> CollisionWorldBoundsZ;
+        public Bounds<float> CollisionWorldBoundsX;
+        public Bounds<float> CollisionWorldBoundsY;
+        public Bounds<float> CollisionWorldBoundsZ;
         public List<BreakableSurfaceMoppCode> BreakableSurfaceMoppCodes;
         public List<BreakableSurfaceKeyTableBlock> BreakableSurfaceKeyTable;
         public uint Unknown70;
@@ -308,9 +308,9 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xE0, MinVersion = CacheVersion.HaloOnline498295)]
         public class Cluster2
         {
-            public Range<float> BoundsX;
-            public Range<float> BoundsY;
-            public Range<float> BoundsZ;
+            public Bounds<float> BoundsX;
+            public Bounds<float> BoundsY;
+            public Bounds<float> BoundsZ;
             public sbyte Unknown;
             public sbyte ScenarioSkyIndex;
             public sbyte CameraEffectIndex;
@@ -603,9 +603,9 @@ namespace TagTool.Tags.Definitions
             public sbyte BreakableSurfaceIndex;
             public byte BreakableSurfaceSubIndex;
             public int SeedSurfaceIndex;
-            public Range<float> X;
-            public Range<float> Y;
-            public Range<float> Z;
+            public Bounds<float> X;
+            public Bounds<float> Y;
+            public Bounds<float> Z;
         }
 
         [TagStructure(Size = 0x20)]

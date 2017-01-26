@@ -244,7 +244,7 @@ namespace TagTool.Commands.Editing
                     return false;
                 output = Angle.FromDegrees(value);
             }
-            else if (type == typeof(Euler2))
+            else if (type == typeof(RealEulerAngles2d))
             {
                 if (args.Count != 2)
                     return false;
@@ -252,11 +252,11 @@ namespace TagTool.Commands.Editing
                 if (!float.TryParse(args[0], out yaw) ||
                     !float.TryParse(args[1], out pitch))
                     return false;
-                output = new Euler2(
+                output = new RealEulerAngles2d(
                     Angle.FromDegrees(yaw),
                     Angle.FromDegrees(pitch));
             }
-            else if (type == typeof(Euler3))
+            else if (type == typeof(RealEulerAngles3d))
             {
                 if (args.Count != 2)
                     return false;
@@ -265,7 +265,7 @@ namespace TagTool.Commands.Editing
                     !float.TryParse(args[1], out pitch) ||
                     !float.TryParse(args[2], out roll))
                     return false;
-                output = new Euler3(
+                output = new RealEulerAngles3d(
                     Angle.FromDegrees(yaw),
                     Angle.FromDegrees(pitch),
                     Angle.FromDegrees(roll));
@@ -334,7 +334,7 @@ namespace TagTool.Commands.Editing
                 
                 output = found;
             }
-            else if (type == typeof(Range<>))
+            else if (type == typeof(Bounds<>))
             {
                 var rangeType = type.GenericTypeArguments[0];
                 var argCount = RangeArgCount(rangeType);
@@ -373,9 +373,9 @@ namespace TagTool.Commands.Editing
                 type == typeof(StringId) ||
                 type == typeof(Angle))
                 return 1;
-            else if (type == typeof(Euler2))
+            else if (type == typeof(RealEulerAngles2d))
                 return 2;
-            else if (type == typeof(Euler3))
+            else if (type == typeof(RealEulerAngles3d))
                 return 3;
             else if (type == typeof(RealPoint2d))
                 return 2;

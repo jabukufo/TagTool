@@ -195,10 +195,10 @@ namespace TagTool.Serialization
                 block.Writer.Write(((ResourceAddress)val).Value);
             else if (valueType == typeof(byte[]))
                 SerializeDataReference(tagStream, block, (byte[])val, valueInfo);
-            else if (valueType == typeof(Euler2))
-                SerializeEulerAngles(block, (Euler2)val);
-            else if (valueType == typeof(Euler3))
-                SerializeEulerAngles(block, (Euler3)val);
+            else if (valueType == typeof(RealEulerAngles2d))
+                SerializeEulerAngles(block, (RealEulerAngles2d)val);
+            else if (valueType == typeof(RealEulerAngles3d))
+                SerializeEulerAngles(block, (RealEulerAngles3d)val);
             else if (valueType == typeof(RealPoint2d))
                 SerializePoint(block, (RealPoint2d)val);
             else if (valueType == typeof(RealPoint3d))
@@ -221,7 +221,7 @@ namespace TagTool.Serialization
                 SerializeInlineArray(context, tagStream, block, (Array)val, valueInfo);
             else if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(List<>))
                 SerializeTagBlock(context, tagStream, block, val, valueType, valueInfo);
-            else if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Range<>))
+            else if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Bounds<>))
                 SerializeRange(block, val);
             else
                 SerializeStruct(context, tagStream, block, new TagStructureInfo(val.GetType(), _version), val);
@@ -389,13 +389,13 @@ namespace TagTool.Serialization
             block.WritePointer(valueBlock.Finalize(tagStream), valueType);
         }
 
-        private static void SerializeEulerAngles(IDataBlock block, Euler2 angles)
+        private static void SerializeEulerAngles(IDataBlock block, RealEulerAngles2d angles)
         {
             block.Writer.Write(angles.Yaw.Radians);
             block.Writer.Write(angles.Pitch.Radians);
         }
 
-        private static void SerializeEulerAngles(IDataBlock block, Euler3 angles)
+        private static void SerializeEulerAngles(IDataBlock block, RealEulerAngles3d angles)
         {
             block.Writer.Write(angles.Yaw.Radians);
             block.Writer.Write(angles.Pitch.Radians);

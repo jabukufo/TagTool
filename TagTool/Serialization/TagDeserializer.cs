@@ -184,18 +184,18 @@ namespace TagTool.Serialization
                 return DeserializeDataReference(reader, context);
 
             // Euler Angles types
-            if (valueType == typeof(Euler2))
+            if (valueType == typeof(RealEulerAngles2d))
             {
                 var i = Angle.FromRadians(reader.ReadSingle());
                 var j = Angle.FromRadians(reader.ReadSingle());
-                return new Euler2(i, j);
+                return new RealEulerAngles2d(i, j);
             }
-            else if (valueType == typeof(Euler3))
+            else if (valueType == typeof(RealEulerAngles3d))
             {
                 var i = Angle.FromRadians(reader.ReadSingle());
                 var j = Angle.FromRadians(reader.ReadSingle());
                 var k = Angle.FromRadians(reader.ReadSingle());
-                return new Euler3(i, j, k);
+                return new RealEulerAngles3d(i, j, k);
             }
 
             // Point/Vector types
@@ -240,7 +240,7 @@ namespace TagTool.Serialization
                 return DeserializeTagBlock(reader, context, valueType);
 
             // Ranges
-            if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Range<>))
+            if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Bounds<>))
                 return DeserializeRange(reader, context, valueType);
 
             // Assume the value is a structure
@@ -395,7 +395,7 @@ namespace TagTool.Serialization
         }
 
         /// <summary>
-        /// Deserializes a <see cref="Range{T}"/> value.
+        /// Deserializes a <see cref="Bounds{T}"/> value.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="context">The serialization context to use.</param>

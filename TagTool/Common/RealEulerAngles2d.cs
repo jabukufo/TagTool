@@ -2,31 +2,31 @@
 
 namespace TagTool.Common
 {
-    public struct Euler2 : IEquatable<Euler2>
+    public struct RealEulerAngles2d : IEquatable<RealEulerAngles2d>
     {
         public Angle Yaw { get; }
 
         public Angle Pitch { get; }
 
-        public Euler2(Angle yaw, Angle pitch)
+        public RealEulerAngles2d(Angle yaw, Angle pitch)
         {
             Yaw = yaw;
             Pitch = pitch;
         }
 
-        public bool Equals(Euler2 other) =>
+        public bool Equals(RealEulerAngles2d other) =>
             Yaw.Equals(other.Yaw) &&
             Pitch.Equals(other.Pitch);
 
         public override bool Equals(object obj) =>
-            obj is Euler2 ?
-                Equals((Euler2)obj) :
+            obj is RealEulerAngles2d ?
+                Equals((RealEulerAngles2d)obj) :
             false;
 
-        public static bool operator ==(Euler2 a, Euler2 b) =>
+        public static bool operator ==(RealEulerAngles2d a, RealEulerAngles2d b) =>
             a.Equals(b);
 
-        public static bool operator !=(Euler2 a, Euler2 b) =>
+        public static bool operator !=(RealEulerAngles2d a, RealEulerAngles2d b) =>
             !a.Equals(b);
 
         public override int GetHashCode() =>

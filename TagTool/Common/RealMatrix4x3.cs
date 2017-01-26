@@ -95,11 +95,11 @@ namespace TagTool.Common
                 reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
                 reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
-        public static RealMatrix4x3 FromBounds(BoundingBox bb)
+        public static RealMatrix4x3 FromBounds(Bounds<float> xBounds, Bounds<float> yBounds, Bounds<float> zBounds)
         {
-            var bbXLength = bb.XBounds.Max - bb.XBounds.Min;
-            var bbYLength = bb.YBounds.Max - bb.YBounds.Min;
-            var bbZLength = bb.ZBounds.Max - bb.ZBounds.Min;
+            var bbXLength = xBounds.Upper - xBounds.Lower;
+            var bbYLength = yBounds.Upper - yBounds.Lower;
+            var bbZLength = zBounds.Upper - zBounds.Lower;
 
             return new RealMatrix4x3(
                 bbXLength != 0.0f ? bbXLength : 1.0f, 0.0f, 0.0f,
@@ -108,11 +108,11 @@ namespace TagTool.Common
                 bbXLength, bbYLength, bbZLength);
         }
 
-        public static RealMatrix4x3 FromBounds(Vector min, Vector max)
+        public static RealMatrix4x3 FromBounds(RealPoint3d lower, RealPoint3d upper)
         {
-            var bbXLength = max.X - min.X;
-            var bbYLength = max.Y - min.Y;
-            var bbZLength = max.Z - min.Z;
+            var bbXLength = upper.X - lower.X;
+            var bbYLength = upper.Y - lower.Y;
+            var bbZLength = upper.Z - lower.Z;
 
             return new RealMatrix4x3(
                 bbXLength != 0.0f ? bbXLength : 1.0f, 0.0f, 0.0f,

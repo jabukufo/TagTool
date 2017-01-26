@@ -172,9 +172,9 @@ namespace TagTool.Tags.Definitions
                 public List<ErrorComment> Comments;
                 public int ReportKey;
                 public int NodeIndex;
-                public Range<float> BoundsX;
-                public Range<float> BoundsY;
-                public Range<float> BoundsZ;
+                public Bounds<float> BoundsX;
+                public Bounds<float> BoundsY;
+                public Bounds<float> BoundsZ;
                 public RealArgbColor Color;
             }
         }

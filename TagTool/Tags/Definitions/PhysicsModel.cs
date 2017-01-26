@@ -744,9 +744,9 @@ namespace TagTool.Tags.Definitions
             public short EdgeIndex;
             public short Unknown;
             public uint Unknown2;
-            public Range<float> TwistRange;
-            public Range<float> ConeRange;
-            public Range<float> PlaneRange;
+            public Bounds<float> TwistRange;
+            public Bounds<float> ConeRange;
+            public Bounds<float> PlaneRange;
             public float MaxFrictionTorque;
         }
 
