@@ -3,44 +3,29 @@
 namespace TagTool.Common
 {
     /// <summary>
-    /// A 3D vector.
+    /// A 2D vector.
     /// </summary>
-    public struct Vector3 : IEquatable<Vector3>
+    public struct RealPoint2d : IEquatable<RealPoint2d>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3"/> struct.
+        /// Initializes a new instance of the <see cref="RealPoint2d"/> struct.
         /// </summary>
         /// <param name="x">The X component.</param>
         /// <param name="y">The Y component.</param>
-        /// <param name="z">The Z component.</param>
-        public Vector3(float x, float y, float z)
+        public RealPoint2d(float x, float y)
         {
             X = x;
             Y = y;
-            Z = z;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3"/> struct from a 2D vector and a Z component.
+        /// Initializes a new instance of the <see cref="RealPoint2d"/> struct from an array of components.
         /// </summary>
-        /// <param name="xy">The vector to obtain the X and Y components from.</param>
-        /// <param name="z">The Z component.</param>
-        public Vector3(Vector2 xy, float z)
-        {
-            X = xy.X;
-            Y = xy.Y;
-            Z = z;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3"/> struct from an array of components.
-        /// </summary>
-        /// <param name="components">The components. Must contain at least three elements.</param>
-        public Vector3(float[] components)
+        /// <param name="components">The components. Must contain at least two elements.</param>
+        public RealPoint2d(float[] components)
         {
             X = components[0];
             Y = components[1];
-            Z = components[2];
         }
 
         /// <summary>
@@ -54,22 +39,12 @@ namespace TagTool.Common
         public readonly float Y;
 
         /// <summary>
-        /// Gets the Z component of the vector.
-        /// </summary>
-        public readonly float Z;
-
-        /// <summary>
-        /// Gets the X and Y components of the vector as a 2D vector.
-        /// </summary>
-        public Vector2 XY { get { return new Vector2(X, Y); } }
-
-        /// <summary>
         /// Gets an array containing the vector's components.
         /// </summary>
         /// <returns>An array containing the vector's components.</returns>
         public float[] ToArray()
         {
-            return new[] { X, Y, Z };
+            return new[] { X, Y };
         }
 
         /// <summary>
@@ -78,7 +53,7 @@ namespace TagTool.Common
         /// <returns>The squared length of the vector.</returns>
         public float LengthSquared()
         {
-            return X * X + Y * Y + Z * Z;
+            return X * X + Y * Y;
         }
 
         /// <summary>
@@ -94,7 +69,7 @@ namespace TagTool.Common
         /// Computes the normalization of the vector.
         /// </summary>
         /// <returns>The normalized vector.</returns>
-        public Vector3 Normalize()
+        public RealPoint2d Normalize()
         {
             return this / Length();
         }
@@ -105,23 +80,9 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns>The dot product.</returns>
-        public static float Dot(Vector3 lhs, Vector3 rhs)
+        public static float Dot(RealPoint2d lhs, RealPoint2d rhs)
         {
-            return lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z;
-        }
-
-        /// <summary>
-        /// Computes the cross product of two vectors.
-        /// </summary>
-        /// <param name="lhs">The left-hand vector.</param>
-        /// <param name="rhs">The right-hand vector.</param>
-        /// <returns>The cross product.</returns>
-        public static Vector3 Cross(Vector3 lhs, Vector3 rhs)
-        {
-            var x = lhs.Y * rhs.Z - lhs.Z * rhs.Y;
-            var y = lhs.Z * rhs.X - lhs.X * rhs.Z;
-            var z = lhs.X * rhs.Y - lhs.Y * rhs.X;
-            return new Vector3(x, y, z);
+            return lhs.X * rhs.X + lhs.Y * rhs.Y;
         }
 
         /// <summary>
@@ -130,12 +91,11 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns>The squared distance.</returns>
-        public static float DistanceSquared(Vector3 lhs, Vector3 rhs)
+        public static float DistanceSquared(RealPoint2d lhs, RealPoint2d rhs)
         {
             var xDelta = lhs.X - rhs.X;
             var yDelta = lhs.Y - rhs.Y;
-            var zDelta = lhs.Z - rhs.Z;
-            return xDelta * xDelta + yDelta * yDelta + zDelta * zDelta;
+            return xDelta * xDelta + yDelta * yDelta;
         }
 
         /// <summary>
@@ -144,7 +104,7 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns>The distance.</returns>
-        public static float Distance(Vector3 lhs, Vector3 rhs)
+        public static float Distance(RealPoint2d lhs, RealPoint2d rhs)
         {
             return (float)Math.Sqrt(DistanceSquared(lhs, rhs));
         }
@@ -154,7 +114,7 @@ namespace TagTool.Common
         /// </summary>
         /// <param name="vec">The vector.</param>
         /// <returns>The vector.</returns>
-        public static Vector3 operator +(Vector3 vec)
+        public static RealPoint2d operator+(RealPoint2d vec)
         {
             return vec;
         }
@@ -164,9 +124,9 @@ namespace TagTool.Common
         /// </summary>
         /// <param name="vec">The vector.</param>
         /// <returns>The vector with all of its components negated.</returns>
-        public static Vector3 operator -(Vector3 vec)
+        public static RealPoint2d operator-(RealPoint2d vec)
         {
-            return new Vector3(-vec.X, -vec.Y, -vec.Z);
+            return new RealPoint2d(-vec.X, -vec.Y);
         }
 
         /// <summary>
@@ -175,9 +135,9 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns>The sum of the two vectors.</returns>
-        public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
+        public static RealPoint2d operator+(RealPoint2d lhs, RealPoint2d rhs)
         {
-            return new Vector3(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
+            return new RealPoint2d(lhs.X + rhs.X, lhs.Y + rhs.Y);
         }
 
         /// <summary>
@@ -186,9 +146,9 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns>The difference of the two vectors.</returns>
-        public static Vector3 operator -(Vector3 lhs, Vector3 rhs)
+        public static RealPoint2d operator-(RealPoint2d lhs, RealPoint2d rhs)
         {
-            return new Vector3(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
+            return new RealPoint2d(lhs.X - rhs.X, lhs.Y - rhs.Y);
         }
 
         /// <summary>
@@ -197,9 +157,9 @@ namespace TagTool.Common
         /// <param name="vec">The vector.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector3 operator *(Vector3 vec, float scale)
+        public static RealPoint2d operator*(RealPoint2d vec, float scale)
         {
-            return new Vector3(vec.X * scale, vec.Y * scale, vec.Z * scale);
+            return new RealPoint2d(vec.X * scale, vec.Y * scale);
         }
 
         /// <summary>
@@ -208,7 +168,7 @@ namespace TagTool.Common
         /// <param name="scale">The scalar.</param>
         /// <param name="vec">The vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector3 operator *(float scale, Vector3 vec)
+        public static RealPoint2d operator*(float scale, RealPoint2d vec)
         {
             return vec * scale;
         }
@@ -220,9 +180,9 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns>The component-wise multiplication.</returns>
-        public static Vector3 operator *(Vector3 lhs, Vector3 rhs)
+        public static RealPoint2d operator*(RealPoint2d lhs, RealPoint2d rhs)
         {
-            return new Vector3(lhs.X * rhs.X, lhs.Y * rhs.Y, lhs.Z * rhs.Z);
+            return new RealPoint2d(lhs.X * rhs.X, lhs.Y * rhs.Y);
         }
 
         /// <summary>
@@ -231,9 +191,9 @@ namespace TagTool.Common
         /// <param name="vec">The vector.</param>
         /// <param name="divisor">The scalar.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector3 operator /(Vector3 vec, float divisor)
+        public static RealPoint2d operator/(RealPoint2d vec, float divisor)
         {
-            return new Vector3(vec.X / divisor, vec.Y / divisor, vec.Z / divisor);
+            return new RealPoint2d(vec.X / divisor, vec.Y / divisor);
         }
 
         /// <summary>
@@ -242,8 +202,10 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns><c>true</c> if the two vectors are equal.</returns>
-        public static bool operator ==(Vector3 lhs, Vector3 rhs) =>
-            lhs.Equals(rhs);
+        public static bool operator==(RealPoint2d lhs, RealPoint2d rhs)
+        {
+            return lhs.Equals(rhs);
+        }
 
         /// <summary>
         /// Compares two vectors for inequality.
@@ -251,27 +213,37 @@ namespace TagTool.Common
         /// <param name="lhs">The left-hand vector.</param>
         /// <param name="rhs">The right-hand vector.</param>
         /// <returns><c>true</c> if the two vectors are not equal.</returns>
-        public static bool operator !=(Vector3 lhs, Vector3 rhs) =>
-            !lhs.Equals(rhs);
-
-        public bool Equals(Vector3 other)
+        public static bool operator!=(RealPoint2d lhs, RealPoint2d rhs)
         {
-            return X == other.X && Y == other.Y && Z == other.Z;
+            return !(lhs == rhs);
+        }
+
+        public bool Equals(RealPoint2d other)
+        {
+            return X == other.X && Y == other.Y;
         }
 
         public override bool Equals(object other)
         {
-            if (!(other is Vector3))
+            if (!(other is RealPoint2d))
                 return false;
-            return Equals((Vector3)other);
+            return Equals((RealPoint2d)other);
         }
 
-        public override int GetHashCode() =>
-            13 * 17 + X.GetHashCode()
-               * 17 + Y.GetHashCode()
-               * 17 + Z.GetHashCode();
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var result = 13;
+                result = result * 17 + X.GetHashCode();
+                result = result * 17 + Y.GetHashCode();
+                return result;
+            }
+        }
 
-        public override string ToString() =>
-            $"{{ X: {X}, Y: {Y}, Z: {Z} }}";
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}", X, Y);
+        }
     }
 }

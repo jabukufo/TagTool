@@ -16,7 +16,7 @@ namespace TagTool.Cache
         private const int ChunkHeaderSize = 0x8;
         private const int MaxDecompressedBlockSize = 0x7FFF8; // Decompressed chunks cannot exceed this size
 
-        private readonly List<Resource> _resources = new List<Resource>();
+        private readonly ResourceBlockReference<Resource> _resources = new ResourceBlockReference<Resource>();
 
         /// <summary>
         /// Loads a resource cache from a stream.
@@ -27,7 +27,7 @@ namespace TagTool.Cache
             if (stream.Length != 0)
                 Load(stream);
             else
-                _resources = new List<Resource>();
+                _resources = new ResourceBlockReference<Resource>();
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace TagTool.Cache
                 throw new ArgumentOutOfRangeException("resourceIndex");
 
             // Divide the data into chunks with decompressed sizes no larger than the maximum allowed size
-            var chunks = new List<byte[]>();
+            var chunks = new ResourceBlockReference<byte[]>();
             var startOffset = 0;
             uint newSize = 0;
             while (startOffset < data.Length)

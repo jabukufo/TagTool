@@ -270,7 +270,7 @@ namespace TagTool.Commands.Editing
                     Angle.FromDegrees(pitch),
                     Angle.FromDegrees(roll));
             }
-            else if (type == typeof(Vector2))
+            else if (type == typeof(RealPoint2d))
             {
                 if (args.Count != 2)
                     return false;
@@ -278,9 +278,9 @@ namespace TagTool.Commands.Editing
                 if (!float.TryParse(args[0], out x) ||
                     !float.TryParse(args[1], out y))
                     return false;
-                output = new Vector2(x, y);
+                output = new RealPoint2d(x, y);
             }
-            else if (type == typeof(Vector3))
+            else if (type == typeof(RealPoint3d))
             {
                 if (args.Count != 3)
                     return false;
@@ -289,9 +289,9 @@ namespace TagTool.Commands.Editing
                     !float.TryParse(args[1], out y) ||
                     !float.TryParse(args[2], out z))
                     return false;
-                output = new Vector3(x, y, z);
+                output = new RealPoint3d(x, y, z);
             }
-            else if (type == typeof(Vector4))
+            else if (type == typeof(RealVector4d))
             {
                 if (args.Count != 4)
                     return false;
@@ -301,7 +301,7 @@ namespace TagTool.Commands.Editing
                     !float.TryParse(args[2], out z) ||
                     !float.TryParse(args[3], out w))
                     return false;
-                output = new Vector4(x, y, z, w);
+                output = new RealVector4d(x, y, z, w);
             }
             else if (type.IsEnum)
             {
@@ -377,11 +377,11 @@ namespace TagTool.Commands.Editing
                 return 2;
             else if (type == typeof(Euler3))
                 return 3;
-            else if (type == typeof(Vector2))
+            else if (type == typeof(RealPoint2d))
                 return 2;
-            else if (type == typeof(Vector3))
+            else if (type == typeof(RealPoint3d))
                 return 3;
-            else if (type == typeof(Vector4))
+            else if (type == typeof(RealVector4d))
                 return 4;
             else throw new NotImplementedException();
         }

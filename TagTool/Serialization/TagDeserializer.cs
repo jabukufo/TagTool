@@ -199,12 +199,12 @@ namespace TagTool.Serialization
             }
 
             // Vector types
-            if (valueType == typeof(Vector2))
-                return new Vector2(reader.ReadSingle(), reader.ReadSingle());
-            if (valueType == typeof(Vector3))
-                return new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-            if (valueType == typeof(Vector4))
-                return new Vector4(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            if (valueType == typeof(RealPoint2d))
+                return new RealPoint2d(reader.ReadSingle(), reader.ReadSingle());
+            if (valueType == typeof(RealPoint3d))
+                return new RealPoint3d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            if (valueType == typeof(RealVector4d))
+                return new RealVector4d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
             if (valueType == typeof(RealQuaternion))
                 return new RealQuaternion(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());

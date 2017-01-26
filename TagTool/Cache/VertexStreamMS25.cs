@@ -13,12 +13,12 @@ namespace TagTool.Cache
             _stream = new VertexElementStream(stream);
         }
 
-        private Vector4 TransformTangent(Vector4 tangent)
+        private RealVector4d TransformTangent(RealVector4d tangent)
         {
-            return new Vector4(
-                tangent.X * 2.0f - 1.0f,
-                tangent.Y * 2.0f - 1.0f,
-                tangent.Z * 2.0f - 1.0f,
+            return new RealVector4d(
+                tangent.I * 2.0f - 1.0f,
+                tangent.J * 2.0f - 1.0f,
+                tangent.K * 2.0f - 1.0f,
                 tangent.W * 2.0f - 1.0f);
         }
 
@@ -74,7 +74,7 @@ namespace TagTool.Cache
             _stream.WriteShort2N(v.Texcoord);
             _stream.WriteUByte4N(v.Tangent);
             _stream.WriteUByte4(v.BlendIndices);
-            _stream.WriteUByte4N(new Vector4(v.BlendWeights));
+            _stream.WriteUByte4N(new RealVector4d(v.BlendWeights));
         }
 
         public ParticleModelVertex ReadParticleModelVertex()
@@ -146,7 +146,7 @@ namespace TagTool.Cache
             _stream.WriteShort2N(v.Texcoord);
             _stream.WriteUByte4N(v.Tangent);
             _stream.WriteUByte4(v.BlendIndices);
-            _stream.WriteUByte4N(new Vector4(v.BlendWeights));
+            _stream.WriteUByte4N(new RealVector4d(v.BlendWeights));
         }
 
         public ScreenVertex ReadScreenVertex()
@@ -462,17 +462,17 @@ namespace TagTool.Cache
             _stream.WriteShort2N(v.Texcoord);
             _stream.WriteUByte4N(v.Tangent);
             _stream.WriteUByte4(v.BlendIndices);
-            _stream.WriteUByte4N(new Vector4(v.BlendWeights));
+            _stream.WriteUByte4N(new RealVector4d(v.BlendWeights));
         }
 
         public WorldVertex ReadWorldVertex2()
         {
             return new WorldVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = TransformTangent(new Vector4(_stream.ReadFloat3(), 0)),
+                Tangent = TransformTangent(new RealVector4d(_stream.ReadFloat3(), 0)),
                 Binormal = _stream.ReadFloat3(),
             };
         }

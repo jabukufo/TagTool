@@ -47,7 +47,7 @@ namespace TagTool.Commands.RenderMethods
                     Console.WriteLine("");
 
                     var argumentName = CacheContext.StringIdCache.GetString(template.Arguments[i].Name);
-                    var argumentValue = new Vector4(
+                    var argumentValue = new RealVector4d(
                         property.Arguments[i].Arg1,
                         property.Arguments[i].Arg2,
                         property.Arguments[i].Arg3,
@@ -57,16 +57,16 @@ namespace TagTool.Commands.RenderMethods
 
                     if (argumentName.EndsWith("_map"))
                     {
-                        Console.WriteLine(string.Format("\tX Scale: {0}", argumentValue.X));
-                        Console.WriteLine(string.Format("\tY Scale: {0}", argumentValue.Y));
-                        Console.WriteLine(string.Format("\tX Offset: {0}", argumentValue.Z));
+                        Console.WriteLine(string.Format("\tX Scale: {0}", argumentValue.I));
+                        Console.WriteLine(string.Format("\tY Scale: {0}", argumentValue.J));
+                        Console.WriteLine(string.Format("\tX Offset: {0}", argumentValue.K));
                         Console.WriteLine(string.Format("\tY Offset: {0}", argumentValue.W));
                     }
                     else
                     {
-                        Console.WriteLine(string.Format("\tX: {0}", argumentValue.X));
-                        Console.WriteLine(string.Format("\tY: {0}", argumentValue.Y));
-                        Console.WriteLine(string.Format("\tZ: {0}", argumentValue.Z));
+                        Console.WriteLine(string.Format("\tX: {0}", argumentValue.I));
+                        Console.WriteLine(string.Format("\tY: {0}", argumentValue.J));
+                        Console.WriteLine(string.Format("\tZ: {0}", argumentValue.K));
                         Console.WriteLine(string.Format("\tW: {0}", argumentValue.W));
                     }
                 }

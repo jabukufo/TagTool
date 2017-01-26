@@ -14,7 +14,7 @@ namespace TagTool.Cache
     {
         private const uint CacheHeaderSize = 0x20;
 
-        private readonly List<TagInstance> _tags = new List<TagInstance>();
+        private readonly ResourceBlockReference<TagInstance> _tags = new ResourceBlockReference<TagInstance>();
 
         /// <summary>
         /// Opens a tags.dat file from a stream.

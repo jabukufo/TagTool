@@ -154,7 +154,7 @@ namespace TagTool.Common
             Z = newZ;
         }
 
-        public void Vector3DTransform(Matrix4x3 Transform)
+        public void ColorArgbTransform(Matrix4x3 Transform)
         {
             if (Transform.IsIdentity) return;
 

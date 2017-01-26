@@ -11,7 +11,7 @@ namespace TagTool.Cache
         public byte[] Padding1 { get; set; } // Padding following the resource count.
         public long TimeStamp { get; set; } // Uh, a timestamp?
         public byte[] Padding2 { get; set; } // Padding following the timestamp.
-        public List<Resource> Resources { get; set; } = new List<Resource> { }; // List of all the resources in their file (with their index, offset, size, and data).
+        public ResourceBlockReference<Resource> Resources { get; set; } = new ResourceBlockReference<Resource> { }; // List of all the resources in their file (with their index, offset, size, and data).
 
         public ResourceFile(FileInfo file)
         {
@@ -110,7 +110,7 @@ namespace TagTool.Cache
                 writer.Write(Padding2);
 
                 // Write the resources data (if it has any) and add it's offset to the list.
-                List<uint> offsets = new List<uint> { };
+                ResourceBlockReference<uint> offsets = new ResourceBlockReference<uint> { };
                 foreach (Resource resource in Resources)
                 {
                     if (resource.Data != null)

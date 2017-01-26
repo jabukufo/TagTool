@@ -199,12 +199,12 @@ namespace TagTool.Serialization
                 SerializeEulerAngles(block, (Euler2)val);
             else if (valueType == typeof(Euler3))
                 SerializeEulerAngles(block, (Euler3)val);
-            else if (valueType == typeof(Vector2))
-                SerializeVector(block, (Vector2)val);
-            else if (valueType == typeof(Vector3))
-                SerializeVector(block, (Vector3)val);
-            else if (valueType == typeof(Vector4))
-                SerializeVector(block, (Vector4)val);
+            else if (valueType == typeof(RealPoint2d))
+                SerializeVector(block, (RealPoint2d)val);
+            else if (valueType == typeof(RealPoint3d))
+                SerializeVector(block, (RealPoint3d)val);
+            else if (valueType == typeof(RealVector4d))
+                SerializeVector(block, (RealVector4d)val);
             else if (valueType == typeof(RealQuaternion))
                 SerializeRealQuaternion(block, (RealQuaternion)val);
             else if (valueType == typeof(Matrix4x3))
@@ -398,24 +398,24 @@ namespace TagTool.Serialization
             block.Writer.Write(angles.Roll.Radians);
         }
 
-        private static void SerializeVector(IDataBlock block, Vector2 vec)
+        private static void SerializeVector(IDataBlock block, RealPoint2d vec)
         {
             block.Writer.Write(vec.X);
             block.Writer.Write(vec.Y);
         }
 
-        private static void SerializeVector(IDataBlock block, Vector3 vec)
+        private static void SerializeVector(IDataBlock block, RealPoint3d vec)
         {
             block.Writer.Write(vec.X);
             block.Writer.Write(vec.Y);
             block.Writer.Write(vec.Z);
         }
 
-        private static void SerializeVector(IDataBlock block, Vector4 vec)
+        private static void SerializeVector(IDataBlock block, RealVector4d vec)
         {
-            block.Writer.Write(vec.X);
-            block.Writer.Write(vec.Y);
-            block.Writer.Write(vec.Z);
+            block.Writer.Write(vec.I);
+            block.Writer.Write(vec.J);
+            block.Writer.Write(vec.K);
             block.Writer.Write(vec.W);
         }
 

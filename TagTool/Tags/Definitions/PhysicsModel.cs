@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TagTool.Common;
 using TagTool.Serialization;
@@ -7,36 +8,42 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "physics_model", Class = "phmo", Size = 0x198)]
     public class PhysicsModel
     {
-        public uint Unknown;
+        [Flags]
+        public enum PhysicsModelFlags : int
+        {
+            None = 0,
+            SerializedHavokData = 1 << 0,
+            MakePhysicalChildrenKeyframed = 1 << 1,
+            ShrinkRadiusByHavokComplexRadius = 1 << 2,
+            UsePhysicsForCollision = 1 << 3
+        }
+
+        public PhysicsModelFlags Flags;
         public float Mass;
-        public float LowFrequencyDecativationScale;
-        public float HighFrequencyDecativationScale;
-        public uint Unknown2;
-        public uint Unknown3;
-        public sbyte Unknown4;
-        public sbyte Unknown5;
-        public sbyte Unknown6;
-        public sbyte Unknown7;
-        public List<UnknownBlock> Unknown8;
-        public List<UnknownBlock2> Unknown9;
+        public float LowFrequencyDeactivationScale;
+        public float HighFrequencyDeactivationScale;
+        public float CustomShapeRadius;
+        public float MaximumPenetrationDepthScale;
+        public sbyte ImportVersion;
+        public byte Unused1;
+        public byte Unused2;
+        public byte Unused3;
+        public List<DampedSprintMotor> DampedSpringMotors;
+        public List<PositionMotor> PositionMotors;
         public List<PhantomType> PhantomTypes;
-        public List<UnknownBlock3> Unknown10;
+        public List<PoweredChain> PoweredChains;
         public List<NodeEdge> NodeEdges;
         public List<RigidBody> RigidBodies;
         public List<Material> Materials;
         public List<Sphere> Spheres;
-        public float MultiSpheresBlockHere;
-        public float MultiSpheresBlockHere2;
-        public float MultiSpheresBlockHere3;
+        public List<MultiSphere> MultiSpheres;
         public List<Pill> Pills;
         public List<Box> Boxes;
         public List<Triangle> Triangles;
         public List<Polyhedron> Polyhedra;
         public List<PolyhedronFourVector> PolyhedronFourVectors;
         public List<PolyhedronPlaneEquation> PolyhedronPlaneEquations;
-        public float MassDistributionsBlockHere;
-        public float MassDistributionsBlockHere2;
-        public float MassDistributionsBlockHere3;
+        public List<MassDistribution> MassDistributions;
         public List<List> Lists;
         public List<ListShape> ListShapes;
         public List<Mopp> Mopps;
@@ -64,41 +71,60 @@ namespace TagTool.Tags.Definitions
         public List<Phantom> Phantoms;
 
         [TagStructure(Size = 0x18)]
-        public class UnknownBlock
+        public class DampedSprintMotor
         {
-            public StringId Unknown;
-            public uint Unknown2;
-            public uint Unknown3;
-            public uint Unknown4;
-            public uint Unknown5;
-            public uint Unknown6;
+            public StringId Name;
+            public float MaximumForce;
+            public float MinimumForce;
+            public float SpringK;
+            public float Damping;
+            public float InitialPosition;
         }
 
         [TagStructure(Size = 0x20)]
-        public class UnknownBlock2
+        public class PositionMotor
         {
             public StringId Name;
-            public uint Unknown;
-            public uint Unknown2;
-            public uint Unknown3;
-            public uint Unknown4;
-            public uint Unknown5;
-            public uint Unknown6;
-            public uint Unknown7;
+            public uint MaximumForce;
+            public uint MinimumForce;
+            public uint Tau;
+            public uint Damping;
+            public uint ProportionRecoverVelocity;
+            public uint ConstantRecoverVelocity;
+            public uint InitialPosition;
+        }
+
+        public enum PhantomTypeFlags : int
+        {
+            None = 0,
+            GeneratesEffects = 1 << 0,
+            UseAccelerationAsForce = 1 << 1,
+            NegatesGravity = 1 << 2,
+            // TODO: Add ignores flags
+        }
+
+        public enum PhantomTypeSize : sbyte
+        {
+            Default,
+            Tiny,
+            Small,
+            Medium,
+            Large,
+            Huge,
+            ExtraHuge
         }
 
         [TagStructure(Size = 0x68)]
         public class PhantomType
         {
-            public uint Flags; // NOTE: This has to be adjusted when converting because of the new armor object type. The "Ignores Armor" bit was inserted at position 8.
-            public SizeValue MinimumSize;
-            public SizeValue MaximumSize;
-            public short Unknown;
+            public PhantomTypeFlags Flags; // NOTE: This has to be adjusted when converting because of the new armor object type. The "Ignores Armor" bit was inserted at position 8.
+            public PhantomTypeSize MinimumSize;
+            public PhantomTypeSize MaximumSize;
+            [TagField(Count = 2)] public sbyte[] Padding1;
             public StringId MarkerName;
             public StringId AlignmentMarkerName;
-            public uint Unknown2;
-            public uint Unknown3;
-            public float HookeSLawE;
+            [TagField(Count = 2)] public sbyte[] Padding2;
+            public float HookesLawE;
             public float LinearDeadRadius;
             public float CenterAcceleration;
             public float CenterMaxLevel;
@@ -106,50 +132,54 @@ namespace TagTool.Tags.Definitions
             public float AxisMaxVelocity;
             public float DirectionAcceleration;
             public float DirectionMaxVelocity;
-            public uint Unknown4;
-            public uint Unknown5;
-            public uint Unknown6;
-            public uint Unknown7;
-            public uint Unknown8;
-            public uint Unknown9;
-            public uint Unknown10;
-            public float AlignmentHookeSLawE;
-            public Angle AlignmentAcceleration;
-            public Angle AlignmentMaxVelocity;
-            public uint Unknown11;
-            public uint Unknown12;
+            [TagField(Count = 28)] public sbyte[] Padding3;
+            public float AlignmentHookesLawE;
+            public float AlignmentAcceleration;
+            public float AlignmentMaxVelocity;
+            [TagField(Count = 8)] public sbyte[] Padding4;
+        }
 
-            public enum SizeValue : sbyte
-            {
-                Default,
-                Tiny,
-                Small,
-                Medium,
-                Large,
-                Huge,
-                ExtraHuge,
-            }
+        public enum ConstraintType : short
+        {
+            Hinge,
+            LimitedHinge,
+            Ragdoll,
+            StiffSpring,
+            BallAndSocket,
+            Prismatic,
+            PoweredChain
+        }
+
+        public enum MotorType : short
+        {
+            None,
+            DampedSprint,
+            StrongestForce
         }
 
         [TagStructure(Size = 0x18)]
-        public class UnknownBlock3
+        public class PoweredChain
         {
-            public List<UnknownBlock> Unknown;
-            public List<UnknownBlock2> Unknown2;
+            public List<Node> Nodes;
+            public List<Constraint> Constraints;
 
             [TagStructure(Size = 0x2)]
-            public class UnknownBlock
+            public class Node
             {
-                public short Unknown;
+                public short NodeIndex;
             }
 
             [TagStructure(Size = 0x10)]
-            public class UnknownBlock2
+            public class Constraint
             {
-                public uint Unknown;
-                public uint Unknown2;
-                public uint Unknown3;
-                public uint Unknown4;
+                public ConstraintType ConstraintType;
+                public short ConstraintIndex;
+                public MotorType MotorXType;
+                public short MotorXIndex;
+                public MotorType MotorYType;
+                public short MotorYIndex;
+                public MotorType MotorZType;
+                public short MotorZIndex;
             }
         }
 
@@ -167,36 +197,36 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x24)]
             public class Constraint
             {
-                public TypeValue Type;
+                public ConstraintType Type;
                 public short Index;
-                public uint Flags;
+                public ConstraintFlags Flags;
                 public float Friction;
-                public List<UnknownBlock> Unknown;
-                public List<UnknownBlock2> Unknown2;
-
-                public enum TypeValue : short
+                public List<RagdollMotor> RagdollMotors;
+                public List<LimitedHingeMotor> LimitedHingeMotors;
+                
+                [Flags]
+                public enum ConstraintFlags : int
                 {
-                    Hinge,
-                    LimitedHinge,
-                    Ragdoll,
-                    StiffSpring,
-                    BallAndSocket,
-                    Prismatic,
+                    None = 0,
+                    IsPhysicalChild = 1 << 0,
+                    IsRigid = 1 << 1,
+                    DisableEffects = 1 << 2,
+                    NotCreatedAutomatically = 1 << 3
                 }
 
                 [TagStructure(Size = 0xC)]
-                public class UnknownBlock
+                public class RagdollMotor
                 {
-                    public short Unknown;
-                    public short Unknown2;
-                    public short Unknown3;
-                    public short Unknown4;
-                    public short Unknown5;
-                    public short Unknown6;
+                    public MotorType TwistMotorType;
+                    public short TwistIndex;
+                    public MotorType ConeMotorType;
+                    public short ConeIndex;
+                    public MotorType PlaneMotorType;
+                    public short PlaneIndex;
                 }
 
                 [TagStructure(Size = 0x4)]
-                public class UnknownBlock2
+                public class LimitedHingeMotor
                 {
                     public short Unknown;
                     public short Unknown2;
@@ -345,6 +375,11 @@ namespace TagTool.Tags.Definitions
             public float TranslationJ;
             public float TranslationK;
             public float TranslationRadius;
+        }
+
+        [TagStructure]
+        public class MultiSphere
+        {
         }
 
         [TagStructure(Size = 0x60)]
@@ -544,6 +579,11 @@ namespace TagTool.Tags.Definitions
             public float Unknown2;
             public float Unknown3;
             public float Unknown4;
+        }
+
+        [TagStructure]
+        public class MassDistribution
+        {
         }
 
         [TagStructure(Size = 0x50)]

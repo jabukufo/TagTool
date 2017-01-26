@@ -45,64 +45,65 @@ namespace TagTool.Commands.BSPs
 
             using (var reader = new EndianReader(resourceDataStream))
             {
+                /* TODO: Fix
                 #region collision bsps
 
                 foreach (var cbsp in definition.CollisionBsps)
                 {
-                    reader.BaseStream.Position = cbsp.Bsp3DNodes.Address.Offset;
-                    for (var i = 0; i < cbsp.Bsp3DNodes.Count; i++)
+                    reader.BaseStream.Position = cbsp.Bsp3dNodes.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp3dNodes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode));
-                        cbsp.Bsp3DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp3dNode));
+                        cbsp.Bsp3dNodes.Add((CollisionGeometry.Bsp3dNode)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Planes.Address.Offset;
                     for (var i = 0; i < cbsp.Planes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Plane));
-                        cbsp.Planes.Add((CollisionBspResourceDefinition.CollisionBsp.Plane)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Plane));
+                        cbsp.Planes.Add((CollisionGeometry.Plane)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Leaves.Address.Offset;
                     for (var i = 0; i < cbsp.Leaves.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Leaf));
-                        cbsp.Leaves.Add((CollisionBspResourceDefinition.CollisionBsp.Leaf)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Leaf));
+                        cbsp.Leaves.Add((CollisionGeometry.Leaf)element);
                     }
 
-                    reader.BaseStream.Position = cbsp.Bsp2DReferences.Address.Offset;
-                    for (var i = 0; i < cbsp.Bsp2DReferences.Count; i++)
+                    reader.BaseStream.Position = cbsp.Bsp2dReferences.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp2dReferences.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference));
-                        cbsp.Bsp2DReferences.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dReference));
+                        cbsp.Bsp2dReferences.Add((CollisionGeometry.Bsp2dReference)element);
                     }
 
-                    reader.BaseStream.Position = cbsp.Bsp2DNodes.Address.Offset;
-                    for (var i = 0; i < cbsp.Bsp2DNodes.Count; i++)
+                    reader.BaseStream.Position = cbsp.Bsp2dNodes.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp2dNodes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode));
-                        cbsp.Bsp2DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dNode));
+                        cbsp.Bsp2dNodes.Add((CollisionGeometry.Bsp2dNode)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Surfaces.Address.Offset;
                     for (var i = 0; i < cbsp.Surfaces.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Surface));
-                        cbsp.Surfaces.Add((CollisionBspResourceDefinition.CollisionBsp.Surface)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Surface));
+                        cbsp.Surfaces.Add((CollisionGeometry.Surface)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Edges.Address.Offset;
                     for (var i = 0; i < cbsp.Edges.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Edge));
-                        cbsp.Edges.Add((CollisionBspResourceDefinition.CollisionBsp.Edge)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Edge));
+                        cbsp.Edges.Add((CollisionGeometry.Edge)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Vertices.Address.Offset;
                     for (var i = 0; i < cbsp.Vertices.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Vertex));
-                        cbsp.Vertices.Add((CollisionBspResourceDefinition.CollisionBsp.Vertex)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Vertex));
+                        cbsp.Vertices.Add((CollisionGeometry.Vertex)element);
                     }
                 }
 
@@ -112,60 +113,60 @@ namespace TagTool.Commands.BSPs
 
                 foreach (var cbsp in definition.LargeCollisionBsps)
                 {
-                    reader.BaseStream.Position = cbsp.Bsp3DNodes.Address.Offset;
-                    for (var i = 0; i < cbsp.Bsp3DNodes.Count; i++)
+                    reader.BaseStream.Position = cbsp.Bsp3dNodes.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp3dNodes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode));
-                        cbsp.Bsp3DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp3dNode));
+                        cbsp.Bsp3dNodes.Add((CollisionGeometry.Bsp3dNode)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Planes.Address.Offset;
                     for (var i = 0; i < cbsp.Planes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Plane));
-                        cbsp.Planes.Add((CollisionBspResourceDefinition.CollisionBsp.Plane)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Plane));
+                        cbsp.Planes.Add((CollisionGeometry.Plane)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Leaves.Address.Offset;
                     for (var i = 0; i < cbsp.Leaves.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Leaf));
-                        cbsp.Leaves.Add((CollisionBspResourceDefinition.CollisionBsp.Leaf)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Leaf));
+                        cbsp.Leaves.Add((CollisionGeometry.Leaf)element);
                     }
 
-                    reader.BaseStream.Position = cbsp.Bsp2DReferences.Address.Offset;
-                    for (var i = 0; i < cbsp.Bsp2DReferences.Count; i++)
+                    reader.BaseStream.Position = cbsp.Bsp2dReferences.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp2dReferences.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference));
-                        cbsp.Bsp2DReferences.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dReference));
+                        cbsp.Bsp2dReferences.Add((CollisionGeometry.Bsp2dReference)element);
                     }
 
-                    reader.BaseStream.Position = cbsp.Bsp2DNodes.Address.Offset;
-                    for (var i = 0; i < cbsp.Bsp2DNodes.Count; i++)
+                    reader.BaseStream.Position = cbsp.Bsp2dNodes.Address.Offset;
+                    for (var i = 0; i < cbsp.Bsp2dNodes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode));
-                        cbsp.Bsp2DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dNode));
+                        cbsp.Bsp2dNodes.Add((CollisionGeometry.Bsp2dNode)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Surfaces.Address.Offset;
                     for (var i = 0; i < cbsp.Surfaces.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Surface));
-                        cbsp.Surfaces.Add((CollisionBspResourceDefinition.CollisionBsp.Surface)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Surface));
+                        cbsp.Surfaces.Add((CollisionGeometry.Surface)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Edges.Address.Offset;
                     for (var i = 0; i < cbsp.Edges.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Edge));
-                        cbsp.Edges.Add((CollisionBspResourceDefinition.CollisionBsp.Edge)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Edge));
+                        cbsp.Edges.Add((CollisionGeometry.Edge)element);
                     }
 
                     reader.BaseStream.Position = cbsp.Vertices.Address.Offset;
                     for (var i = 0; i < cbsp.Vertices.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Vertex));
-                        cbsp.Vertices.Add((CollisionBspResourceDefinition.CollisionBsp.Vertex)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Vertex));
+                        cbsp.Vertices.Add((CollisionGeometry.Vertex)element);
                     }
                 }
 
@@ -177,60 +178,60 @@ namespace TagTool.Commands.BSPs
                 {
                     #region compression's resource data
 
-                    reader.BaseStream.Position = comp.CollisionBsp.Bsp3DNodes.Address.Offset;
-                    for (var i = 0; i < comp.CollisionBsp.Bsp3DNodes.Count; i++)
+                    reader.BaseStream.Position = comp.CollisionBsp.Bsp3dNodes.Address.Offset;
+                    for (var i = 0; i < comp.CollisionBsp.Bsp3dNodes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode));
-                        comp.CollisionBsp.Bsp3DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp3dNode));
+                        comp.CollisionBsp.Bsp3dNodes.Add((CollisionGeometry.Bsp3dNode)element);
                     }
 
                     reader.BaseStream.Position = comp.CollisionBsp.Planes.Address.Offset;
                     for (var i = 0; i < comp.CollisionBsp.Planes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Plane));
-                        comp.CollisionBsp.Planes.Add((CollisionBspResourceDefinition.CollisionBsp.Plane)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Plane));
+                        comp.CollisionBsp.Planes.Add((CollisionGeometry.Plane)element);
                     }
 
                     reader.BaseStream.Position = comp.CollisionBsp.Leaves.Address.Offset;
                     for (var i = 0; i < comp.CollisionBsp.Leaves.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Leaf));
-                        comp.CollisionBsp.Leaves.Add((CollisionBspResourceDefinition.CollisionBsp.Leaf)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Leaf));
+                        comp.CollisionBsp.Leaves.Add((CollisionGeometry.Leaf)element);
                     }
 
-                    reader.BaseStream.Position = comp.CollisionBsp.Bsp2DReferences.Address.Offset;
-                    for (var i = 0; i < comp.CollisionBsp.Bsp2DReferences.Count; i++)
+                    reader.BaseStream.Position = comp.CollisionBsp.Bsp2dReferences.Address.Offset;
+                    for (var i = 0; i < comp.CollisionBsp.Bsp2dReferences.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference));
-                        comp.CollisionBsp.Bsp2DReferences.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dReference));
+                        comp.CollisionBsp.Bsp2dReferences.Add((CollisionGeometry.Bsp2dReference)element);
                     }
 
-                    reader.BaseStream.Position = comp.CollisionBsp.Bsp2DNodes.Address.Offset;
-                    for (var i = 0; i < comp.CollisionBsp.Bsp2DNodes.Count; i++)
+                    reader.BaseStream.Position = comp.CollisionBsp.Bsp2dNodes.Address.Offset;
+                    for (var i = 0; i < comp.CollisionBsp.Bsp2dNodes.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode));
-                        comp.CollisionBsp.Bsp2DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dNode));
+                        comp.CollisionBsp.Bsp2dNodes.Add((CollisionGeometry.Bsp2dNode)element);
                     }
 
                     reader.BaseStream.Position = comp.CollisionBsp.Surfaces.Address.Offset;
                     for (var i = 0; i < comp.CollisionBsp.Surfaces.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Surface));
-                        comp.CollisionBsp.Surfaces.Add((CollisionBspResourceDefinition.CollisionBsp.Surface)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Surface));
+                        comp.CollisionBsp.Surfaces.Add((CollisionGeometry.Surface)element);
                     }
 
                     reader.BaseStream.Position = comp.CollisionBsp.Edges.Address.Offset;
                     for (var i = 0; i < comp.CollisionBsp.Edges.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Edge));
-                        comp.CollisionBsp.Edges.Add((CollisionBspResourceDefinition.CollisionBsp.Edge)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Edge));
+                        comp.CollisionBsp.Edges.Add((CollisionGeometry.Edge)element);
                     }
 
                     reader.BaseStream.Position = comp.CollisionBsp.Vertices.Address.Offset;
                     for (var i = 0; i < comp.CollisionBsp.Vertices.Count; i++)
                     {
-                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Vertex));
-                        comp.CollisionBsp.Vertices.Add((CollisionBspResourceDefinition.CollisionBsp.Vertex)element);
+                        var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Vertex));
+                        comp.CollisionBsp.Vertices.Add((CollisionGeometry.Vertex)element);
                     }
 
                     #endregion
@@ -239,60 +240,60 @@ namespace TagTool.Commands.BSPs
 
                     foreach (var cbsp in comp.CollisionBsps)
                     {
-                        reader.BaseStream.Position = cbsp.Bsp3DNodes.Address.Offset;
-                        for (var i = 0; i < cbsp.Bsp3DNodes.Count; i++)
+                        reader.BaseStream.Position = cbsp.Bsp3dNodes.Address.Offset;
+                        for (var i = 0; i < cbsp.Bsp3dNodes.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode));
-                            cbsp.Bsp3DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp3DNode)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp3dNode));
+                            cbsp.Bsp3dNodes.Add((CollisionGeometry.Bsp3dNode)element);
                         }
 
                         reader.BaseStream.Position = cbsp.Planes.Address.Offset;
                         for (var i = 0; i < cbsp.Planes.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Plane));
-                            cbsp.Planes.Add((CollisionBspResourceDefinition.CollisionBsp.Plane)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Plane));
+                            cbsp.Planes.Add((CollisionGeometry.Plane)element);
                         }
 
                         reader.BaseStream.Position = cbsp.Leaves.Address.Offset;
                         for (var i = 0; i < cbsp.Leaves.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Leaf));
-                            cbsp.Leaves.Add((CollisionBspResourceDefinition.CollisionBsp.Leaf)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Leaf));
+                            cbsp.Leaves.Add((CollisionGeometry.Leaf)element);
                         }
 
-                        reader.BaseStream.Position = cbsp.Bsp2DReferences.Address.Offset;
-                        for (var i = 0; i < cbsp.Bsp2DReferences.Count; i++)
+                        reader.BaseStream.Position = cbsp.Bsp2dReferences.Address.Offset;
+                        for (var i = 0; i < cbsp.Bsp2dReferences.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference));
-                            cbsp.Bsp2DReferences.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DReference)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dReference));
+                            cbsp.Bsp2dReferences.Add((CollisionGeometry.Bsp2dReference)element);
                         }
 
-                        reader.BaseStream.Position = cbsp.Bsp2DNodes.Address.Offset;
-                        for (var i = 0; i < cbsp.Bsp2DNodes.Count; i++)
+                        reader.BaseStream.Position = cbsp.Bsp2dNodes.Address.Offset;
+                        for (var i = 0; i < cbsp.Bsp2dNodes.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode));
-                            cbsp.Bsp2DNodes.Add((CollisionBspResourceDefinition.CollisionBsp.Bsp2DNode)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Bsp2dNode));
+                            cbsp.Bsp2dNodes.Add((CollisionGeometry.Bsp2dNode)element);
                         }
 
                         reader.BaseStream.Position = cbsp.Surfaces.Address.Offset;
                         for (var i = 0; i < cbsp.Surfaces.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Surface));
-                            cbsp.Surfaces.Add((CollisionBspResourceDefinition.CollisionBsp.Surface)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Surface));
+                            cbsp.Surfaces.Add((CollisionGeometry.Surface)element);
                         }
 
                         reader.BaseStream.Position = cbsp.Edges.Address.Offset;
                         for (var i = 0; i < cbsp.Edges.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Edge));
-                            cbsp.Edges.Add((CollisionBspResourceDefinition.CollisionBsp.Edge)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Edge));
+                            cbsp.Edges.Add((CollisionGeometry.Edge)element);
                         }
 
                         reader.BaseStream.Position = cbsp.Vertices.Address.Offset;
                         for (var i = 0; i < cbsp.Vertices.Count; i++)
                         {
-                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionBspResourceDefinition.CollisionBsp.Vertex));
-                            cbsp.Vertices.Add((CollisionBspResourceDefinition.CollisionBsp.Vertex)element);
+                            var element = CacheContext.Deserializer.DeserializeValue(reader, null, null, typeof(CollisionGeometry.Vertex));
+                            cbsp.Vertices.Add((CollisionGeometry.Vertex)element);
                         }
                     }
 
@@ -344,6 +345,7 @@ namespace TagTool.Commands.BSPs
                 }
 
                 #endregion
+                */
             }
 
             return true;

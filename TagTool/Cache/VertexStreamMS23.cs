@@ -17,10 +17,10 @@ namespace TagTool.Cache
         {
             return new WorldVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = new Vector4(_stream.ReadFloat3(), 0),
+                Tangent = new RealVector4d(_stream.ReadFloat3(), 0),
                 Binormal = _stream.ReadFloat3(),
             };
         }
@@ -38,10 +38,10 @@ namespace TagTool.Cache
         {
             return new RigidVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = new Vector4(_stream.ReadFloat3(), 0),
+                Tangent = new RealVector4d(_stream.ReadFloat3(), 0),
                 Binormal = _stream.ReadFloat3(),
             };
         }
@@ -59,10 +59,10 @@ namespace TagTool.Cache
         {
             return new SkinnedVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = new Vector4(_stream.ReadFloat3(), 0),
+                Tangent = new RealVector4d(_stream.ReadFloat3(), 0),
                 Binormal = _stream.ReadFloat3(),
                 BlendIndices = _stream.ReadUByte4(),
                 BlendWeights = _stream.ReadUByte4N().ToArray(),
@@ -77,7 +77,7 @@ namespace TagTool.Cache
             _stream.WriteFloat3(v.Tangent.XYZ);
             _stream.WriteFloat3(v.Binormal);
             _stream.WriteUByte4(v.BlendIndices);
-            _stream.WriteUByte4N(new Vector4(v.BlendWeights));
+            _stream.WriteUByte4N(new RealVector4d(v.BlendWeights));
         }
 
         public ParticleModelVertex ReadParticleModelVertex()
@@ -101,10 +101,10 @@ namespace TagTool.Cache
         {
             return new FlatWorldVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = new Vector4(_stream.ReadFloat3(), 0),
+                Tangent = new RealVector4d(_stream.ReadFloat3(), 0),
                 Binormal = _stream.ReadFloat3(),
             };
         }
@@ -122,10 +122,10 @@ namespace TagTool.Cache
         {
             return new FlatRigidVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = new Vector4(_stream.ReadFloat3(), 0),
+                Tangent = new RealVector4d(_stream.ReadFloat3(), 0),
                 Binormal = _stream.ReadFloat3(),
             };
         }
@@ -143,10 +143,10 @@ namespace TagTool.Cache
         {
             return new FlatSkinnedVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = new Vector4(_stream.ReadFloat3(), 0),
+                Tangent = new RealVector4d(_stream.ReadFloat3(), 0),
                 Binormal = _stream.ReadFloat3(),
                 BlendIndices = _stream.ReadUByte4(),
                 BlendWeights = _stream.ReadUByte4N().ToArray(),
@@ -161,7 +161,7 @@ namespace TagTool.Cache
             _stream.WriteFloat3(v.Tangent.XYZ);
             _stream.WriteFloat3(v.Binormal);
             _stream.WriteUByte4(v.BlendIndices);
-            _stream.WriteUByte4N(new Vector4(v.BlendWeights));
+            _stream.WriteUByte4N(new RealVector4d(v.BlendWeights));
         }
 
         public ScreenVertex ReadScreenVertex()
@@ -302,9 +302,9 @@ namespace TagTool.Cache
         {
             return new DecoratorVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
-                Normal = new Vector4(_stream.ReadFloat3(), 0),
+                Normal = new RealVector4d(_stream.ReadFloat3(), 0),
                 /*Texcoord2 = _stream.ReadShort4(),
                 Texcoord3 = _stream.ReadUByte4N(),
                 Texcoord4 = _stream.ReadUByte4N(),*/
@@ -463,10 +463,10 @@ namespace TagTool.Cache
         {
             return new DualQuatVertex
             {
-                Position = new Vector4(_stream.ReadFloat3(), 0),
+                Position = new RealVector4d(_stream.ReadFloat3(), 0),
                 Texcoord = _stream.ReadFloat2(),
                 Normal = _stream.ReadFloat3(),
-                Tangent = new Vector4(_stream.ReadFloat3(), 0),
+                Tangent = new RealVector4d(_stream.ReadFloat3(), 0),
                 Binormal = _stream.ReadFloat3(),
                 BlendIndices = _stream.ReadUByte4(),
                 BlendWeights = _stream.ReadUByte4N().ToArray(),
@@ -481,7 +481,7 @@ namespace TagTool.Cache
             _stream.WriteFloat3(v.Tangent.XYZ);
             _stream.WriteFloat3(v.Binormal);
             _stream.WriteUByte4(v.BlendIndices);
-            _stream.WriteUByte4N(new Vector4(v.BlendWeights));
+            _stream.WriteUByte4N(new RealVector4d(v.BlendWeights));
         }
 
         public StaticPerVertexColorData ReadStaticPerVertexColorData()

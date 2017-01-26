@@ -129,10 +129,10 @@ namespace TagTool.Tags.Definitions
             public ushort Flags;
             public short NodeIndex;
             public float DefaultScale;
-            public Vector3 InverseForward;
-            public Vector3 InverseLeft;
-            public Vector3 InverseUp;
-            public Vector3 InversePosition;
+            public RealPoint3d InverseForward;
+            public RealPoint3d InverseLeft;
+            public RealPoint3d InverseUp;
+            public RealPoint3d InversePosition;
         }
 
         [TagStructure(Size = 0x60)]
@@ -143,13 +143,13 @@ namespace TagTool.Tags.Definitions
             public short FirstChildNode;
             public short NextSiblingNode;
             public short ImportNode;
-            public Vector3 DefaultTranslation;
-            public Vector4 DefaultRotation;
+            public RealPoint3d DefaultTranslation;
+            public RealVector4d DefaultRotation;
             public float DefaultScale;
-            public Vector3 InverseForward;
-            public Vector3 InverseLeft;
-            public Vector3 InverseUp;
-            public Vector3 InversePosition;
+            public RealPoint3d InverseForward;
+            public RealPoint3d InverseLeft;
+            public RealPoint3d InverseUp;
+            public RealPoint3d InversePosition;
             public float DistanceFromParent;
         }
 
@@ -166,8 +166,8 @@ namespace TagTool.Tags.Definitions
                 public sbyte PermutationIndex;
                 public sbyte NodeIndex;
                 public sbyte Unknown3;
-                public Vector3 Translation;
-                public Vector4 Rotation;
+                public RealPoint3d Translation;
+                public RealVector4d Rotation;
                 public float Scale;
             }
         }
@@ -276,8 +276,8 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x20)]
         public class RuntimeNode
         {
-            public Vector4 Rotation;
-            public Vector3 Translation;
+            public RealVector4d Rotation;
+            public RealPoint3d Translation;
             public float Scale;
         }
     }

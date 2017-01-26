@@ -36,7 +36,7 @@ namespace TagTool.Cache
         public int Unused;
 
         [MaxVersion(CacheVersion.Unknown)]
-        private List<T> Elements = new List<T>();
+        private ResourceBlockReference<T> Elements = new ResourceBlockReference<T>();
 
         int ICollection<T>.Count => Elements.Count;
         public bool IsReadOnly => ((IList<T>)Elements).IsReadOnly;

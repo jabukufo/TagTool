@@ -236,8 +236,8 @@ namespace TagTool.Tags.Definitions
             {
                 public short NodeIndex;
                 public ushort ComponentFlags;
-                public Vector4 Rotation;
-                public Vector3 DefaultTranslation;
+                public RealVector4d Rotation;
+                public RealPoint3d DefaultTranslation;
                 public float DefaultScale;
             }
 

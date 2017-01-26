@@ -555,9 +555,9 @@ namespace TagTool.Tags.Definitions
             {
                 public AnchorValue Anchor;
                 public short Unknown;
-                public Vector2 MirrorOffset;
-                public Vector2 Offset;
-                public Vector2 Scale;
+                public RealPoint2d MirrorOffset;
+                public RealPoint2d Offset;
+                public RealPoint2d Scale;
 
                 public enum AnchorValue : short
                 {

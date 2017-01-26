@@ -411,21 +411,21 @@ namespace TagTool.Commands.Tags
                 case VertexBufferFormat.World:
                     ConvertVertices(count, inVertexStream.ReadWorldVertex, v =>
                     {
-                        v.Binormal = new Vector3(v.Position.W, v.Tangent.W, 0); // Converted shaders use this
+                        v.Binormal = new RealPoint3d(v.Position.W, v.Tangent.W, 0); // Converted shaders use this
                         outVertexStream.WriteWorldVertex(v);
                     });
                     break;
                 case VertexBufferFormat.Rigid:
                     ConvertVertices(count, inVertexStream.ReadRigidVertex, v =>
                     {
-                        v.Binormal = new Vector3(v.Position.W, v.Tangent.W, 0); // Converted shaders use this
+                        v.Binormal = new RealPoint3d(v.Position.W, v.Tangent.W, 0); // Converted shaders use this
                         outVertexStream.WriteRigidVertex(v);
                     });
                     break;
                 case VertexBufferFormat.Skinned:
                     ConvertVertices(count, inVertexStream.ReadSkinnedVertex, v =>
                     {
-                        v.Binormal = new Vector3(v.Position.W, v.Tangent.W, 0); // Converted shaders use this
+                        v.Binormal = new RealPoint3d(v.Position.W, v.Tangent.W, 0); // Converted shaders use this
                         outVertexStream.WriteSkinnedVertex(v);
                     });
                     break;
@@ -493,7 +493,7 @@ namespace TagTool.Commands.Tags
             if (phantom != null)
             {
                 // Remove the armor bit added at position 8 in flags
-                phantom.Flags = (uint)((phantom.Flags & ~0x1FFE00) | ((phantom.Flags & 0x1FFE00) >> 1));
+                phantom.Flags = (PhysicsModel.PhantomTypeFlags)(((int)phantom.Flags & ~0x1FFE00) | (((int)phantom.Flags & 0x1FFE00) >> 1));
             }
             var chmt = data as ChocolateMountainNew;
             if (chmt != null && chmt.LightingVariables != null && chmt.LightingVariables.Count > 3)

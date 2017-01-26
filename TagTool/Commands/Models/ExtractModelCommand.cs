@@ -122,9 +122,9 @@ namespace TagTool.Commands.Models
                         bw.Write(node.DefaultTranslation.X * 100);
                         bw.Write(node.DefaultTranslation.Y * 100);
                         bw.Write(node.DefaultTranslation.Z * 100);
-                        bw.Write(node.DefaultRotation.X);
-                        bw.Write(node.DefaultRotation.Y);
-                        bw.Write(node.DefaultRotation.Z);
+                        bw.Write(node.DefaultRotation.I);
+                        bw.Write(node.DefaultRotation.J);
+                        bw.Write(node.DefaultRotation.K);
                         bw.Write(node.DefaultRotation.W);
                     }
                     #endregion
@@ -150,9 +150,9 @@ namespace TagTool.Commands.Models
                             bw.Write(marker.Translation.X * 100);
                             bw.Write(marker.Translation.Y * 100);
                             bw.Write(marker.Translation.Z * 100);
-                            bw.Write(marker.Rotation.X);
-                            bw.Write(marker.Rotation.Y);
-                            bw.Write(marker.Rotation.Z);
+                            bw.Write(marker.Rotation.I);
+                            bw.Write(marker.Rotation.J);
+                            bw.Write(marker.Rotation.K);
                             bw.Write(marker.Rotation.W);
                         }
                     }

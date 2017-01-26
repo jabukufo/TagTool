@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using TagTool.Common;
+using TagTool.Geometry;
 using TagTool.Serialization;
 
 namespace TagTool.Tags.Definitions
@@ -8,14 +10,174 @@ namespace TagTool.Tags.Definitions
     public class CollisionModel
     {
         public int CollisionModelChecksum;
-        public uint Unknown;
-        public uint Unknown2;
-        public uint Unknown3;
+        public List<Error> Errors;
         public uint Flags;
         public List<Material> Materials;
         public List<Region> Regions;
         public List<PathfindingSphere> PathfindingSpheres;
         public List<Node> Nodes;
+
+        [TagStructure]
+        public class Error
+        {
+            [TagField(Length = 32)]
+            public string Name;
+            public ErrorType ReportType;
+            public byte Unused1;
+            public ErrorFlags Flags;
+            public short RuntimeGenerationFlags;
+            public short Unused2;
+            public int Unused3;
+            public List<Report> Reports;
+
+            [Flags]
+            public enum ErrorFlags : ushort
+            {
+                None = 0,
+                Rendered = 1 << 0,
+                TangentSpace = 1 << 1,
+                NonCritical = 1 << 2,
+                LightmapLight = 1 << 3,
+                ReportKeyIsValid = 1 << 4
+            }
+
+            public enum ErrorType : sbyte
+            {
+                Silent,
+                Comment,
+                Warning,
+                Error
+            }
+
+            public enum ErrorSource : sbyte
+            {
+                None,
+                Structure,
+                Poop,
+                Lightmap,
+                Pathfinding
+            }
+            
+            [TagStructure]
+            public class ErrorVertex
+            {
+                public RealPoint3d Point;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices;
+                [TagField(Count = 4)]
+                public float[] NodeWeights;
+                public RealArgbColor Color;
+                public float ScreenSize;
+            }
+
+            [TagStructure]
+            public class ErrorVector
+            {
+                public RealPoint3d Point;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices;
+                [TagField(Count = 4)]
+                public float[] NodeWeights;
+                public RealArgbColor Color;
+                public RealPoint3d Normal;
+                public float ScreenSize;
+            }
+
+            [TagStructure]
+            public class ErrorLine
+            {
+                public RealPoint3d Point1;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices1;
+                [TagField(Count = 4)]
+                public float[] NodeWeights1;
+                public RealPoint3d Point2;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices2;
+                [TagField(Count = 4)]
+                public float[] NodeWeights2;
+                public RealArgbColor Color;
+            }
+
+            [TagStructure]
+            public class ErrorTriangle
+            {
+                public RealPoint3d Point1;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices1;
+                [TagField(Count = 4)]
+                public float[] NodeWeights1;
+                public RealPoint3d Point2;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices2;
+                [TagField(Count = 4)]
+                public float[] NodeWeights2;
+                public RealPoint3d Point3;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices3;
+                [TagField(Count = 4)]
+                public float[] NodeWeights3;
+                public RealArgbColor Color;
+            }
+
+            [TagStructure]
+            public class ErrorQuad
+            {
+                public RealPoint3d Point1;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices1;
+                [TagField(Count = 4)]
+                public float[] NodeWeights1;
+                public RealPoint3d Point2;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices2;
+                [TagField(Count = 4)]
+                public float[] NodeWeights2;
+                public RealPoint3d Point3;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices3;
+                [TagField(Count = 4)]
+                public float[] NodeWeights3;
+                public RealPoint3d Point4;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices4;
+                [TagField(Count = 4)]
+                public float[] NodeWeights4;
+                public RealArgbColor Color;
+            }
+
+            [TagStructure]
+            public class ErrorComment
+            {
+                public byte[] TextData;
+                public RealPoint3d Point;
+                [TagField(Count = 4)]
+                public sbyte[] NodeIndices;
+                [TagField(Count = 4)]
+                public float[] NodeWeights;
+            }
+
+            [TagStructure]
+            public class Report
+            {
+                public ErrorType Type;
+                public ErrorSource Source;
+                public ErrorFlags Flags;
+                public byte[] TextData;
+                public int SourceIdentifier;
+                public List<ErrorVertex> Vertices;
+                public List<ErrorVector> Vectors;
+                public List<ErrorLine> Lines;
+                public List<ErrorTriangle> Triangles;
+                public List<ErrorComment> Comments;
+                public int ReportKey;
+                public int NodeIndex;
+                public Range<float> BoundsX;
+                public Range<float> BoundsY;
+                public Range<float> BoundsZ;
+                public RealArgbColor Color;
+            }
+        }
 
         [TagStructure(Size = 0x4)]
         public class Material
@@ -35,100 +197,14 @@ namespace TagTool.Tags.Definitions
                 public StringId Name;
                 public List<Bsp> Bsps;
                 public List<BspPhysic> BspPhysics;
-                public List<BspMoppCode> BspMoppCodes;
+                public List<CollisionMoppCode> BspMoppCodes;
 
                 [TagStructure(Size = 0x64)]
                 public class Bsp
                 {
                     public short NodeIndex;
-                    public short Unknown;
-                    public List<Bsp3dNode> Bsp3dNodes;
-                    public List<Plane> Planes;
-                    public List<Leaf> Leaves;
-                    public List<Bsp2dReference> Bsp2dReferences;
-                    public List<Bsp2dNode> Bsp2dNodes;
-                    public List<Surface> Surfaces;
-                    public List<Edge> Edges;
-                    public List<Vertex> Vertices;
-
-                    [TagStructure(Size = 0x8)]
-                    public class Bsp3dNode
-                    {
-                        public short Plane;
-                        public byte BackChildLower;
-                        public byte BackChildMid;
-                        public byte BackChildUpper;
-                        public byte FrontChildLower;
-                        public byte FrontChildMid;
-                        public byte FrontChildUpper;
-                    }
-
-                    [TagStructure(Size = 0x10)]
-                    public class Plane
-                    {
-                        public float PlaneI;
-                        public float PlaneJ;
-                        public float PlaneK;
-                        public float PlaneD;
-                    }
-
-                    [TagStructure(Size = 0x8)]
-                    public class Leaf
-                    {
-                        public short Flags;
-                        public short Bsp2dReferenceCount;
-                        public short Unknown;
-                        public short FirstBsp2dReference;
-                    }
-
-                    [TagStructure(Size = 0x4)]
-                    public class Bsp2dReference
-                    {
-                        public short Plane;
-                        public short Bsp2dNode;
-                    }
-
-                    [TagStructure(Size = 0x10)]
-                    public class Bsp2dNode
-                    {
-                        public float PlaneI;
-                        public float PlaneJ;
-                        public float PlaneD;
-                        public short LeftChild;
-                        public short RightChild;
-                    }
-
-                    [TagStructure(Size = 0xC)]
-                    public class Surface
-                    {
-                        public short Plane;
-                        public short FirstEdge;
-                        public short Material;
-                        public short Unknown;
-                        public short BreakableSurface;
-                        public short Unknown2;
-                    }
-
-                    [TagStructure(Size = 0xC)]
-                    public class Edge
-                    {
-                        public short StartVertex;
-                        public short EndVertex;
-                        public short ForwardEdge;
-                        public short ReverseEdge;
-                        public short LeftSurface;
-                        public short RightSurface;
-                    }
-
-                    [TagStructure(Size = 0x10)]
-                    public class Vertex
-                    {
-                        public float PointX;
-                        public float PointY;
-                        public float PointZ;
-                        public short FirstEdge;
-                        public short Unknown;
-                    }
+                    public short Padding;
+                    public CollisionGeometry Geometry;
                 }
 
                 [TagStructure(Size = 0x80)]
@@ -170,47 +246,39 @@ namespace TagTool.Tags.Definitions
                     public uint Unknown27;
                     public uint Unknown28;
                 }
-
-                [TagStructure(Size = 0x40)]
-                public class BspMoppCode
-                {
-                    public int Size;
-                    public int Count;
-                    public int Offset;
-                    public uint Unknown;
-                    public float OffsetX;
-                    public float OffsetY;
-                    public float OffsetZ;
-                    public float OffsetScale;
-                    public uint Unknown2;
-                    public int DataSize;
-                    public uint DataCapacity;
-                    public sbyte Unknown3;
-                    public sbyte Unknown4;
-                    public sbyte Unknown5;
-                    public sbyte Unknown6;
-                    public List<byte> Data;
-                    public uint Unknown7;
-                }
             }
+        }
+
+        [Flags]
+        public enum PathfindingSphereFlags : ushort
+        {
+            None = 0,
+            RemainsWhenOpen = 1 << 0,
+            VehicleOnly = 1 << 1,
+            WithSectors = 1 << 2
         }
 
         [TagStructure(Size = 0x14)]
         public class PathfindingSphere
         {
             public short Node;
-            public ushort Flags;
-            public float CenterX;
-            public float CenterY;
-            public float CenterZ;
+            public PathfindingSphereFlags Flags;
+            public RealPoint3d Center;
             public float Radius;
+        }
+
+        [Flags]
+        public enum NodeFlags : ushort
+        {
+            None = 0,
+            GenerateNavMesh = 1 << 0
         }
 
         [TagStructure(Size = 0xC)]
         public class Node
         {
             public StringId Name;
-            public short Unknown;
+            public NodeFlags Flags;
             public short ParentNode;
             public short NextSiblingNode;
             public short FirstChildNode;

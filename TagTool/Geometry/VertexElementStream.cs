@@ -25,32 +25,32 @@ namespace TagTool.Geometry
             _writer.Write(v);
         }
 
-        public Vector2 ReadFloat2()
+        public RealPoint2d ReadFloat2()
         {
-            return new Vector2(Read(2, () => _reader.ReadSingle()));
+            return new RealPoint2d(Read(2, () => _reader.ReadSingle()));
         }
 
-        public void WriteFloat2(Vector2 v)
+        public void WriteFloat2(RealPoint2d v)
         {
             Write(v.ToArray(), 2, e => _writer.Write(e));
         }
 
-        public Vector3 ReadFloat3()
+        public RealPoint3d ReadFloat3()
         {
-            return new Vector3(Read(3, () => _reader.ReadSingle()));
+            return new RealPoint3d(Read(3, () => _reader.ReadSingle()));
         }
 
-        public void WriteFloat3(Vector3 v)
+        public void WriteFloat3(RealPoint3d v)
         {
             Write(v.ToArray(), 3, e => _writer.Write(e));
         }
 
-        public Vector4 ReadFloat4()
+        public RealVector4d ReadFloat4()
         {
-            return new Vector4(Read(4, () => _reader.ReadSingle()));
+            return new RealVector4d(Read(4, () => _reader.ReadSingle()));
         }
 
-        public void WriteFloat4(Vector4 v)
+        public void WriteFloat4(RealVector4d v)
         {
             Write(v.ToArray(), 4, e => _writer.Write(e));
         }
@@ -95,66 +95,66 @@ namespace TagTool.Geometry
             Write(v, 4, e => _writer.Write(e));
         }
 
-        public Vector4 ReadUByte4N()
+        public RealVector4d ReadUByte4N()
         {
-            return new Vector4(Read(4, () => _reader.ReadByte() / 255.0f));
+            return new RealVector4d(Read(4, () => _reader.ReadByte() / 255.0f));
         }
 
-        public void WriteUByte4N(Vector4 v)
+        public void WriteUByte4N(RealVector4d v)
         {
             Write(v.ToArray(), 4, e => _writer.Write((byte)(Clamp(e) * 255.0f)));
         }
 
-        public Vector2 ReadShort2N()
+        public RealPoint2d ReadShort2N()
         {
-            return new Vector2(Read(2, () => _reader.ReadInt16() / 32767.0f));
+            return new RealPoint2d(Read(2, () => _reader.ReadInt16() / 32767.0f));
         }
 
-        public void WriteShort2N(Vector2 v)
+        public void WriteShort2N(RealPoint2d v)
         {
             Write(v.ToArray(), 2, e => _writer.Write((short)(Clamp(e) * 32767.0f)));
         }
 
-        public Vector4 ReadShort4N()
+        public RealVector4d ReadShort4N()
         {
-            return new Vector4(Read(4, () => _reader.ReadInt16() / 32767.0f));
+            return new RealVector4d(Read(4, () => _reader.ReadInt16() / 32767.0f));
         }
 
-        public void WriteShort4N(Vector4 v)
+        public void WriteShort4N(RealVector4d v)
         {
             Write(v.ToArray(), 4, e => _writer.Write((short)(Clamp(e) * 32767.0f)));
         }
 
-        public Vector2 ReadUShort2N()
+        public RealPoint2d ReadUShort2N()
         {
-            return new Vector2(Read(2, () => _reader.ReadUInt16() / 65535.0f));
+            return new RealPoint2d(Read(2, () => _reader.ReadUInt16() / 65535.0f));
         }
 
-        public void WriteUShort2N(Vector2 v)
+        public void WriteUShort2N(RealPoint2d v)
         {
             Write(v.ToArray(), 2, e => _writer.Write((ushort)(Clamp(e) * 65535.0f)));
         }
 
-        public Vector4 ReadUShort4N()
+        public RealVector4d ReadUShort4N()
         {
-            return new Vector4(Read(4, () => _reader.ReadUInt16() / 65535.0f));
+            return new RealVector4d(Read(4, () => _reader.ReadUInt16() / 65535.0f));
         }
 
-        public void WriteUShort4N(Vector4 v)
+        public void WriteUShort4N(RealVector4d v)
         {
             Write(v.ToArray(), 4, e => _writer.Write((ushort)(Clamp(e) * 65535.0f)));
         }
 
-        public Vector3 ReadUDec3()
+        public RealPoint3d ReadUDec3()
         {
             var val = _reader.ReadUInt32();
             var x = (float)(val >> 22);
             var y = (float)((val >> 12) & 0x3FF);
             var z = (float)((val >> 2) & 0x3FF);
-            return new Vector3(x, y, z);
+            return new RealPoint3d(x, y, z);
         }
 
-        public void WriteUDec3(Vector3 v)
+        public void WriteUDec3(RealPoint3d v)
         {
             var x = (uint)v.X & 0x3FF;
             var y = (uint)v.Y & 0x3FF;
@@ -162,16 +162,16 @@ namespace TagTool.Geometry
             _writer.Write((x << 22) | (y << 12) | (z << 2));
         }
 
-        public Vector3 ReadDec3N()
+        public RealPoint3d ReadDec3N()
         {
             var val = _reader.ReadUInt32();
             var x = ((val >> 22) - 512) / 511.0f;
             var y = (((val >> 12) & 0x3FF) - 512) / 511.0f;
             var z = (((val >> 2) & 0x3FF) - 512) / 511.0f;
-            return new Vector3(x, y, z);
+            return new RealPoint3d(x, y, z);
         }
 
-        public void WriteDec3N(Vector3 v)
+        public void WriteDec3N(RealPoint3d v)
         {
             var x = (((uint)(Clamp(v.X) * 511.0f)) + 512) & 0x3FF;
             var y = (((uint)(Clamp(v.Y) * 511.0f)) + 512) & 0x3FF;
@@ -179,22 +179,22 @@ namespace TagTool.Geometry
             _writer.Write((x << 22) | (y << 12) | (z << 2));
         }
 
-        public Vector2 ReadFloat16_2()
+        public RealPoint2d ReadFloat16_2()
         {
-            return new Vector2(Read(2, () => (float)Half.ToHalf(_reader.ReadUInt16())));
+            return new RealPoint2d(Read(2, () => (float)Half.ToHalf(_reader.ReadUInt16())));
         }
 
-        public void WriteFloat16_2(Vector2 v)
+        public void WriteFloat16_2(RealPoint2d v)
         {
             Write(v.ToArray(), 2, e => _writer.Write(Half.GetBytes(new Half(e))));
         }
 
-        public Vector4 ReadFloat16_4()
+        public RealVector4d ReadFloat16_4()
         {
-            return new Vector4(Read(4, () => (float)Half.ToHalf(_reader.ReadUInt16())));
+            return new RealVector4d(Read(4, () => (float)Half.ToHalf(_reader.ReadUInt16())));
         }
 
-        public void WriteFloat16_4(Vector4 v)
+        public void WriteFloat16_4(RealVector4d v)
         {
             Write(v.ToArray(), 4, e => _writer.Write(Half.GetBytes(new Half(e))));
         }

@@ -166,7 +166,7 @@ namespace TagTool.Tags.Definitions
             public class SeamCluster
             {
                 public int ClusterIndex;
-                public Vector3 Centroid;
+                public RealPoint3d Centroid;
             }
         }
 
@@ -186,10 +186,10 @@ namespace TagTool.Tags.Definitions
             public short BackCluster;
             public short FrontCluster;
             public int PlaneIndex;
-            public Vector3 Centroid;
+            public RealPoint3d Centroid;
             public float BoundingRadius;
             public uint Flags;
-            public List<Vector3> Vertices;
+            public List<RealPoint3d> Vertices;
         }
 
         [TagStructure(Size = 0x78)]
@@ -346,10 +346,10 @@ namespace TagTool.Tags.Definitions
                 public sbyte DecoratorIndex;
                 public sbyte DecoratorIndexScattering;
                 public int Unknown;
-                public Vector3 Position;
+                public RealPoint3d Position;
                 public float Radius;
-                public Vector3 GridSize;
-                public Vector3 BoundingSphereOffset;
+                public RealPoint3d GridSize;
+                public RealPoint3d BoundingSphereOffset;
                 public uint Unknown2;
             }
             
@@ -394,7 +394,7 @@ namespace TagTool.Tags.Definitions
         {
             [TagField(Length = 32)] public string Name;
             public RealQuaternion Rotation;
-            public Vector3 Position;
+            public RealPoint3d Position;
         }
 
         [TagStructure(Size = 0x10)]
@@ -416,7 +416,7 @@ namespace TagTool.Tags.Definitions
             public sbyte Yaw;
             public sbyte Pitch;
             public RealQuaternion Rotation;
-            public Vector3 Position;
+            public RealPoint3d Position;
             public float Scale;
         }
 
@@ -433,7 +433,7 @@ namespace TagTool.Tags.Definitions
         {
             [TagField(Length = 32)] public string Name;
             public RealQuaternion Rotation;
-            public Vector3 Position;
+            public RealPoint3d Position;
             public float Scale;
             public short PaletteIndex;
             public short Unknown;
@@ -452,7 +452,7 @@ namespace TagTool.Tags.Definitions
             public short UnknownYoIndex;
             public short Unknown;
             public uint Unknown2;
-            public Vector3 BoundingSphereOffset;
+            public RealPoint3d BoundingSphereOffset;
             public float BoundingSphereRadius1;
             public float BoundingSphereRadius2;
             public StringId Name;
@@ -531,7 +531,7 @@ namespace TagTool.Tags.Definitions
         {
             public short MeshIndex;
             public short PartIndex;
-            public Vector4 Plane;
+            public RealVector4d Plane;
         }
 
         [TagStructure(Size = 0x40, Align = 0x10)]
@@ -542,7 +542,7 @@ namespace TagTool.Tags.Definitions
             public short Count;
             public int Address;
             public uint Unknown2;
-            public Vector3 Offset;
+            public RealPoint3d Offset;
             public float OffsetScale;
             public uint Unknown3;
             public int DataSize;
@@ -563,7 +563,7 @@ namespace TagTool.Tags.Definitions
             public short Count;
             public int Address;
             public uint Unknown2;
-            public Vector3 Offset;
+            public RealPoint3d Offset;
             public float OffsetScale;
             public uint Unknown3;
             public int DataSize;

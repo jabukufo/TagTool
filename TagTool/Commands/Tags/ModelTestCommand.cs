@@ -103,11 +103,11 @@ namespace TagTool.Commands.Tags
                 ParentNode = -1,
                 FirstChildNode = -1,
                 NextSiblingNode = -1,
-                DefaultRotation = new Vector4(0, 0, 0, -1),
+                DefaultRotation = new RealVector4d(0, 0, 0, -1),
                 DefaultScale = 1,
-                InverseForward = new Vector3(1, 0, 0),
-                InverseLeft = new Vector3(0, 1, 0),
-                InverseUp = new Vector3(0, 0, 1),
+                InverseForward = new RealPoint3d(1, 0, 0),
+                InverseLeft = new RealPoint3d(0, 1, 0),
+                InverseUp = new RealPoint3d(0, 0, 1),
             });
 
             // Begin building the default region and permutation
@@ -150,11 +150,11 @@ namespace TagTool.Commands.Tags
                         var bitangent = mesh.BiTangents[i];
                         vertices.Add(new RigidVertex
                         {
-                            Position = new Vector4(position.X, position.Y, position.Z, 1),
-                            Normal = new Vector3(normal.X, normal.Y, normal.Z),
-                            Texcoord = new Vector2(uv.X, uv.Y),
-                            Tangent = new Vector4(tangent.X, tangent.Y, tangent.Z, 1),
-                            Binormal = new Vector3(bitangent.X, bitangent.Y, bitangent.Z),
+                            Position = new RealVector4d(position.X, position.Y, position.Z, 1),
+                            Normal = new RealPoint3d(normal.X, normal.Y, normal.Z),
+                            Texcoord = new RealPoint2d(uv.X, uv.Y),
+                            Tangent = new RealVector4d(tangent.X, tangent.Y, tangent.Z, 1),
+                            Binormal = new RealPoint3d(bitangent.X, bitangent.Y, bitangent.Z),
                         });
                     }
 

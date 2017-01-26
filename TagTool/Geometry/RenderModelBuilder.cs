@@ -388,8 +388,8 @@ namespace TagTool.Geometry
             {
                 // TODO: Refactor how vertices work, this is just ugly
 
-                IEnumerable<Vector4> positions = null;
-                IEnumerable<Vector2> texCoords = null;
+                IEnumerable<RealVector4d> positions = null;
+                IEnumerable<RealPoint2d> texCoords = null;
                 if (mesh.RigidVertices != null)
                 {
                     positions = mesh.RigidVertices.Select(v => v.Position);
@@ -403,12 +403,12 @@ namespace TagTool.Geometry
 
                 if (positions != null)
                 {
-                    result.PositionMinX = Math.Min(result.PositionMinX, positions.Min(v => v.X));
-                    result.PositionMinY = Math.Min(result.PositionMinY, positions.Min(v => v.Y));
-                    result.PositionMinZ = Math.Min(result.PositionMinZ, positions.Min(v => v.Z));
-                    result.PositionMaxX = Math.Max(result.PositionMaxX, positions.Max(v => v.X));
-                    result.PositionMaxY = Math.Max(result.PositionMaxY, positions.Max(v => v.Y));
-                    result.PositionMaxZ = Math.Max(result.PositionMaxZ, positions.Max(v => v.Z));
+                    result.PositionMinX = Math.Min(result.PositionMinX, positions.Min(v => v.I));
+                    result.PositionMinY = Math.Min(result.PositionMinY, positions.Min(v => v.J));
+                    result.PositionMinZ = Math.Min(result.PositionMinZ, positions.Min(v => v.K));
+                    result.PositionMaxX = Math.Max(result.PositionMaxX, positions.Max(v => v.I));
+                    result.PositionMaxY = Math.Max(result.PositionMaxY, positions.Max(v => v.J));
+                    result.PositionMaxZ = Math.Max(result.PositionMaxZ, positions.Max(v => v.K));
                 }
                 if (texCoords != null)
                 {
