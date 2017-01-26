@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 using TagTool.Commands;
 using TagTool.Commands.Tags;
 using TagTool.IO;
@@ -13,13 +15,22 @@ using TagTool.Serialization;
 
 namespace TagTool
 {
-    class Program
+    static class Program
     {
+        enum WindowState : int
+        {
+            Hidden = 0,
+            Normal = 1,
+            Minimized = 2,
+            Maximized = 3,
+            Inactive = 4,
+        }
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, WindowState state);
+
         static void Main(string[] args)
         {
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en-US");
-            ConsoleHistory.Initialize();
-
             // Get the file path from the first argument
             // If no argument is given, load tags.dat
             var filePath = (args.Length > 0) ? args[0] : "tags.dat";
@@ -29,8 +40,19 @@ namespace TagTool
             if (args.Length > 1)
                 autoexecCommand = args.Skip(1).ToList();
 
-            if (autoexecCommand == null)
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            ConsoleHistory.Initialize();
+
+            if (autoexecCommand != null)
             {
+                // Hide the console window
+                ShowWindow(Process.GetCurrentProcess().MainWindowHandle, WindowState.Hidden);
+            }
+            else
+            {
+                // Maximize the console window
+                ShowWindow(Process.GetCurrentProcess().MainWindowHandle, WindowState.Maximized);
+
                 Console.WriteLine("Tag Tool [{0}]", Assembly.GetExecutingAssembly().GetName().Version);
                 Console.WriteLine();
                 Console.WriteLine("Please report any bugs and feature requests at");
@@ -108,10 +130,10 @@ namespace TagTool
 
             var cacheContext = new GameCacheContext
             {
-                Cache = cache,
-                CacheFile = fileInfo,
-                StringIDs = stringIds,
-                StringIDsFile = (stringIds != null) ? new FileInfo(stringIdPath) : null,
+                TagCache = cache,
+                TagCacheFile = fileInfo,
+                StringIdCache = stringIds,
+                StringIdCacheFile = (stringIds != null) ? new FileInfo(stringIdPath) : null,
                 Version = version,
                 Serializer = new TagSerializer(version),
                 Deserializer = new TagDeserializer(version),
@@ -153,7 +175,7 @@ namespace TagTool
                 }
             }
 
-            foreach (var tag in cacheContext.Cache.Tags)
+            foreach (var tag in cacheContext.TagCache.Tags)
                 if (tag != null && !cacheContext.TagNames.ContainsKey(tag.Index))
                     cacheContext.TagNames[tag.Index] = $"0x{tag.Index:X4}";
             
@@ -176,9 +198,16 @@ namespace TagTool
                 // Read and parse a command
                 Console.WriteLine();
                 Console.Write("{0}> ", contextStack.GetPath());
-                var commandLine = Console.ReadLine();
+
+                var commandNames = new List<string>();
+                foreach (var command in contextStack.Context.Commands)
+                    commandNames.Add(command.Name);
+
+                var commandLine = ReadHintedLine(contextStack, commandNames, s => s);
+
                 if (commandLine == null)
                     break;
+
                 string redirectFile;
                 var commandArgs = ArgumentParser.ParseCommand(commandLine, out redirectFile);
                 if (commandArgs.Count == 0)
@@ -218,6 +247,54 @@ namespace TagTool
             }
         }
 
+        public static string ReadHintedLine<T, TResult>(CommandContextStack contextStack, IEnumerable<T> hintSource, Func<T, TResult> hintField, string inputRegex = ".*", ConsoleColor hintColor = ConsoleColor.DarkGray)
+        {
+            ConsoleKeyInfo input;
+
+            var suggestion = string.Empty;
+            var userInput = string.Empty;
+            var commandLine = string.Empty;
+
+            while (ConsoleKey.Enter != (input = Console.ReadKey()).Key)
+            {
+                if (input.Key == ConsoleKey.Backspace)
+                    userInput = userInput.Any() ? userInput.Remove(userInput.Length - 1, 1) : string.Empty;
+
+                else if (input.Key == ConsoleKey.Tab)
+                    userInput = suggestion ?? userInput;
+
+                else if (input != null && Regex.IsMatch(input.KeyChar.ToString(), inputRegex))
+                    userInput += input.KeyChar;
+
+                suggestion = hintSource.Select(item => hintField(item).ToString())
+                    .FirstOrDefault(item => item.Length > userInput.Length && item.Substring(0, userInput.Length) == userInput);
+
+                commandLine = suggestion == null ? userInput : suggestion;
+
+                // Clear the console input line
+                int currentLineCursor = Console.CursorTop;
+                Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, currentLineCursor);
+
+                Console.Write("{0}> ", contextStack.GetPath());
+                Console.Write(userInput);
+
+                var originalColor = Console.ForegroundColor;
+
+                Console.ForegroundColor = hintColor;
+
+                if (userInput.Any())
+                    Console.Write(commandLine.Substring(userInput.Length, commandLine.Length - userInput.Length));
+
+                Console.ForegroundColor = originalColor;
+            }
+
+            Console.WriteLine(commandLine);
+
+            return commandLine;
+        }
+        
         private static bool ExecuteCommand(CommandContext context, List<string> commandAndArgs)
         {
             if (commandAndArgs.Count == 0)

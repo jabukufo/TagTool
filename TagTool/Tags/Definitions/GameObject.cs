@@ -26,7 +26,7 @@ namespace TagTool.Tags.Definitions
         public float DynamicLightSphereOffsetX;
         public float DynamicLightSphereOffsetY;
         public float DynamicLightSphereOffsetZ;
-        public StringID DefaultModelVariant;
+        public StringId DefaultModelVariant;
         public TagInstance Model;
         [MaxVersion(CacheVersion.HaloOnline449175)] public TagInstance CrateObject;
         public TagInstance CollisionDamage;
@@ -101,7 +101,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x28)]
         public class EarlyMoverProperty
         {
-            public StringID Name;
+            public StringId Name;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -117,7 +117,7 @@ namespace TagTool.Tags.Definitions
         public class AiProperty
         {
             public uint Flags;
-            public StringID AiTypeName;
+            public StringId AiTypeName;
             public ObjectSizeValue Size;
             public AiDistanceValue LeapJumpSpeed;
         }
@@ -149,12 +149,12 @@ namespace TagTool.Tags.Definitions
         public class Function
         {
             public uint Flags;
-            public StringID ImportName;
-            public StringID ExportName;
-            public StringID TurnOffWith;
+            public StringId ImportName;
+            public StringId ExportName;
+            public StringId TurnOffWith;
             public float MinimumValue;
             public byte[] DefaultFunction;
-            public StringID ScaleBy;
+            public StringId ScaleBy;
         }
 
         [TagStructure(Size = 0x24)]
@@ -162,11 +162,11 @@ namespace TagTool.Tags.Definitions
         {
             public uint AtlasFlags;
             public TagInstance Attachment2;
-            public StringID Marker;
+            public StringId Marker;
             public ChangeColorValue ChangeColor;
             public short Unknown;
-            public StringID PrimaryScale;
-            public StringID SecondaryScale;
+            public StringId PrimaryScale;
+            public StringId SecondaryScale;
 
             public enum ChangeColorValue : short
             {
@@ -200,7 +200,7 @@ namespace TagTool.Tags.Definitions
                 public float ColorUpperBoundR;
                 public float ColorUpperBoundG;
                 public float ColorUpperBoundB;
-                public StringID VariantName;
+                public StringId VariantName;
             }
 
             [TagStructure(Size = 0x20)]
@@ -213,8 +213,8 @@ namespace TagTool.Tags.Definitions
                 public float ColorUpperBoundR;
                 public float ColorUpperBoundG;
                 public float ColorUpperBoundB;
-                public StringID DarkenBy;
-                public StringID ScaleBy;
+                public StringId DarkenBy;
+                public StringId ScaleBy;
             }
         }
 

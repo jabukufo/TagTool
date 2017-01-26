@@ -7,7 +7,7 @@ namespace TagTool.Tags.Definitions
     public class GuiBitmapWidgetDefinition
     {
         public uint Flags;
-        public StringID Name;
+        public StringId Name;
         public short Unknown;
         public short Layer;
         public short WidescreenYBoundsMin;
@@ -25,8 +25,8 @@ namespace TagTool.Tags.Definitions
         public short Unknown3;
         public short SpriteIndex;
         public short Unknown4;
-        public StringID DataSourceName;
-        public StringID SpriteDataSourceName;
+        public StringId DataSourceName;
+        public StringId SpriteDataSourceName;
         public uint Unknown5;
 
         public enum BlendMethodValue : short

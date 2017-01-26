@@ -33,47 +33,47 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x14)]
             public class SpartanArmorCustomizationBlock
             {
-                public StringID ArmorObjectRegion;
-                public StringID BipedRegion;
+                public StringId ArmorObjectRegion;
+                public StringId BipedRegion;
                 public List<Permutation> Permutations;
 
                 [TagStructure(Size = 0x30)]
                 public class Permutation
                 {
-                    public StringID Name;
+                    public StringId Name;
                     public TagInstance ThirdPersonArmorObject;
                     public TagInstance FirstPersonArmorModel;
                     public short Unknown;
                     public short Unknown2;
-                    public StringID ParentAttachMarker;
-                    public StringID ChildAttachMarker;
+                    public StringId ParentAttachMarker;
+                    public StringId ChildAttachMarker;
                 }
             }
 
             [TagStructure(Size = 0x14)]
             public class EliteArmorCustomizationBlock
             {
-                public StringID PieceRegion;
-                public StringID CharacterRegion;
+                public StringId PieceRegion;
+                public StringId CharacterRegion;
                 public List<Permutation> Permutations;
 
                 [TagStructure(Size = 0x30)]
                 public class Permutation
                 {
-                    public StringID Name;
+                    public StringId Name;
                     public TagInstance ThirdPersonArmorObject;
                     public TagInstance FirstPersonArmorModel;
                     public short Unknown;
                     public short Unknown2;
-                    public StringID ParentAttachMarker;
-                    public StringID ChildAttachMarker;
+                    public StringId ParentAttachMarker;
+                    public StringId ChildAttachMarker;
                 }
             }
 
             [TagStructure(Size = 0x18)]
             public class EquipmentBlock
             {
-                public StringID Name;
+                public StringId Name;
                 public TagInstance Equipment;
                 public short Unknown;
                 public short Unknown2;
@@ -89,7 +89,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x18)]
             public class GameVariantWeapon
             {
-                public StringID Name;
+                public StringId Name;
                 public float RandomChance;
                 public TagInstance Weapon;
             }
@@ -97,42 +97,42 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x14)]
             public class GameVariantVehicle
             {
-                public StringID Name;
+                public StringId Name;
                 public TagInstance Vehicle;
             }
 
             [TagStructure(Size = 0x14)]
             public class GameVariantEquipmentBlock
             {
-                public StringID Name;
+                public StringId Name;
                 public TagInstance Grenade;
             }
 
             [TagStructure(Size = 0x10)]
             public class WeaponSet
             {
-                public StringID Name;
+                public StringId Name;
                 public List<Substitution> Substitutions;
 
                 [TagStructure(Size = 0x8)]
                 public class Substitution
                 {
-                    public StringID OriginalWeapon;
-                    public StringID SubstitutedWeapon;
+                    public StringId OriginalWeapon;
+                    public StringId SubstitutedWeapon;
                 }
             }
 
             [TagStructure(Size = 0x10)]
             public class VehicleSet
             {
-                public StringID Name;
+                public StringId Name;
                 public List<Substitution> Substitutions;
 
                 [TagStructure(Size = 0x8)]
                 public class Substitution
                 {
-                    public StringID OriginalVehicle;
-                    public StringID SubstitutedVehicle;
+                    public StringId OriginalVehicle;
+                    public StringId SubstitutedVehicle;
                 }
             }
 
@@ -140,8 +140,8 @@ namespace TagTool.Tags.Definitions
             public class PodiumBlock
             {
                 public TagInstance AnimationGraph;
-                public StringID DefaultUnarmed;
-                public StringID DefaultArmed;
+                public StringId DefaultUnarmed;
+                public StringId DefaultArmed;
                 public List<StanceAnimation> StanceAnimations;
                 public List<MoveAnimation> MoveAnimations;
 
@@ -149,10 +149,10 @@ namespace TagTool.Tags.Definitions
                 public class StanceAnimation
                 {
                     [TagField(Length = 32)] public string Name;
-                    public StringID BaseAnimation;
-                    public StringID LoopAnimation;
-                    public StringID UnarmedTransition;
-                    public StringID ArmedTransition;
+                    public StringId BaseAnimation;
+                    public StringId LoopAnimation;
+                    public StringId UnarmedTransition;
+                    public StringId ArmedTransition;
                     public float Unknown;
                 }
 
@@ -160,9 +160,9 @@ namespace TagTool.Tags.Definitions
                 public class MoveAnimation
                 {
                     [TagField(Length = 32)] public string Name;
-                    public StringID InAnimation;
-                    public StringID LoopAnimation;
-                    public StringID OutAnimation;
+                    public StringId InAnimation;
+                    public StringId LoopAnimation;
+                    public StringId OutAnimation;
                     public int Unknown;
                     public TagInstance PrimaryWeapon;
                     public TagInstance SecondaryWeapon;
@@ -239,22 +239,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -352,22 +352,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -465,22 +465,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -578,22 +578,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -691,22 +691,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -804,22 +804,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -917,22 +917,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -1030,22 +1030,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -1143,22 +1143,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -1256,22 +1256,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -1369,22 +1369,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -1482,22 +1482,22 @@ namespace TagTool.Tags.Definitions
             {
                 public ushort Flags;
                 public TypeValue Type;
-                public StringID Event;
+                public StringId Event;
                 public AudienceValue Audience;
                 public short Unknown;
                 public TeamValue Team;
                 public short Unknown2;
-                public StringID DisplayString;
-                public StringID DisplayMedal;
+                public StringId DisplayString;
+                public StringId DisplayMedal;
                 public uint Unknown3;
                 public uint Unknown4;
                 public RequiredFieldValue RequiredField;
                 public ExcludedAudienceValue ExcludedAudience;
                 public RequiredField2Value RequiredField2;
                 public ExcludedAudience2Value ExcludedAudience2;
-                public StringID PrimaryString;
+                public StringId PrimaryString;
                 public int PrimaryStringDuration;
-                public StringID PluralDisplayString;
+                public StringId PluralDisplayString;
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
@@ -1684,25 +1684,25 @@ namespace TagTool.Tags.Definitions
                 public TagInstance BombExplodeDamageEffect;
                 public TagInstance BombDefuseEffect;
                 public TagInstance CursorImpactEffect;
-                public StringID BombDefusalString;
-                public StringID BlockedTeleporterString;
+                public StringId BombDefusalString;
+                public StringId BlockedTeleporterString;
                 public int Unknown72;
-                public StringID Unknown73;
-                public StringID SpawnAllowedDefaultRespawnString;
-                public StringID SpawnAtPlayerLookingAtSelfString;
-                public StringID SpawnAtPlayerLookingAtTargetString;
-                public StringID SpawnAtPlayerLookingAtPotentialTargetString;
-                public StringID SpawnAtTerritoryAllowedLookingAtTargetString;
-                public StringID SpawnAtTerritoryAllowedLookingAtPotentialTargetString;
-                public StringID PlayerOutOfLivesString;
-                public StringID InvalidSpawnTargetString;
-                public StringID TargettedPlayerEnemiesNearbyString;
-                public StringID TargettedPlayerUnfriendlyTeamString;
-                public StringID TargettedPlayerIsDeadString;
-                public StringID TargettedPlayerInCombatString;
-                public StringID TargettedPlayerTooFarFromOwnedFlagString;
-                public StringID NoAvailableNetpointsString;
-                public StringID NetpointContestedString;
+                public StringId Unknown73;
+                public StringId SpawnAllowedDefaultRespawnString;
+                public StringId SpawnAtPlayerLookingAtSelfString;
+                public StringId SpawnAtPlayerLookingAtTargetString;
+                public StringId SpawnAtPlayerLookingAtPotentialTargetString;
+                public StringId SpawnAtTerritoryAllowedLookingAtTargetString;
+                public StringId SpawnAtTerritoryAllowedLookingAtPotentialTargetString;
+                public StringId PlayerOutOfLivesString;
+                public StringId InvalidSpawnTargetString;
+                public StringId TargettedPlayerEnemiesNearbyString;
+                public StringId TargettedPlayerUnfriendlyTeamString;
+                public StringId TargettedPlayerIsDeadString;
+                public StringId TargettedPlayerInCombatString;
+                public StringId TargettedPlayerTooFarFromOwnedFlagString;
+                public StringId NoAvailableNetpointsString;
+                public StringId NetpointContestedString;
 
                 [TagStructure(Size = 0x20)]
                 public class Weapon
@@ -1748,8 +1748,8 @@ namespace TagTool.Tags.Definitions
                 public short Unknown;
                 public StateValue State;
                 public short Unknown2;
-                public StringID FreeForAllMessage;
-                public StringID TeamMessage;
+                public StringId FreeForAllMessage;
+                public StringId TeamMessage;
                 public TagInstance Unknown3;
                 public uint Unknown4;
 

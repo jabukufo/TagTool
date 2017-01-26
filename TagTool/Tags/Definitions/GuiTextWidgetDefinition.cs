@@ -7,7 +7,7 @@ namespace TagTool.Tags.Definitions
     public class GuiTextWidgetDefinition
     {
         public uint Flags;
-        public StringID Name;
+        public StringId Name;
         public short Unknown;
         public short Layer;
         public short WidescreenYBoundsMin;
@@ -19,9 +19,9 @@ namespace TagTool.Tags.Definitions
         public short StandardYBoundsMax;
         public short StandardXBoundsMax;
         public TagInstance Animation;
-        public StringID DataSourceName;
-        public StringID TextString;
-        public StringID TextColor;
+        public StringId DataSourceName;
+        public StringId TextString;
+        public StringId TextColor;
         public short TextFont;
         public short Unknown2;
         public uint Unknown3;

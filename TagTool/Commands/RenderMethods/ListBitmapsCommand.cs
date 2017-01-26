@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Serialization;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
@@ -10,18 +10,21 @@ namespace TagTool.Commands.RenderMethods
 {
     class ListBitmapsCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private RenderMethod Definition { get; }
 
-        public ListBitmapsCommand(GameCacheContext info, TagInstance tag, RenderMethod definition)
+        public ListBitmapsCommand(GameCacheContext cacheContext, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
-                 "listbitmaps",
+
+                 "list-bitmaps",
                  "Lists the bitmaps used by the render_method.",
-                 "listbitmaps",
+
+                 "list-bitmaps",
+
                  "Lists the bitmaps used by the render_method.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Tag = tag;
             Definition = definition;
         }
@@ -35,17 +38,17 @@ namespace TagTool.Commands.RenderMethods
             {
                 RenderMethodTemplate template = null;
 
-                using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.Read))
+                using (var cacheStream = CacheContext.TagCacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
-                    var context = new TagSerializationContext(cacheStream, Info, property.Template);
-                    template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
+                    var context = new TagSerializationContext(cacheStream, CacheContext, property.Template);
+                    template = CacheContext.Deserializer.Deserialize<RenderMethodTemplate>(context);
                 }
 
                 for (var i = 0; i < template.ShaderMaps.Count; i++)
                 {
                     var mapTemplate = template.ShaderMaps[i];
 
-                    Console.WriteLine($"Bitmap {i} ({Info.StringIdCache.GetString(mapTemplate.Name)}): {property.ShaderMaps[i].Bitmap.Group.Tag} 0x{property.ShaderMaps[i].Bitmap.Index:X4}");
+                    Console.WriteLine($"Bitmap {i} ({CacheContext.StringIdCache.GetString(mapTemplate.Name)}): {property.ShaderMaps[i].Bitmap.Group.Tag} 0x{property.ShaderMaps[i].Bitmap.Index:X4}");
                 }
             }
 

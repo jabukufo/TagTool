@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 using TagTool.Tags;
@@ -109,8 +109,8 @@ namespace TagTool.Commands.Editing
                 fieldType.Name;
 
             var valueString =
-                fieldType == typeof(StringID) ?
-                    CacheContext.StringIdCache.GetString((StringID)fieldValue) :
+                fieldType == typeof(StringId) ?
+                    CacheContext.StringIdCache.GetString((StringId)fieldValue) :
                 fieldType.GetInterface(typeof(IList).Name) != null ?
                     (((IList)fieldValue).Count != 0 ?
                         $"{{...}}[{((IList)fieldValue).Count}]" :
@@ -229,11 +229,11 @@ namespace TagTool.Commands.Editing
                     return false;
                 output = ArgumentParser.ParseTagIndex(CacheContext, input);
             }
-            else if (type == typeof(StringID))
+            else if (type == typeof(StringId))
             {
                 if (args.Count != 1)
                     return false;
-                output = CacheContext.StringIdCache.GetStringID(input);
+                output = CacheContext.StringIdCache.GetStringId(input);
             }
             else if (type == typeof(Angle))
             {
@@ -370,7 +370,7 @@ namespace TagTool.Commands.Editing
                 type == typeof(float) ||
                 type == typeof(string) ||
                 type == typeof(TagInstance) ||
-                type == typeof(StringID) ||
+                type == typeof(StringId) ||
                 type == typeof(Angle))
                 return 1;
             else if (type == typeof(Euler2))

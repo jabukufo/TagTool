@@ -12,16 +12,16 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class Line
         {
-            public StringID Name;
+            public StringId Name;
             public List<Variant> Variants;
-            public StringID DefaultSoundEffect;
+            public StringId DefaultSoundEffect;
 
             [TagStructure(Size = 0x18)]
             public class Variant
             {
-                public StringID Designation;
+                public StringId Designation;
                 public TagInstance Sound;
-                public StringID SoundEffect;
+                public StringId SoundEffect;
             }
         }
     }

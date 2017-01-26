@@ -4,7 +4,7 @@ using System.Collections;
 using TagTool.Serialization;
 using TagTool.Common;
 using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Commands.Editing
 {
@@ -63,8 +63,8 @@ namespace TagTool.Commands.Editing
                         ((IList)fieldValue).Count != 0 ?
                             $"{{...}}[{((IList)fieldValue).Count}]" :
                         "null";
-                else if (fieldType == typeof(StringID))
-                    valueString = CacheContext.StringIdCache.GetString((StringID)fieldValue);
+                else if (fieldType == typeof(StringId))
+                    valueString = CacheContext.StringIdCache.GetString((StringId)fieldValue);
                 else if (fieldType == typeof(TagInstance))
                     valueString = $"[0x{((TagInstance)fieldValue).Index:X4}] {CacheContext.TagNames[((TagInstance)fieldValue).Index]}.{CacheContext.StringIdCache.GetString(((TagInstance)fieldValue).Group.Name)}";
                 else

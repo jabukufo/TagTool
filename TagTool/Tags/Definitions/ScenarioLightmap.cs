@@ -36,7 +36,7 @@ namespace TagTool.Tags.Definitions
             public float Unknown;
             public float Unknown2;
             public float Unknown3;
-            public StringID Unknown4;
+            public StringId Unknown4;
             public ushort Unknown5;
             public short Unknown6;
             public uint Unknown7;

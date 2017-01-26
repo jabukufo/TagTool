@@ -3,32 +3,32 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Assimp;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Geometry;
 using TagTool.Serialization;
+using TagTool.Tags;
 using TagTool.Tags.Definitions;
 using PrimitiveType = TagTool.Geometry.PrimitiveType;
-using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ModelTestCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
 
-        public ModelTestCommand(GameCacheContext info) : base(
-            CommandFlags.Inherit,
+        public ModelTestCommand(GameCacheContext cacheContext)
+            : base(CommandFlags.Inherit,
+                  
+                  "model-test",
+                  "Model injection test",
 
-            "modeltest",
-            "Model injection test",
+                  "model-test [location = resources] [tag index = 0x3317] <model file>",
 
-            "modeltest [location = resources] [tag index = 0x3317] <model file>",
-
-            "Injects the model over the traffic cone.\n" +
-            "The model must only have a single material and no nodes.")
+                  "Injects the model over the traffic cone.\n" +
+                  "The model must only have a single material and no nodes.")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -37,7 +37,7 @@ namespace TagTool.Commands.Tags
                 return false;
 
             ResourceLocation location = ResourceLocation.Resources;
-            TagInstance destination = Info.TagCache.Tags[0x3317];
+            TagInstance destination = CacheContext.TagCache.Tags[0x3317];
 
             if (args.Count == 3)
             {
@@ -83,7 +83,7 @@ namespace TagTool.Commands.Tags
 
             if (args.Count == 2)
             {
-                destination = ArgumentParser.ParseTagIndex(Info, args[0]);
+                destination = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
 
                 if (!destination.IsInGroup("mode"))
                 {
@@ -94,12 +94,12 @@ namespace TagTool.Commands.Tags
                 args.RemoveAt(0);
             }
 
-            var builder = new RenderModelBuilder(Info.Version);
+            var builder = new RenderModelBuilder(CacheContext.Version);
 
             // Add a root node
             var node = builder.AddNode(new RenderModel.Node
             {
-                Name = Info.StringIdCache.GetStringID("street_cone"),
+                Name = CacheContext.StringIdCache.GetStringId("street_cone"),
                 ParentNode = -1,
                 FirstChildNode = -1,
                 NextSiblingNode = -1,
@@ -111,8 +111,8 @@ namespace TagTool.Commands.Tags
             });
 
             // Begin building the default region and permutation
-            builder.BeginRegion(Info.StringIdCache.GetStringID("default"));
-            builder.BeginPermutation(Info.StringIdCache.GetStringID("default"));
+            builder.BeginRegion(CacheContext.StringIdCache.GetStringId("default"));
+            builder.BeginPermutation(CacheContext.StringIdCache.GetStringId("default"));
 
             using (var importer = new AssimpContext())
             {
@@ -165,7 +165,7 @@ namespace TagTool.Commands.Tags
                     // Define a material and part for this mesh
                     var material = builder.AddMaterial(new RenderMaterial
                     {
-                        RenderMethod = Info.TagCache.Tags[0x101F],
+                        RenderMethod = CacheContext.TagCache.Tags[0x101F],
                     });
 
 
@@ -190,23 +190,23 @@ namespace TagTool.Commands.Tags
             Console.WriteLine("Building Blam mesh data...");
 
             var resourceStream = new MemoryStream();
-            var renderModel = builder.Build(Info.Serializer, resourceStream);
+            var renderModel = builder.Build(CacheContext.Serializer, resourceStream);
 
             Console.WriteLine("Writing resource data...");
 
             // Add a new resource for the model data
             var resources = new ResourceDataManager();
-            resources.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
+            resources.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
             resourceStream.Position = 0;
             resources.Add(renderModel.Geometry.Resource, location, resourceStream);
 
             Console.WriteLine("Writing tag data...");
 
-            using (var cacheStream = Info.OpenCacheReadWrite())
+            using (var cacheStream = CacheContext.OpenTagCacheReadWrite())
             {
                 var tag = destination;
-                var context = new TagSerializationContext(cacheStream, Info, tag);
-                Info.Serializer.Serialize(context, renderModel);
+                var context = new TagSerializationContext(cacheStream, CacheContext, tag);
+                CacheContext.Serializer.Serialize(context, renderModel);
             }
 
             Console.WriteLine("Model imported successfully!");

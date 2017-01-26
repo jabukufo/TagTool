@@ -27,7 +27,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x3C)]
         public class ImportDatum
         {
-            public StringID MaterialType;
+            public StringId MaterialType;
             public int Unknown;
             public TagInstance Bitmap;
             public uint Unknown2;
@@ -45,7 +45,7 @@ namespace TagTool.Tags.Definitions
             public class Function
             {
                 public int Unknown;
-                public StringID Name;
+                public StringId Name;
                 public uint Unknown2;
                 public uint Unknown3;
                 public byte[] Function2;
@@ -130,7 +130,7 @@ namespace TagTool.Tags.Definitions
             public class Function
             {
                 public int Unknown;
-                public StringID Name;
+                public StringId Name;
                 public uint Unknown2;
                 public uint Unknown3;
                 public byte[] Function2;

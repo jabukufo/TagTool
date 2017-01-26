@@ -38,37 +38,37 @@ namespace TagTool.Tags.Definitions
         public float MenuBlurX;
         public float MenuBlurY;
         public List<UiWidgetBiped> UiWidgetBipeds;
-        public StringID UnknownPlayer1;
-        public StringID UnknownPlayer2;
-        public StringID UnknownPlayer3;
-        public StringID UnknownPlayer4;
+        public StringId UnknownPlayer1;
+        public StringId UnknownPlayer2;
+        public StringId UnknownPlayer3;
+        public StringId UnknownPlayer4;
         [TagField(Length = 32)] public string UiEliteBipedName;
         [TagField(Length = 32)] public string UiEliteAiSquadName;
-        public StringID UiEliteAiLocationName;
+        public StringId UiEliteAiLocationName;
         [TagField(Length = 32)] public string UiOdst1BipedName;
         [TagField(Length = 32)] public string UiOdst1AiSquadName;
-        public StringID UiOdst1AiLocationName;
+        public StringId UiOdst1AiLocationName;
         [TagField(Length = 32)] public string UiMickeyBipedName;
         [TagField(Length = 32)] public string UiMickeyAiSquadName;
-        public StringID UiMickeyAiLocationName;
+        public StringId UiMickeyAiLocationName;
         [TagField(Length = 32)] public string UiRomeoBipedName;
         [TagField(Length = 32)] public string UiRomeoAiSquadName;
-        public StringID UiRomeoAiLocationName;
+        public StringId UiRomeoAiLocationName;
         [TagField(Length = 32)] public string UiDutchBipedName;
         [TagField(Length = 32)] public string UiDutchAiSquadName;
-        public StringID UiDutchAiLocationName;
+        public StringId UiDutchAiLocationName;
         [TagField(Length = 32)] public string UiJohnsonBipedName;
         [TagField(Length = 32)] public string UiJohnsonAiSquadName;
-        public StringID UiJohnsonAiLocationName;
+        public StringId UiJohnsonAiLocationName;
         [TagField(Length = 32)] public string UiOdst2BipedName;
         [TagField(Length = 32)] public string UiOdst2AiSquadName;
-        public StringID UiOdst2AiLocationName;
+        public StringId UiOdst2AiLocationName;
         [TagField(Length = 32)] public string UiOdst3BipedName;
         [TagField(Length = 32)] public string UiOdst3AiSquadName;
-        public StringID UiOdst3AiLocationName;
+        public StringId UiOdst3AiLocationName;
         [TagField(Length = 32)] public string UiOdst4BipedName;
         [TagField(Length = 32)] public string UiOdst4AiSquadName;
-        public StringID UiOdst4AiLocationName;
+        public StringId UiOdst4AiLocationName;
         public int SingleScrollSpeed;
         public int ScrollSpeedTransitionWaitTime;
         public int HeldScrollSpeed;
@@ -99,7 +99,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class TextColor
         {
-            public StringID Name;
+            public StringId Name;
             public float ColorA;
             public float ColorR;
             public float ColorG;
@@ -154,13 +154,13 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x10)]
         public class Alert
         {
-            public StringID Name;
+            public StringId Name;
             public byte Flags;
             public sbyte Unknown;
             public IconValue Icon;
             public sbyte Unknown2;
-            public StringID Title;
-            public StringID Body;
+            public StringId Title;
+            public StringId Body;
 
             public enum IconValue : sbyte
             {
@@ -175,16 +175,16 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x28)]
         public class Dialog
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Unknown2;
-            public StringID Title;
-            public StringID Body;
-            public StringID Option1;
-            public StringID Option2;
-            public StringID Option3;
-            public StringID Option4;
-            public StringID KeyLegend;
+            public StringId Title;
+            public StringId Body;
+            public StringId Option1;
+            public StringId Option2;
+            public StringId Option3;
+            public StringId Option4;
+            public StringId KeyLegend;
             public DefaultOptionValue DefaultOption;
             public short Unknown3;
 
@@ -208,19 +208,19 @@ namespace TagTool.Tags.Definitions
         {
             [TagField(Length = 32)] public string AppearanceBipedName;
             [TagField(Length = 32)] public string AppearanceAiSquadName;
-            public StringID AppearanceAiLocationName;
+            public StringId AppearanceAiLocationName;
             [TagField(Length = 32)] public string RosterPlayer1BipedName;
             [TagField(Length = 32)] public string RosterPlayer1AiSquadName;
-            public StringID RosterPlayer1AiLocationName;
+            public StringId RosterPlayer1AiLocationName;
             [TagField(Length = 32)] public string RosterPlayer2BipedName;
             [TagField(Length = 32)] public string RosterPlayer2AiSquadName;
-            public StringID RosterPlayer2AiLocationName;
+            public StringId RosterPlayer2AiLocationName;
             [TagField(Length = 32)] public string RosterPlayer3BipedName;
             [TagField(Length = 32)] public string RosterPlayer3AiSquadName;
-            public StringID RosterPlayer3AiLocationName;
+            public StringId RosterPlayer3AiLocationName;
             [TagField(Length = 32)] public string RosterPlayer4BipedName;
             [TagField(Length = 32)] public string RosterPlayer4AiSquadName;
-            public StringID RosterPlayer4AiLocationName;
+            public StringId RosterPlayer4AiLocationName;
         }
     }
 }

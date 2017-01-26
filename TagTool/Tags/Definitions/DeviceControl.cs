@@ -9,7 +9,7 @@ namespace TagTool.Tags.Definitions
         public TypeValue Type;
         public TriggersWhenValue TriggersWhen;
         public float CallValue;
-        public StringID ActionString;
+        public StringId ActionString;
         public TagInstance On;
         public TagInstance Off;
         public TagInstance Deny;

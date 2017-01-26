@@ -10,7 +10,7 @@ namespace TagTool.Tags.Definitions
         public TagInstance GlobalDialogueInfo;
         public uint Flags;
         public List<Vocalization> Vocalizations;
-        public StringID MissionDialogueDesignator;
+        public StringId MissionDialogueDesignator;
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;
@@ -20,7 +20,7 @@ namespace TagTool.Tags.Definitions
         {
             public ushort Flags;
             public short Unknown;
-            public StringID Vocalization2;
+            public StringId Vocalization2;
             public TagInstance Sound;
         }
     }

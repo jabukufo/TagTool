@@ -12,7 +12,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x9C)]
         public class ScreenEffectBlock
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Unknown2;
             public uint Unknown3;

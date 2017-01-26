@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -42,7 +42,7 @@ namespace TagTool.Commands.Tags
             var filter = (args.Count == 2) ? args[1] : null;
             var found = false;
 
-            using (var stream = CacheContext.OpenCacheRead())
+            using (var stream = CacheContext.OpenTagCacheRead())
             {
                 foreach (var unicTag in CacheContext.TagCache.Tags.FindAllInGroup("unic"))
                 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Commands.Tags
 {

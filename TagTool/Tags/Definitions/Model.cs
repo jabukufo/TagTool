@@ -32,7 +32,7 @@ namespace TagTool.Tags.Definitions
         public TagInstance PrimaryDialogue;
         public TagInstance SecondaryDialogue;
         public uint Flags;
-        public StringID DefaultDialogueEffect;
+        public StringId DefaultDialogueEffect;
         public uint RenderOnlyNodeFlags1;
         public uint RenderOnlyNodeFlags2;
         public uint RenderOnlyNodeFlags3;
@@ -67,14 +67,14 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x50)]
         public class Variant
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance VariantDialogue;
-            public StringID DefaultDialogEffect;
+            public StringId DefaultDialogEffect;
             public sbyte Unknown;
             public sbyte Unknown2;
             public sbyte Unknown3;
             public sbyte Unknown4;
-            [MinVersion(CacheVersion.HaloOnline700123)] public StringID SkinName;
+            [MinVersion(CacheVersion.HaloOnline700123)] public StringId SkinName;
             public sbyte ModelRegion0Index;
             public sbyte ModelRegion1Index;
             public sbyte ModelRegion2Index;
@@ -100,7 +100,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x18)]
             public class Region
             {
-                public StringID Name;
+                public StringId Name;
                 public sbyte RenderModelRegionIndex;
                 public sbyte Unknown;
                 public sbyte Unknown2;
@@ -111,7 +111,7 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x24)]
                 public class Permutation
                 {
-                    public StringID Name;
+                    public StringId Name;
                     public sbyte RenderModelPermutationIndex;
                     public sbyte Unknown;
                     public sbyte Unknown2;
@@ -125,12 +125,12 @@ namespace TagTool.Tags.Definitions
                     [TagStructure(Size = 0x20)]
                     public class State
                     {
-                        public StringID Name;
+                        public StringId Name;
                         public sbyte Unknown;
                         public byte PropertyFlags;
                         public StateValue State2;
                         public TagInstance LoopingEffect;
-                        public StringID LoopingEffectMarkerName;
+                        public StringId LoopingEffectMarkerName;
                         public float InitialProbability;
 
                         public enum StateValue : short
@@ -164,9 +164,9 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x1C)]
             public class Object
             {
-                public StringID ParentMarker;
-                public StringID ChildMarker;
-                public StringID ChildVariant;
+                public StringId ParentMarker;
+                public StringId ChildMarker;
+                public StringId ChildVariant;
                 public TagInstance ChildObject;
             }
         }
@@ -180,7 +180,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x18)]
         public class FlairApplication
         {
-            public StringID Name;
+            public StringId Name;
             public int Unknown;
             public List<UnknownBlock> Unknown2;
             public uint Unknown3;
@@ -189,7 +189,7 @@ namespace TagTool.Tags.Definitions
             public class UnknownBlock
             {
                 public int Unknown;
-                public StringID Unknown2;
+                public StringId Unknown2;
                 public uint Unknown3;
                 public uint FlairFlags1;
                 public uint FlairFlags2;
@@ -201,12 +201,12 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class Material
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short DamageSectionIndex;
             public short Unknown2;
             public short Unknown3;
-            public StringID MaterialName;
+            public StringId MaterialName;
             public short GlobalMaterialIndex;
             public short Unknown4;
         }
@@ -215,7 +215,7 @@ namespace TagTool.Tags.Definitions
         public class NewDamageInfoBlock
         {
             public uint Flags;
-            public StringID GlobalIndirectMaterialName;
+            public StringId GlobalIndirectMaterialName;
             public short IndirectDamageSection;
             public short Unknown;
             public uint Unknown2;
@@ -249,7 +249,7 @@ namespace TagTool.Tags.Definitions
             public uint Unknown23;
             public uint Unknown24;
             public float MaxShieldVitality;
-            public StringID GlobalShieldMaterialName;
+            public StringId GlobalShieldMaterialName;
             public float MinStunDamage2;
             public float StunTime2;
             public float ShieldRechargeTime;
@@ -405,7 +405,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x44)]
             public class DamageSection
             {
-                public StringID Name;
+                public StringId Name;
                 public uint Flags;
                 public float VitalityPercentage;
                 public List<InstantRespons> InstantResponses;
@@ -418,7 +418,7 @@ namespace TagTool.Tags.Definitions
                 public float StunTime;
                 public float RechargeTime;
                 public uint Unknown7;
-                public StringID ResurrectionRegionName;
+                public StringId ResurrectionRegionName;
                 public short RessurectionRegionRuntimeIndex;
                 public short Unknown8;
 
@@ -427,29 +427,29 @@ namespace TagTool.Tags.Definitions
                 {
                     public ResponseTypeValue ResponseType;
                     public ConstraintDamageTypeValue ConstraintDamageType;
-                    public StringID Trigger;
+                    public StringId Trigger;
                     public uint Flags;
                     public float DamageThreshold;
                     public TagInstance PrimaryTransitionEffect;
                     public TagInstance SecondaryTransitionEffect;
                     public TagInstance TransitionDamageEffect;
-                    public StringID Region;
+                    public StringId Region;
                     public NewStateValue NewState;
                     public short RuntimeRegionIndex;
-                    public StringID SecondaryRegion;
+                    public StringId SecondaryRegion;
                     public SecondaryNewStateValue SecondaryNewState;
                     public short SecondaryRuntimeRegionIndex;
                     public short Unknown;
                     public UnknownSpecialDamageValue UnknownSpecialDamage;
-                    public StringID SpecialDamageCase;
-                    public StringID EffectMarkerName;
-                    public StringID DamageEffectMarkerName;
+                    public StringId SpecialDamageCase;
+                    public StringId EffectMarkerName;
+                    public StringId DamageEffectMarkerName;
                     public float ResponseDelay;
                     public TagInstance DelayEffect;
-                    public StringID DelayEffectMarkerName;
-                    public StringID EjectingSeatLabel;
+                    public StringId DelayEffectMarkerName;
+                    public StringId EjectingSeatLabel;
                     public float SkipFraction;
-                    public StringID DestroyedChildObjectMarkerName;
+                    public StringId DestroyedChildObjectMarkerName;
                     public float TotalDamageThreshold;
 
                     public enum ResponseTypeValue : short
@@ -509,7 +509,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x20)]
             public class DamageSeat
             {
-                public StringID SeatLabel;
+                public StringId SeatLabel;
                 public float DirectDamageScale;
                 public float DamageTransferFallOffRadius;
                 public float MaximumTransferDamageScale;
@@ -519,7 +519,7 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x2C)]
                 public class UnknownBlock
                 {
-                    public StringID Node;
+                    public StringId Node;
                     public uint Unknown;
                     public uint Unknown2;
                     public uint Unknown3;
@@ -536,9 +536,9 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x14)]
             public class DamageConstraint
             {
-                public StringID PhysicsModelConstraintName;
-                public StringID DamageConstraintName;
-                public StringID DamageConstraintGroupName;
+                public StringId PhysicsModelConstraintName;
+                public StringId DamageConstraintName;
+                public StringId DamageConstraintGroupName;
                 public float GroupProbabilityScale;
                 public TypeValue Type;
                 public short Index;
@@ -559,7 +559,7 @@ namespace TagTool.Tags.Definitions
         public class Target
         {
             public uint Unknown;
-            public StringID MarkerName;
+            public StringId MarkerName;
             public float Size;
             public Angle ConeAngle;
             public short DamageSection;
@@ -568,13 +568,13 @@ namespace TagTool.Tags.Definitions
             public uint Unknown2;
             public uint Flags;
             public float LockOnDistance;
-            public StringID TargetFilter;
+            public StringId TargetFilter;
         }
 
         [TagStructure(Size = 0x14)]
         public class CollisionRegion
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte CollisionRegionIndex;
             public sbyte PhysicsRegionIndex;
             public sbyte Unknown;
@@ -584,7 +584,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x8)]
             public class Permutation
             {
-                public StringID Name;
+                public StringId Name;
                 public byte Flags;
                 public sbyte CollisionPermutationIndex;
                 public sbyte PhysicsPermutationIndex;
@@ -595,7 +595,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x5C)]
         public class Node
         {
-            public StringID Name;
+            public StringId Name;
             public short ParentNode;
             public short FirstChildNode;
             public short NextSiblingNode;
@@ -643,23 +643,23 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x8)]
         public class UnknownBlock2
         {
-            public StringID Region;
-            public StringID Permutation;
+            public StringId Region;
+            public StringId Permutation;
         }
 
         [TagStructure(Size = 0x8)]
         public class UnknownBlock3
         {
-            public StringID Unknown;
+            public StringId Unknown;
             public uint Unknown2;
         }
 
         [TagStructure(Size = 0x14)]
         public class UnknownBlock4
         {
-            public StringID Marker;
+            public StringId Marker;
             public uint Unknown;
-            public StringID Marker2;
+            public StringId Marker2;
             public uint Unknown2;
             public uint Unknown3;
         }

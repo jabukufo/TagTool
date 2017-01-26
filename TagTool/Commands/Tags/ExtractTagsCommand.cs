@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Commands.Tags
 {
@@ -43,7 +43,7 @@ namespace TagTool.Commands.Tags
                     return false;
             }
 
-            using (var cacheStream = CacheContext.OpenCacheRead())
+            using (var cacheStream = CacheContext.OpenTagCacheRead())
             {
                 foreach (var instance in CacheContext.TagCache.Tags)
                 {

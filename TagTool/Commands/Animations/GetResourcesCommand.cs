@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
 
@@ -8,18 +8,21 @@ namespace TagTool.Commands.Animations
 {
     class GetResourcesCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private ModelAnimationGraph Definition { get; }
 
-        public GetResourcesCommand(GameCacheContext info, TagInstance tag, ModelAnimationGraph definition)
+        public GetResourcesCommand(GameCacheContext cacheContext, TagInstance tag, ModelAnimationGraph definition)
             : base(CommandFlags.None,
-                  "getresources",
-                  "",
-                  "getresources",
-                  "")
+
+                  "get-resource-info",
+                  "Gets information about a model_animation_graph's resources.",
+
+                  "get-resource-info",
+
+                  "Gets information about a model_animation_graph's resources.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Tag = tag;
             Definition = definition;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 using TagTool.Tags;
@@ -11,18 +11,21 @@ namespace TagTool.Commands.RenderMethods
 {
     class ListArgumentsCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private RenderMethod Definition { get; }
 
-        public ListArgumentsCommand(GameCacheContext info, TagInstance tag, RenderMethod definition)
+        public ListArgumentsCommand(GameCacheContext cacheContext, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
-                 "listarguments",
+
+                 "list-arguments",
                  "Lists the arguments of the render_method.",
-                 "listarguments",
+
+                 "list-arguments",
+
                  "Lists the arguments of the render_method.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Tag = tag;
             Definition = definition;
         }
@@ -33,17 +36,17 @@ namespace TagTool.Commands.RenderMethods
             {
                 RenderMethodTemplate template = null;
 
-                using (var cacheStream = Info.TagCacheFile.Open(FileMode.Open, FileAccess.Read))
+                using (var cacheStream = CacheContext.TagCacheFile.Open(FileMode.Open, FileAccess.Read))
                 {
-                    var context = new TagSerializationContext(cacheStream, Info, property.Template);
-                    template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
+                    var context = new TagSerializationContext(cacheStream, CacheContext, property.Template);
+                    template = CacheContext.Deserializer.Deserialize<RenderMethodTemplate>(context);
                 }
 
                 for (var i = 0; i < template.Arguments.Count; i++)
                 {
                     Console.WriteLine("");
 
-                    var argumentName = Info.StringIdCache.GetString(template.Arguments[i].Name);
+                    var argumentName = CacheContext.StringIdCache.GetString(template.Arguments[i].Name);
                     var argumentValue = new Vector4(
                         property.Arguments[i].Arg1,
                         property.Arguments[i].Arg2,

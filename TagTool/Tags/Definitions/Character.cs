@@ -56,7 +56,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class Variant
         {
-            public StringID VariantName;
+            public StringId VariantName;
             public short VariantIndex;
             public short Unknown;
             public List<DialogueVariation> DialogueVariations;
@@ -65,7 +65,7 @@ namespace TagTool.Tags.Definitions
             public class DialogueVariation
             {
                 public TagInstance Dialogue;
-                public StringID Name;
+                public StringId Name;
                 public uint Unknown;
             }
         }
@@ -79,7 +79,7 @@ namespace TagTool.Tags.Definitions
             public class DialogueVariation
             {
                 public TagInstance Dialogue;
-                public StringID Name;
+                public StringId Name;
                 public uint Unknown;
             }
         }
@@ -789,7 +789,7 @@ namespace TagTool.Tags.Definitions
             public uint Unknown8;
             public TagInstance Character;
             public uint Unknown9;
-            public StringID Unknown10;
+            public StringId Unknown10;
             public uint Unknown11;
             public uint Unknown12;
             public uint Unknown13;
@@ -885,10 +885,10 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x1C)]
         public class ActAttachment
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance ChildObject;
-            public StringID ChildMarker;
-            public StringID ParentMarker;
+            public StringId ChildMarker;
+            public StringId ParentMarker;
         }
     }
 }

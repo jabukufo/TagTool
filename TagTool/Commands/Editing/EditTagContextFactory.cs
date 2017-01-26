@@ -10,7 +10,7 @@ using TagTool.Tags.Definitions;
 using TagTool.Tags;
 using TagTool.Commands.Animations;
 using TagTool.Commands.BSPs;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Commands.Editing
 {
@@ -32,7 +32,7 @@ namespace TagTool.Commands.Editing
 
             object value = null;
 
-            using (var stream = cacheContext.OpenCacheRead())
+            using (var stream = cacheContext.OpenTagCacheRead())
                 value = cacheContext.Deserializer.Deserialize(new TagSerializationContext(stream, cacheContext, tag), TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
             switch (tag.Group.Tag.ToString())

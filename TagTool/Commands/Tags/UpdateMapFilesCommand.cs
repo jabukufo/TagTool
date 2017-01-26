@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -35,7 +32,7 @@ namespace TagTool.Commands.Tags
 
             var mapIndices = new Dictionary<int, int>();
 
-            using (var cacheStream = CacheContext.OpenCacheRead())
+            using (var cacheStream = CacheContext.OpenTagCacheRead())
             {
                 foreach (var scnrTag in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
                 {

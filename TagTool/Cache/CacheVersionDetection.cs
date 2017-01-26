@@ -1,5 +1,4 @@
 ﻿using System;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Cache
 {
@@ -28,13 +27,13 @@ namespace TagTool.Cache
             if (index >= 0)
             {
                 // Version matches a timestamp directly
-                closestGuess = (CacheVersion)(index + 1 + (int)CacheVersion.HaloODST);
+                closestGuess = (CacheVersion)index;
                 return closestGuess;
             }
 
             // Match the closest timestamp
             index = Math.Max(0, Math.Min(~index - 1, VersionTimestamps.Length - 1));
-            closestGuess = (CacheVersion)(index + 1 + (int)CacheVersion.HaloODST);
+            closestGuess = (CacheVersion)index;
             return CacheVersion.Unknown;
         }
 
@@ -149,8 +148,6 @@ namespace TagTool.Cache
     public enum CacheVersion
     {
         Unknown = -1,
-        Halo3,
-        HaloODST,
         HaloOnline106708,
         HaloOnline235640,
         HaloOnline301003,

@@ -11,7 +11,7 @@ namespace TagTool.Tags.Definitions
         public List<DesignMoppCode> DesignMoppCodes;
         public List<DesignShapes2Block> DesignShapes2;
         public List<WaterMoppCode> WaterMoppCodes;
-        public List<StringID> WaterNames;
+        public List<StringId> WaterNames;
         public List<UnderwaterDefinition> UnderwaterDefinitions;
         public uint Unknown2;
 
@@ -41,7 +41,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class DesignShapes2Block
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Unknown2;
             public List<Unknown2Block> Unknown2_2;

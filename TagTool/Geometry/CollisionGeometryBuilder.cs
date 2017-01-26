@@ -62,7 +62,7 @@ namespace TagTool.Geometry
             for (uint i = 0; i < count; ++i)
             {
                 var material = new CollisionModel.Material();
-                material.Name = new StringID(0x140 + i);
+                material.Name = new StringId(0x140 + i);
                 coll.Materials.Add(material);
             }
 
@@ -93,7 +93,7 @@ namespace TagTool.Geometry
             {
                 //configure the current region
                 CollisionModel.Region region = new CollisionModel.Region();
-                region.Name = new StringID(0x140 + i);
+                region.Name = new StringId(0x140 + i);
 
                 //set up stream for reading number of permutations in current region
                 reader.BaseStream.Position = originalPos
@@ -106,7 +106,7 @@ namespace TagTool.Geometry
                 for (uint j = 0; j < n_permutations; ++j)
                 {
                     var permutation = new CollisionModel.Region.Permutation();
-                    permutation.Name = new StringID(0x140 + j);
+                    permutation.Name = new StringId(0x140 + j);
                     permutation.Bsps = new List<BSP>();
                     region.Permutations.Add(permutation);
                 }
@@ -168,7 +168,7 @@ namespace TagTool.Geometry
             for (var i = 0; i < count; ++i)
             {
                 var node = new CollisionModel.Node();
-                node.Name = new StringID(0x140 + (uint)i);
+                node.Name = new StringId(0x140 + (uint)i);
 
                 //offset of the parent node in the h1 ce node tagblock
                 reader.BaseStream.Position = originalPos + (i * NODE_SIZE) + 32;
@@ -188,7 +188,7 @@ namespace TagTool.Geometry
                 {
                     var region = new CollisionModel.Region();
                     coll.Regions.Add(region);
-                    region.Name = new StringID(0x140 + (uint)new_region_count);
+                    region.Name = new StringId(0x140 + (uint)new_region_count);
                     reader.BaseStream.Position = originalPos + (i * NODE_SIZE) + 52; //bsp tagblock count
 
                     //each bsp is placed into a separate permutation. In h1 ce

@@ -19,8 +19,8 @@ namespace TagTool.Tags.Definitions
         public float HeightCrouching;
         public float Radius;
         public float Mass;
-        public StringID LivingMaterialName;
-        public StringID DeadMaterialName;
+        public StringId LivingMaterialName;
+        public StringId DeadMaterialName;
         public short LivingGlobalMaterialIndex;
         public short DeadGlobalMaterialIndex;
         public List<DeadSphereShape> DeadSphereShapes;
@@ -90,7 +90,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x70)]
         public class DeadSphereShape
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -129,7 +129,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x60)]
         public class PillShape
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -163,7 +163,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x70)]
         public class SphereShape
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;

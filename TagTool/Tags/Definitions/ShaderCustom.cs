@@ -6,6 +6,6 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "shader_custom", Class = "rmcs", Size = 0x4)]
     public class ShaderCustom : RenderMethod
     {
-        public StringID Material;
+        public StringId Material;
     }
 }

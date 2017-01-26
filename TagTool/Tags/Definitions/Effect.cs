@@ -34,7 +34,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xC)]
         public class Location
         {
-            public StringID MarkerName;
+            public StringId MarkerName;
             public int Unknown;
             public sbyte Unknown2;
             public sbyte Unknown3;
@@ -45,7 +45,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x44)]
         public class Event
         {
-            public StringID Name;
+            public StringId Name;
             public int Unknown;
             public sbyte Unknown2;
             public sbyte Unknown3;
@@ -202,7 +202,7 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x300)]
                 public class Emitter
                 {
-                    public StringID Name;
+                    public StringId Name;
                     public ushort Unknown;
                     public short Unknown2;
                     public TagInstance CustomEmitterPoints;

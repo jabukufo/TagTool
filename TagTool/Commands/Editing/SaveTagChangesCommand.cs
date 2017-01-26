@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Serialization;
 using TagTool.Tags;
 
@@ -29,7 +29,7 @@ namespace TagTool.Commands.Editing
 
         public override bool Execute(List<string> args)
         {
-            using (var stream = CacheContext.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenTagCacheReadWrite())
             {
                 var context = new TagSerializationContext(stream, CacheContext, Tag);
                 CacheContext.Serializer.Serialize(context, Value);

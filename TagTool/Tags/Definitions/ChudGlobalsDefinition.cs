@@ -245,7 +245,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x4)]
             public class MultiplayerMedal
             {
-                public StringID Medal;
+                public StringId Medal;
             }
         }
 
@@ -343,7 +343,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class PlayerTrainingDatum
         {
-            public StringID DisplayString;
+            public StringId DisplayString;
             public short MaxDisplayTime;
             public short DisplayCount;
             public short DisappearDelay;

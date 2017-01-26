@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
@@ -11,20 +11,23 @@ namespace TagTool.Commands.Models
 {
     class ExtractModelCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private Model Definition { get; }
 
-        public ExtractModelCommand(GameCacheContext info, Model model)
+        public ExtractModelCommand(GameCacheContext cacheContext, Model model)
             : base(CommandFlags.Inherit,
-                  "extractmodel",
+
+                  "extract-model",
                   "Extracts a render model from the current model definition.",
-                  "extractmodel <variant> <filetype> <filename>",
+
+                  "extract-model <variant> <filetype> <filename>",
+
                   "Extracts a variant of the render model to a file.\n" +
                   "Use the \"listvariants\" command to list available variants.\n" +
                   "If the model does not have any variants, just use \"default\".\n" +
                   "Supported file types: obj")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Definition = model;
         }
 
@@ -35,7 +38,7 @@ namespace TagTool.Commands.Models
             var resourceManager = new ResourceDataManager();
             try
             {
-                resourceManager.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
+                resourceManager.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
             }
             catch
             {
@@ -47,10 +50,10 @@ namespace TagTool.Commands.Models
             // Deserialize the render model tag
             Console.WriteLine("Reading model data...");
             RenderModel renderModel;
-            using (var cacheStream = Info.TagCacheFile.OpenRead())
+            using (var cacheStream = CacheContext.TagCacheFile.OpenRead())
             {
-                var renderModelContext = new TagSerializationContext(cacheStream, Info, Definition.RenderModel);
-                renderModel = Info.Deserializer.Deserialize<RenderModel>(renderModelContext);
+                var renderModelContext = new TagSerializationContext(cacheStream, CacheContext, Definition.RenderModel);
+                renderModel = CacheContext.Deserializer.Deserialize<RenderModel>(renderModelContext);
             }
 
             if (renderModel.Geometry.Resource == null)
@@ -61,7 +64,7 @@ namespace TagTool.Commands.Models
 
             // Deserialize the resource definition
             var resourceContext = new ResourceSerializationContext(renderModel.Geometry.Resource);
-            var definition = Info.Deserializer.Deserialize<RenderGeometryResourceDefinition>(resourceContext);
+            var definition = CacheContext.Deserializer.Deserialize<RenderGeometryResourceDefinition>(resourceContext);
 
             using (var resourceStream = new MemoryStream())
             {
@@ -72,7 +75,7 @@ namespace TagTool.Commands.Models
 
                 foreach (var region in variant.Regions)
                 {
-                    regionMeshes[Info.StringIdCache.GetString(region.Name)] = renderModel.Geometry.Meshes[region.RenderModelRegionIndex];
+                    regionMeshes[CacheContext.StringIdCache.GetString(region.Name)] = renderModel.Geometry.Meshes[region.RenderModelRegionIndex];
                 }
 
                 var headerAddressList = new List<int>();
@@ -90,7 +93,7 @@ namespace TagTool.Commands.Models
                     #region Header
                     bw.Write("AMF!".ToCharArray());
                     bw.Write(2.0f); //format version
-                    bw.Write((Info.StringIdCache.GetString(renderModel.Name) + "\0").ToCharArray());
+                    bw.Write((CacheContext.StringIdCache.GetString(renderModel.Name) + "\0").ToCharArray());
 
                     bw.Write(renderModel.Nodes.Count);
                     headerAddressList.Add((int)bw.BaseStream.Position);
@@ -112,7 +115,7 @@ namespace TagTool.Commands.Models
                     headerValueList.Add((int)bw.BaseStream.Position);
                     foreach (var node in renderModel.Nodes)
                     {
-                        bw.Write((Info.StringIdCache.GetString(node.Name) + "\0").ToCharArray());
+                        bw.Write((CacheContext.StringIdCache.GetString(node.Name) + "\0").ToCharArray());
                         bw.Write((short)node.ParentNode);
                         bw.Write((short)node.FirstChildNode);
                         bw.Write((short)node.NextSiblingNode);
@@ -129,7 +132,7 @@ namespace TagTool.Commands.Models
                     headerValueList.Add((int)bw.BaseStream.Position);
                     foreach (var group in renderModel.MarkerGroups)
                     {
-                        bw.Write((Info.StringIdCache.GetString(group.Name) + "\0").ToCharArray());
+                        bw.Write((CacheContext.StringIdCache.GetString(group.Name) + "\0").ToCharArray());
                         bw.Write(group.Markers.Count);
                         markerAddressList.Add((int)bw.BaseStream.Position);
                         bw.Write(0);
@@ -158,7 +161,7 @@ namespace TagTool.Commands.Models
                     headerValueList.Add((int)bw.BaseStream.Position);
                     foreach (var region in renderModel.Regions)
                     {
-                        bw.Write((Info.StringIdCache.GetString(region.Name) + "\0").ToCharArray());
+                        bw.Write((CacheContext.StringIdCache.GetString(region.Name) + "\0").ToCharArray());
                         bw.Write(regionMeshes.Count);
                         permAddressList.Add((int)bw.BaseStream.Position);
                         bw.Write(0);
@@ -168,7 +171,7 @@ namespace TagTool.Commands.Models
                     foreach (var part in regionMeshes)
                     {
                         permValueList.Add((int)bw.BaseStream.Position);
-                        bw.Write((Info.StringIdCache.GetString(variant.Name) + "\0").ToCharArray());
+                        bw.Write((CacheContext.StringIdCache.GetString(variant.Name) + "\0").ToCharArray());
 
                         if (part.Value.Type == VertexType.Rigid)
                             bw.Write((byte)1);
@@ -223,7 +226,7 @@ namespace TagTool.Commands.Models
                 return true;
             }
 
-            var variant = Definition.Variants.FirstOrDefault(v => (Info.StringIdCache.GetString(v.Name) ?? v.Name.ToString()) == variantName);
+            var variant = Definition.Variants.FirstOrDefault(v => (CacheContext.StringIdCache.GetString(v.Name) ?? v.Name.ToString()) == variantName);
             if (variant == null && Definition.Variants.Count > 0)
             {
                 Console.WriteLine("Unable to find variant \"{0}\"", variantName);
@@ -239,7 +242,7 @@ namespace TagTool.Commands.Models
             var resourceManager = new ResourceDataManager();
             try
             {
-                resourceManager.LoadCachesFromDirectory(Info.TagCacheFile.DirectoryName);
+                resourceManager.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
             }
             catch
             {
@@ -251,10 +254,10 @@ namespace TagTool.Commands.Models
             // Deserialize the render model tag
             Console.WriteLine("Reading model data...");
             RenderModel renderModel;
-            using (var cacheStream = Info.TagCacheFile.OpenRead())
+            using (var cacheStream = CacheContext.TagCacheFile.OpenRead())
             {
-                var renderModelContext = new TagSerializationContext(cacheStream, Info, Definition.RenderModel);
-                renderModel = Info.Deserializer.Deserialize<RenderModel>(renderModelContext);
+                var renderModelContext = new TagSerializationContext(cacheStream, CacheContext, Definition.RenderModel);
+                renderModel = CacheContext.Deserializer.Deserialize<RenderModel>(renderModelContext);
             }
 
             if (renderModel.Geometry.Resource == null)
@@ -265,7 +268,7 @@ namespace TagTool.Commands.Models
             
             // Deserialize the resource definition
             var resourceContext = new ResourceSerializationContext(renderModel.Geometry.Resource);
-            var definition = Info.Deserializer.Deserialize<RenderGeometryResourceDefinition>(resourceContext);
+            var definition = CacheContext.Deserializer.Deserialize<RenderGeometryResourceDefinition>(resourceContext);
 
             using (var resourceStream = new MemoryStream())
             {
@@ -306,15 +309,15 @@ namespace TagTool.Commands.Models
                             // Extract each mesh in the permutation
                             var meshIndex = renderModelPermutation.MeshIndex;
                             var meshCount = renderModelPermutation.MeshCount;
-                            var regionName = Info.StringIdCache.GetString(region.Name) ?? region.Name.ToString();
-                            var permutationName = Info.StringIdCache.GetString(permutation.Name) ?? permutation.Name.ToString();
+                            var regionName = CacheContext.StringIdCache.GetString(region.Name) ?? region.Name.ToString();
+                            var permutationName = CacheContext.StringIdCache.GetString(permutation.Name) ?? permutation.Name.ToString();
 
                             Console.WriteLine("Extracting {0} mesh(es) for {1}:{2}...", meshCount, regionName, permutationName);
 
                             for (var i = 0; i < meshCount; i++)
                             {
                                 // Create a MeshReader for the mesh and pass it to the obj extractor
-                                var meshReader = new MeshReader(Info.Version, renderModel.Geometry.Meshes[meshIndex + i], definition);
+                                var meshReader = new MeshReader(CacheContext.Version, renderModel.Geometry.Meshes[meshIndex + i], definition);
                                 objExtractor.ExtractMesh(meshReader, vertexCompressor, resourceStream);
                             }
                         }
@@ -327,7 +330,7 @@ namespace TagTool.Commands.Models
                         foreach (var mesh in renderModel.Geometry.Meshes)
                         {
                             // Create a MeshReader for the mesh and pass it to the obj extractor
-                            var meshReader = new MeshReader(Info.Version, mesh, definition);
+                            var meshReader = new MeshReader(CacheContext.Version, mesh, definition);
                             objExtractor.ExtractMesh(meshReader, vertexCompressor, resourceStream);
                         }
                     }

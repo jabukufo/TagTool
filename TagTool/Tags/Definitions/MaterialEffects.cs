@@ -21,7 +21,7 @@ namespace TagTool.Tags.Definitions
             {
                 public TagInstance Effect;
                 public TagInstance Sound;
-                public StringID MaterialName;
+                public StringId MaterialName;
                 public short GlobalMaterialIndex;
                 public SweetenerModeValue SweetenerMode;
                 public sbyte Unknown;
@@ -40,7 +40,7 @@ namespace TagTool.Tags.Definitions
             {
                 public TagInstance Tag;
                 public TagInstance SecondaryTag;
-                public StringID MaterialName;
+                public StringId MaterialName;
                 public short GlobalMaterialIndex;
                 public SweetenerModeValue SweetenerMode;
                 public sbyte Unknown;
@@ -59,7 +59,7 @@ namespace TagTool.Tags.Definitions
             {
                 public TagInstance Tag;
                 public TagInstance SecondaryTag;
-                public StringID MaterialName;
+                public StringId MaterialName;
                 public short GlobalMaterialIndex;
                 public SweetenerModeValue SweetenerMode;
                 public sbyte Unknown;

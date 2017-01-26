@@ -1,4 +1,4 @@
-﻿using TagTool.Cache.HaloOnline;
+﻿using TagTool.Cache;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
 
@@ -21,8 +21,7 @@ namespace TagTool.Commands.RenderModels
         public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, RenderModel renderModel)
         {
             context.AddCommand(new SpecifyShadersCommand(info, tag, renderModel));
-            context.AddCommand(new GetResourceCommand(info, tag, renderModel));
-            context.AddCommand(new ReplaceCommand(info, tag, renderModel));
+            context.AddCommand(new GetResourceInfoCommand(info, tag, renderModel));
         }
     }
 }

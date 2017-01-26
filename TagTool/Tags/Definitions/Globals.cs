@@ -300,7 +300,7 @@ namespace TagTool.Tags.Definitions
         public TagInstance DefaultWind;
         public TagInstance DefaultDamageEffect;
         public TagInstance DefaultCollisionDamage;
-        public StringID UnknownMaterial;
+        public StringId UnknownMaterial;
         public short UnknownGlobalMaterialIndex;
         public short Unknown265;
         public TagInstance EffectGlobals;
@@ -439,13 +439,13 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x10)]
             public class DamageGroup
             {
-                public StringID Name;
+                public StringId Name;
                 public List<ArmorModifier> ArmorModifiers;
 
                 [TagStructure(Size = 0x8)]
                 public class ArmorModifier
                 {
-                    public StringID Name;
+                    public StringId Name;
                     public float DamageMultiplier;
                 }
             }
@@ -805,12 +805,12 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x6C)]
         public class PlayerRepresentationBlock
         {
-            public StringID Name;
+            public StringId Name;
             public uint Flags;
             public TagInstance FirstPersonHands;
             public TagInstance FirstPersonBody;
             public TagInstance ThirdPersonUnit;
-            public StringID ThirdPersonVariant;
+            public StringId ThirdPersonVariant;
             public TagInstance BinocularsZoomInSound;
             public TagInstance BinocularsZoomOutSound;
             public TagInstance Unknown;
@@ -844,12 +844,12 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x178)]
         public class Material
         {
-            public StringID Name;
-            public StringID ParentName;
+            public StringId Name;
+            public StringId ParentName;
             public short ParentIndex;
             public ushort Flags;
-            public StringID GeneralArmor;
-            public StringID SpecificArmor;
+            public StringId GeneralArmor;
+            public StringId SpecificArmor;
             public uint Unknown;
             public float Friction;
             public float Restitution;
@@ -898,8 +898,8 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0xC)]
             public class WaterInteractionBlock
             {
-                public StringID SurfaceName;
-                public StringID SubmergedName;
+                public StringId SurfaceName;
+                public StringId SubmergedName;
                 public short SurfaceIndex;
                 public short SubmergedIndex;
             }
@@ -953,7 +953,7 @@ namespace TagTool.Tags.Definitions
                 public float Multiplier;
                 public int AwardedPoints;
                 public int MedalUptime;
-                public StringID EventName;
+                public StringId EventName;
             }
 
             [TagStructure(Size = 0x4)]

@@ -85,20 +85,19 @@
     <Compile Include="Bitmaps\BitmapFormat.cs" />
     <Compile Include="Bitmaps\BitmapTextureResourceDefinition.cs" />
     <Compile Include="Bitmaps\BitmapType.cs" />
-    <Compile Include="Cache\CacheFile.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceAddress.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceBlockReference.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceCache.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceDataManager.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceDataReference.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceReference.cs" />
-    <Compile Include="Cache\HaloOnline\StringIdCache.cs" />
-    <Compile Include="Cache\HaloOnline\StringIdResolverBase.cs" />
-    <Compile Include="Cache\HaloOnline\StringIdResolverFactory.cs" />
-    <Compile Include="Cache\HaloOnline\TagCache.cs" />
-    <Compile Include="Cache\HaloOnline\TagData.cs" />
-    <Compile Include="Cache\HaloOnline\TagList.cs" />
-    <Compile Include="Cache\HaloOnline\GameCacheContext.cs" />
+    <Compile Include="Cache\ResourceAddress.cs" />
+    <Compile Include="Cache\ResourceBlockReference.cs" />
+    <Compile Include="Cache\ResourceCache.cs" />
+    <Compile Include="Cache\ResourceDataManager.cs" />
+    <Compile Include="Cache\ResourceDataReference.cs" />
+    <Compile Include="Cache\ResourceReference.cs" />
+    <Compile Include="Cache\StringIdCache.cs" />
+    <Compile Include="Cache\StringIdResolverBase.cs" />
+    <Compile Include="Cache\StringIdResolverFactory.cs" />
+    <Compile Include="Cache\TagCache.cs" />
+    <Compile Include="Cache\TagData.cs" />
+    <Compile Include="Cache\TagList.cs" />
+    <Compile Include="Cache\GameCacheContext.cs" />
     <Compile Include="Commands\Animations\AnimationContextFactory.cs" />
     <Compile Include="Commands\Animations\AnimationTestCommand.cs" />
     <Compile Include="Commands\Animations\GetResourcesCommand.cs" />
@@ -108,12 +107,6 @@
     <Compile Include="Commands\Bitmaps\ImportBitmapCommand.cs" />
     <Compile Include="Commands\BSPs\BSPContextFactory.cs" />
     <Compile Include="Commands\BSPs\CollisionTestCommand.cs" />
-    <Compile Include="Commands\BSPs\LoadResourcesCommand.cs" />
-    <Compile Include="Commands\Cache\CacheContextFactory.cs" />
-    <Compile Include="Commands\Cache\ListBitmapsCommand.cs" />
-    <Compile Include="Commands\Cache\PortBspCommand.cs" />
-    <Compile Include="Commands\Cache\PortModelCommand.cs" />
-    <Compile Include="Commands\Cache\PortShaderCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandContext.cs" />
     <Compile Include="Commands\CommandContextStack.cs" />
@@ -142,9 +135,8 @@
     <Compile Include="Commands\RenderMethods\ListBitmapsCommand.cs" />
     <Compile Include="Commands\RenderMethods\RenderMethodContextFactory.cs" />
     <Compile Include="Commands\RenderMethods\SpecifyBitmapsCommand.cs" />
-    <Compile Include="Commands\RenderModels\GetResourceCommand.cs" />
+    <Compile Include="Commands\RenderModels\GetResourceInfoCommand.cs" />
     <Compile Include="Commands\RenderModels\RenderModelContextFactory.cs" />
-    <Compile Include="Commands\RenderModels\ReplaceCommand.cs" />
     <Compile Include="Commands\RenderModels\SpecifyShadersCommand.cs" />
     <Compile Include="Commands\Scenarios\CopyForgePaletteCommand.cs" />
     <Compile Include="Commands\Scenarios\ScenarioContextFactory.cs" />
@@ -158,36 +150,35 @@
     <Compile Include="Commands\Tags\DuplicateTagCommand.cs" />
     <Compile Include="Commands\Tags\EditTagCommand.cs" />
     <Compile Include="Commands\Tags\ExtractTagsCommand.cs" />
-    <Compile Include="Commands\Tags\ExtractCommand.cs" />
+    <Compile Include="Commands\Tags\ExtractTagCommand.cs" />
     <Compile Include="Commands\Tags\GenerateLayoutsCommand.cs" />
     <Compile Include="Commands\Tags\GenerateTagNamesCommand.cs" />
-    <Compile Include="Commands\Tags\ImportCommand.cs" />
-    <Compile Include="Commands\Tags\InfoCommand.cs" />
-    <Compile Include="Commands\Tags\ListCommand.cs" />
+    <Compile Include="Commands\Tags\ImportTagCommand.cs" />
+    <Compile Include="Commands\Tags\GetTagInfoCommand.cs" />
+    <Compile Include="Commands\Tags\ListTagsCommand.cs" />
     <Compile Include="Commands\Tags\ListNullTagsCommand.cs" />
     <Compile Include="Commands\Tags\ListStringsCommand.cs" />
     <Compile Include="Commands\Tags\ListUnreferencedTagsCommand.cs" />
-    <Compile Include="Commands\Tags\DisplayMapInfoCommand.cs" />
+    <Compile Include="Commands\Tags\GetMapInfoCommand.cs" />
     <Compile Include="Commands\Tags\MatchTagsCommand.cs" />
     <Compile Include="Commands\Tags\ModelTestCommand.cs" />
-    <Compile Include="Commands\Tags\NewTagCommand.cs" />
+    <Compile Include="Commands\Tags\CreateTagCommand.cs" />
     <Compile Include="Commands\Tags\CleanCacheFilesCommand.cs" />
-    <Compile Include="Commands\Tags\NullTagCommand.cs" />
-    <Compile Include="Commands\Tags\OpenCacheCommand.cs" />
+    <Compile Include="Commands\Tags\DeleteTagCommand.cs" />
     <Compile Include="Commands\Tags\PhysicsModelTestCommand.cs" />
     <Compile Include="Commands\Tags\ResourceCommand.cs" />
-    <Compile Include="Commands\Tags\ResourceFile.cs" />
+    <Compile Include="Cache\ResourceFile.cs" />
     <Compile Include="Commands\Tags\StringIdCommand.cs" />
     <Compile Include="Commands\Tags\TagCacheContextFactory.cs" />
     <Compile Include="Commands\Tags\UpdateMapFilesCommand.cs" />
-    <Compile Include="Commands\Unicode\GetCommand.cs" />
+    <Compile Include="Commands\Unicode\GetStringCommand.cs" />
     <Compile Include="Commands\Unicode\ListCommand.cs" />
-    <Compile Include="Commands\Unicode\SetCommand.cs" />
+    <Compile Include="Commands\Unicode\SetStringCommand.cs" />
     <Compile Include="Commands\Unicode\UnicodeContextFactory.cs" />
-    <Compile Include="Commands\VFiles\ExtractAllCommand.cs" />
-    <Compile Include="Commands\VFiles\ExtractCommand.cs" />
-    <Compile Include="Commands\VFiles\ImportAllCommand.cs" />
-    <Compile Include="Commands\VFiles\ImportCommand.cs" />
+    <Compile Include="Commands\VFiles\ExtractFilesCommand.cs" />
+    <Compile Include="Commands\VFiles\ExtractFileCommand.cs" />
+    <Compile Include="Commands\VFiles\ImportFilesCommand.cs" />
+    <Compile Include="Commands\VFiles\ImportFileCommand.cs" />
     <Compile Include="Commands\VFiles\ListCommand.cs" />
     <Compile Include="Commands\VFiles\VFilesContextFactory.cs" />
     <Compile Include="Common\Angle.cs" />
@@ -219,16 +210,12 @@
     <Compile Include="Common\Vertex.cs" />
     <Compile Include="Common\XCompress.cs" />
     <Compile Include="Cache\AES.cs" />
-    <Compile Include="Cache\CacheFileOld.cs" />
-    <Compile Include="Cache\CacheManager.cs" />
     <Compile Include="Cache\CacheVersionDetection.cs" />
-    <Compile Include="Cache\Halo3\CacheFileOld.cs" />
-    <Compile Include="Cache\HaloODST\CacheFileOld.cs" />
-    <Compile Include="Cache\HaloOnline\MS23\StringIdResolver.cs" />
-    <Compile Include="Cache\HaloOnline\MS23\VertexStream.cs" />
-    <Compile Include="Cache\HaloOnline\MS25\VertexStream.cs" />
-    <Compile Include="Cache\HaloOnline\MS28\StringIdResolver.cs" />
-    <Compile Include="Cache\HaloOnline\MS30\StringIdResolver.cs" />
+    <Compile Include="Cache\StringIdResolverMS23.cs" />
+    <Compile Include="Cache\VertexStreamMS23.cs" />
+    <Compile Include="Cache\VertexStreamMS25.cs" />
+    <Compile Include="Cache\StringIdResolverMS28.cs" />
+    <Compile Include="Cache\StringIdResolverMS30.cs" />
     <Compile Include="Serialization\DataSerializationContext.cs" />
     <Compile Include="Tags\TagConverter.cs" />
     <Compile Include="Geometry\BlenderPhmoReader.cs" />
@@ -314,7 +301,6 @@
     <Compile Include="Serialization\TagSerializer.cs" />
     <Compile Include="Serialization\TagStructureAttribute.cs" />
     <Compile Include="Serialization\TagStructureInfo.cs" />
-    <Compile Include="Serialization\XboxSerializationContext.cs" />
     <Compile Include="Shaders\ShaderCompiler.cs" />
     <Compile Include="Shaders\ShaderConverter.cs" />
     <Compile Include="Sounds\Info.cs" />
@@ -509,15 +495,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Cache\Builds.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Cache\Versions.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Cache\VertexBuffer.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

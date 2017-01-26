@@ -25,7 +25,7 @@ namespace TagTool.Tags.Definitions
             public float DangerBodyDamage;
             public float DangerExtendedBodyDamage;
             public TagInstance GlobalDialogue;
-            public StringID DefaultMissionDialogueSoundEffect;
+            public StringId DefaultMissionDialogueSoundEffect;
             public float JumpDown;
             public float JumpStep;
             public float JumpCrouch;

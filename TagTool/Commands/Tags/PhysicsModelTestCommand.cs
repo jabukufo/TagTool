@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using TagTool.Serialization;
 using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Commands.Tags
 {
@@ -74,7 +74,7 @@ namespace TagTool.Commands.Tags
                 return false;
             }
 
-            using (var stream = CacheContext.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenTagCacheReadWrite())
             {
 
                 if (b_duplicate)

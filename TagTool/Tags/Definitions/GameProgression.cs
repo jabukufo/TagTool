@@ -18,13 +18,13 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x4)]
         public class UnknownBlock
         {
-            public StringID Unknown;
+            public StringId Unknown;
         }
 
         [TagStructure(Size = 0x4)]
         public class UnknownBlock2
         {
-            public StringID Unknown;
+            public StringId Unknown;
         }
 
         [TagStructure(Size = 0x4)]
@@ -44,7 +44,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x124)]
         public class UnknownBlock5
         {
-            public StringID MapName;
+            public StringId MapName;
             public int Unknown;
             public int Unknown2;
             public TagInstance Unknown3;

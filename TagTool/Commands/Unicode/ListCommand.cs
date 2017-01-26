@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Tags.Definitions;
 
@@ -8,10 +8,10 @@ namespace TagTool.Commands.Unicode
 {
     class ListCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private MultilingualUnicodeStringList Definition { get; }
 
-        public ListCommand(GameCacheContext info, MultilingualUnicodeStringList definition)
+        public ListCommand(GameCacheContext cacheContext, MultilingualUnicodeStringList definition)
             : base(CommandFlags.Inherit,
                   "list",
                   "List strings",
@@ -25,7 +25,7 @@ namespace TagTool.Commands.Unicode
                   "chinese-trad, chinese-simp, portuguese, russian")
         {
             // TODO: Can we dynamically generate the language list from the dictionary in ArgumentParser?
-            Info = info;
+            CacheContext = cacheContext;
             Definition = definition;
         }
 
@@ -39,7 +39,7 @@ namespace TagTool.Commands.Unicode
                 return false;
 
             var filter = (args.Count == 2) ? args[1] : null;
-            var strings = LocalizedStringPrinter.PrepareForDisplay(Definition, Info.StringIdCache, Definition.Strings, language, filter);
+            var strings = LocalizedStringPrinter.PrepareForDisplay(Definition, CacheContext.StringIdCache, Definition.Strings, language, filter);
 
             if (strings.Count > 0)
                 LocalizedStringPrinter.PrintStrings(strings);

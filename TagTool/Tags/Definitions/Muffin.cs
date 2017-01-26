@@ -18,7 +18,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x8)]
         public class LocationsBlock
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Unknown2;
         }

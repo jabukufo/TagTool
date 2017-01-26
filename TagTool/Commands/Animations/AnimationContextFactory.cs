@@ -1,4 +1,4 @@
-﻿using TagTool.Cache.HaloOnline;
+﻿using TagTool.Cache;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
 

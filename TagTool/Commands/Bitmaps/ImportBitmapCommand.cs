@@ -6,7 +6,7 @@ using TagTool.Bitmaps;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
 using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Commands.Bitmaps
 {
@@ -74,7 +74,7 @@ namespace TagTool.Commands.Bitmaps
                     injector.InjectDds(CacheContext.Serializer, CacheContext.Deserializer, Bitmap, imageIndex, imageStream);
                 }
 
-                using (var tagsStream = CacheContext.OpenCacheReadWrite())
+                using (var tagsStream = CacheContext.OpenTagCacheReadWrite())
                 {
                     var tagContext = new TagSerializationContext(tagsStream, CacheContext, Tag);
                     CacheContext.Serializer.Serialize(tagContext, Bitmap);

@@ -518,7 +518,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x24)]
         public class ScenarioZonesetGroup
         {
-            public StringID Name;
+            public StringId Name;
             public int BspGroupIndex;
             public int ImportLoadedBsps;
             public uint LoadedBsps;
@@ -558,7 +558,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -572,11 +572,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -744,7 +744,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -758,11 +758,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -854,7 +854,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -868,11 +868,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -1014,7 +1014,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1028,8 +1028,8 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
             public uint EquipmentFlags;
@@ -1151,7 +1151,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1165,11 +1165,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -1323,7 +1323,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1337,11 +1337,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -1454,7 +1454,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1468,11 +1468,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -1566,7 +1566,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1580,11 +1580,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -1683,7 +1683,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1697,11 +1697,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -1797,7 +1797,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1811,8 +1811,8 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
             public int VolumeType;
@@ -1890,7 +1890,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -1904,11 +1904,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -2010,7 +2010,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -2024,8 +2024,8 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
 
@@ -2096,7 +2096,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -2110,8 +2110,8 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
             public short PowerGroup;
@@ -2201,7 +2201,7 @@ namespace TagTool.Tags.Definitions
         public class SandboxObject
         {
             public TagInstance Object;
-            public StringID Name;
+            public StringId Name;
             public int MaxAllowed;
             public float Cost;
             public uint Unknown;
@@ -2216,7 +2216,7 @@ namespace TagTool.Tags.Definitions
         {
             public short Type;
             public short Unknown;
-            public StringID Name;
+            public StringId Name;
             public short Unknown2;
             public short Unknown3;
         }
@@ -2261,10 +2261,10 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x7C)]
         public class TriggerVolume
         {
-            public StringID Name;
+            public StringId Name;
             public short ObjectName;
             public short Unknown;
-            public StringID NodeName;
+            public StringId NodeName;
             public short Unknown2;
             public short Unknown3;
             public uint Unknown4;
@@ -2391,7 +2391,7 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public List<GroupLocation> GroupLocations;
             public List<SingleLocation> SingleLocations;
-            public StringID SquadTemplateName;
+            public StringId SquadTemplateName;
             [TagField(Flags = TagFieldFlags.Short)]
             public TagInstance SquadTemplate;
             public List<SquadABlock> SquadA;
@@ -2424,7 +2424,7 @@ namespace TagTool.Tags.Definitions
                 public short Unknown2;
                 public uint Unknown3;
                 public uint Unknown4;
-                public StringID Name;
+                public StringId Name;
                 public float PositionX;
                 public float PositionY;
                 public float PositionZ;
@@ -2433,13 +2433,13 @@ namespace TagTool.Tags.Definitions
                 public Angle FacingI;
                 public Angle FacingJ;
                 public Angle FacingK;
-                public StringID FormationType;
+                public StringId FormationType;
                 public uint Unknown6;
                 public short Unknown7;
                 public short CommandScriptIndex;
                 [TagField(Length = 32)]
                 public string CommandScriptName;
-                public StringID InitialState;
+                public StringId InitialState;
                 public short Unknown8;
                 public short Unknown9;
                 public List<MultiStateBlock> MultiState;
@@ -2451,7 +2451,7 @@ namespace TagTool.Tags.Definitions
                     public short Unknown2;
                     public uint Unknown3;
                     public uint Unknown4;
-                    public StringID State;
+                    public StringId State;
                     public uint Unknown5;
                     [TagField(Length = 32)]
                     public string CommandScriptName;
@@ -2467,7 +2467,7 @@ namespace TagTool.Tags.Definitions
                 public short Unknown2;
                 public uint Unknown3;
                 public uint Unknown4;
-                public StringID Name;
+                public StringId Name;
                 public short SquadMemberIndex;
                 public short Unknown5;
                 public float PositionX;
@@ -2487,8 +2487,8 @@ namespace TagTool.Tags.Definitions
                 public SeatTypeValue SeatType;
                 public InitialGrenadesValue InitialGrenades;
                 public uint Unknown7;
-                public StringID ActorVariant;
-                public StringID VehicleVariant;
+                public StringId ActorVariant;
+                public StringId VehicleVariant;
                 public float InitialMovementDistance;
                 public InitialMovementModeValue InitialMovementMode;
                 public short EmitterVehicle;
@@ -2498,7 +2498,7 @@ namespace TagTool.Tags.Definitions
                 public string CommandScriptName;
                 public short CommandScriptIndex;
                 public short Unknown8;
-                public StringID InitialState;
+                public StringId InitialState;
                 public short Unknown9;
                 public short Unknown10;
                 public List<MultiStateBlock> MultiState;
@@ -2537,7 +2537,7 @@ namespace TagTool.Tags.Definitions
                     public short Unknown2;
                     public uint Unknown3;
                     public uint Unknown4;
-                    public StringID State;
+                    public StringId State;
                     public uint Unknown5;
                     [TagField(Length = 32)]
                     public string CommandScriptName;
@@ -2549,7 +2549,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x84)]
             public class SquadABlock
             {
-                public StringID Name;
+                public StringId Name;
                 public ushort Difficulty;
                 public short Unknown;
                 public short MinimumRound;
@@ -2564,7 +2564,7 @@ namespace TagTool.Tags.Definitions
                 public List<EquipmentBlock> Equipment;
                 public short Unknown5;
                 public short Vehicle;
-                public StringID VehicleVariant;
+                public StringId VehicleVariant;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -2634,7 +2634,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x84)]
             public class SquadBBlock
             {
-                public StringID Name;
+                public StringId Name;
                 public ushort Difficulty;
                 public short Unknown;
                 public short MinimumRound;
@@ -2649,7 +2649,7 @@ namespace TagTool.Tags.Definitions
                 public List<EquipmentBlock> Equipment;
                 public short Unknown5;
                 public short Vehicle;
-                public StringID VehicleVariant;
+                public StringId VehicleVariant;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -2809,7 +2809,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x2C)]
         public class UnknownBlock2
         {
-            public StringID Unknown;
+            public StringId Unknown;
             public List<UnknownBlock> Unknown2;
             public List<UnknownBlock2_2> Unknown3;
             public List<UnknownBlock3> Unknown4;
@@ -3282,7 +3282,7 @@ namespace TagTool.Tags.Definitions
         public class CutsceneFlag
         {
             public uint Unknown;
-            public StringID Name;
+            public StringId Name;
             public float PositionX;
             public float PositionY;
             public float PositionZ;
@@ -3319,7 +3319,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x28)]
         public class CutsceneTitle
         {
-            public StringID Name;
+            public StringId Name;
             public short TextBoundsTop;
             public short TextBoundsLeft;
             public short TextBoundsBottom;
@@ -3568,7 +3568,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x58)]
         public class BackgroundSoundEnvironmentPaletteBlock
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance SoundEnvironment;
             public int Unknown;
             public float CutoffDistance;
@@ -3615,7 +3615,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x8)]
         public class FogBlock
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Unknown2;
         }
@@ -3623,7 +3623,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x30)]
         public class CameraFxBlock
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance CameraFx;
             public uint Unknown;
             public uint Unknown2;
@@ -3746,7 +3746,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x30)]
             public class StaticRespawnZone
             {
-                public StringID Name;
+                public StringId Name;
                 public uint RelevantTeams;
                 public uint RelevantGames;
                 public uint Flags;
@@ -3763,7 +3763,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x30)]
             public class StaticInitialSpawnZone
             {
-                public StringID Name;
+                public StringId Name;
                 public uint RelevantTeams;
                 public uint RelevantGames;
                 public uint Flags;
@@ -3794,7 +3794,7 @@ namespace TagTool.Tags.Definitions
             public List<UnknownBlock> Unknown;
             public short Unknown2;
             public ushort OldManualBspFlagsNowZonesets;
-            public StringID UniqueName;
+            public StringId UniqueName;
             public ushort UniqueIdSalt;
             public ushort UniqueIdIndex;
             public short OriginBspIndex;
@@ -3808,11 +3808,11 @@ namespace TagTool.Tags.Definitions
             public short EditorFolderIndex;
             public short Unknown4;
             public short ParentNameIndex;
-            public StringID ChildName;
-            public StringID Unknown5;
+            public StringId ChildName;
+            public StringId Unknown5;
             public ushort AllowedZonesets;
             public short Unknown6;
-            public StringID Variant;
+            public StringId Variant;
             public byte ActiveChangeColors;
             public sbyte Unknown7;
             public sbyte Unknown8;
@@ -3953,7 +3953,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x48)]
         public class Flock
         {
-            public StringID Name;
+            public StringId Name;
             public short FlockPaletteIndex;
             public short BspIndex;
             public short BoundingTriggerVolume;
@@ -4030,9 +4030,9 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x24)]
         public class Interpolator
         {
-            public StringID Name;
-            public StringID AcceleratorName;
-            public StringID MultiplierName;
+            public StringId Name;
+            public StringId AcceleratorName;
+            public StringId MultiplierName;
             public byte[] Function;
             public short Unknown;
             public short Unknown2;
@@ -4061,7 +4061,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class AiObjective
         {
-            public StringID Name;
+            public StringId Name;
             public short Zone;
             public short Unknown;
             public List<Role> Roles;
@@ -4089,7 +4089,7 @@ namespace TagTool.Tags.Definitions
                 public short Unknown9;
                 public short Unknown10;
                 public List<Unknown84Block> Unknown84;
-                public StringID Task;
+                public StringId Task;
                 public short HierarchyLevelFrom100;
                 public short PreviousRole;
                 public short NextRole;
@@ -4178,7 +4178,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xBC)]
         public class DesignerZoneset
         {
-            public StringID Name;
+            public StringId Name;
             public uint Unknown;
             public List<Biped> Bipeds;
             public List<Vehicle> Vehicles;
@@ -4299,7 +4299,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class CinematicLightingBlock
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance CinematicLight;
         }
 

@@ -7,7 +7,7 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "gui_datasource_definition", Class = "dsrc", Size = 0x20)]
     public class GuiDatasourceDefinition
     {
-        public StringID Name;
+        public StringId Name;
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;
@@ -20,27 +20,27 @@ namespace TagTool.Tags.Definitions
             public List<IntegerValue> IntegerValues;
             public List<StringValue> StringValues;
             public List<StringidValue> StringidValues;
-            public StringID Unknown;
+            public StringId Unknown;
 
             [TagStructure(Size = 0x8)]
             public class IntegerValue
             {
-                public StringID DataType;
+                public StringId DataType;
                 public int Value;
             }
 
             [TagStructure(Size = 0x24)]
             public class StringValue
             {
-                public StringID DataType;
+                public StringId DataType;
                 [TagField(Length = 20)] public string Value;
             }
 
             [TagStructure(Size = 0x8)]
             public class StringidValue
             {
-                public StringID DataType;
-                public StringID Value;
+                public StringId DataType;
+                public StringId Value;
             }
         }
     }

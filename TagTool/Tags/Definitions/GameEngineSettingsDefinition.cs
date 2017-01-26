@@ -24,7 +24,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x40)]
         public class TraitProfile
         {
-            public StringID Name;
+            public StringId Name;
             public List<ShieldsAndHealthBlock> ShieldsAndHealth;
             public List<WeaponsAndDamageBlock> WeaponsAndDamage;
             public List<MovementBlock> Movement;
@@ -109,8 +109,8 @@ namespace TagTool.Tags.Definitions
                 public GrenadeRegenerationValue GrenadeRegeneration;
                 public WeaponPickupValue WeaponPickup;
                 public InfiniteAmmoValue InfiniteAmmo;
-                public StringID PrimaryWeapon;
-                public StringID SecondaryWeapon;
+                public StringId PrimaryWeapon;
+                public StringId SecondaryWeapon;
                 public GrenadeCountValue GrenadeCount;
                 public sbyte Unknown;
                 public sbyte Unknown2;
@@ -289,8 +289,8 @@ namespace TagTool.Tags.Definitions
         public class SlayerVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -312,7 +312,7 @@ namespace TagTool.Tags.Definitions
             public sbyte SplatterBonus;
             public sbyte SpreeBonus;
             public sbyte Unknown2;
-            public StringID LeaderTraitProfile;
+            public StringId LeaderTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -345,7 +345,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -362,12 +362,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -387,8 +387,8 @@ namespace TagTool.Tags.Definitions
         public class OddballVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -405,7 +405,7 @@ namespace TagTool.Tags.Definitions
             public sbyte Unknown2;
             public short InitialBallDelay;
             public short BallRespawnDelay;
-            public StringID BallCarrierTraitProfile;
+            public StringId BallCarrierTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -438,7 +438,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -455,12 +455,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -480,8 +480,8 @@ namespace TagTool.Tags.Definitions
         public class CaptureTheFlagVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -495,7 +495,7 @@ namespace TagTool.Tags.Definitions
             public short ScoreToWin;
             public short Unknown;
             public short FlagResetTime;
-            public StringID FlagCarrierTraitProfile;
+            public StringId FlagCarrierTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -528,7 +528,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -545,12 +545,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -585,8 +585,8 @@ namespace TagTool.Tags.Definitions
         public class AssaultVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -606,8 +606,8 @@ namespace TagTool.Tags.Definitions
             public short BombDisarmingTime;
             public short BombFuseTime;
             public short Unknown5;
-            public StringID BombCarrierTraitProfile;
-            public StringID UnknownTraitProfile;
+            public StringId BombCarrierTraitProfile;
+            public StringId UnknownTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -640,7 +640,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -657,12 +657,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -697,8 +697,8 @@ namespace TagTool.Tags.Definitions
         public class InfectionVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -716,10 +716,10 @@ namespace TagTool.Tags.Definitions
             public sbyte LastManStandingBonus;
             public sbyte Unknown;
             public sbyte Unknown2;
-            public StringID ZombieTraitProfile;
-            public StringID AlphaZombieTraitProfile;
-            public StringID OnHavenTraitProfile;
-            public StringID LastHumanTraitProfile;
+            public StringId ZombieTraitProfile;
+            public StringId AlphaZombieTraitProfile;
+            public StringId OnHavenTraitProfile;
+            public StringId LastHumanTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -752,7 +752,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -769,12 +769,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -801,8 +801,8 @@ namespace TagTool.Tags.Definitions
         public class KingOfTheHillVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -818,7 +818,7 @@ namespace TagTool.Tags.Definitions
             public sbyte UncontestedControlPoints;
             public sbyte OffHillPoints;
             public sbyte KillPoints;
-            public StringID OnHillTraitProfile;
+            public StringId OnHillTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -851,7 +851,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -868,12 +868,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -912,8 +912,8 @@ namespace TagTool.Tags.Definitions
         public class TerritoriesVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -923,8 +923,8 @@ namespace TagTool.Tags.Definitions
             public short TerritoryCaptureTime;
             public short SuddenDeathTime;
             public short Unknown;
-            public StringID DefenderTraitProfile;
-            public StringID AttackerTraitProfile;
+            public StringId DefenderTraitProfile;
+            public StringId AttackerTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -957,7 +957,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -974,12 +974,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -999,8 +999,8 @@ namespace TagTool.Tags.Definitions
         public class JuggernautVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -1020,7 +1020,7 @@ namespace TagTool.Tags.Definitions
             public sbyte BetrayalPoints;
             public sbyte NextJuggernautDelay;
             public sbyte Unknown2;
-            public StringID JuggernautTraitProfile;
+            public StringId JuggernautTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -1053,7 +1053,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -1070,12 +1070,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -1123,8 +1123,8 @@ namespace TagTool.Tags.Definitions
         public class VipVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -1145,9 +1145,9 @@ namespace TagTool.Tags.Definitions
             public sbyte BetrayalPoints;
             public sbyte VipProximityTraitRadius;
             public sbyte Unknown2;
-            public StringID VipTeamTraitProfile;
-            public StringID VipProximityTraitProfile;
-            public StringID VipTraitProfile;
+            public StringId VipTeamTraitProfile;
+            public StringId VipProximityTraitProfile;
+            public StringId VipTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -1180,7 +1180,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -1197,12 +1197,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;
@@ -1243,8 +1243,8 @@ namespace TagTool.Tags.Definitions
         public class SandboxEditorVariant
         {
             [TagField(Length = 32)] public string NameAscii;
-            public StringID Name;
-            public StringID Description;
+            public StringId Name;
+            public StringId Description;
             public List<GeneralSetting> GeneralSettings;
             public List<RespawnSetting> RespawnSettings;
             public List<SocialSetting> SocialSettings;
@@ -1252,7 +1252,7 @@ namespace TagTool.Tags.Definitions
             public uint Flags;
             public EditModeValue EditMode;
             public short EditorRespawnTime;
-            public StringID EditorTraitProfile;
+            public StringId EditorTraitProfile;
 
             [TagStructure(Size = 0x8)]
             public class GeneralSetting
@@ -1285,7 +1285,7 @@ namespace TagTool.Tags.Definitions
                 public sbyte Unknown;
                 public sbyte Unknown2;
                 public sbyte Unknown3;
-                public StringID RespawnTraitProfile;
+                public StringId RespawnTraitProfile;
                 public sbyte RespawnTraitDuration;
                 public sbyte Unknown4;
                 public sbyte Unknown5;
@@ -1302,12 +1302,12 @@ namespace TagTool.Tags.Definitions
             public class MapOverride
             {
                 public uint Flags;
-                public StringID BasePlayerTraitProfile;
-                public StringID WeaponSet;
-                public StringID VehicleSet;
-                public StringID OvershieldTraitProfile;
-                public StringID ActiveCamoTraitProfile;
-                public StringID CustomPowerupTraitProfile;
+                public StringId BasePlayerTraitProfile;
+                public StringId WeaponSet;
+                public StringId VehicleSet;
+                public StringId OvershieldTraitProfile;
+                public StringId ActiveCamoTraitProfile;
+                public StringId CustomPowerupTraitProfile;
                 public sbyte OvershieldTraitDuration;
                 public sbyte ActiveCamoTraitDuration;
                 public sbyte CustomPowerupTraitDuration;

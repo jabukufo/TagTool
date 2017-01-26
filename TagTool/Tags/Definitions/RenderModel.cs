@@ -8,7 +8,7 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "render_model", Class = "mode", Size = 0x1D0)]
     public class RenderModel
     {
-        public StringID Name;
+        public StringId Name;
         public ushort Flags;
         public short Unknown6;
         public int Checksum;
@@ -87,7 +87,7 @@ namespace TagTool.Tags.Definitions
             /// <summary>
             /// Gets or sets the name of the region as a stringID.
             /// </summary>
-            public StringID Name;
+            public StringId Name;
 
             /// <summary>
             /// Gets or sets the permutations belonging to the region.
@@ -103,7 +103,7 @@ namespace TagTool.Tags.Definitions
                 /// <summary>
                 /// Gets or sets the name of the permutation as a stringID.
                 /// </summary>
-                public StringID Name;
+                public StringId Name;
 
                 /// <summary>
                 /// Gets or sets the index of the first mesh belonging to the permutation.
@@ -125,7 +125,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x3C)]
         public class Flair
         {
-            public StringID Name;
+            public StringId Name;
             public ushort Flags;
             public short NodeIndex;
             public float DefaultScale;
@@ -138,7 +138,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x60)]
         public class Node
         {
-            public StringID Name;
+            public StringId Name;
             public short ParentNode;
             public short FirstChildNode;
             public short NextSiblingNode;
@@ -156,7 +156,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x10)]
         public class MarkerGroup
         {
-            public StringID Name;
+            public StringId Name;
             public List<Marker> Markers;
 
             [TagStructure(Size = 0x24)]

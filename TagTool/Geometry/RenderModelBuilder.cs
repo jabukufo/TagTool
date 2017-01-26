@@ -7,7 +7,6 @@ using TagTool.Common;
 using TagTool.IO;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Geometry
 {
@@ -79,7 +78,7 @@ namespace TagTool.Geometry
         /// </summary>
         /// <param name="name">The name stringID.</param>
         /// <exception cref="System.InvalidOperationException">Cannot begin a new region while another is active</exception>
-        public void BeginRegion(StringID name)
+        public void BeginRegion(StringId name)
         {
             if (_currentRegion != null)
                 throw new InvalidOperationException("Cannot begin a new region while another is active");
@@ -119,7 +118,7 @@ namespace TagTool.Geometry
         /// or
         /// Cannot begin a new permutation while another is active
         /// </exception>
-        public void BeginPermutation(StringID name)
+        public void BeginPermutation(StringId name)
         {
             if (_currentRegion == null)
                 throw new InvalidOperationException("Cannot begin a new permutation if a region is not active");

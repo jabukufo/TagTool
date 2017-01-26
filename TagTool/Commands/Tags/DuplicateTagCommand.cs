@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
@@ -34,7 +34,7 @@ namespace TagTool.Commands.Tags
                 return false;
 
             TagInstance newTag;
-            using (var stream = CacheContext.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenTagCacheReadWrite())
                 newTag = CacheContext.TagCache.DuplicateTag(stream, tag);
 
             Console.WriteLine("Tag duplicated successfully!");

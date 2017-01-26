@@ -7,7 +7,7 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "antenna", Class = "ant!", Size = 0x50)]
     public class Antenna
     {
-        public StringID AttachmentMarkerName;
+        public StringId AttachmentMarkerName;
         public TagInstance Bitmaps;
         public TagInstance Physics;
         public uint Unknown;

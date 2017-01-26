@@ -8,8 +8,8 @@ namespace TagTool.Tags.Definitions
     public class Cloth
     {
         public uint Flags;
-        public StringID MarkerAttachmentName;
-        public StringID SecondMarkerAttachmentName;
+        public StringId MarkerAttachmentName;
+        public StringId SecondMarkerAttachmentName;
         public TagInstance Shader;
         public short GridXDimension;
         public short GridYDimension;

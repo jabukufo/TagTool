@@ -28,9 +28,9 @@ namespace TagTool.Tags.Definitions
         public float RiderDirectDamageScale;
         public float RiderMaxTransferDamageScale;
         public float RiderMinTransferDamageScale;
-        public StringID GeneralDamage;
-        public StringID SpecificDamage;
-        public StringID SpecialDamage;
+        public StringId GeneralDamage;
+        public StringId SpecificDamage;
+        public StringId SpecialDamage;
         public float AiStunRadius;
         public float AiStunBoundsMin;
         public float AiStunBoundsMax;
@@ -109,7 +109,7 @@ namespace TagTool.Tags.Definitions
             public byte[] LowFrequencyVibrationFunction;
             public float HighFrequencyVibrationDuration;
             public byte[] HighFrequencyVibrationFunction;
-            public StringID EffectName;
+            public StringId EffectName;
             public float Duration2;
             public byte[] EffectScaleFunction;
 

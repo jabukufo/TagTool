@@ -10,7 +10,6 @@ using TagTool.Shaders;
 using TagTool.Serialization;
 using TagTool.Tags.Definitions;
 using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
@@ -57,45 +56,45 @@ namespace TagTool.Commands.Tags
             // Load destination files
             Console.WriteLine("Loading the target tags.dat...");
             var destCachePath = Path.Combine(targetDir, "tags.dat");
-            var destInfo = new GameCacheContext { TagCacheFile = new FileInfo(destCachePath) };
-            using (var stream = destInfo.OpenCacheRead())
-                destInfo.TagCache = new TagCache(stream);
+            var destCacheContext = new GameCacheContext { TagCacheFile = new FileInfo(destCachePath) };
+            using (var stream = destCacheContext.OpenTagCacheRead())
+                destCacheContext.TagCache = new TagCache(stream);
 
             // Do version detection
             CacheVersion guessedVersion;
-            destInfo.Version = CacheVersionDetection.Detect(destInfo.TagCache, out guessedVersion);
-            if (destInfo.Version == CacheVersion.Unknown)
+            destCacheContext.Version = CacheVersionDetection.Detect(destCacheContext.TagCache, out guessedVersion);
+            if (destCacheContext.Version == CacheVersion.Unknown)
             {
                 Console.WriteLine("Unrecognized target version!");
                 return true;
             }
-            Console.WriteLine("- Detected version {0}", CacheVersionDetection.GetVersionString(destInfo.Version));
+            Console.WriteLine("- Detected version {0}", CacheVersionDetection.GetVersionString(destCacheContext.Version));
 
-            if (CacheContext.Version != CacheVersion.HaloOnline498295 && destInfo.Version != CacheVersion.HaloOnline106708)
+            if (CacheContext.Version != CacheVersion.HaloOnline498295 && destCacheContext.Version != CacheVersion.HaloOnline106708)
             {
                 Console.Error.WriteLine("Conversion is only supported from 11.1.498295 Live to 1.106708 cert_ms23.");
                 return true;
             }
 
             // Set up version-specific objects
-            destInfo.Serializer = new TagSerializer(destInfo.Version);
-            destInfo.Deserializer = new TagDeserializer(destInfo.Version);
+            destCacheContext.Serializer = new TagSerializer(destCacheContext.Version);
+            destCacheContext.Deserializer = new TagDeserializer(destCacheContext.Version);
 
             // Load stringIDs
             Console.WriteLine("Loading the target string_ids.dat...");
 
-            var resolver = StringIdResolverFactory.Create(destInfo.Version);
+            var resolver = StringIdResolverFactory.Create(destCacheContext.Version);
 
             var destStringIDsPath = Path.Combine(targetDir, "string_ids.dat");
-            destInfo.StringIdCacheFile = new FileInfo(destStringIDsPath);
+            destCacheContext.StringIdCacheFile = new FileInfo(destStringIDsPath);
 
-            using (var stream = destInfo.StringIdCacheFile.OpenRead())
-                destInfo.StringIdCache = new StringIdCache(stream, resolver);
+            using (var stream = destCacheContext.StringIdCacheFile.OpenRead())
+                destCacheContext.StringIdCache = new StringIdCache(stream, resolver);
 
             // Load resources for the target build
             Console.WriteLine("Loading target resources...");
             var destResources = new ResourceDataManager();
-            destResources.LoadCachesFromDirectory(destInfo.TagCacheFile.DirectoryName);
+            destResources.LoadCachesFromDirectory(destCacheContext.TagCacheFile.DirectoryName);
 
             // Load resources for our build
             Console.WriteLine("Loading source resources...");
@@ -103,10 +102,10 @@ namespace TagTool.Commands.Tags
             srcResources.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
 
             Console.WriteLine();
-            Console.WriteLine("CONVERTING FROM VERSION {0} TO {1}", CacheVersionDetection.GetVersionString(CacheContext.Version), CacheVersionDetection.GetVersionString(destInfo.Version));
+            Console.WriteLine("CONVERTING FROM VERSION {0} TO {1}", CacheVersionDetection.GetVersionString(CacheContext.Version), CacheVersionDetection.GetVersionString(destCacheContext.Version));
             Console.WriteLine();
 
-            using (var stream = CacheContext.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenTagCacheReadWrite())
             {
                 foreach (var scnr in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
                 {
@@ -135,27 +134,27 @@ namespace TagTool.Commands.Tags
             }
 
                 TagInstance resultTag;
-            using (Stream srcStream = CacheContext.OpenCacheRead(), destStream = destInfo.OpenCacheReadWrite())
-                resultTag = ConvertTag(srcTag, CacheContext, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+            using (Stream srcStream = CacheContext.OpenTagCacheRead(), destStream = destCacheContext.OpenTagCacheReadWrite())
+                resultTag = ConvertTag(srcTag, CacheContext, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
 
             Console.WriteLine();
             Console.WriteLine("Repairing decal systems...");
-            FixDecalSystems(destInfo, resultTag.Index);
+            FixDecalSystems(destCacheContext, resultTag.Index);
 
             Console.WriteLine();
             Console.WriteLine("Saving stringIDs...");
-            using (var stream = destInfo.StringIdCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
-                destInfo.StringIdCache.Save(stream);
+            using (var stream = destCacheContext.StringIdCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+                destCacheContext.StringIdCache.Save(stream);
 
             Console.WriteLine("Writing {0}...", csvOutPath);
             using (var stream = new StreamWriter(File.Open(csvOutPath, FileMode.Create, FileAccess.ReadWrite)))
                 tagMap.WriteCsv(stream);
 
             // Uncomment this to add the new tag as a dependency to cfgt to make testing easier
-            /*using (var stream = destInfo.OpenCacheReadWrite())
+            /*using (var stream = destCacheContext.OpenCacheReadWrite())
             {
-                destInfo.Cache.Tags[0].Dependencies.Add(resultTag.Index);
-                destInfo.Cache.UpdateTag(stream, destInfo.Cache.Tags[0]);
+                destCacheContext.Cache.Tags[0].Dependencies.Add(resultTag.Index);
+                destCacheContext.Cache.UpdateTag(stream, destCacheContext.Cache.Tags[0]);
             }*/
 
             Console.WriteLine();
@@ -164,20 +163,20 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private TagInstance ConvertTag(TagInstance srcTag, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private TagInstance ConvertTag(TagInstance srcTag, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             TagPrinter.PrintTagShort(srcTag);
             
             // Uncomment this to use 0x101F for all shaders
             /*if (srcTag.IsClass("rm  "))
-                return destInfo.Cache.Tags[0x101F];*/
+                return destCacheContext.Cache.Tags[0x101F];*/
 
             // Check if the tag is in the map, and just return the translated tag if so
-            var destIndex = tagMap.Translate(srcInfo.Version, srcTag.Index, destInfo.Version);
+            var destIndex = tagMap.Translate(srcInfo.Version, srcTag.Index, destCacheContext.Version);
             if (destIndex >= 0)
             {
                 Console.WriteLine("- Using already-known index {0:X4}", destIndex);
-                return destInfo.TagCache.Tags[destIndex];
+                return destCacheContext.TagCache.Tags[destIndex];
             }
 
             // Deserialize the tag from the source cache
@@ -193,8 +192,8 @@ namespace TagTool.Commands.Tags
                 var rm = (RenderMethod)tagData;
                 foreach (var prop in rm.ShaderProperties)
                 {
-                    if (tagMap.Translate(srcInfo.Version, prop.Template.Index, destInfo.Version) < 0)
-                        return destInfo.Cache.Tags[0x101F];
+                    if (tagMap.Translate(srcInfo.Version, prop.Template.Index, destCacheContext.Version) < 0)
+                        return destCacheContext.Cache.Tags[0x101F];
                 }
             }*/
 
@@ -202,72 +201,72 @@ namespace TagTool.Commands.Tags
 
             TagInstance instance = null;
 
-            for (var i = 0; i < destInfo.TagCache.Tags.Count; i++)
+            for (var i = 0; i < destCacheContext.TagCache.Tags.Count; i++)
             {
-                if (destInfo.TagCache.Tags[i] == null)
+                if (destCacheContext.TagCache.Tags[i] == null)
                 {
-                    destInfo.TagCache.Tags[i] = instance = new TagInstance(i, TagGroup.Instances[srcTag.Group.Tag]);
+                    destCacheContext.TagCache.Tags[i] = instance = new TagInstance(i, TagGroup.Instances[srcTag.Group.Tag]);
                     break;
                 }
             }
 
             if (instance == null)
-                instance = destInfo.TagCache.AllocateTag(srcTag.Group);
-            tagMap.Add(srcInfo.Version, srcTag.Index, destInfo.Version, instance.Index);
+                instance = destCacheContext.TagCache.AllocateTag(srcTag.Group);
+            tagMap.Add(srcInfo.Version, srcTag.Index, destCacheContext.Version, instance.Index);
 
             if (srcTag.IsInGroup("decs") || srcTag.IsInGroup("rmd "))
                 IsDecalShader = true;
 
             // Convert it
-            tagData = Convert(tagData, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+            tagData = Convert(tagData, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
 
             if (srcTag.IsInGroup("decs") || srcTag.IsInGroup("rmd "))
                 IsDecalShader = false;
 
             // Re-serialize into the destination cache
-            var destContext = new TagSerializationContext(destStream, destInfo, instance);
-            destInfo.Serializer.Serialize(destContext, tagData);
+            var destContext = new TagSerializationContext(destStream, destCacheContext, instance);
+            destCacheContext.Serializer.Serialize(destContext, tagData);
             return instance;
         }
 
-        private object Convert(object data, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private object Convert(object data, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             if (data == null)
                 return null;
             var type = data.GetType();
             if (type.IsPrimitive)
                 return data;
-            if (type == typeof(StringID))
-                return ConvertStringID((StringID)data, srcInfo, destInfo);
+            if (type == typeof(StringId))
+                return ConvertStringID((StringId)data, srcInfo, destCacheContext);
             if (type == typeof(TagInstance))
-                return ConvertTag((TagInstance)data, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+                return ConvertTag((TagInstance)data, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
             if (type == typeof(ResourceReference))
-                return ConvertResource((ResourceReference)data, srcInfo, srcResources, destInfo, destResources);
+                return ConvertResource((ResourceReference)data, srcInfo, srcResources, destCacheContext, destResources);
             if (type == typeof(GeometryReference))
-                return ConvertGeometry((GeometryReference)data, srcInfo, srcResources, destInfo, destResources);
+                return ConvertGeometry((GeometryReference)data, srcInfo, srcResources, destCacheContext, destResources);
             if (type.IsArray)
-                return ConvertArray((Array)data, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+                return ConvertArray((Array)data, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
-                return ConvertList(data, type, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+                return ConvertList(data, type, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
             if (type.GetCustomAttributes(typeof(TagStructureAttribute), false).Length > 0)
-                return ConvertStructure(data, type, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+                return ConvertStructure(data, type, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
             return data;
         }
 
-        private Array ConvertArray(Array array, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private Array ConvertArray(Array array, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             if (array.GetType().GetElementType().IsPrimitive)
                 return array;
             for (var i = 0; i < array.Length; i++)
             {
                 var oldValue = array.GetValue(i);
-                var newValue = Convert(oldValue, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+                var newValue = Convert(oldValue, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
                 array.SetValue(newValue, i);
             }
             return array;
         }
 
-        private object ConvertList(object list, Type type, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private object ConvertList(object list, Type type, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             if (type.GenericTypeArguments[0].IsPrimitive)
                 return list;
@@ -277,20 +276,20 @@ namespace TagTool.Commands.Tags
             for (var i = 0; i < count; i++)
             {
                 var oldValue = getItem.Invoke(list, new object[] { i });
-                var newValue = Convert(oldValue, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+                var newValue = Convert(oldValue, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
                 setItem.Invoke(list, new object[] { i, newValue });
             }
             return list;
         }
 
-        private object ConvertStructure(object data, Type type, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destInfo, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private object ConvertStructure(object data, Type type, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             // Convert each field
-            var enumerator = new TagFieldEnumerator(new TagStructureInfo(type, destInfo.Version));
+            var enumerator = new TagFieldEnumerator(new TagStructureInfo(type, destCacheContext.Version));
             while (enumerator.Next())
             {
                 var oldValue = enumerator.Field.GetValue(data);
-                var newValue = Convert(oldValue, srcInfo, srcStream, srcResources, destInfo, destStream, destResources, tagMap);
+                var newValue = Convert(oldValue, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
                 enumerator.Field.SetValue(data, newValue);
             }
 
@@ -304,26 +303,26 @@ namespace TagTool.Commands.Tags
             return data;
         }
 
-        private StringID ConvertStringID(StringID stringId, GameCacheContext srcInfo, GameCacheContext destInfo)
+        private StringId ConvertStringID(StringId stringId, GameCacheContext srcInfo, GameCacheContext destCacheContext)
         {
-            if (stringId == StringID.Null)
+            if (stringId == StringId.Null)
                 return stringId;
             var srcString = srcInfo.StringIdCache.GetString(stringId);
             if (srcString == null)
-                return StringID.Null;
-            var destStringID = destInfo.StringIdCache.GetStringID(srcString);
-            if (destStringID == StringID.Null)
-                destStringID = destInfo.StringIdCache.Add(srcString);
+                return StringId.Null;
+            var destStringID = destCacheContext.StringIdCache.GetStringId(srcString);
+            if (destStringID == StringId.Null)
+                destStringID = destCacheContext.StringIdCache.Add(srcString);
             return destStringID;
         }
 
-        private ResourceReference ConvertResource(ResourceReference resource, GameCacheContext srcInfo, ResourceDataManager srcResources, GameCacheContext destInfo, ResourceDataManager destResources)
+        private ResourceReference ConvertResource(ResourceReference resource, GameCacheContext srcInfo, ResourceDataManager srcResources, GameCacheContext destCacheContext, ResourceDataManager destResources)
         {
             if (resource == null)
                 return null;
             Console.WriteLine("- Copying resource {0} in {1}...", resource.Index, resource.GetLocation());
             var data = srcResources.ExtractRaw(resource);
-            var newLocation = FixResourceLocation(resource.GetLocation(), srcInfo.Version, destInfo.Version);
+            var newLocation = FixResourceLocation(resource.GetLocation(), srcInfo.Version, destCacheContext.Version);
             destResources.AddRaw(resource, newLocation, data);
             return resource;
         }
@@ -342,17 +341,17 @@ namespace TagTool.Commands.Tags
             return location;
         }
 
-        private GeometryReference ConvertGeometry(GeometryReference geometry, GameCacheContext srcInfo, ResourceDataManager srcResources, GameCacheContext destInfo, ResourceDataManager destResources)
+        private GeometryReference ConvertGeometry(GeometryReference geometry, GameCacheContext srcInfo, ResourceDataManager srcResources, GameCacheContext destCacheContext, ResourceDataManager destResources)
         {
             if (geometry == null || geometry.Resource == null || geometry.Resource.Index < 0)
                 return geometry;
 
             // The format changed starting with version 1.235640, so if both versions are on the same side then they can be converted normally
             var srcCompare = CacheVersionDetection.Compare(srcInfo.Version, CacheVersion.HaloOnline235640);
-            var destCompare = CacheVersionDetection.Compare(destInfo.Version, CacheVersion.HaloOnline235640);
+            var destCompare = CacheVersionDetection.Compare(destCacheContext.Version, CacheVersion.HaloOnline235640);
             if ((srcCompare < 0 && destCompare < 0) || (srcCompare >= 0 && destCompare >= 0))
             {
-                geometry.Resource = ConvertResource(geometry.Resource, srcInfo, srcResources, destInfo, destResources);
+                geometry.Resource = ConvertResource(geometry.Resource, srcInfo, srcResources, destCacheContext, destResources);
                 return geometry;
             }
 
@@ -365,7 +364,7 @@ namespace TagTool.Commands.Tags
                 // Now open source and destination vertex streams
                 inStream.Position = 0;
                 var inVertexStream = VertexStreamFactory.Create(srcInfo.Version, inStream);
-                var outVertexStream = VertexStreamFactory.Create(destInfo.Version, outStream);
+                var outVertexStream = VertexStreamFactory.Create(destCacheContext.Version, outStream);
 
                 // Deserialize the definition data
                 var resourceContext = new ResourceSerializationContext(geometry.Resource);
@@ -389,10 +388,10 @@ namespace TagTool.Commands.Tags
                 }
 
                 // Update the definition data
-                destInfo.Serializer.Serialize(resourceContext, definition);
+                destCacheContext.Serializer.Serialize(resourceContext, definition);
 
                 // Now inject the new resource data
-                var newLocation = FixResourceLocation(geometry.Resource.GetLocation(), srcInfo.Version, destInfo.Version);
+                var newLocation = FixResourceLocation(geometry.Resource.GetLocation(), srcInfo.Version, destCacheContext.Version);
                 outStream.Position = 0;
                 destResources.Add(geometry.Resource, newLocation, outStream);
             }
@@ -761,7 +760,7 @@ namespace TagTool.Commands.Tags
             }
         }
 
-        private void FixDecalSystems(GameCacheContext destInfo, int firstNewIndex)
+        private void FixDecalSystems(GameCacheContext destCacheContext, int firstNewIndex)
         {
             // decs tags need to be updated to use the old rmdf for decals,
             // because the decal planes seem to be generated by the engine and
@@ -772,21 +771,21 @@ namespace TagTool.Commands.Tags
             // pass, but we'd have to store the rmdf somewhere and frankly I'm
             // too lazy to do that...
 
-            var firstDecalSystemTag = destInfo.TagCache.Tags.FindFirstInGroup("decs");
+            var firstDecalSystemTag = destCacheContext.TagCache.Tags.FindFirstInGroup("decs");
             if (firstDecalSystemTag == null)
                 return;
-            using (var stream = destInfo.OpenCacheReadWrite())
+            using (var stream = destCacheContext.OpenTagCacheReadWrite())
             {
-                var firstDecalSystemContext = new TagSerializationContext(stream, destInfo, firstDecalSystemTag);
-                var firstDecalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(firstDecalSystemContext);
-                foreach (var decalSystemTag in destInfo.TagCache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
+                var firstDecalSystemContext = new TagSerializationContext(stream, destCacheContext, firstDecalSystemTag);
+                var firstDecalSystem = destCacheContext.Deserializer.Deserialize<DecalSystem>(firstDecalSystemContext);
+                foreach (var decalSystemTag in destCacheContext.TagCache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
                 {
                     TagPrinter.PrintTagShort(decalSystemTag);
-                    var context = new TagSerializationContext(stream, destInfo, decalSystemTag);
-                    var decalSystem = destInfo.Deserializer.Deserialize<DecalSystem>(context);
+                    var context = new TagSerializationContext(stream, destCacheContext, decalSystemTag);
+                    var decalSystem = destCacheContext.Deserializer.Deserialize<DecalSystem>(context);
                     foreach (var system in decalSystem.DecalSystem2)
                         system.BaseRenderMethod = firstDecalSystem.DecalSystem2[0].BaseRenderMethod;
-                    destInfo.Serializer.Serialize(context, decalSystem);
+                    destCacheContext.Serializer.Serialize(context, decalSystem);
                 }
             }
         }

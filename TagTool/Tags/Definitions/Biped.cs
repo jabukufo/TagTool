@@ -11,7 +11,7 @@ namespace TagTool.Tags.Definitions
         public uint Flags4;
         public Angle StationaryTurningSpeed;
         public uint Unknown20;
-        public StringID Unknown21;
+        public StringId Unknown21;
         public float JumpVelocity;
         public float MaximumSoftLandingTime;
         public float MinimumHardLandingTime;
@@ -60,8 +60,8 @@ namespace TagTool.Tags.Definitions
         public float HeightCrouching;
         public float Radius;
         public float Mass;
-        public StringID LivingMaterialName;
-        public StringID DeadMaterialName;
+        public StringId LivingMaterialName;
+        public StringId DeadMaterialName;
         public short LivingMaterialGlobalIndex;
         public short DeadMaterialGlobalIndex;
         public List<DeadSphereShape> DeadSphereShapes;
@@ -130,7 +130,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x18)]
         public class WeaponCameraHeightBlock
         {
-            public StringID Class;
+            public StringId Class;
             public float StandingHeightFraction;
             public float CrouchingHeightFraction;
             public uint Unknown;
@@ -161,7 +161,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x70)]
         public class DeadSphereShape
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -200,7 +200,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x60)]
         public class PillShape
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -234,7 +234,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x70)]
         public class SphereShape
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -273,7 +273,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x4)]
         public class ContactPoint
         {
-            public StringID MarkerName;
+            public StringId MarkerName;
         }
     }
 }

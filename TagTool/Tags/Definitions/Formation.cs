@@ -7,7 +7,7 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "formation", Class = "form", Size = 0x18)]
     public class Formation
     {
-        public StringID Name;
+        public StringId Name;
         public List<UnknownBlock> Unknown;
         public uint Unknown2;
         public uint Unknown3;

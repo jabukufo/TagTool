@@ -8,7 +8,7 @@ namespace TagTool.Tags.Definitions
     public class GuiModelWidgetDefinition
     {
         public uint Flags;
-        public StringID Name;
+        public StringId Name;
         public short Unknown;
         public short Layer;
         public short WidescreenYBoundsMin;
@@ -43,7 +43,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xA0)]
         public class Biped
         {
-            public StringID Biped2;
+            public StringId Biped2;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -95,7 +95,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class UnknownBlock2
         {
-            public StringID Unknown;
+            public StringId Unknown;
             public uint Unknown2;
             public uint Unknown3;
             public uint Unknown4;

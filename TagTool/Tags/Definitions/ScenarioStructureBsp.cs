@@ -3,11 +3,9 @@ using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Tags.Definitions
 {
-    [TagStructure(Name = "scenario_structure_bsp", Class = "sbsp", Size = 0x394, MaxVersion = CacheVersion.HaloODST)]
     [TagStructure(Name = "scenario_structure_bsp", Class = "sbsp", Size = 0x3AC, MaxVersion = CacheVersion.HaloOnline106708)]
     [TagStructure(Name = "scenario_structure_bsp", Class = "sbsp", Size = 0x3A8, MaxVersion = CacheVersion.HaloOnline235640)]
     [TagStructure(Name = "scenario_structure_bsp", Class = "sbsp", Size = 0x3AC, MaxVersion = CacheVersion.HaloOnline449175)]
@@ -24,8 +22,6 @@ namespace TagTool.Tags.Definitions
         public uint Unknown5;
         [MinVersion(CacheVersion.HaloOnline106708)]
         public uint Unknown6;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public List<StructureSeam> StructureSeams;
         public uint Unknown7;
         public uint Unknown8;
         public uint Unknown9;
@@ -129,28 +125,14 @@ namespace TagTool.Tags.Definitions
         public GeometryReference Geometry2;
         [MinVersion(CacheVersion.HaloOnline106708)]
         public List<LeafSystem> LeafSystems;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public uint Unknown102;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public uint Unknown103;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public uint Unknown104;
         public uint Unknown88;
         public uint Unknown89;
         public uint Unknown90;
         [MinVersion(CacheVersion.HaloOnline106708)]
         public ResourceReference CollisionBspResource;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public ushort ZoneAssetSalt3;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public ushort ZoneAssetIndex3;
         public int UselessPading;
         [MinVersion(CacheVersion.HaloOnline106708)]
         public ResourceReference Resource4;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public ushort ZoneAssetSalt4;
-        [MaxVersion(CacheVersion.HaloODST)]
-        public ushort ZoneAssetIndex4;
         public int UselessPadding3;
         public int Unknown91;
         [MinVersion(CacheVersion.HaloOnline106708)]
@@ -248,7 +230,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x8)]
         public class FogBlock
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Unknown2;
         }
@@ -256,7 +238,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x30)]
         public class CameraEffect
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance Effect;
             public sbyte Unknown;
             public sbyte Unknown2;
@@ -280,9 +262,6 @@ namespace TagTool.Tags.Definitions
             public uint Unknown5;
             public uint Unknown6;
             public uint Unknown7;
-            [MaxVersion(CacheVersion.HaloODST)] public uint Unknown12;
-            [MaxVersion(CacheVersion.HaloODST)] public uint Unknown13;
-            [MaxVersion(CacheVersion.HaloODST)] public uint Unknown14;
             [MinVersion(CacheVersion.HaloOnline106708)] public List<UnknownBlock> Unknown8;
             public uint Unknown9;
             public uint Unknown10;
@@ -359,9 +338,8 @@ namespace TagTool.Tags.Definitions
             public uint Unknown23;
             public List<UnknownBlock> Unknown24;
             public List<UnknownBlock2> Unknown25;
-
-            [TagStructure(Size = 0x30, MaxVersion = CacheVersion.HaloODST)]
-            [TagStructure(Size = 0x34, MinVersion = CacheVersion.HaloOnline106708)]
+            
+            [TagStructure(Size = 0x34)]
             public class DecoratorGrid
             {
                 public short Amount;
@@ -372,7 +350,7 @@ namespace TagTool.Tags.Definitions
                 public float Radius;
                 public Vector3 GridSize;
                 public Vector3 BoundingSphereOffset;
-                [MinVersion(CacheVersion.HaloOnline106708)] public uint Unknown2;
+                public uint Unknown2;
             }
             
             [TagStructure(Size = 0x4)]
@@ -396,7 +374,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x58)]
         public class BackgroundSoundEnvironmentPaletteBlock
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance SoundEnvironment;
             public uint Unknown;
             public float CutoffDistance;
@@ -463,9 +441,8 @@ namespace TagTool.Tags.Definitions
             [TagField(Length = 32)] public string ScenarioObjectName;
             public uint Unknown2;
         }
-
-        [TagStructure(Size = 0x78, MaxVersion = CacheVersion.HaloODST)]
-        [TagStructure(Size = 0x74, MinVersion = CacheVersion.HaloOnline106708)]
+        
+        [TagStructure(Size = 0x74)]
         public class InstancedGeometryInstance
         {
             public float Scale;
@@ -478,7 +455,7 @@ namespace TagTool.Tags.Definitions
             public Vector3 BoundingSphereOffset;
             public float BoundingSphereRadius1;
             public float BoundingSphereRadius2;
-            public StringID Name;
+            public StringId Name;
             public short PathfindingPolicy;
             public short LightmappingPolicy;
             public uint Unknown3;
@@ -487,11 +464,8 @@ namespace TagTool.Tags.Definitions
             public short Unknown5;
             public short Unknown6;
             public short Unknown7;
-            [MaxVersion(CacheVersion.HaloODST)]
-            public uint Unknown8;
-
-            [TagStructure(Size = 0x70, Align = 0x10, MaxVersion = CacheVersion.HaloODST)]
-            [TagStructure(Size = 0x80, Align = 0x10, MinVersion = CacheVersion.HaloOnline106708)]
+            
+            [TagStructure(Size = 0x80)]
             public class CollisionDefinition
             {
                 public int Unknown;

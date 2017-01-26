@@ -7,7 +7,7 @@ using TagTool.Bitmaps;
 using TagTool.Geometry;
 using TagTool.Tags;
 using TagTool.Common;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {

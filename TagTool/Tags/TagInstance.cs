@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Common;
 
 namespace TagTool.Tags
@@ -145,7 +145,7 @@ namespace TagTool.Tags
             var groupTag = new Tag(reader.ReadInt32());            // 0x14 int32  group tag
             var parentGroupTag = new Tag(reader.ReadInt32());      // 0x18 int32  parent group tag
             var grandparentGroupTag = new Tag(reader.ReadInt32()); // 0x1C int32  grandparent group tag
-            var groupName = new StringID(reader.ReadUInt32());     // 0x20 uint32 group name stringid
+            var groupName = new StringId(reader.ReadUInt32());     // 0x20 uint32 group name stringid
             Group = new TagGroup(groupTag, parentGroupTag, grandparentGroupTag, groupName);
 
             // Read dependencies

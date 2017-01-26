@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TagTool.Cache;
 using TagTool.Bitmaps;
 using TagTool.Serialization;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Tags.Definitions
 {

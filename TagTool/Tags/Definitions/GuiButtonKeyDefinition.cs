@@ -8,7 +8,7 @@ namespace TagTool.Tags.Definitions
     public class GuiButtonKeyDefinition
     {
         public uint Flags;
-        public StringID Name;
+        public StringId Name;
         public short Unknown;
         public short Layer;
         public short WidescreenYBoundsMin;
@@ -29,7 +29,7 @@ namespace TagTool.Tags.Definitions
         {
             public TagInstance Parent;
             public uint Flags;
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Layer;
             public short WidescreenYBoundsMin;
@@ -41,9 +41,9 @@ namespace TagTool.Tags.Definitions
             public short StandardYBoundsMax;
             public short StandardXBoundsMax;
             public TagInstance Animation;
-            public StringID DataSourceName;
-            public StringID TextString;
-            public StringID TextColor;
+            public StringId DataSourceName;
+            public StringId TextString;
+            public StringId TextColor;
             public short TextFont;
             public short Unknown2;
         }
@@ -53,7 +53,7 @@ namespace TagTool.Tags.Definitions
         {
             public TagInstance Parent;
             public uint Flags;
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Layer;
             public short WidescreenYBoundsMin;
@@ -71,8 +71,8 @@ namespace TagTool.Tags.Definitions
             public short Unknown3;
             public short SpriteIndex;
             public short Unknown4;
-            public StringID DataSourceName;
-            public StringID SpriteDataSourceName;
+            public StringId DataSourceName;
+            public StringId SpriteDataSourceName;
 
             public enum BlendMethodValue : short
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Bitmaps;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Serialization;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
@@ -70,7 +70,7 @@ namespace TagTool.Commands.Bitmaps
 
             var extractor = new BitmapDdsExtractor(resourceManager);
 
-            using (var tagsStream = CacheContext.OpenCacheRead())
+            using (var tagsStream = CacheContext.OpenTagCacheRead())
             {
                 try
                 {

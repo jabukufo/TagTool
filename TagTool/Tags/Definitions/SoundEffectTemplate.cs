@@ -17,7 +17,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x1C)]
         public class AdditionalSoundInput
         {
-            public StringID DspEffect;
+            public StringId DspEffect;
             public byte[] LowFrequencySoundFunction;
             public float TimePeriod;
         }

@@ -91,7 +91,7 @@ namespace TagTool.Tags.Definitions
     {
         public LocalizedString()
         {
-            StringID = StringID.Null;
+            StringID = StringId.Null;
             StringIDStr = "";
             Offsets = new int[12];
             for (var i = 0; i < Offsets.Length; i++)
@@ -101,7 +101,7 @@ namespace TagTool.Tags.Definitions
         /// <summary>
         /// Gets or sets the string's stringID.
         /// </summary>
-        public StringID StringID;
+        public StringId StringID;
 
         /// <summary>
         /// Gets or sets the stringID's string value. Can be empty.

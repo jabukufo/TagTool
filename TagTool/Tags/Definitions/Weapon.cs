@@ -12,7 +12,7 @@ namespace TagTool.Tags.Definitions
     {
         public uint Flags3;
         public uint MoreFlags;
-        public StringID Unknown8;
+        public StringId Unknown8;
         public SecondaryTriggerModeValue SecondaryTriggerMode;
         public short MaximumAlternateShotsLoaded;
         public float TurnOnTime;
@@ -96,8 +96,8 @@ namespace TagTool.Tags.Definitions
         public uint Unknown21;
         public uint Unknown22;
         public uint Unknown23;
-        public StringID WeaponClass;
-        public StringID WeaponName;
+        public StringId WeaponClass;
+        public StringId WeaponName;
         public uint Unknown24;
         public MultiplayerWeaponTypeValue MultiplayerWeaponType;
         public WeaponTypeValue WeaponType;
@@ -133,7 +133,7 @@ namespace TagTool.Tags.Definitions
         public float ZoomTransitionTime;
         public float MeleeWeaponDelay;
         public float ReadyAnimationDuration;
-        public StringID WeaponHolsterMarker;
+        public StringId WeaponHolsterMarker;
 
         public enum SecondaryTriggerModeValue : short
         {
@@ -225,7 +225,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x4)]
             public class TrackingType
             {
-                public StringID TrackingType2;
+                public StringId TrackingType2;
             }
         }
 
@@ -418,7 +418,7 @@ namespace TagTool.Tags.Definitions
             public short RoundsPerShot;
             public short MinimumRoundsLoaded;
             public short RoundsBetweenTracers;
-            public StringID OptionalBarrelMarkerName;
+            public StringId OptionalBarrelMarkerName;
             public PredictionTypeValue PredictionType;
             public FiringNoiseValue FiringNoise;
             public float AccelerationTime2;

@@ -13,7 +13,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x4C)]
         public class SoundEffect
         {
-            public StringID Name;
+            public StringId Name;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -78,13 +78,13 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x10)]
                 public class TemplateCollectionBlock
                 {
-                    public StringID DspEffect;
+                    public StringId DspEffect;
                     public List<Parameter> Parameters;
 
                     [TagStructure(Size = 0x2C)]
                     public class Parameter
                     {
-                        public StringID Name;
+                        public StringId Name;
                         public uint Unknown;
                         public uint Unknown2;
                         public uint HardwareOffset;

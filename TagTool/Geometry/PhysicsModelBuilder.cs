@@ -29,14 +29,14 @@ namespace TagTool.Geometry
             node.Sibling = -1;
             node.Parent = -1;
             //the 'default' stringid
-            node.Name = new StringID(1);
+            node.Name = new StringId(1);
 
             _phmo.Nodes.Add(node);
 
             _phmo.Materials = new List<PhysicsModel.Material>();
             var material = new PhysicsModel.Material();
             //the 'default' stringid
-            material.Name = new StringID(1);
+            material.Name = new StringId(1);
             material.Flags = -256;
             material.PhantomType = -1;
 

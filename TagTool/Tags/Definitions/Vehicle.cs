@@ -49,7 +49,7 @@ namespace TagTool.Tags.Definitions
         public float SeatEntranceAccelerationScale;
         public float SeatExitAccelerationScale;
         public float FlipTime;
-        public StringID FlipOverMessage;
+        public StringId FlipOverMessage;
         public TagInstance SuspensionSound;
         public TagInstance RunningEffect;
         public TagInstance UnknownResponse;
@@ -183,12 +183,12 @@ namespace TagTool.Tags.Definitions
             public float Traction;
             public uint Unknown5;
             public float TurningRate;
-            public StringID Unknown6;
+            public StringId Unknown6;
             public uint Unknown7;
             public uint Unknown8;
             public uint Unknown9;
             public uint Unknown10;
-            public StringID Unknown11;
+            public StringId Unknown11;
             public uint Unknown12;
             public uint Unknown13;
             public uint Unknown14;
@@ -243,9 +243,9 @@ namespace TagTool.Tags.Definitions
             public Angle MaximumLeftTurn;
             public Angle MaximumRightTurnNegative;
             public Angle Unknown;
-            public StringID ThrustFrontLeft;
-            public StringID ThrustFrontRight;
-            public StringID Thrust;
+            public StringId ThrustFrontLeft;
+            public StringId ThrustFrontRight;
+            public StringId Thrust;
             public Angle Unknown2;
             public Angle Unknown3;
             public Angle Unknown4;
@@ -284,7 +284,7 @@ namespace TagTool.Tags.Definitions
             public List<Gear> Gears;
             public TagInstance ChangeGearSound;
             public uint Unknown;
-            public StringID Unknown2;
+            public StringId Unknown2;
             public uint Unknown3;
             public uint Unknown4;
             public uint Unknown5;
@@ -341,7 +341,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x4C)]
         public class AntiGravityPoint
         {
-            public StringID MarkerName;
+            public StringId MarkerName;
             public uint Flags;
             public float AntigravStrength;
             public float AntigravOffset;
@@ -355,7 +355,7 @@ namespace TagTool.Tags.Definitions
             public uint Unknown3;
             public short Unknown4;
             public short DamageSourceRegionIndex;
-            public StringID DamageSourceRegionName;
+            public StringId DamageSourceRegionName;
             public float DefaultStateError;
             public float MinorDamageError;
             public float MediumDamageError;
@@ -366,7 +366,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x4C)]
         public class FrictionPoint
         {
-            public StringID MarkerName;
+            public StringId MarkerName;
             public uint Flags;
             public float FractionOfTotalMass;
             public float Radius;
@@ -382,10 +382,10 @@ namespace TagTool.Tags.Definitions
             public uint Unknown4;
             public uint Unknown5;
             public uint Unknown6;
-            public StringID CollisionMaterialName;
+            public StringId CollisionMaterialName;
             public short CollisionGlobalMaterialIndex;
             public ModelStateDestroyedValue ModelStateDestroyed;
-            public StringID RegionName;
+            public StringId RegionName;
             public int RegionIndex;
 
             public enum FrictionTypeValue : short

@@ -19,18 +19,18 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x18)]
         public class Method
         {
-            public StringID Type;
+            public StringId Type;
             public List<ShaderOption> ShaderOptions;
-            public StringID Unknown;
-            public StringID Unknown2;
+            public StringId Unknown;
+            public StringId Unknown2;
 
             [TagStructure(Size = 0x1C)]
             public class ShaderOption
             {
-                public StringID Type;
+                public StringId Type;
                 public TagInstance Option;
-                public StringID Unknown;
-                public StringID Unknown2;
+                public StringId Unknown;
+                public StringId Unknown2;
             }
         }
 

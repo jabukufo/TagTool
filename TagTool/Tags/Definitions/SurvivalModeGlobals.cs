@@ -20,22 +20,22 @@ namespace TagTool.Tags.Definitions
         {
             public ushort Flags;
             public TypeValue Type;
-            public StringID Event;
+            public StringId Event;
             public AudienceValue Audience;
             public short Unknown;
             public short Unknown2;
             public TeamValue Team;
-            public StringID DisplayString;
-            public StringID DisplayMedal;
+            public StringId DisplayString;
+            public StringId DisplayMedal;
             public uint Unknown3;
             public float DisplayDuration;
             public RequiredFieldValue RequiredField;
             public ExcludedAudienceValue ExcludedAudience;
             public RequiredField2Value RequiredField2;
             public ExcludedAudience2Value ExcludedAudience2;
-            public StringID PrimaryString;
+            public StringId PrimaryString;
             public int PrimaryStringDuration;
-            public StringID PluralDisplayString;
+            public StringId PluralDisplayString;
             public float SoundDelayAnnouncerOnly;
             public ushort SoundFlags;
             public short Unknown4;

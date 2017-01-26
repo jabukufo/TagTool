@@ -26,7 +26,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x60)]
         public class Vocalization
         {
-            public StringID Vocalization2;
+            public StringId Vocalization2;
             public short ParentIndex;
             public short Priority;
             public uint Flags;
@@ -51,7 +51,7 @@ namespace TagTool.Tags.Definitions
             public float SkipFraction2;
             public float SkipFraction3;
             public float SkipFraction4;
-            public StringID SampleLine;
+            public StringId SampleLine;
             public List<Respons> Responses;
 
             public enum PerceptionTypeValue : short
@@ -64,7 +64,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0xC)]
             public class Respons
             {
-                public StringID VocalizationName;
+                public StringId VocalizationName;
                 public ushort Flags;
                 public short VocalizationIndex;
                 public short ResponseType;
@@ -77,14 +77,14 @@ namespace TagTool.Tags.Definitions
         {
             public short DialogueType;
             public short VocalizationsIndex;
-            public StringID VocalizationName;
+            public StringId VocalizationName;
             public short SpeakerType;
             public ushort Flags;
             public short Hostility;
             public ushort Unknown;
             public short Unknown2;
             public short CauseType;
-            public StringID CauseAiTypeName;
+            public StringId CauseAiTypeName;
             public uint Unknown3;
             public short Unknown4;
             public short Unknown5;
@@ -95,7 +95,7 @@ namespace TagTool.Tags.Definitions
             public short DamageType;
             public short Unknown7;
             public short SubjectType;
-            public StringID SubjectAiTypeName;
+            public StringId SubjectAiTypeName;
         }
 
         [TagStructure(Size = 0x4)]

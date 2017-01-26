@@ -63,25 +63,25 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x4)]
         public class Argument
         {
-            public StringID Name;
+            public StringId Name;
         }
 
         [TagStructure(Size = 0x4)]
         public class UnknownBlock4
         {
-            public StringID Unknown;
+            public StringId Unknown;
         }
 
         [TagStructure(Size = 0x4)]
         public class UnknownBlock5
         {
-            public StringID Unknown;
+            public StringId Unknown;
         }
 
         [TagStructure(Size = 0x4)]
         public class ShaderMap
         {
-            public StringID Name;
+            public StringId Name;
         }
     }
 }

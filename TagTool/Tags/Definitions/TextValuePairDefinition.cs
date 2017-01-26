@@ -8,8 +8,8 @@ namespace TagTool.Tags.Definitions
     public class TextValuePairDefinition
     {
         public ParameterValue Parameter;
-        public StringID Name;
-        public StringID Description;
+        public StringId Name;
+        public StringId Description;
         public List<TextValuePair> TextValuePairs;
 
         public enum ParameterValue : int
@@ -649,9 +649,9 @@ namespace TagTool.Tags.Definitions
             public ExpectedValueTypeValue ExpectedValueType;
             public short Unknown;
             public int IntegerValue;
-            public StringID StringidValue;
-            public StringID Name;
-            public StringID Description;
+            public StringId StringidValue;
+            public StringId Name;
+            public StringId Description;
 
             public enum ExpectedValueTypeValue : sbyte
             {

@@ -17,7 +17,7 @@ namespace TagTool.Tags.Definitions
         {
             public int Unknown;
             public int Unknown2;
-            public StringID LevelName;
+            public StringId LevelName;
             public int Unknown3;
             public int Unknown4;
             public int Unknown5;

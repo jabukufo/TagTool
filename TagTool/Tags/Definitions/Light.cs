@@ -13,14 +13,14 @@ namespace TagTool.Tags.Definitions
         public float NearWidth;
         public float HeightStretch;
         public Angle FieldOfView;
-        public StringID FunctionName;
-        public StringID FunctionName2;
+        public StringId FunctionName;
+        public StringId FunctionName2;
         public short Unknown2;
         public short Unknown3;
         public uint Unknown4;
         public byte[] Function;
-        public StringID FunctionName3;
-        public StringID FunctionName4;
+        public StringId FunctionName3;
+        public StringId FunctionName4;
         public short Unknown5;
         public short Unknown6;
         public uint Unknown7;

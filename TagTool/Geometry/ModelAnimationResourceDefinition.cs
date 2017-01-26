@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 
@@ -14,7 +14,7 @@ namespace TagTool.Geometry
         [TagStructure]
         public class GroupMember
         {
-            public StringID Name;
+            public StringId Name;
             public uint Checksum;
             public short FrameCount;
             public sbyte NodeCount;
@@ -127,7 +127,7 @@ namespace TagTool.Geometry
                 public sbyte RotationCount; // number of static primary nodes in the animation, used in calculation of StaticNodesPrimary
                 public sbyte PositionCount; // number of static secondary noes in the animation, used in calculation of StaticNodesSecondary
                 public sbyte Unknown1;
-                public StringID Name; // only on overlay anims
+                public StringId Name; // only on overlay anims
                 public uint Checksum; // only on overlay anims
                 public uint NodesSecondaryOffset;
                 public uint NextOffset;

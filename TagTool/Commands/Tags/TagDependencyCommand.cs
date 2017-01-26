@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Tags;
 
 namespace TagTool.Commands.Tags
@@ -11,9 +11,9 @@ namespace TagTool.Commands.Tags
     /// </summary>
     class TagDependencyCommand : Command
     {
-        public GameCacheContext Info { get; }
+        public GameCacheContext CacheContext { get; }
 
-        public TagDependencyCommand(GameCacheContext info) : base(
+        public TagDependencyCommand(GameCacheContext cacheContext) : base(
             CommandFlags.None,
 
             "tag-dependency",
@@ -34,7 +34,7 @@ namespace TagTool.Commands.Tags
             "To add dependencies to a map, use the \"map\" command to get its scenario tag\n" +
             "index and then add dependencies to the scenario tag.")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -42,7 +42,7 @@ namespace TagTool.Commands.Tags
             if (args.Count < 2)
                 return false;
 
-            var tag = ArgumentParser.ParseTagIndex(Info, args[1]);
+            var tag = ArgumentParser.ParseTagIndex(CacheContext, args[1]);
 
             if (tag == null)
                 return false;
@@ -70,14 +70,14 @@ namespace TagTool.Commands.Tags
             if (args.Count < 3)
                 return false;
 
-            var dependencies = args.Skip(2).Select(a => ArgumentParser.ParseTagIndex(Info, a)).ToList();
+            var dependencies = args.Skip(2).Select(a => ArgumentParser.ParseTagIndex(CacheContext, a)).ToList();
 
             if (dependencies.Count == 0 || dependencies.Any(d => d == null))
                 return false;
 
-            using (var stream = Info.OpenCacheReadWrite())
+            using (var stream = CacheContext.OpenTagCacheReadWrite())
             {
-                var data = Info.TagCache.ExtractTag(stream, tag);
+                var data = CacheContext.TagCache.ExtractTag(stream, tag);
 
                 if (args[0] == "add")
                 {
@@ -100,7 +100,7 @@ namespace TagTool.Commands.Tags
                     }
                 }
 
-                Info.TagCache.SetTagData(stream, tag, data);
+                CacheContext.TagCache.SetTagData(stream, tag, data);
             }
 
             return true;
@@ -117,17 +117,17 @@ namespace TagTool.Commands.Tags
             IEnumerable<TagInstance> dependencies;
 
             if (all)
-                dependencies = Info.TagCache.Tags.FindDependencies(tag);
+                dependencies = CacheContext.TagCache.Tags.FindDependencies(tag);
             else
-                dependencies = tag.Dependencies.Where(i => Info.TagCache.Tags.Contains(i)).Select(i => Info.TagCache.Tags[i]);
+                dependencies = tag.Dependencies.Where(i => CacheContext.TagCache.Tags.Contains(i)).Select(i => CacheContext.TagCache.Tags[i]);
 
             foreach (var dependency in dependencies)
             {
-                var tagName = Info.TagNames.ContainsKey(dependency.Index) ?
-                    Info.TagNames[dependency.Index] :
+                var tagName = CacheContext.TagNames.ContainsKey(dependency.Index) ?
+                    CacheContext.TagNames[dependency.Index] :
                     $"0x{dependency.Index:X4}";
 
-                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{Info.StringIdCache.GetString(dependency.Group.Name)}");
+                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{CacheContext.StringIdCache.GetString(dependency.Group.Name)}");
             }
 
             return true;
@@ -135,15 +135,15 @@ namespace TagTool.Commands.Tags
 
         private bool ExecuteListDependsOn(TagInstance tag)
         {
-            var dependsOn = Info.TagCache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
+            var dependsOn = CacheContext.TagCache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
 
             foreach (var dependency in dependsOn)
             {
-                var tagName = Info.TagNames.ContainsKey(dependency.Index) ?
-                    Info.TagNames[dependency.Index] :
+                var tagName = CacheContext.TagNames.ContainsKey(dependency.Index) ?
+                    CacheContext.TagNames[dependency.Index] :
                     $"0x{dependency.Index:X4}";
 
-                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{Info.StringIdCache.GetString(dependency.Group.Name)}");
+                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{CacheContext.StringIdCache.GetString(dependency.Group.Name)}");
             }
 
             return true;

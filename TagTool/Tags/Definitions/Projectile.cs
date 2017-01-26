@@ -170,7 +170,7 @@ namespace TagTool.Tags.Definitions
         {
             public ushort Flags;
             public ResponseValue Response;
-            public StringID MaterialName;
+            public StringId MaterialName;
             public short GlobalMaterialIndex;
             public short Unknown;
             public ResponseValue2 Response2;

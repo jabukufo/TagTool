@@ -1,4 +1,4 @@
-﻿using TagTool.Cache.HaloOnline;
+﻿using TagTool.Cache;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
 
@@ -19,10 +19,10 @@ namespace TagTool.Commands.VFiles
         public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, VFilesList vfsl)
         {
             context.AddCommand(new ListCommand(vfsl));
-            context.AddCommand(new ExtractCommand(vfsl));
-            context.AddCommand(new ExtractAllCommand(vfsl));
-            context.AddCommand(new ImportCommand(info, tag, vfsl));
-            context.AddCommand(new ImportAllCommand(info, tag, vfsl));
+            context.AddCommand(new ExtractFileCommand(vfsl));
+            context.AddCommand(new ExtractFilesCommand(vfsl));
+            context.AddCommand(new ImportFileCommand(info, tag, vfsl));
+            context.AddCommand(new ImportFilesCommand(info, tag, vfsl));
         }
     }
 }

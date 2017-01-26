@@ -17,7 +17,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x60)]
         public class HudWidget
         {
-            public StringID Name;
+            public StringId Name;
             public SpecialHudTypeValue SpecialHudType;
             public byte Unknown;
             public byte Unknown2;
@@ -879,7 +879,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x54)]
             public class BitmapWidget
             {
-                public StringID Name;
+                public StringId Name;
                 public SpecialHudTypeValue SpecialHudType;
                 public byte Unknown;
                 public byte Unknown2;
@@ -922,7 +922,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x48)]
             public class TextWidget
             {
-                public StringID Name;
+                public StringId Name;
                 public SpecialHudTypeValue SpecialHudType;
                 public byte Unknown1;
                 public byte Unknown2;
@@ -934,7 +934,7 @@ namespace TagTool.Tags.Definitions
                 public FlagsValue Flags;
                 public FontValue Font;
                 public short Unknown3;
-                public StringID String;
+                public StringId String;
                 
                 [Flags]
                 public enum FlagsValue : int

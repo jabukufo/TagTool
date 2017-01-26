@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Serialization;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Tags.Definitions
 {
@@ -175,7 +174,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x38)]
         public class PitchRange
         {
-            public StringID Name;
+            public StringId Name;
             public short NaturalPitch;
             public short Unknown;
             public short BendBoundsMin;
@@ -195,7 +194,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x2C)]
             public class Permutation
             {
-                public StringID Name;
+                public StringId Name;
                 public float SkipFractionMin;
                 public float SkipFractionMax;
                 public uint SampleSize;
@@ -284,7 +283,7 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x7C)]
                 public class RawInfoBlockBlock
                 {
-                    public StringID SkipFractionName;
+                    public StringId SkipFractionName;
                     public uint Unknown;
                     public uint Unknown2;
                     public uint Unknown3;

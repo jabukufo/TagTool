@@ -4,7 +4,6 @@ using System.Text;
 using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
 using TagTool.IO;
 
 namespace TagTool.Serialization
@@ -218,8 +217,8 @@ namespace TagTool.Serialization
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
             // StringID
-            if (valueType == typeof(StringID))
-                return new StringID(reader.ReadUInt32());
+            if (valueType == typeof(StringId))
+                return new StringId(reader.ReadUInt32());
 
             // Angle (radians)
             if (valueType == typeof(Angle))

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Tags.Definitions
 {
@@ -49,7 +49,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x20)]
         public class SkeletonNode
         {
-            public StringID Name;
+            public StringId Name;
             public short NextSiblingNodeIndex;
             public short FirstChildNodeIndex;
             public short ParentNodeIndex;
@@ -95,7 +95,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x1C)]
         public class BlendScreen
         {
-            public StringID Label;
+            public StringId Label;
             public Angle RightYawPerFrame;
             public Angle LeftYawPerFrame;
             public short RightFrameCount;
@@ -109,10 +109,10 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x1C)]
         public class Leg
         {
-            public StringID FootMarker;
+            public StringId FootMarker;
             public float FootMin;
             public float FootMax;
-            public StringID AnkleMarker;
+            public StringId AnkleMarker;
             public float AnkleMin;
             public float AnkleMax;
             public AnchorsValue Anchors;
@@ -128,7 +128,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x88)]
         public class Animation
         {
-            public StringID Name;
+            public StringId Name;
             public float Weight;
             public short LoopFrameIndex;
             public ushort PlaybackFlags;
@@ -213,7 +213,7 @@ namespace TagTool.Tags.Definitions
             {
                 public short Sound;
                 public short Frame;
-                public StringID MarkerName;
+                public StringId MarkerName;
             }
 
             [TagStructure(Size = 0x8)]
@@ -221,7 +221,7 @@ namespace TagTool.Tags.Definitions
             {
                 public short Effect;
                 public short Frame;
-                public StringID MarkerName;
+                public StringId MarkerName;
             }
 
             [TagStructure(Size = 0x4)]
@@ -265,7 +265,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x28)]
         public class Mode
         {
-            public StringID Label;
+            public StringId Label;
             public List<WeaponClassBlock> WeaponClass;
             public List<ModeIkBlock> ModeIk;
             public uint Unknown;
@@ -275,7 +275,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x28)]
             public class WeaponClassBlock
             {
-                public StringID Label;
+                public StringId Label;
                 public List<WeaponTypeBlock> WeaponType;
                 public List<WeaponIkBlock> WeaponIk;
                 public List<SyncAction> SyncActions;
@@ -283,7 +283,7 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x34)]
                 public class WeaponTypeBlock
                 {
-                    public StringID Label;
+                    public StringId Label;
                     public List<Action> Actions;
                     public List<Overlay> Overlays;
                     public List<DeathAndDamageBlock> DeathAndDamage;
@@ -292,7 +292,7 @@ namespace TagTool.Tags.Definitions
                     [TagStructure(Size = 0x8)]
                     public class Action
                     {
-                        public StringID Label;
+                        public StringId Label;
                         public short GraphIndex;
                         public short Animation;
                     }
@@ -300,7 +300,7 @@ namespace TagTool.Tags.Definitions
                     [TagStructure(Size = 0x8)]
                     public class Overlay
                     {
-                        public StringID Label;
+                        public StringId Label;
                         public short GraphIndex;
                         public short Animation;
                     }
@@ -308,7 +308,7 @@ namespace TagTool.Tags.Definitions
                     [TagStructure(Size = 0x10)]
                     public class DeathAndDamageBlock
                     {
-                        public StringID Label;
+                        public StringId Label;
                         public List<Direction> Directions;
 
                         [TagStructure(Size = 0xC)]
@@ -328,8 +328,8 @@ namespace TagTool.Tags.Definitions
                     [TagStructure(Size = 0x18)]
                     public class Transition
                     {
-                        public StringID FullName;
-                        public StringID StateName;
+                        public StringId FullName;
+                        public StringId StateName;
                         public short Unknown;
                         public sbyte IndexA;
                         public sbyte IndexB;
@@ -338,9 +338,9 @@ namespace TagTool.Tags.Definitions
                         [TagStructure(Size = 0x14)]
                         public class Destination
                         {
-                            public StringID FullName;
-                            public StringID ModeName;
-                            public StringID StateName;
+                            public StringId FullName;
+                            public StringId ModeName;
+                            public StringId StateName;
                             public FrameEventLinkValue FrameEventLink;
                             public sbyte Unknown;
                             public sbyte IndexA;
@@ -363,20 +363,20 @@ namespace TagTool.Tags.Definitions
                 [TagStructure(Size = 0x8)]
                 public class WeaponIkBlock
                 {
-                    public StringID Marker;
-                    public StringID AttachToMarker;
+                    public StringId Marker;
+                    public StringId AttachToMarker;
                 }
 
                 [TagStructure(Size = 0x10)]
                 public class SyncAction
                 {
-                    public StringID Label;
+                    public StringId Label;
                     public List<ClassBlock> Class;
 
                     [TagStructure(Size = 0x1C)]
                     public class ClassBlock
                     {
-                        public StringID Label;
+                        public StringId Label;
                         public List<UnknownBlock> Unknown;
                         public List<SyncBipedBlock> SyncBiped;
 
@@ -411,22 +411,22 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x8)]
             public class ModeIkBlock
             {
-                public StringID Marker;
-                public StringID AttachToMarker;
+                public StringId Marker;
+                public StringId AttachToMarker;
             }
         }
 
         [TagStructure(Size = 0x28)]
         public class VehicleSuspensionBlock
         {
-            public StringID Label;
+            public StringId Label;
             public short GraphIndex;
             public short Animation;
-            public StringID MarkerName;
+            public StringId MarkerName;
             public float MassPointOffset;
             public float FullExtensionGroundDepth;
             public float FullCompressionGroundDepth;
-            public StringID RegionName;
+            public StringId RegionName;
             public float MassPointOffset2;
             public float ExpressionGroundDepth;
             public float CompressionGroundDepth;
@@ -435,12 +435,12 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class ObjectOverlay
         {
-            public StringID Label;
+            public StringId Label;
             public short GraphIndex;
             public short Animation;
             public short Unknown;
             public FunctionControlsValue FunctionControls;
-            public StringID Function;
+            public StringId Function;
             public uint Unknown2;
 
             public enum FunctionControlsValue : short
@@ -475,8 +475,8 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x8)]
         public class WeaponListBlock
         {
-            public StringID WeaponName;
-            public StringID WeaponClass;
+            public StringId WeaponName;
+            public StringId WeaponClass;
         }
 
         [TagStructure(Size = 0xC)]

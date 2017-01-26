@@ -7,13 +7,13 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "squad_template", Class = "sqtm", Size = 0x10)]
     public class SquadTemplate
     {
-        public StringID Name;
+        public StringId Name;
         public List<SquadBlock> Squad;
 
         [TagStructure(Size = 0x60)]
         public class SquadBlock
         {
-            public StringID Name;
+            public StringId Name;
             public ushort Difficulty;
             public short Unknown;
             public short MinimumRound;
@@ -28,7 +28,7 @@ namespace TagTool.Tags.Definitions
             public List<EquipmentBlock> Equipment;
             public uint Unknown5;
             public TagInstance Vehicle;
-            public StringID VehicleVariant;
+            public StringId VehicleVariant;
             public uint Unknown6;
 
             [TagStructure(Size = 0x20)]

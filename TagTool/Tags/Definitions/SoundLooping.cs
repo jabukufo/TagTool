@@ -90,7 +90,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xA0)]
         public class Track
         {
-            public StringID Name;
+            public StringId Name;
             public uint Flags;
             public float Gain;
             public float FadeInDuration;
@@ -124,7 +124,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x3C)]
         public class DetailSound
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance Sound;
             public float RandomPeriodBoundsMin;
             public float RandomPeriodBoundsMax;

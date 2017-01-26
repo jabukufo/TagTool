@@ -12,7 +12,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x10)]
         public class SandboxTextValuePair
         {
-            public StringID ParameterName;
+            public StringId ParameterName;
             public List<TextValuePari> TextValueParis;
 
             [TagStructure(Size = 0x14)]
@@ -22,9 +22,9 @@ namespace TagTool.Tags.Definitions
                 public ExpectedValueTypeValue ExpectedValueType;
                 public short Unknown;
                 public int IntValue;
-                public StringID RefName;
-                public StringID Name;
-                public StringID Description;
+                public StringId RefName;
+                public StringId Name;
+                public StringId Description;
 
                 public enum ExpectedValueTypeValue : sbyte
                 {

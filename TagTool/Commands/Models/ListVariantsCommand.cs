@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Models
 {
     class ListVariantsCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private Model Definition { get; }
 
-        public ListVariantsCommand(GameCacheContext info, Model model) : base(
-            CommandFlags.Inherit,
-            "listvariants",
-            "List available variants of the current model definition.",
-            "listvariants",
-            "Lists available variants of the current model definition which can be used with \"extractmodel\".")
+        public ListVariantsCommand(GameCacheContext cacheContext, Model model)
+            : base(CommandFlags.Inherit,
+                  
+                  "list-variants",
+                  "List available variants of the current model definition.",
+                  
+                  "list-variants",
+                  "Lists available variants of the current model definition which can be used with \"extract-model\".")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Definition = model;
         }
 
@@ -26,14 +28,18 @@ namespace TagTool.Commands.Models
         {
             if (args.Count != 0)
                 return false;
-            var variantNames = Definition.Variants.Select(v => Info.StringIdCache.GetString(v.Name) ?? v.Name.ToString()).OrderBy(n => n).ToList();
+
+            var variantNames = Definition.Variants.Select(v => CacheContext.StringIdCache.GetString(v.Name) ?? v.Name.ToString()).OrderBy(n => n).ToList();
+
             if (variantNames.Count == 0)
             {
                 Console.WriteLine("Model has no variants");
                 return true;
             }
+
             foreach (var name in variantNames)
                 Console.WriteLine(name);
+
             return true;
         }
     }

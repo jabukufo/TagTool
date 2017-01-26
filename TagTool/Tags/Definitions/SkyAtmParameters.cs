@@ -29,7 +29,7 @@ namespace TagTool.Tags.Definitions
         {
             public short Unknown;
             public short Unknown2;
-            public StringID Name;
+            public StringId Name;
             public float LightSourceY;
             public float LightSourceX;
             public float FogColorR;
@@ -71,7 +71,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class UnderwaterBlock
         {
-            public StringID Name;
+            public StringId Name;
             public float ColorA;
             public float ColorR;
             public float ColorG;

@@ -6,7 +6,6 @@ using TagTool.Common;
 using TagTool.Cache;
 using TagTool.IO;
 using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Serialization
 {
@@ -210,8 +209,8 @@ namespace TagTool.Serialization
                 SerializeRealQuaternion(block, (RealQuaternion)val);
             else if (valueType == typeof(Matrix4x3))
                 SerializeMatrix(block, (Matrix4x3)val);
-            else if (valueType == typeof(StringID))
-                block.Writer.Write(((StringID)val).Value);
+            else if (valueType == typeof(StringId))
+                block.Writer.Write(((StringId)val).Value);
             else if (valueType == typeof(Angle))
                 block.Writer.Write(((Angle)val).Radians);
             else if (valueType.IsArray)

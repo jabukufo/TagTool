@@ -1,4 +1,4 @@
-﻿using TagTool.Cache.HaloOnline;
+﻿using TagTool.Cache;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
 
@@ -20,7 +20,6 @@ namespace TagTool.Commands.BSPs
 
         public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, ScenarioStructureBsp bsp)
         {
-            context.AddCommand(new LoadResourcesCommand(info, tag, bsp));
             context.AddCommand(new CollisionTestCommand(info, tag, bsp));
         }
     }

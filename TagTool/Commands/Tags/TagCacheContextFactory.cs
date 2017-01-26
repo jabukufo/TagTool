@@ -1,4 +1,4 @@
-﻿using TagTool.Cache.HaloOnline;
+﻿using TagTool.Cache;
 using TagTool.Commands.Core;
 
 namespace TagTool.Commands.Tags
@@ -17,37 +17,32 @@ namespace TagTool.Commands.Tags
             context.AddCommand(new ExecuteCommand(cacheContext));
             context.AddCommand(new CleanCsvFileCommand(cacheContext));
             context.AddCommand(new TagDependencyCommand(cacheContext));
-            context.AddCommand(new ExtractCommand(cacheContext));
-            context.AddCommand(new ImportCommand(cacheContext));
-            context.AddCommand(new InfoCommand(cacheContext));
-            context.AddCommand(new ListCommand(cacheContext));
-            context.AddCommand(new MapCommand());
+            context.AddCommand(new ExtractTagCommand(cacheContext));
+            context.AddCommand(new ImportTagCommand(cacheContext));
+            context.AddCommand(new GetTagInfoCommand(cacheContext));
+            context.AddCommand(new ListTagsCommand(cacheContext));
+            context.AddCommand(new GetMapInfoCommand());
             context.AddCommand(new DuplicateTagCommand(cacheContext));
             context.AddCommand(new GetTagAddressCommand());
             context.AddCommand(new ResourceCommand());
-            context.AddCommand(new NullTagCommand(cacheContext));
+            context.AddCommand(new DeleteTagCommand(cacheContext));
             context.AddCommand(new CleanCacheFilesCommand(cacheContext));
             context.AddCommand(new ListUnreferencedTagsCommand(cacheContext));
             context.AddCommand(new ListNullTagsCommand(cacheContext));
-            context.AddCommand(new NewTagCommand(cacheContext));
+            context.AddCommand(new CreateTagCommand(cacheContext));
             context.AddCommand(new ExtractTagsCommand(cacheContext));
-
-            if (cacheContext.StringIdCache != null)
-            {
-                context.AddCommand(new EditTagCommand(stack, cacheContext));
-                context.AddCommand(new CollisionModelTestCommand(cacheContext));
-                context.AddCommand(new PhysicsModelTestCommand(cacheContext));
-                context.AddCommand(new StringIDCommand(cacheContext));
-                context.AddCommand(new ListStringsCommand(cacheContext));
-                context.AddCommand(new GenerateLayoutsCommand(cacheContext));
-                context.AddCommand(new ModelTestCommand(cacheContext));
-                context.AddCommand(new ConvertPluginsCommand(cacheContext));
-                context.AddCommand(new GenerateTagNamesCommand(cacheContext));
-                context.AddCommand(new OpenCacheCommand(stack, cacheContext));
-                context.AddCommand(new MatchTagsCommand(cacheContext));
-                context.AddCommand(new ConvertTagCommand(cacheContext));
-                context.AddCommand(new UpdateMapFilesCommand(cacheContext));
-            }
+            context.AddCommand(new EditTagCommand(stack, cacheContext));
+            context.AddCommand(new CollisionModelTestCommand(cacheContext));
+            context.AddCommand(new PhysicsModelTestCommand(cacheContext));
+            context.AddCommand(new StringIDCommand(cacheContext));
+            context.AddCommand(new ListStringsCommand(cacheContext));
+            context.AddCommand(new GenerateLayoutsCommand(cacheContext));
+            context.AddCommand(new ModelTestCommand(cacheContext));
+            context.AddCommand(new ConvertPluginsCommand(cacheContext));
+            context.AddCommand(new GenerateTagNamesCommand(cacheContext));
+            context.AddCommand(new MatchTagsCommand(cacheContext));
+            context.AddCommand(new ConvertTagCommand(cacheContext));
+            context.AddCommand(new UpdateMapFilesCommand(cacheContext));
 
             return context;
         }

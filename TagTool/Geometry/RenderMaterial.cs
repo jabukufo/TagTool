@@ -29,7 +29,7 @@ namespace TagTool.Geometry
         [TagStructure(Size = 0x14)]
         public class Skin
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance RenderMethod;
         }
 

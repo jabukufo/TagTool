@@ -13,7 +13,7 @@ namespace TagTool.Tags
         /// Constructs an empty tag group description.
         /// </summary>
         public TagGroup()
-            : this(Tag.Null, Tag.Null, Tag.Null, StringID.Null)
+            : this(Tag.Null, Tag.Null, Tag.Null, StringId.Null)
         {
         }
 
@@ -24,7 +24,7 @@ namespace TagTool.Tags
         /// <param name="parentTag">The parent group's tag. Can be -1.</param>
         /// <param name="grandparentTag">The grandparent group's tag. Can be -1.</param>
         /// <param name="name">The group's name stringID.</param>
-        public TagGroup(Tag tag, Tag parentTag, Tag grandparentTag, StringID name)
+        public TagGroup(Tag tag, Tag parentTag, Tag grandparentTag, StringId name)
         {
             Tag = tag;
             ParentTag = parentTag;
@@ -40,7 +40,7 @@ namespace TagTool.Tags
         /// <summary>
         /// Represents a "null" tag group.
         /// </summary>
-        public static readonly TagGroup Null = new TagGroup(new Tag(-1), new Tag(-1), new Tag(-1), StringID.Null);
+        public static readonly TagGroup Null = new TagGroup(new Tag(-1), new Tag(-1), new Tag(-1), StringId.Null);
 
         /// <summary>
         /// A dictionary of available tag groups.
@@ -65,7 +65,7 @@ namespace TagTool.Tags
         /// <summary>
         /// Gets the group's name stringID.
         /// </summary>
-        public readonly StringID Name;
+        public readonly StringId Name;
 
         /// <summary>
         /// Determines whether this group is a subgroup of another group.

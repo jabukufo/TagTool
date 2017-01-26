@@ -17,8 +17,8 @@ namespace TagTool.Tags.Definitions
         public float CameraStiffness;
         public short Flags2;
         public short Unknown6;
-        public StringID CameraMarkerName;
-        public StringID CameraSubmergedMarkerName;
+        public StringId CameraMarkerName;
+        public StringId CameraSubmergedMarkerName;
         public Angle PitchAutoLevel;
         public Angle PitchRangeMin;
         public Angle PitchRangeMax;
@@ -29,8 +29,8 @@ namespace TagTool.Tags.Definitions
         public List<UnknownBlock> Unknown10;
         public short Flags3;
         public short Unknown11;
-        public StringID CameraMarkerName2;
-        public StringID CameraSubmergedMarkerName2;
+        public StringId CameraMarkerName2;
+        public StringId CameraSubmergedMarkerName2;
         public Angle PitchAutoLevel2;
         public Angle PitchRangeMin2;
         public Angle PitchRangeMax2;
@@ -41,9 +41,9 @@ namespace TagTool.Tags.Definitions
         public List<UnknownBlock2> Unknown15;
         public TagInstance AssassinationResponse;
         public TagInstance AssassinationWeapon;
-        public StringID AssasinationToolStowAnchor;
-        public StringID AssasinationToolHandMarker;
-        public StringID AssasinationToolMarker;
+        public StringId AssasinationToolStowAnchor;
+        public StringId AssasinationToolHandMarker;
+        public StringId AssasinationToolMarker;
         public float AccelerationRangeI;
         public float AccelerationRangeJ;
         public float AccelerationRangeK;
@@ -69,9 +69,9 @@ namespace TagTool.Tags.Definitions
         public float CasualAimingModifier;
         public Angle LookingVelocityMaximum;
         public Angle LookingAccelerationMaximum;
-        public StringID RightHandNode;
-        public StringID LeftHandNode;
-        public StringID PreferredGunNode;
+        public StringId RightHandNode;
+        public StringId LeftHandNode;
+        public StringId PreferredGunNode;
         public TagInstance MeleeDamage;
         public TagInstance BoardingMeleeDamage;
         public TagInstance BoardingMeleeResponse;
@@ -275,7 +275,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x10)]
         public class Posture
         {
-            public StringID Name;
+            public StringId Name;
             public float PillOffsetI;
             public float PillOffsetJ;
             public float PillOffsetK;
@@ -329,7 +329,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x4)]
             public class TrackingType
             {
-                public StringID TrackingType2;
+                public StringId TrackingType2;
             }
         }
 
@@ -337,13 +337,13 @@ namespace TagTool.Tags.Definitions
         public class Seat
         {
             public uint Flags;
-            public StringID SeatAnimation;
-            public StringID SeatMarkerName;
-            public StringID EntryMarkerSName;
-            public StringID BoardingGrenadeMarker;
-            public StringID BoardingGrenadeString;
-            public StringID BoardingMeleeString;
-            public StringID DetachWeaponString;
+            public StringId SeatAnimation;
+            public StringId SeatMarkerName;
+            public StringId EntryMarkerSName;
+            public StringId BoardingGrenadeMarker;
+            public StringId BoardingGrenadeString;
+            public StringId BoardingMeleeString;
+            public StringId DetachWeaponString;
             public float PingScale;
             public float TurnoverTime;
             public float AccelerationRangeI;
@@ -365,8 +365,8 @@ namespace TagTool.Tags.Definitions
             public float SpeedExponent;
             public short Unknown2;
             public short Unknown3;
-            public StringID CameraMarkerName;
-            public StringID CameraSubmergedMarkerName;
+            public StringId CameraMarkerName;
+            public StringId CameraSubmergedMarkerName;
             public Angle PitchAutoLevel;
             public Angle PitchRangeMin;
             public Angle PitchRangeMax;
@@ -376,7 +376,7 @@ namespace TagTool.Tags.Definitions
             public Angle Unknown6;
             public List<UnknownBlock> Unknown7;
             public List<UnitHudInterfaceBlock> UnitHudInterface;
-            public StringID EnterSeatString;
+            public StringId EnterSeatString;
             public Angle YawRangeMin;
             public Angle YawRangeMax;
             public TagInstance BuiltInGunner;
@@ -384,7 +384,7 @@ namespace TagTool.Tags.Definitions
             public Angle EntryMarkerConeAngle;
             public Angle EntryMarkerFacingAngle;
             public float MaximumRelativeVelocity;
-            public StringID InvisibleSeatRegion;
+            public StringId InvisibleSeatRegion;
             public int RuntimeInvisibleSeatRegionIndex;
 
             public enum AiSeatTypeValue : short

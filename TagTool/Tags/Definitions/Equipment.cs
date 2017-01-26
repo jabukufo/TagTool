@@ -49,17 +49,17 @@ namespace TagTool.Tags.Definitions
         public TagInstance ActivationEffect;
         public TagInstance ActiveEffect;
         public TagInstance DeactivationEffect;
-        public StringID EnterAnimation;
-        public StringID IdleAnimation;
-        public StringID ExitAnimation;
+        public StringId EnterAnimation;
+        public StringId IdleAnimation;
+        public StringId ExitAnimation;
 
         [TagStructure(Size = 0x3C)]
         public class EquipmentCameraBlock
         {
             public short Flags;
             public short Unknown;
-            public StringID CameraMarkerName;
-            public StringID CameraSubmergedMarkerName;
+            public StringId CameraMarkerName;
+            public StringId CameraSubmergedMarkerName;
             public Angle PitchAutoLevel;
             public Angle PitchRangeMin;
             public Angle PitchRangeMax;
@@ -166,7 +166,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x2C)]
         public class InvincibilityBlock
         {
-            public StringID NewPlayerMaterial;
+            public StringId NewPlayerMaterial;
             public short NewPlayerMaterialGlobalIndex;
             public short Unknown;
             public uint Unknown2;
@@ -197,7 +197,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x28)]
         public class TankModeBlock
         {
-            public StringID NewPlayerMaterial;
+            public StringId NewPlayerMaterial;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -314,7 +314,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x18)]
             public class Weapon
             {
-                public StringID Name;
+                public StringId Name;
                 public TagInstance WeaponObject;
                 public int Unknown;
             }

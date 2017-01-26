@@ -5,7 +5,7 @@ using System.Linq;
 using TagTool.Common;
 using TagTool.IO;
 using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {
@@ -48,7 +48,7 @@ namespace TagTool.Serialization
                     tag: info.GroupTag,
                     parentTag: info.ParentGroupTag,
                     grandparentTag: info.GrandparentGroupTag,
-                    name: (info.Structure.Name != null) ? Context.StringIdCache.GetStringID(info.Structure.Name) : StringID.Null
+                    name: (info.Structure.Name != null) ? Context.StringIdCache.GetStringId(info.Structure.Name) : StringId.Null
                 ),
             };
         }

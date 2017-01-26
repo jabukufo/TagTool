@@ -66,7 +66,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x18)]
         public class UnknownBlock
         {
-            public StringID Unknown;
+            public StringId Unknown;
             public uint Unknown2;
             public uint Unknown3;
             public uint Unknown4;
@@ -77,7 +77,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x20)]
         public class UnknownBlock2
         {
-            public StringID Name;
+            public StringId Name;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -94,8 +94,8 @@ namespace TagTool.Tags.Definitions
             public SizeValue MinimumSize;
             public SizeValue MaximumSize;
             public short Unknown;
-            public StringID MarkerName;
-            public StringID AlignmentMarkerName;
+            public StringId MarkerName;
+            public StringId AlignmentMarkerName;
             public uint Unknown2;
             public uint Unknown3;
             public float HookeSLawE;
@@ -161,8 +161,8 @@ namespace TagTool.Tags.Definitions
             public short NodeA;
             public short NodeB;
             public List<Constraint> Constraints;
-            public StringID NodeAMaterial;
-            public StringID NodeBMaterial;
+            public StringId NodeAMaterial;
+            public StringId NodeBMaterial;
 
             [TagStructure(Size = 0x24)]
             public class Constraint
@@ -302,8 +302,8 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xC)]
         public class Material
         {
-            public StringID Name;
-            public StringID MaterialName;
+            public StringId Name;
+            public StringId MaterialName;
             public short PhantomType;
             public short Flags;
         }
@@ -311,7 +311,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x70)]
         public class Sphere
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -350,7 +350,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x60)]
         public class Pill
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -384,7 +384,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xB0)]
         public class Box
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -439,7 +439,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x80)]
         public class Triangle
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -481,7 +481,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x80)]
         public class Polyhedron
         {
-            public StringID Name;
+            public StringId Name;
             public sbyte MaterialIndex;
             public sbyte Unknown;
             public short GlobalMaterialIndex;
@@ -640,7 +640,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x78)]
         public class HingeConstraint
         {
-            public StringID Name;
+            public StringId Name;
             public short NodeA;
             public short NodeB;
             public float AScale;
@@ -677,7 +677,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x94)]
         public class RagdollConstraint
         {
-            public StringID Name;
+            public StringId Name;
             public short NodeA;
             public short NodeB;
             public float AScale;
@@ -718,13 +718,13 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x10)]
         public class Region
         {
-            public StringID Name;
+            public StringId Name;
             public List<Permutation> Permutations;
 
             [TagStructure(Size = 0x10)]
             public class Permutation
             {
-                public StringID Name;
+                public StringId Name;
                 public List<RigidBody> RigidBodies;
 
                 [TagStructure(Size = 0x2)]
@@ -738,7 +738,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xC)]
         public class Node
         {
-            public StringID Name;
+            public StringId Name;
             public ushort Flags;
             public short Parent;
             public short Sibling;
@@ -748,7 +748,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x84)]
         public class LimitedHingeConstraint
         {
-            public StringID Name;
+            public StringId Name;
             public short NodeA;
             public short NodeB;
             public float AScale;

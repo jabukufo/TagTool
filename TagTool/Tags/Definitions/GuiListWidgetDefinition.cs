@@ -8,7 +8,7 @@ namespace TagTool.Tags.Definitions
     public class GuiListWidgetDefinition
     {
         public uint Flags;
-        public StringID Name;
+        public StringId Name;
         public short Unknown;
         public short Layer;
         public short WidescreenYOffset;
@@ -20,7 +20,7 @@ namespace TagTool.Tags.Definitions
         public short StandardYUnknown;
         public short StandardXUnknown;
         public TagInstance Animation;
-        public StringID DataSourceName;
+        public StringId DataSourceName;
         public TagInstance Skin;
         public int RowCount;
         public List<ListWidgetItem> ListWidgetItems;
@@ -31,7 +31,7 @@ namespace TagTool.Tags.Definitions
         public class ListWidgetItem
         {
             public uint Flags;
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Layer;
             public short WidescreenYOffset;
@@ -43,7 +43,7 @@ namespace TagTool.Tags.Definitions
             public short StandardYUnknown;
             public short StandardXUnknown;
             public TagInstance Animation;
-            public StringID Target;
+            public StringId Target;
         }
     }
 }

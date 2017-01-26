@@ -8,7 +8,7 @@ namespace TagTool.Tags.Definitions
     public class GuiGroupWidgetDefinition
     {
         public uint Flags;
-        public StringID Name;
+        public StringId Name;
         public short Unknown;
         public short Layer;
         public short WidescreenYOffset;
@@ -31,7 +31,7 @@ namespace TagTool.Tags.Definitions
         {
             public TagInstance Parent;
             public uint Flags;
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Layer;
             public short WidescreenYOffset;
@@ -43,7 +43,7 @@ namespace TagTool.Tags.Definitions
             public short StandardYUnknown;
             public short StandardXUnknown;
             public TagInstance Animation;
-            public StringID DataSourceName;
+            public StringId DataSourceName;
             public TagInstance Skin;
             public int RowCount;
             public List<ListWidgetItem> ListWidgetItems;
@@ -54,7 +54,7 @@ namespace TagTool.Tags.Definitions
             public class ListWidgetItem
             {
                 public uint Flags;
-                public StringID Name;
+                public StringId Name;
                 public short Unknown;
                 public short Layer;
                 public short WidescreenYOffset;
@@ -66,7 +66,7 @@ namespace TagTool.Tags.Definitions
                 public short StandardYUnknown;
                 public short StandardXUnknown;
                 public TagInstance Animation;
-                public StringID Target;
+                public StringId Target;
             }
         }
 
@@ -75,7 +75,7 @@ namespace TagTool.Tags.Definitions
         {
             public TagInstance Parent;
             public uint Flags;
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Layer;
             public short WidescreenYBoundsMin;
@@ -87,9 +87,9 @@ namespace TagTool.Tags.Definitions
             public short StandardYBoundsMax;
             public short StandardXBoundsMax;
             public TagInstance Animation;
-            public StringID DataSourceName;
-            public StringID TextString;
-            public StringID TextColor;
+            public StringId DataSourceName;
+            public StringId TextString;
+            public StringId TextColor;
             public short TextFont;
             public short Unknown2;
         }
@@ -99,7 +99,7 @@ namespace TagTool.Tags.Definitions
         {
             public TagInstance Parent;
             public uint Flags;
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Layer;
             public short WidescreenYBoundsMin;
@@ -117,8 +117,8 @@ namespace TagTool.Tags.Definitions
             public short Unknown3;
             public short SpriteIndex;
             public short Unknown4;
-            public StringID DataSourceName;
-            public StringID SpriteDataSourceName;
+            public StringId DataSourceName;
+            public StringId SpriteDataSourceName;
 
             public enum BlendMethodValue : short
             {
@@ -144,7 +144,7 @@ namespace TagTool.Tags.Definitions
         {
             public TagInstance Parent;
             public uint Flags;
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short Unknown2;
             public short WidescreenYBoundsMin;
@@ -182,7 +182,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0xA0)]
             public class UnknownBlock
             {
-                public StringID Biped;
+                public StringId Biped;
                 public uint Unknown;
                 public uint Unknown2;
                 public uint Unknown3;
@@ -234,7 +234,7 @@ namespace TagTool.Tags.Definitions
             [TagStructure(Size = 0x14)]
             public class UnknownBlock3
             {
-                public StringID Unknown;
+                public StringId Unknown;
                 public uint Unknown2;
                 public uint Unknown3;
                 public uint Unknown4;

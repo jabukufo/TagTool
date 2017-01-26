@@ -13,7 +13,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class GameEngineSetting
         {
-            public StringID Name;
+            public StringId Name;
             public SettingCategoryValue SettingCategory;
             public List<Option> Options;
 
@@ -244,8 +244,8 @@ namespace TagTool.Tags.Definitions
                 public TagInstance ExplicitSubmenu;
                 public TagInstance TemplateBasedSubmenu;
                 public SubmenuSettingCategoryValue SubmenuSettingCategory;
-                public StringID SubmenuName;
-                public StringID SubmenuDescription;
+                public StringId SubmenuName;
+                public StringId SubmenuDescription;
                 public TagInstance ValuePairs;
 
                 public enum SubmenuSettingCategoryValue : int

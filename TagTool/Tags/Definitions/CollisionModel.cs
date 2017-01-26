@@ -20,19 +20,19 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x4)]
         public class Material
         {
-            public StringID Name;
+            public StringId Name;
         }
 
         [TagStructure(Size = 0x10)]
         public class Region
         {
-            public StringID Name;
+            public StringId Name;
             public List<Permutation> Permutations;
 
             [TagStructure(Size = 0x28)]
             public class Permutation
             {
-                public StringID Name;
+                public StringId Name;
                 public List<Bsp> Bsps;
                 public List<BspPhysic> BspPhysics;
                 public List<BspMoppCode> BspMoppCodes;
@@ -209,7 +209,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0xC)]
         public class Node
         {
-            public StringID Name;
+            public StringId Name;
             public short Unknown;
             public short ParentNode;
             public short NextSiblingNode;

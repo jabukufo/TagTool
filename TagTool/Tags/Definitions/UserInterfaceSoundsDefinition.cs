@@ -33,7 +33,7 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class AtlasSound
         {
-            public StringID Name;
+            public StringId Name;
             public TagInstance Sound;
         }
     }

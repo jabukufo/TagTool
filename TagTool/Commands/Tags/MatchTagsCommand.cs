@@ -7,7 +7,6 @@ using TagTool.Common;
 using TagTool.Serialization;
 using TagTool.Tags;
 using TagTool.Tags.Definitions;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
@@ -30,22 +29,22 @@ namespace TagTool.Commands.Tags
             400, // shrine
         };
 
-        private readonly GameCacheContext _info;
+        private GameCacheContext CacheContext { get; }
 
-        public MatchTagsCommand(GameCacheContext info) : base(
+        public MatchTagsCommand(GameCacheContext cacheContext) : base(
             CommandFlags.Inherit,
 
-            "matchtags",
+            "match-tags",
             "Find equivalent tags in different engine versions",
 
-            "matchtags <output csv> <tags.dat...>",
+            "match-tags <output csv> <tags.dat...>",
 
             "The tags in the current tag cache will be compared with the tags in each of the\n" +
             "listed tags.dat files to find tags that are the same in all of them. Results\n" +
             "will be written to a CSV which can be used to convert tags between the\n" +
             "different versions.")
         {
-            _info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -61,30 +60,30 @@ namespace TagTool.Commands.Tags
                 Console.WriteLine("Loading {0}...", path);
 
                 // Load the cache file
-                var info = new GameCacheContext { TagCacheFile = new FileInfo(path) };
-                using (var stream = info.OpenCacheRead())
-                    info.TagCache = new TagCache(stream);
+                var cacheContext = new GameCacheContext { TagCacheFile = new FileInfo(path) };
+                using (var stream = cacheContext.OpenTagCacheRead())
+                    cacheContext.TagCache = new TagCache(stream);
 
                 // Do version detection, and don't accept the closest version
                 // because that might not work
                 CacheVersion closestVersion;
-                info.Version = CacheVersionDetection.Detect(info.TagCache, out closestVersion);
-                if (info.Version == CacheVersion.Unknown)
+                cacheContext.Version = CacheVersionDetection.Detect(cacheContext.TagCache, out closestVersion);
+                if (cacheContext.Version == CacheVersion.Unknown)
                 {
                     Console.WriteLine("- Unrecognized version! Ignoring.");
                     continue;
                 }
-                info.Deserializer = new TagDeserializer(info.Version);
-                infos.Add(info);
+                cacheContext.Deserializer = new TagDeserializer(cacheContext.Version);
+                infos.Add(cacheContext);
             }
 
             var result = new TagVersionMap();
-            using (var baseStream = _info.OpenCacheRead())
+            using (var baseStream = CacheContext.OpenTagCacheRead())
             {
                 // Get the scenario tags for this cache
                 Console.WriteLine("Finding base scenario tags...");
-                var baseScenarios = FindScenarios(_info, baseStream);
-                var baseVersion = _info.Version;
+                var baseScenarios = FindScenarios(CacheContext, baseStream);
+                var baseVersion = CacheContext.Version;
                 var baseTagData = new Dictionary<int, object>();
                 foreach (var scenario in baseScenarios)
                     baseTagData[scenario.Tag.Index] = scenario.Data;
@@ -92,7 +91,7 @@ namespace TagTool.Commands.Tags
                 // Now compare with each of the other caches
                 foreach (var info in infos)
                 {
-                    using (var stream = info.OpenCacheRead())
+                    using (var stream = info.OpenTagCacheRead())
                     {
                         Console.WriteLine("Finding scenario tags in {0}...", info.TagCacheFile.FullName);
 
@@ -123,15 +122,15 @@ namespace TagTool.Commands.Tags
 
                             // Now get the data for the base tag
                             var baseTag = result.Translate(info.Version, tag.Tag.Index, baseVersion);
-                            if (baseTag == -1 || _info.TagCache.Tags[baseTag].Group.Tag != tag.Tag.Group.Tag)
+                            if (baseTag == -1 || CacheContext.TagCache.Tags[baseTag].Group.Tag != tag.Tag.Group.Tag)
                                 continue;
                             object baseData;
                             if (!baseTagData.TryGetValue(baseTag, out baseData))
                             {
                                 // No data yet - deserialize it
-                                var context = new TagSerializationContext(baseStream, _info, _info.TagCache.Tags[baseTag]);
+                                var context = new TagSerializationContext(baseStream, CacheContext, CacheContext.TagCache.Tags[baseTag]);
                                 var type = TagStructureTypes.FindByGroupTag(tag.Tag.Group.Tag);
-                                baseData = _info.Deserializer.Deserialize(context, type);
+                                baseData = CacheContext.Deserializer.Deserialize(context, type);
                                 baseTagData[baseTag] = baseData;
                             }
 
