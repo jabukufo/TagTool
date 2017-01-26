@@ -7,15 +7,16 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "ai_globals", Class = "aigl", Size = 0x10)]
     public class AiGlobals
     {
-        public List<UnknownBlock> Unknown;
-        public uint Unknown2;
+        public List<AiData> Data;
+        [TagField(Count = 4)]
+        public sbyte[] Padding;
 
         [TagStructure(Size = 0x144)]
-        public class UnknownBlock
+        public class AiData
         {
-            public uint Unknown;
-            public uint Unknown2;
-            public uint Unknown3;
+            public float InfantryOnAiWeaponDamageScale;
+            public float VehicleOnAiWeaponDamageScale;
+            public float PlayerOnAiWeaponDamageScale;
             public float DangerBroadlyFacing;
             public float DangerShootingNear;
             public float DangerShootingAt;
@@ -38,33 +39,28 @@ namespace TagTool.Tags.Definitions
             public float MaxJumpDownHeightStand;
             public float MaxJumpDownHeightStorey;
             public float MaxJumpDownHeightTower;
-            public float HoistStepMin;
-            public float HoistStepMax;
-            public float HoistCrouchMin;
-            public float HoistCrouchMax;
-            public float HoistStandMin;
-            public float HoistStandMax;
-            public float VaultStepMin;
-            public float VaultStepMax;
-            public float VaultCrouchMin;
-            public float VaultCrouchMax;
-            public uint Unknown4;
-            public uint Unknown5;
-            public uint Unknown6;
-            public uint Unknown7;
+            public Bounds<float> HoistStep;
+            public Bounds<float> HoistCrouch;
+            public Bounds<float> HoistStand;
+            public Bounds<float> VaultStep;
+            public Bounds<float> VaultCrouch;
+            public float SearchRangeInfantry;
+            public float SearchRangeFlying;
+            public float SearchRangeVehicle;
+            public float SearchRangeGiant;
             public List<GravemindProperty> GravemindProperties;
             public float ScaryTargetThreshold;
             public float ScaryWeaponThreshold;
-            public uint Unknown8;
-            public uint Unknown9;
-            public uint Unknown10;
-            public uint Unknown11;
-            public uint Unknown12;
-            public uint Unknown13;
-            public uint Unknown14;
-            public uint Unknown15;
-            public uint Unknown16;
-            public uint Unknown17;
+            public float PlayerScariness;
+            public float BerserkingActorScariness;
+            public float KamikazeingActorScariness;
+            public float InvincibleActorScariness;
+            public float MinimumDeathTime;
+            public float ProjectileDistance;
+            public float IdleClumpDistance;
+            public float DangerousClumpDistance;
+            public float ConverSearchDuration;
+            public float TaskSearchDuration;
             public uint Unknown18;
             public List<Style> Styles;
             public List<Formation> Formations;
