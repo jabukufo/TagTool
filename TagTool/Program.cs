@@ -195,7 +195,6 @@ namespace TagTool
             Console.WriteLine("Enter \"help\" to list available commands. Enter \"exit\" to quit.");
             while (true)
             {
-                // Read and parse a command
                 Console.WriteLine();
                 Console.Write("{0}> ", contextStack.GetPath());
 
@@ -203,7 +202,7 @@ namespace TagTool
                 foreach (var command in contextStack.Context.Commands)
                     commandNames.Add(command.Name);
 
-                var commandLine = ReadHintedLine(contextStack, commandNames, s => s);
+                var commandLine = ReadCommandLine(contextStack, commandNames, s => s);
 
                 if (commandLine == null)
                     break;
@@ -247,7 +246,7 @@ namespace TagTool
             }
         }
 
-        public static string ReadHintedLine<T, TResult>(CommandContextStack contextStack, IEnumerable<T> hintSource, Func<T, TResult> hintField, string inputRegex = ".*", ConsoleColor hintColor = ConsoleColor.DarkGray)
+        public static string ReadCommandLine<T, TResult>(CommandContextStack contextStack, IEnumerable<T> hintSource, Func<T, TResult> hintField, string inputRegex = ".*", ConsoleColor hintColor = ConsoleColor.DarkGray)
         {
             ConsoleKeyInfo input;
 
@@ -276,9 +275,8 @@ namespace TagTool
                 Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, currentLineCursor);
-
-                Console.Write("{0}> ", contextStack.GetPath());
-                Console.Write(userInput);
+                
+                Console.Write("{0}> {1}", contextStack.GetPath(), userInput);
 
                 var originalColor = Console.ForegroundColor;
 
@@ -290,7 +288,8 @@ namespace TagTool
                 Console.ForegroundColor = originalColor;
             }
 
-            Console.WriteLine(commandLine);
+            Console.Write("{0}> {1}", contextStack.GetPath(), commandLine);
+            Console.WriteLine();
 
             return commandLine;
         }
