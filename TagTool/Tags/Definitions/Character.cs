@@ -398,16 +398,33 @@ namespace TagTool.Tags.Definitions
             public Bounds<float> ReadTimeBounds;
         }
 
+        [Flags]
+        public enum EngageFlags : int
+        {
+            None = 0,
+            DefendThreatAxis = 1 << 0,
+            FightConstantMovement = 1 << 1,
+            FlightFightConstantMovement = 1 << 2,
+            DisallowCombatCrouching = 1 << 3,
+            DisallowCrouchShooting = 1 << 4,
+            FightStable = 1 << 5,
+            ThrowShouldLob = 1 << 6,
+            AllowPositioningBeyondIdealRange = 1 << 7,
+            CanSuppress = 1 << 8,
+            PrefersBunker = 1 << 9,
+            BurstInhibitsEvasion = 1 << 10
+        }
+
         [TagStructure(Size = 0x38)]
         public class EngageProperty
         {
-            public uint EngageFlags;
+            public EngageFlags Flags;
             public uint Unknown;
             public float CrouchDangerThreshold;
             public float StandDangerThreshold;
             public float FightDangerMoveThreshold;
-            public uint Unknown2;
-            public TagInstance Unknown3;
+            public Bounds<short> FightDangerMoveThresholdCooldown;
+            public TagInstance OverrideGrenadeProjectile;
             public uint Unknown4;
             public uint Unknown5;
             public uint Unknown6;
