@@ -24,8 +24,7 @@ namespace TagTool.Serialization
         /// Creates a tag serialization context which serializes data into a tag.
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
-        /// <param name="cache">The cache file to write to.</param>
-        /// <param name="stringIds">The stringID source to use.</param>
+        /// <param name="context">The game cache context.</param>
         /// <param name="tag">The tag to overwrite.</param>
         public TagSerializationContext(Stream stream, GameCacheContext context, TagInstance tag)
         {

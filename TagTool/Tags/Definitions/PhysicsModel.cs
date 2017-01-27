@@ -120,10 +120,12 @@ namespace TagTool.Tags.Definitions
             public PhantomTypeFlags Flags; // NOTE: This has to be adjusted when converting because of the new armor object type. The "Ignores Armor" bit was inserted at position 8.
             public SizeValue MinimumSize;
             public SizeValue MaximumSize;
-            [TagField(Count = 2)] public sbyte[] Padding1;
+            [TagField(Padding = true, Length = 2)]
+            public byte[] Padding1;
             public StringId MarkerName;
             public StringId AlignmentMarkerName;
-            [TagField(Count = 2)] public sbyte[] Padding2;
+            [TagField(Padding = true, Length = 2)]
+            public byte[] Padding2;
             public float HookesLawE;
             public float LinearDeadRadius;
             public float CenterAcceleration;
@@ -132,11 +134,13 @@ namespace TagTool.Tags.Definitions
             public float AxisMaxVelocity;
             public float DirectionAcceleration;
             public float DirectionMaxVelocity;
-            [TagField(Count = 28)] public sbyte[] Padding3;
+            [TagField(Padding = true, Length = 28)]
+            public byte[] Padding3;
             public float AlignmentHookesLawE;
             public float AlignmentAcceleration;
             public float AlignmentMaxVelocity;
-            [TagField(Count = 8)] public sbyte[] Padding4;
+            [TagField(Padding = true, Length = 8)]
+            public byte[] Padding4;
         }
 
         public enum ConstraintType : short

@@ -11,13 +11,24 @@ using TagTool.Tags;
 using TagTool.Commands.Animations;
 using TagTool.Commands.BSPs;
 using TagTool.Cache;
+using System.Reflection;
+using System.IO;
+using System.Xml;
 
 namespace TagTool.Commands.Editing
 {
     static class EditTagContextFactory
     {
+        public static XmlDocument Documentation { get; } = new XmlDocument();
+
         public static CommandContext Create(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag)
         {
+            var documentationPath = Assembly.GetExecutingAssembly().Location;
+            documentationPath = $"{documentationPath.Substring(0, documentationPath.Length - 4)}.xml";
+
+            if (Documentation.ChildNodes.Count == 0 && File.Exists(documentationPath))
+                Documentation.Load(documentationPath);
+
             var groupName = cacheContext.StringIdCache.GetString(tag.Group.Name);
 
             var tagName = $"0x{tag.Index:X4}";

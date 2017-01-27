@@ -51,10 +51,6 @@ namespace TagTool.Geometry
         /// <summary>
         /// Stub for now, creates n materials, which are named 0 to (n-1)
         /// </summary>
-        /// <param name="coll"></param>
-        /// <param name="tag_data"></param>
-        /// <param name="pos"></param>
-        /// <returns></returns>
         public long ParseMaterials(CollisionModel coll, BinaryReader reader, int count)
         {
             coll.Materials = new List<CollisionModel.Material>();

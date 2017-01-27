@@ -11,6 +11,9 @@ namespace TagTool.Tags.Definitions
         public uint CharacterFlags;
         public TagInstance ParentCharacter;
         public TagInstance Unit;
+        /// <summary>
+        /// Creature reference for swarm characters ONLY
+        /// </summary>
         public TagInstance Creature;
         public TagInstance Style;
         public TagInstance MajorCharacter;
@@ -35,7 +38,7 @@ namespace TagTool.Tags.Definitions
         public List<IdleProperty> IdleProperties;
         public List<VocalizationProperty> VocalizationProperties;
         public List<BoardingProperty> BoardingProperties;
-        public List<UnknownBlock2> Unknown2;
+        public List<CombatformProperty> CombatformProperties;
         public uint Unknown3;
         public uint Unknown4;
         public uint Unknown5;
@@ -59,8 +62,8 @@ namespace TagTool.Tags.Definitions
         {
             public StringId VariantName;
             public short VariantIndex;
-            [TagField(Count = 2)]
-            public sbyte[] Padding;
+            [TagField(Padding = true, Length = 2)]
+            public byte[] Padding;
             public List<DialogueVariation> DialogueVariations;
 
             [TagStructure(Size = 0x18)]
@@ -94,9 +97,38 @@ namespace TagTool.Tags.Definitions
             Flying = 1 << 1,
             DualWields = 1 << 2,
             UsesGravemind = 1 << 3,
-            CannotSwapWeaponsWithPlayer = 1 << 5,
-            DoesNotInitiallyBackpack = 1 << 6,
-            ReviveOnDeath = 1 << 7
+            DoNotTradeWeapon = 1 << 5,
+            DoNotStowWeapon = 1 << 6,
+            HeroCharacter = 1 << 7,
+            LeaderIndependentPositioning = 1 << 8,
+            HasActiveCamo = 1 << 9,
+            UseHeadMarkerForLooking = 1 << 10,
+            SpaceCharacter = 1 << 11,
+            DoNotDropEquipment = 1 << 12,
+            DoNotAllowCrouch = 1 << 13,
+            DoNotAllowMovingCrouch = 1 << 14,
+            CriticalBetrayal = 1 << 15,
+            DeathlessCriticalBetrayal = 1 << 16,
+            /// <summary>
+            /// Non-depleted ai-tracked damage sections prevent instant melee kills.
+            /// </summary>
+            ArmorPreventsAssassination = 1 << 17,
+            /// <summary>
+            /// The default is to drop only the currently equipped weapon.
+            /// </summary>
+            DropAllWeaponsOnDeath = 1 << 18,
+            /// <summary>
+            /// This will override 'drop all weapons'.
+            /// </summary>
+            DropNoWeaponsOnDeath = 1 << 19,
+            /// <summary>
+            /// Cannot be assassinated unless its shield has been depleted.
+            /// </summary>
+            ShieldPreventsAssassination = 1 << 20,
+            /// <summary>
+            /// This overrides all other character assassination modifications.
+            /// </summary>
+            CannotBeAssassinated = 1 << 21
         }
 
         public enum ActorTypeValue : short
@@ -154,14 +186,37 @@ namespace TagTool.Tags.Definitions
         public class GeneralProperty
         {
             public GeneralPropertyFlags Flags;
+
             public ActorTypeValue ActorType;
+
+            /// <summary>
+            /// The rank of this character, helps determine who should be a squad leader. (0 is lowly, 32767 is highest)
+            /// </summary>
             public short Rank;
+
+            /// <summary>
+            /// Where should my followers try and position themselves when I am their leader?
+            /// </summary>
             public FollowerPositioningValue FollowerPositioning;
-            [TagField(Count = 2)]
-            public sbyte[] Padding;
+
+            [TagField(Padding = true, Length = 2)]
+            public byte[] Padding;
+
+            /// <summary>
+            /// Don't let my combat range get outside this distance from my leader when in combat. (if 0 then defaults to 4wu)
+            /// </summary>
             public float MaximumLeaderDistance;
+
+            /// <summary>
+            /// Never play dialogue if all players are outside of this range. (if 0 then defaults to 20wu)
+            /// </summary>
             public float MaximumPlayerDialogueDistance;
+
+            /// <summary>
+            /// The inherent scariness of the character.
+            /// </summary>
             public float Scariness;
+
             public GrenadeTypeValue DefaultGrenadeType;
             public BehaviorTreeRootValue BehaviorTreeRoot;
         }
@@ -197,8 +252,7 @@ namespace TagTool.Tags.Definitions
             public float ShieldRechargeDelayTime;
             public float ShieldRechargeTime;
             public float StunThreshold;
-            public float StunTimeBoundsMin;
-            public float StunTimeBoundsMax;
+            public Bounds<float> StunTimeBounds;
             public float ExtendedShieldDamageThreshold;
             public float ExtendedBodyDamageThreshold;
             public float SuicideRadius;
@@ -210,8 +264,9 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x34)]
         public class PlacementProperty
         {
-            [TagField(Count = 4)]
-            public sbyte[] Padding;
+            [TagField(Padding = true, Length = 4)]
+            public byte[] Padding;
+
             public float FewUpgradeChanceEasy;
             public float FewUpgradeChanceNormal;
             public float FewUpgradeChanceHeroic;
@@ -378,8 +433,10 @@ namespace TagTool.Tags.Definitions
         public class SwarmProperty
         {
             public short ScatterKilledCount;
-            [TagField(Count = 2)]
-            public sbyte[] Padding;
+
+            [TagField(Padding = true, Length = 2)]
+            public byte[] Padding;
+
             public float ScatterRadius;
             public float ScatterTime;
             public Bounds<float> HoundDistance;
@@ -431,10 +488,25 @@ namespace TagTool.Tags.Definitions
             public uint Unknown7;
         }
 
+        [Flags]
+        public enum ChargeFlags : int
+        {
+            None = 0,
+            OffhandMeleeAllowed = 1 << 0,
+            BerserkWheneverCharge = 1 << 1,
+            DoNotUseBerserkMode = 1 << 2,
+            DoNotStowWeaponDuringBerserk = 1 << 3,
+            AllowDialogueWhileBerserking = 1 << 4,
+            DoNotPlayBerserkAnimation = 1 << 5,
+            DoNotShootDuringCharge = 1 << 6,
+            AllowLeapWithRangedWeapons = 1 << 7,
+            PermanentBerserkOnceInitiated = 1 << 8
+        }
+
         [TagStructure(Size = 0x7C)]
         public class ChargeProperty
         {
-            public uint ChargeFlags;
+            public ChargeFlags Flags;
             public float MeleeConsiderRange;
             public float MeleeChance;
             public float MeleeAttackRange;
@@ -459,14 +531,14 @@ namespace TagTool.Tags.Definitions
             public uint Unknown8;
             public uint Unknown9;
             public uint Unknown10;
-            public List<UnknownBlock> Unknown11;
+            public List<DifficultyLimit> DifficultyLimits;
 
             [TagStructure(Size = 0x6)]
-            public class UnknownBlock
+            public class DifficultyLimit
             {
-                public short Unknown;
-                public short Unknown2;
-                public short Unknown3;
+                public short MaximumKamikazeCount;
+                public short MaximumBerserkCount;
+                public short MinimumBerserkCount;
             }
         }
 
@@ -480,12 +552,18 @@ namespace TagTool.Tags.Definitions
             public float DiveRetreatChance;
         }
 
+        [Flags]
+        public enum CoverFlags : int
+        {
+            None = 0,
+            UsePhasing = 1 << 1
+        }
+
         [TagStructure(Size = 0x54)]
         public class CoverProperty
         {
-            public uint CoverFlags;
-            public float HideBehindCoverTimeMin;
-            public float HideBehindCoverTimeMax;
+            public CoverFlags Flags;
+            public Bounds<float> HideBehindCoverTime;
             public float CoverVitalityThreshold;
             public float CoverShieldFraction;
             public float CoverCheckDelay;
@@ -501,60 +579,77 @@ namespace TagTool.Tags.Definitions
             public float ProximityMeleeDistance;
             public float UnreachableEnemyDangerThreashold;
             public float ScaryTargetThreshold;
-            public uint Unknown4;
-            public uint Unknown5;
-            public uint Unknown6;
+            public float VitalityFractionShieldEquipment;
+            public float RecentDamageShieldEquipment;
+            public float MinimumEnemyDistance;
+        }
+
+        [Flags]
+        public enum RetreatFlags : int
+        {
+            None = 0,
+            ZigZagWhenFleeing = 1 << 0
         }
 
         [TagStructure(Size = 0x58)]
         public class RetreatProperty
         {
-            public uint RetreatFlags;
+            public RetreatFlags Flags;
             public float ShieldThreshold;
             public float ScaryTargetThreshold;
             public float DangerThreshold;
             public float ProximityThreshold;
-            public float ForcedCowerTimeBoundsMin;
-            public float ForcedCowerTimeBoundsMax;
-            public float CowerTimeBoundsMin;
-            public float CowerTimeBoundsMax;
+            public Bounds<float> ForcedCowerTimeBounds;
+            public Bounds<float> CowerTimeBounds;
             public float ProximityAmbushThreshold;
-            public uint Unknown;
-            public uint Unknown2;
-            public uint Unknown3;
-            public uint Unknown4;
-            public uint Unknown5;
+            public float AwarenessAmbushThreshold;
+            public float LeaderDeadRetreatChance;
+            public float PeerDeadRetreatChance;
+            public float SecondPeerDeadRetreatChance;
+            public float FleeTimeout;
             public Angle ZigZagAngle;
             public float ZigZagPeriod;
             public float RetreatGrenadeChance;
             public TagInstance BackupWeapon;
         }
 
+        [Flags]
+        public enum SearchFlags : int
+        {
+            None = 0,
+            CrouchOnInvestigate = 1 << 0,
+            WalkOnPursuit = 1 << 1,
+            SearchForever = 1 << 2,
+            SearchExclusively = 1 << 3,
+            SearchPointsOnlyWhileWalking = 1 << 4
+        }
+
         [TagStructure(Size = 0x20)]
         public class SearchProperty
         {
-            public uint SearchFlags;
-            public float SearchTimeMin;
-            public float SearchTimeMax;
-            public uint Unknown;
-            public float UncoverDistanceBoundsMin;
-            public float UncoverDistanceBoundsMax;
-            public uint Unknown2;
-            public uint Unknown3;
+            public SearchFlags Flags;
+            public Bounds<float> SearchTime;
+            public float SearchDistance;
+            public Bounds<float> UncoverDistanceBounds;
+            public Bounds<float> VocalizationTime;
+        }
+
+        [Flags]
+        public enum PreSearchFlags : int
+        {
+            None = 0,
+            Flag1 = 1 << 0
         }
 
         [TagStructure(Size = 0x28)]
         public class PreSearchProperty
         {
-            public uint PreSearchFlags;
-            public float MinimumPresearchTimeMin;
-            public float MinimumPresearchTimeMax;
-            public float MaximumPresearchTimeMin;
-            public float MaximumPresearchTimeMax;
+            public PreSearchFlags Flags;
+            public Bounds<float> MinimumPreSearchTime;
+            public Bounds<float> MaximumPreSearchTime;
             public float MinimumCertaintyRadius;
             public uint Unknown;
-            public float MinimumSuppressingTimeMin;
-            public float MinimumSuppressingTimeMax;
+            public Bounds<float> MinimumSuppressingTime;
             public short Unknown2;
             public short Unknown3;
         }
@@ -562,36 +657,49 @@ namespace TagTool.Tags.Definitions
         [TagStructure(Size = 0x14)]
         public class IdleProperty
         {
-            public uint Unknown;
-            public float IdlePoseDelayTimeMin;
-            public float IdlePoseDelayTimeMax;
-            public uint Unknown2;
-            public uint Unknown3;
+            [TagField(Padding = true, Length = 4)]
+            public byte[] Padding;
+            public Bounds<float> IdlePoseDelayTime;
+            public Bounds<float> WanderDelayTime;
         }
 
         [TagStructure(Size = 0xC)]
         public class VocalizationProperty
         {
-            public uint Unknown;
+            public float CharacterSkipFraction;
             public float LookCommentTime;
             public float LookLongCommentTime;
+        }
+
+        [Flags]
+        public enum BoardingFlags : int
+        {
+            None = 0,
+            AirborneBoarding = 1 << 0
         }
 
         [TagStructure(Size = 0x14)]
         public class BoardingProperty
         {
-            public uint Flags;
-            public float MaxDistance;
+            public BoardingFlags Flags;
+            public float MaximumDistance;
             public float AbortDistance;
-            public float MaxSpeed;
-            public uint Unknown;
+            public float MaximumSpeed;
+            public float BoardTime;
         }
 
         [TagStructure(Size = 0x8)]
-        public class UnknownBlock2
+        public class CombatformProperty
         {
-            public uint Unknown;
-            public uint Unknown2;
+            /// <summary>
+            /// Distance at which the combatform will be forced into berserking.
+            /// </summary>
+            public float BerserkDistance;
+
+            /// <summary>
+            /// Chance of which the combatform will be forced into berserking this second.
+            /// </summary>
+            public float BerserkChance;
         }
 
         [TagStructure(Size = 0x38)]

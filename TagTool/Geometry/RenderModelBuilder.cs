@@ -228,7 +228,6 @@ namespace TagTool.Geometry
         /// Binds a world vertex to the current mesh.
         /// </summary>
         /// <param name="vertices"></param>
-        /// <param name="nodeIndex"></param>
         public void BindWorldVertexBuffer(IEnumerable<WorldVertex> vertices)
         {
             if (_currentMesh == null)

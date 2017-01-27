@@ -83,12 +83,19 @@ namespace TagTool.Serialization
         public void DeserializeProperty(EndianReader reader, ISerializationContext context, object instance, TagFieldEnumerator enumerator, long baseOffset)
         {
             // Seek to the value if it has an offset specified and then read it
-            if (enumerator.Attribute.Offset >= 0)
-                reader.BaseStream.Position = baseOffset + enumerator.Attribute.Offset;
-            var startOffset = reader.BaseStream.Position;
-            enumerator.Field.SetValue(instance, DeserializeValue(reader, context, enumerator.Attribute, enumerator.Field.FieldType));
-            if (enumerator.Attribute.Size > 0)
-                reader.BaseStream.Position = startOffset + enumerator.Attribute.Size; // Honor the value's size if it has one set
+            if (enumerator.Attribute.Padding == true)
+            {
+                reader.BaseStream.Position += enumerator.Attribute.Length;
+            }
+            else
+            {
+                if (enumerator.Attribute.Offset >= 0)
+                    reader.BaseStream.Position = baseOffset + enumerator.Attribute.Offset;
+                var startOffset = reader.BaseStream.Position;
+                enumerator.Field.SetValue(instance, DeserializeValue(reader, context, enumerator.Attribute, enumerator.Field.FieldType));
+                if (enumerator.Attribute.Size > 0)
+                    reader.BaseStream.Position = startOffset + enumerator.Attribute.Size; // Honor the value's size if it has one set
+            }
         }
 
         /// <summary>

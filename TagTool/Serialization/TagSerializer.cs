@@ -32,6 +32,7 @@ namespace TagTool.Serialization
         /// </summary>
         /// <param name="context">The serialization context to use.</param>
         /// <param name="tagStructure">The tag structure.</param>
+        /// <param name="offset">An optional offset to begin serializing at.</param>
         public void Serialize(ISerializationContext context, object tagStructure, uint? offset = null)
         {
             // Serialize the structure to a data block
@@ -83,8 +84,7 @@ namespace TagTool.Serialization
         /// <param name="tagStream">The stream to write completed blocks of tag data to.</param>
         /// <param name="block">The temporary block to write incomplete tag data to.</param>
         /// <param name="instance">The object that the property belongs to.</param>
-        /// <param name="structInfo">The structure information.</param>
-        /// <param name="property">The property.</param>
+        /// <param name="enumerator">The field enumerator.</param>
         /// <param name="baseOffset">The base offset of the structure from the start of its block.</param>
         /// <exception cref="System.InvalidOperationException">Offset for property \ + property.Name + \ is outside of its structure</exception>
         private void SerializeProperty(ISerializationContext context, MemoryStream tagStream, IDataBlock block, object instance, TagFieldEnumerator enumerator, long baseOffset)

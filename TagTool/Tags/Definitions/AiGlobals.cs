@@ -8,8 +8,9 @@ namespace TagTool.Tags.Definitions
     public class AiGlobals
     {
         public List<AiData> Data;
-        [TagField(Count = 4)]
-        public sbyte[] Padding;
+
+        [TagField(Padding = true, Length = 4)]
+        public byte[] Padding;
 
         [TagStructure(Size = 0x144)]
         public class AiData

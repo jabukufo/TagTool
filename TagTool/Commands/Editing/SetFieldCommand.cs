@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
@@ -17,7 +18,7 @@ namespace TagTool.Commands.Editing
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
-
+        
         public SetFieldCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
 
@@ -310,7 +311,16 @@ namespace TagTool.Commands.Editing
 
                 var query = args[0];
 
-                var found = Enum.Parse(type, query);
+                object found;
+
+                try
+                {
+                    found = Enum.Parse(type, query);
+                }
+                catch
+                {
+                    found = null;
+                }
 
                 if (found == null)
                 {
@@ -325,7 +335,15 @@ namespace TagTool.Commands.Editing
 
                         Console.WriteLine("Valid options:");
                         foreach (var name in Enum.GetNames(type))
-                            Console.WriteLine("\t{0}", name);
+                        {
+                            var fieldName = $"{type.FullName}.{name}".Replace("+", ".");
+                            var documentationNode = EditTagContextFactory.Documentation.SelectSingleNode($"//member[starts-with(@name, 'F:{fieldName}')]");
+
+                            Console.WriteLine("\t{0} {1}", name,
+                                documentationNode != null ?
+                                    $":: {documentationNode.FirstChild.InnerText.Replace("\r\n", "").TrimStart().TrimEnd()}" :
+                                    "");
+                        }
                         Console.WriteLine();
 
                         return false;

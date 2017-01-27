@@ -5,6 +5,9 @@ using TagTool.Serialization;
 using TagTool.Common;
 using TagTool.Tags;
 using TagTool.Cache;
+using System.IO;
+using System.Xml;
+using System.Reflection;
 
 namespace TagTool.Commands.Editing
 {
@@ -13,7 +16,7 @@ namespace TagTool.Commands.Editing
         private GameCacheContext CacheContext { get; }
         private TagStructureInfo Structure { get; }
         private object Value { get; }
-
+        
         public ListFieldsCommand(GameCacheContext cacheContext, TagStructureInfo structure, object value)
             : base(CommandFlags.Inherit,
 
@@ -69,8 +72,14 @@ namespace TagTool.Commands.Editing
                     valueString = $"[0x{((TagInstance)fieldValue).Index:X4}] {CacheContext.TagNames[((TagInstance)fieldValue).Index]}.{CacheContext.StringIdCache.GetString(((TagInstance)fieldValue).Group.Name)}";
                 else
                     valueString = fieldValue.ToString();
+
+                var fieldName = $"{enumerator.Field.DeclaringType.FullName}.{enumerator.Field.Name}".Replace("+", ".");
+                var documentationNode = EditTagContextFactory.Documentation.SelectSingleNode($"//member[starts-with(@name, 'F:{fieldName}')]");
                 
-                Console.WriteLine("{0}: {1} = {2}", nameString, typeString, valueString);
+                Console.WriteLine("{0}: {1} = {2} {3}", nameString, typeString, valueString,
+                    documentationNode != null ?
+                        $":: {documentationNode.FirstChild.InnerText.Replace("\r\n", "").TrimStart().TrimEnd()}" :
+                        "");
             }
 
             return true;
