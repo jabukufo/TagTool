@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TagTool.Common;
 using TagTool.Serialization;
@@ -7,35 +8,96 @@ namespace TagTool.Tags.Definitions
     [TagStructure(Name = "area_screen_effect", Class = "sefc", Size = 0xC)]
     public class AreaScreenEffect
     {
-        public List<ScreenEffectBlock> ScreenEffect;
+        public List<ScreenEffectBlock> ScreenEffects;
+
+        [Flags]
+        public enum ScreenEffectFlags : ushort
+        {
+            None = 0,
+            DebugDisable = 1 << 0,
+            AllowEffectOutsideRadius = 1 << 1,
+            Unattached = 1 << 2,
+            FirstPersonOnly = 1 << 3,
+            ThirdPersonOnly = 1 << 4,
+            DisableCinematicCameraFalloffs = 1 << 5,
+            OnlyAffectsAttachedObject = 1 << 6,
+            DrawPreciselyOne = 1 << 7,
+            UsePlayerTravelDirection = 1 << 8
+        }
+
+        [Flags]
+        public enum ScreenEffectHiddenFlags : ushort
+        {
+            None = 0,
+            UpdateThread = 1 << 0,
+            RenderThread = 1 << 1
+        }
 
         [TagStructure(Size = 0x9C)]
         public class ScreenEffectBlock
         {
             public StringId Name;
-            public short Unknown;
-            public short Unknown2;
-            public uint Unknown3;
-            public byte[] Function;
+            public ScreenEffectFlags Flags;
+            public ScreenEffectHiddenFlags HiddenFlags;
+
+            //
+            //  DISTANCE FALLOFF:
+            //      Controls the maximum distance and the distance falloff of this effect.
+            //      NOTE: Not used for scenario global effects
+            //
+
+            /// <summary>
+            /// The maximum distance this screen effect will affect.
+            /// </summary>
+            public float MaximumDistance;
+
+            /// <summary>
+            /// The function data of the distance falloff.
+            /// </summary>
+            public byte[] DistanceFalloffFunction;
+
+            //
+            //  TIME EVOLUTION:
+            //      Controls the lifetime and time falloff of this effect.
+            //      NOTE: Not used for scenario global effects
+            //
+
+            /// <summary>
+            /// The effect is destroyed after this many seconds. (0 = never dies)
+            /// </summary>
             public float Duration;
-            public byte[] Function2;
-            public byte[] Function3;
+
+            /// <summary>
+            /// The function data of the time evolution.
+            /// </summary>
+            public byte[] TimeEvolutionFunction;
+
+            //
+            //  ANGLE FALLOFF:
+            //      Controls the falloff of this effect based on how close you are to looking directly at it.
+            //      NOTE: not used for scenario global effects
+            //
+
+            /// <summary>
+            /// The function data of the angle falloff.
+            /// </summary>
+            public byte[] AngleFalloffFunction;
+
             public float LightIntensity;
             public float PrimaryHue;
             public float SecondaryHue;
             public float Saturation;
-            public float ColorMuting;
-            public float Brightness;
-            public float Darkness;
+            public float Desaturation;
+            public float GammaIncrease;
+            public float GammaDecrease;
             public float ShadowBrightness;
-            public float TintR;
-            public float TintG;
-            public float TintB;
-            public float ToneR;
-            public float ToneG;
-            public float ToneB;
+            public RealRgbColor ColorFilter;
+            public RealRgbColor ColorFloor;
+
             public float Tracing;
-            public uint Unknown4;
+
+            public float ScreenShake;
+
             public TagInstance ScreenShader;
         }
     }
