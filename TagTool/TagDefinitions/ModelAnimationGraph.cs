@@ -542,7 +542,7 @@ namespace TagTool.TagDefinitions
         }
 
         [Flags]
-        public enum InheritanceFlags : int
+        public enum InheritanceListFlags : int
         {
             None = 0,
             TightenNodes = 1 << 0
@@ -555,7 +555,7 @@ namespace TagTool.TagDefinitions
             public List<NodeMapBlock> NodeMap;
             public List<NodeMapFlag> NodeMapFlags;
             public float RootZOffset;
-            public InheritanceFlags Flags;
+            public InheritanceListFlags Flags;
 
             [TagStructure(Size = 0x2)]
             public class NodeMapBlock
