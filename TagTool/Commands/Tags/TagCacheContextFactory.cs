@@ -32,6 +32,7 @@ namespace TagTool.Commands.Tags
             context.AddCommand(new GenerateCacheCommand(cacheContext));
             context.AddCommand(new NewTagCommand(cacheContext));
             context.AddCommand(new ExportTagsCommand(cacheContext));
+            context.AddCommand(new NameTagCommand(cacheContext));
 
             if (cacheContext.StringIDs != null)
             {
