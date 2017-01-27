@@ -1,5 +1,5 @@
-﻿using TagTool.IO;
-using TagTool.Tags;
+﻿using TagTool.Cache;
+using TagTool.IO;
 
 namespace TagTool.Serialization
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.VFiles
 {

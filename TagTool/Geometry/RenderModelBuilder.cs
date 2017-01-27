@@ -6,7 +6,7 @@ using TagTool.Cache;
 using TagTool.Common;
 using TagTool.IO;
 using TagTool.Serialization;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Geometry
 {

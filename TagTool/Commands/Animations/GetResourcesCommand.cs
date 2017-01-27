@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TagTool.Cache;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Animations
 {

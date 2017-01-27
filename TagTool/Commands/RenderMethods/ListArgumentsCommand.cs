@@ -4,8 +4,7 @@ using System.IO;
 using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.RenderMethods
 {

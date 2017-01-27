@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using TagTool.Cache;
-using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {

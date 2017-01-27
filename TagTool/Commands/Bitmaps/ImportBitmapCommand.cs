@@ -4,8 +4,7 @@ using System.Globalization;
 using System.IO;
 using TagTool.Bitmaps;
 using TagTool.Serialization;
-using TagTool.Tags.Definitions;
-using TagTool.Tags;
+using TagTool.TagDefinitions;
 using TagTool.Cache;
 
 namespace TagTool.Commands.Bitmaps

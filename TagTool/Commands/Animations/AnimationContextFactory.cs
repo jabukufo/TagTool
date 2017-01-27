@@ -1,6 +1,5 @@
 ﻿using TagTool.Cache;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Animations
 {

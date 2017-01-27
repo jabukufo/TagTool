@@ -5,7 +5,6 @@ using System.Linq;
 using TagTool.IO;
 using TagTool.Bitmaps;
 using TagTool.Geometry;
-using TagTool.Tags;
 using TagTool.Common;
 using TagTool.Cache;
 

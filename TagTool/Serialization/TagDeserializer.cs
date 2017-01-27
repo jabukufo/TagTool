@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using TagTool.Common;
 using TagTool.Cache;
-using TagTool.Tags;
 using TagTool.IO;
 
 namespace TagTool.Serialization

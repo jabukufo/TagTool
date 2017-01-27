@@ -1,7 +1,6 @@
 ﻿using System;
 using TagTool.Cache;
 using TagTool.IO;
-using TagTool.Tags;
 
 namespace TagTool.Serialization
 {

@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using TagTool.Serialization;
 using TagTool.Common;
-using TagTool.Tags;
 using TagTool.Cache;
-using System.IO;
-using System.Xml;
-using System.Reflection;
 
 namespace TagTool.Commands.Editing
 {

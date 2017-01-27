@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.IO;
-using TagTool.Tags;
 
 namespace TagTool.Cache
 {

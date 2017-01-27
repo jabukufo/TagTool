@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using TagTool.Cache;
 using TagTool.Common;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands
 {

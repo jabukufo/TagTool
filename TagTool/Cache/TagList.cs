@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TagTool.Common;
-using TagTool.Tags;
 
 namespace TagTool.Cache
 {

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using TagTool.Serialization;
-using TagTool.Tags;
 using TagTool.Cache;
 
 namespace TagTool.Commands.Tags

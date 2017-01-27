@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TagTool.Serialization;
-using TagTool.Tags.Definitions;
-using TagTool.Tags;
+using TagTool.TagDefinitions;
 using TagTool.Cache;
 using System.Globalization;
 

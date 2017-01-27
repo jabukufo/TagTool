@@ -5,7 +5,6 @@ using System.Text;
 using TagTool.Common;
 using TagTool.Cache;
 using TagTool.IO;
-using TagTool.Tags;
 
 namespace TagTool.Serialization
 {

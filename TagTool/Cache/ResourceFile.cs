@@ -5,12 +5,12 @@ namespace TagTool.Cache
 {
     public class ResourceFile
     {
-        public byte[] Padding0 { get; set; } // Padding at beginning of file
+        public byte[] Unused0 { get; set; } // Unused at beginning of file
         public uint TableOffset { get; set; } // Offset of where the offsets-table begins.
         public int ResourceCount { get; set; } // Amount of resources in the file.
-        public byte[] Padding1 { get; set; } // Padding following the resource count.
+        public byte[] Unused1 { get; set; } // Unused following the resource count.
         public long TimeStamp { get; set; } // Uh, a timestamp?
-        public byte[] Padding2 { get; set; } // Padding following the timestamp.
+        public byte[] Unused2 { get; set; } // Unused following the timestamp.
         public List<Resource> Resources { get; set; } = new List<Resource> { }; // List of all the resources in their file (with their index, offset, size, and data).
 
         public ResourceFile(FileInfo file)
@@ -19,12 +19,12 @@ namespace TagTool.Cache
             using (var reader = new BinaryReader(stream))
             {
                 // Read the resource file header.
-                Padding0 = reader.ReadBytes(0x4);
+                Unused0 = reader.ReadBytes(0x4);
                 TableOffset = reader.ReadUInt32();
                 ResourceCount = reader.ReadInt32();
-                Padding1 = reader.ReadBytes(0x4);
+                Unused1 = reader.ReadBytes(0x4);
                 TimeStamp = reader.ReadInt64();
-                Padding2 = reader.ReadBytes(0x8);
+                Unused2 = reader.ReadBytes(0x8);
 
                 // Add all resources except the last one to the resources List... (it will get added right after this for-loop.)
                 reader.BaseStream.Position = TableOffset;
@@ -102,12 +102,12 @@ namespace TagTool.Cache
             using (var writer = new BinaryWriter(stream))
             {
                 // Write the header
-                writer.Write(Padding0);
+                writer.Write(Unused0);
                 writer.Write(TableOffset);
                 writer.Write(Resources.Count);
-                writer.Write(Padding1);
+                writer.Write(Unused1);
                 writer.Write(TimeStamp);
-                writer.Write(Padding2);
+                writer.Write(Unused2);
 
                 // Write the resources data (if it has any) and add it's offset to the list.
                 List<uint> offsets = new List<uint> { };

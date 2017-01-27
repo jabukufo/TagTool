@@ -5,7 +5,7 @@ using System.Linq;
 using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Models
 {
