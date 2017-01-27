@@ -22,7 +22,7 @@ namespace TagTool.Tags.Definitions
         public List<PerceptionProperty> PerceptionProperties;
         public List<LookProperty> LookProperties;
         public List<MovementProperty> MovementProperties;
-        public List<UnknownBlock> Unknown;
+        public List<FlockingProperty> FlockingProperties;
         public List<SwarmProperty> SwarmProperties;
         public List<ReadyProperty> ReadyProperties;
         public List<EngageProperty> EngageProperties;
@@ -89,7 +89,14 @@ namespace TagTool.Tags.Definitions
         [Flags]
         public enum GeneralPropertyFlags : int
         {
-            None = 0
+            None = 0,
+            Swarm = 1 << 0,
+            Flying = 1 << 1,
+            DualWields = 1 << 2,
+            UsesGravemind = 1 << 3,
+            CannotSwapWeaponsWithPlayer = 1 << 5,
+            DoesNotInitiallyBackpack = 1 << 6,
+            ReviveOnDeath = 1 << 7
         }
 
         public enum ActorTypeValue : short
@@ -157,7 +164,6 @@ namespace TagTool.Tags.Definitions
             public float Scariness;
             public GrenadeTypeValue DefaultGrenadeType;
             public BehaviorTreeRootValue BehaviorTreeRoot;
-
         }
 
         [Flags]
@@ -275,24 +281,66 @@ namespace TagTool.Tags.Definitions
             public Bounds<float> CombatIdleAiming;
         }
 
+        [Flags]
+        public enum MovementFlags : int
+        {
+            None = 0,
+            DangerCrouchAllowMovement = 1 << 0,
+            NoSideStep = 1 << 1,
+            PreferToCombatNearFriends = 1 << 2,
+            AllowBoostedJump = 1 << 3,
+            Perch = 1 << 4,
+            Climb = 1 << 5,
+            PreferWallMovement = 1 << 6,
+            HasFlyingMode = 1 << 7,
+            DisallowCrouch = 1 << 8,
+            DisallowAllMovement = 1 << 9,
+            AlwaysUseSearchPoints = 1 << 10,
+            KeepMoving = 1 << 11,
+            CureIsolationJump = 1 << 12,
+            GainElevation = 1 << 13,
+            RepositionDistant = 1 << 14,
+            OnlyUseAerialFiringPositions = 1 << 15,
+            UseHighPriorityPathFinding = 1 << 16,
+            LowerWeaponWhenNoAlertMovementOverride = 1 << 17,
+            Phase = 1 << 18,
+            NoOverrideWhenFiring = 1 << 19,
+            NoStowDuringIdleActivities = 1 << 20,
+            FlipAnyVehicle = 1 << 21,
+            BoundAlongPath = 1 << 22
+        }
+
+        [Flags]
+        public enum MovementHintFlags : int
+        {
+            None = 0,
+            VaultStep = 1 << 0,
+            VaultCrouch = 1 << 1,
+            MountStep = 1 << 5,
+            MountCrouch = 1 << 6,
+            MountStand = 1 << 7,
+            HoistCrouch = 1 << 11,
+            HoistStand = 1 << 12
+        }
+
         [TagStructure(Size = 0x2C)]
         public class MovementProperty
         {
-            public uint MovementFlags;
+            public MovementFlags Flags;
             public float PathfindingRadius;
             public float DestinationRadius;
             public float DiveGrenadeChance;
-            public ObstaceLeapMinimumSizeValue ObstaceLeapMinimumSize;
-            public ObstaceLeapMaximumSizeValue ObstaceLeapMaximumSize;
-            public ObstaceIgnoreSizeValue ObstaceIgnoreSize;
-            public ObstaceSmashableSizeValue ObstaceSmashableSize;
+            public SizeValue ObstacleLeapMinimumSize;
+            public SizeValue ObstacleLeapMaximumSize;
+            public SizeValue ObstacleIgnoreSize;
+            public SizeValue ObstaceSmashableSize;
             public JumpHeightValue JumpHeight;
-            public uint MovementHintFlags;
+            public MovementHintFlags HintFlags;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
 
-            public enum ObstaceLeapMinimumSizeValue : short
+            public enum SizeValue : short
             {
                 None,
                 Tiny,
@@ -300,42 +348,9 @@ namespace TagTool.Tags.Definitions
                 Medium,
                 Large,
                 Huge,
-                Immobile,
+                Immobile
             }
-
-            public enum ObstaceLeapMaximumSizeValue : short
-            {
-                None,
-                Tiny,
-                Small,
-                Medium,
-                Large,
-                Huge,
-                Immobile,
-            }
-
-            public enum ObstaceIgnoreSizeValue : short
-            {
-                None,
-                Tiny,
-                Small,
-                Medium,
-                Large,
-                Huge,
-                Immobile,
-            }
-
-            public enum ObstaceSmashableSizeValue : short
-            {
-                None,
-                Tiny,
-                Small,
-                Medium,
-                Large,
-                Huge,
-                Immobile,
-            }
-
+            
             public enum JumpHeightValue : int
             {
                 None,
@@ -345,46 +360,42 @@ namespace TagTool.Tags.Definitions
                 Stand,
                 Storey,
                 Tower,
-                Infinite,
+                Infinite
             }
         }
 
         [TagStructure(Size = 0x18)]
-        public class UnknownBlock
+        public class FlockingProperty
         {
-            public uint Unknown;
-            public uint Unknown2;
-            public uint Unknown3;
-            public uint Unknown4;
-            public uint Unknown5;
-            public uint Unknown6;
+            public float DecelerationDistance;
+            public float NormalizedSpeed;
+            public float BufferDistance;
+            public Bounds<float> ThrottleThresholdBOunds;
+            public float DecelerationStopTime;
         }
 
         [TagStructure(Size = 0x38)]
         public class SwarmProperty
         {
             public short ScatterKilledCount;
-            public short Unknown;
-            public uint Unknown2;
-            public uint Unknown3;
+            [TagField(Count = 2)]
+            public sbyte[] Padding;
             public float ScatterRadius;
-            public float ScatterDistance;
-            public float HoundMinDistance;
-            public float HoundMaxDistance;
+            public float ScatterTime;
+            public Bounds<float> HoundDistance;
+            public Bounds<float> InfectionTime;
             public float PerlinOffsetScale;
-            public float OffsetPeriodMin;
-            public float OffsetPeriodMax;
+            public Bounds<float> OffsetPeriod;
             public float PerlinIdleMovementThreshold;
             public float PerlinCombatMovementThreshold;
-            public uint Unknown4;
-            public uint Unknown5;
+            public float StuckTime;
+            public float StuckDistance;
         }
 
         [TagStructure(Size = 0x8)]
         public class ReadyProperty
         {
-            public float ReadyTimeBoundsMin;
-            public float ReadyTimeBoundsMax;
+            public Bounds<float> ReadTimeBounds;
         }
 
         [TagStructure(Size = 0x38)]
