@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TagTool.Common;
 using TagTool.Serialization;
@@ -58,7 +59,8 @@ namespace TagTool.Tags.Definitions
         {
             public StringId VariantName;
             public short VariantIndex;
-            public short Unknown;
+            [TagField(Count = 2)]
+            public sbyte[] Padding;
             public List<DialogueVariation> DialogueVariations;
 
             [TagStructure(Size = 0x18)]
@@ -66,7 +68,7 @@ namespace TagTool.Tags.Definitions
             {
                 public TagInstance Dialogue;
                 public StringId Name;
-                public uint Unknown;
+                public float Weight;
             }
         }
 
@@ -80,58 +82,95 @@ namespace TagTool.Tags.Definitions
             {
                 public TagInstance Dialogue;
                 public StringId Name;
-                public uint Unknown;
+                public float Weight;
             }
+        }
+
+        [Flags]
+        public enum GeneralPropertyFlags : int
+        {
+            None = 0
+        }
+
+        public enum ActorTypeValue : short
+        {
+            Elite,
+            Jackal,
+            Grunt,
+            Hunter,
+            Engineer,
+            Assassin,
+            Player,
+            Marine,
+            Crew,
+            CombatForm,
+            InfectionForm,
+            CarrierForm,
+            Monitor,
+            Sentinel,
+            None,
+            MountedWeapon,
+            Brute,
+            Prophet,
+            Bugger,
+            Juggernaut,
+            PureFormStealth,
+            PureFormTank,
+            PureFormRanged,
+            Scarab,
+            Guardian
+        }
+
+        public enum FollowerPositioningValue : short
+        {
+            InFrontOfMe,
+            BehindMe,
+            Tight
+        }
+
+        public enum GrenadeTypeValue : short
+        {
+            None,
+            HumanGrenade,
+            CovenantPlasma,
+            BruteClaymore,
+            Firebomb
+        }
+
+        public enum BehaviorTreeRootValue : short
+        {
+            Default,
+            Flying
         }
 
         [TagStructure(Size = 0x1C)]
         public class GeneralProperty
         {
-            public uint Flags;
+            public GeneralPropertyFlags Flags;
             public ActorTypeValue ActorType;
-            public short Unknown;
-            public short Unknown2;
-            public short Unknown3;
-            public uint Unknown4;
-            public uint Unknown5;
+            public short Rank;
+            public FollowerPositioningValue FollowerPositioning;
+            [TagField(Count = 2)]
+            public sbyte[] Padding;
+            public float MaximumLeaderDistance;
+            public float MaximumPlayerDialogueDistance;
             public float Scariness;
-            public short Unknown6;
-            public short Unknown7;
+            public GrenadeTypeValue DefaultGrenadeType;
+            public BehaviorTreeRootValue BehaviorTreeRoot;
 
-            public enum ActorTypeValue : short
-            {
-                Elite,
-                Jackal,
-                Grunt,
-                Hunter,
-                Engineer,
-                Assassin,
-                Player,
-                Marine,
-                Crew,
-                CombatForm,
-                InfectionForm,
-                CarrierForm,
-                Monitor,
-                Sentinel,
-                None,
-                MountedWeapon,
-                Brute,
-                Prophet,
-                Bugger,
-                Juggernaut,
-                PureFormStealth,
-                PureFormTank,
-                PureFormRanged,
-                Scarab,
-                Guardian,
-            }
+        }
+
+        [Flags]
+        public enum VitalityFlags : int
+        {
+            None = 0,
+            AutoResurrect = 1 << 0
         }
 
         [TagStructure(Size = 0x80)]
         public class VitalityProperty
         {
-            public uint VitalityFlags;
+            public VitalityFlags Flags;
             public float NormalBodyVitality;
             public float NormalShieldVitality;
             public float LegendaryBodyVitality;
@@ -139,10 +178,10 @@ namespace TagTool.Tags.Definitions
             public float BodyRechargeFraction;
             public float SoftPingShieldThreshold;
             public float SoftPingNoshieldThreshold;
-            public float SoftPingMinimumInterruptTime;
+            public float SoftPingCooldownTime;
             public float HardPingShieldThreshold;
-            public float HardPingNoshieldThreshold;
-            public float HardPingMinimumInterruptTime;
+            public float HardPingNoShieldThreshold;
+            public float HardPingCooldownTime;
             public float CurrentDamageDecayDelay;
             public float CurrentDamageDecayTime;
             public float RecentDamageDecayDelay;
@@ -157,15 +196,16 @@ namespace TagTool.Tags.Definitions
             public float ExtendedShieldDamageThreshold;
             public float ExtendedBodyDamageThreshold;
             public float SuicideRadius;
-            public uint Unknown;
-            public uint Unknown2;
-            public TagInstance BackupWeapon;
+            public float RuntimeBodyRechargeVelocity;
+            public float RuntimeShieldRechargeVelocity;
+            public TagInstance ResurrectWeapon;
         }
 
         [TagStructure(Size = 0x34)]
         public class PlacementProperty
         {
-            public uint Unknown;
+            [TagField(Count = 4)]
+            public sbyte[] Padding;
             public float FewUpgradeChanceEasy;
             public float FewUpgradeChanceNormal;
             public float FewUpgradeChanceHeroic;
@@ -180,10 +220,32 @@ namespace TagTool.Tags.Definitions
             public float ManyUpgradeChanceLegendary;
         }
 
+        public enum PerceptionMode : short
+        {
+            Idle,
+            Alert,
+            Combat,
+            Search,
+            Patrol,
+            VehicleIdle,
+            VehicleAlert,
+            VehicleCombat
+        }
+
+        [Flags]
+        public enum PerceptionFlags : ushort
+        {
+            None = 0,
+            CharacterCanSeeInDarkness = 1 << 0,
+            IgnoreTrackingProjectiles = 1 << 1,
+            IgnoreMinorTrackingProjectiles = 1 << 2
+        }
+
         [TagStructure(Size = 0x2C)]
         public class PerceptionProperty
         {
-            public int PerceptionFlags;
+            public PerceptionMode Mode;
+            public PerceptionFlags Flags;
             public float MaxVisionDistance;
             public Angle CentralVisionAngle;
             public Angle MaxVisionAngle;
@@ -192,33 +254,25 @@ namespace TagTool.Tags.Definitions
             public float HearingDistance;
             public float NoticeProjectileChance;
             public float NoticeVehicleChance;
-            public uint Unknown;
+            public float PerceptionTime;
             public float FirstAcknowledgeSurpriseDistance;
         }
 
         [TagStructure(Size = 0x50)]
         public class LookProperty
         {
-            public Angle MaximumAimingDeviationY;
-            public Angle MaximumAimingDeviationP;
-            public Angle MaximumLookingDeviationY;
-            public Angle MaximumLookingDeviationP;
-            public uint Unknown;
-            public uint Unknown2;
-            public uint Unknown3;
-            public uint Unknown4;
-            public Angle NoncombatLookDeltaL;
-            public Angle NoncombatLookDeltaR;
-            public Angle CombatLookDeltaL;
-            public Angle CombatLookDeltaR;
-            public float NoncombatIdleLookingMin;
-            public float NoncombatIdleLookingMax;
-            public float NoncombatIdleAimingMin;
-            public float NoncombatIdleAimingMax;
-            public float CombatIdleLookingMin;
-            public float CombatIdleLookingMax;
-            public float CombatIdleAimingMin;
-            public float CombatIdleAimingMax;
+            public RealEulerAngles2d MaximumAimingDeviation;
+            public RealEulerAngles2d MaximumLookingDeviation;
+            public RealEulerAngles2d RuntimeAimingDeviationCosines;
+            public RealEulerAngles2d RuntimeLookingDeviationCosines;
+            public Angle NoncombatLookDeltaLeft;
+            public Angle NoncombatLookDeltaRight;
+            public Angle CombatLookDeltaLeft;
+            public Angle CombatLookDeltaRight;
+            public Bounds<float> NoncombatIdleLooking;
+            public Bounds<float> NoncombatIdleAiming;
+            public Bounds<float> CombatIdleLooking;
+            public Bounds<float> CombatIdleAiming;
         }
 
         [TagStructure(Size = 0x2C)]

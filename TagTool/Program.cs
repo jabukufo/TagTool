@@ -198,7 +198,7 @@ namespace TagTool
                 Console.WriteLine();
                 Console.Write("{0}> ", contextStack.GetPath());
 
-                var commandNames = new List<string>();
+                var commandNames = new List<string> { "exit" };
                 foreach (var command in contextStack.Context.Commands)
                     commandNames.Add(command.Name);
 
