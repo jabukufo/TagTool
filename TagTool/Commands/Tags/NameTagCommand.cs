@@ -45,8 +45,10 @@ namespace TagTool.Commands.Tags
 
             // Write the new tagname back to the tagnames.csv file for the loaded cache version.
             var tagNamesPath = "Tags\\tagnames_" + CacheVersionDetection.GetVersionString(Info.Version) + ".csv";
-            var csvFile = new FileInfo(tagNamesPath);
-            using (var csvStream = csvFile.Open(FileMode.Create, FileAccess.ReadWrite))
+            if (!Directory.Exists("Tags"))
+                Directory.CreateDirectory("Tags");
+                
+            using (var csvStream = File.Create(tagNamesPath))
             {
                 var writer = new StreamWriter(csvStream);
 
