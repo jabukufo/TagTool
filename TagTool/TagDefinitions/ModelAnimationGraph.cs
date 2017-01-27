@@ -10,8 +10,8 @@ namespace TagTool.TagDefinitions
     public class ModelAnimationGraph
     {
         public TagInstance ParentAnimationGraph;
-        public byte InheritanceFlags;
-        public byte PrivateFlags;
+        public AnimationInheritanceFlags InheritanceFlags;
+        public AnimationPrivateFlags PrivateFlags;
         public short AnimationCodecPack;
         public List<SkeletonNode> SkeletonNodes;
         public List<AnimationTagReference> SoundReferences;
@@ -22,29 +22,40 @@ namespace TagTool.TagDefinitions
         public List<Mode> Modes;
         public List<VehicleSuspensionBlock> VehicleSuspension;
         public List<ObjectOverlay> ObjectOverlays;
-        public List<InheritanceListBlock> InheritanceList;
+        public List<Inheritance> InheritanceList;
         public List<WeaponListBlock> WeaponList;
-        public uint UnknownArmNodes1;
-        public uint UnknownArmNodes2;
-        public uint UnknownArmNodes3;
-        public uint UnknownArmNodes4;
-        public uint UnknownArmNodes5;
-        public uint UnknownArmNodes6;
-        public uint UnknownArmNodes7;
-        public uint UnknownArmNodes8;
-        public uint UnknownNodes1;
-        public uint UnknownNodes2;
-        public uint UnknownNodes3;
-        public uint UnknownNodes4;
-        public uint UnknownNodes5;
-        public uint UnknownNodes6;
-        public uint UnknownNodes7;
-        public uint UnknownNodes8;
+
+        [TagField(Count = 8)]
+        public uint[] LeftArmNodes;
+
+        [TagField(Count = 8)]
+        public uint[] RightArmNodes;
+
         public byte[] LastImportResults;
-        public uint Unknown;
-        public uint Unknown2;
-        public uint Unknown3;
+
+        public List<AdditionalNodeDataBlock> AdditionalNodeData;
         public List<ResourceGroup> ResourceGroups;
+
+        [Flags]
+        public enum AnimationInheritanceFlags : byte
+        {
+            None = 0,
+            InheritRootTransScaleOnly = 1 << 0,
+            InheritForUseOnPlayer = 1 << 1
+        }
+
+        [Flags]
+        public enum AnimationPrivateFlags : byte
+        {
+            None = 0,
+            PreparedForCache = 1 << 0,
+            Bit1 = 1 << 1,
+            ImportedWithCodecCompressors = 1 << 2,
+            Bit3 = 1 << 3,
+            WrittenToCache = 1 << 4,
+            AnimationDataReorded = 1 << 5,
+            ReadyForUse = 1 << 6
+        }
 
         [TagStructure(Size = 0x20)]
         public class SkeletonNode
@@ -53,13 +64,32 @@ namespace TagTool.TagDefinitions
             public short NextSiblingNodeIndex;
             public short FirstChildNodeIndex;
             public short ParentNodeIndex;
-            public byte ModelFlags;
-            public byte NodeJointFlags;
-            public float BaseVectorI;
-            public float BaseVectorJ;
-            public float BaseVectorK;
+            public SkeletonModelFlags ModelFlags;
+            public SkeletonNodeJointFlags NodeJointFlags;
+            public RealVector3d BaseVector;
             public float VectorRange;
             public float ZPosition;
+
+            [Flags]
+            public enum SkeletonModelFlags : byte
+            {
+                None = 0,
+                PrimaryModel = 1 << 0,
+                SecondaryModel = 1 << 1,
+                LocalRoot = 1 << 2,
+                LeftHand = 1 << 3,
+                RightHand = 1 << 4,
+                LeftArmMember = 1 << 5
+            }
+
+            [Flags]
+            public enum SkeletonNodeJointFlags : byte
+            {
+                None = 0,
+                BallSocket = 1 << 0,
+                Hinge = 1 << 1,
+                NoMovement = 1 << 2
+            }
         }
 
         [TagStructure(Size = 0x14)]
@@ -125,6 +155,21 @@ namespace TagTool.TagDefinitions
             }
         }
 
+        public enum FrameType : sbyte
+        {
+            Base,
+            Overlay,
+            Replacement
+        }
+
+        public enum FrameMovementDataType : sbyte
+        {
+            None,
+            DxDy,
+            DxDyDyaw,
+            DxDyDzDyaw
+        }
+
         [TagStructure(Size = 0x88)]
         public class Animation
         {
@@ -137,8 +182,8 @@ namespace TagTool.TagDefinitions
             public CompressionValue CurrentCompression;
             public sbyte NodeCount;
             public short FrameCount;
-            public TypeValue Type;
-            public FrameInfoTypeValue FrameInfoType;
+            public FrameType Type;
+            public FrameMovementDataType FrameInfoType;
             public ushort ProductionFlags;
             public ushort InternalFlags;
             public int NodeListChecksum;
@@ -152,7 +197,7 @@ namespace TagTool.TagDefinitions
             public List<FrameEvent> FrameEvents;
             public List<SoundEvent> SoundEvents;
             public List<EffectEvent> EffectEvents;
-            public List<UnknownBlock> Unknown3;
+            public List<DialogueEvent> DialogueEvents;
             public List<ObjectSpaceParentNode> ObjectSpaceParentNodes;
             public List<LegAnchoringBlock> LegAnchoring;
             public float Unknown4;
@@ -168,44 +213,51 @@ namespace TagTool.TagDefinitions
                 BestAccuracy,
                 BestFullframe,
                 BestSmallKeyframe,
-                BestLargeKeyframe,
+                BestLargeKeyframe
             }
 
-            public enum TypeValue : sbyte
+            public enum FrameEventType : short
             {
-                Base,
-                Overlay,
-                Replacement,
-            }
-
-            public enum FrameInfoTypeValue : sbyte
-            {
-                None,
-                DxDy,
-                DxDyDyaw,
-                DxDyDzDyaw,
+                PrimaryKeyframe,
+                SecondaryKeyframe,
+                LeftFoot,
+                RightFoot,
+                AllowInterruption,
+                TransitionA,
+                TransitionB,
+                TransitionC,
+                TransitionD,
+                BothFeetShuffle,
+                BodyImpact,
+                LeftFootLock,
+                LeftFootUnlock,
+                RightFootLock,
+                RightFootUnlock,
+                BlendRangeMarker,
+                StrideExpansion,
+                StrideContraction,
+                RagdollKeyframe,
+                DropWeaponKeyframe,
+                MatchA,
+                MatchB,
+                MatchC,
+                MatchD,
+                JetpackClosed,
+                JetpackOpen,
+                SoundEvent,
+                EffectEvent,
+                LeftHand,
+                RightHand,
+                StartBAMF,
+                EndBAMF,
+                Hide
             }
 
             [TagStructure(Size = 0x4)]
             public class FrameEvent
             {
-                public TypeValue Type;
+                public FrameEventType Type;
                 public short Frame;
-
-                public enum TypeValue : short
-                {
-                    PrimaryKeyframe,
-                    SecondaryKeyframe,
-                    LeftFoot,
-                    RightFoot,
-                    AllowInterruption,
-                    TransitionA,
-                    TransitionB,
-                    TransitionC,
-                    TransitionD,
-                    BothFeetShuffle,
-                    BodyImpact,
-                }
             }
 
             [TagStructure(Size = 0x8)]
@@ -224,18 +276,47 @@ namespace TagTool.TagDefinitions
                 public StringId MarkerName;
             }
 
-            [TagStructure(Size = 0x4)]
-            public class UnknownBlock
+            public enum DialogueEventType : short
             {
-                public short Unknown;
-                public short Unknown2;
+                Bump,
+                Dive,
+                Evade,
+                Lift,
+                Sigh,
+                Contempt,
+                Anger,
+                Fear,
+                Relief,
+                Sprint,
+                SprintEnd,
+                AssGrabber,
+                KillAss,
+                AssGrabbed,
+                DieAss
+            }
+
+            [TagStructure(Size = 0x4)]
+            public class DialogueEvent
+            {
+                public DialogueEventType EventType;
+                public short Frame;
+            }
+
+            [Flags]
+            public enum ObjectSpaceParentNodeFlags : ushort
+            {
+                None = 0,
+                Rotation = 1 << 0,
+                Translation = 1 << 1,
+                Scale = 1 << 2,
+                MotionRoot = 1 << 3
             }
 
             [TagStructure(Size = 0x1C)]
             public class ObjectSpaceParentNode
             {
                 public short NodeIndex;
-                public ushort ComponentFlags;
+                public ObjectSpaceParentNodeFlags Flags;
                 public RealVector4d Rotation;
                 public RealPoint3d DefaultTranslation;
                 public float DefaultScale;
@@ -277,8 +358,8 @@ namespace TagTool.TagDefinitions
             {
                 public StringId Label;
                 public List<WeaponTypeBlock> WeaponType;
-                public List<WeaponIkBlock> WeaponIk;
-                public List<SyncAction> SyncActions;
+                public List<ModeIkBlock> WeaponIk;
+                public List<SyncActionGroup> SyncActionGroups;
 
                 [TagStructure(Size = 0x34)]
                 public class WeaponTypeBlock
@@ -354,55 +435,60 @@ namespace TagTool.TagDefinitions
                                 KeyframeTypeA,
                                 KeyframeTypeB,
                                 KeyframeTypeC,
-                                KeyframeTypeD,
+                                KeyframeTypeD
                             }
                         }
                     }
                 }
-
-                [TagStructure(Size = 0x8)]
-                public class WeaponIkBlock
-                {
-                    public StringId Marker;
-                    public StringId AttachToMarker;
-                }
-
+                
                 [TagStructure(Size = 0x10)]
-                public class SyncAction
+                public class SyncActionGroup
                 {
-                    public StringId Label;
-                    public List<ClassBlock> Class;
+                    public StringId Name;
+                    public List<SyncAction> SyncActions;
 
                     [TagStructure(Size = 0x1C)]
-                    public class ClassBlock
+                    public class SyncAction
                     {
-                        public StringId Label;
-                        public List<UnknownBlock> Unknown;
-                        public List<SyncBipedBlock> SyncBiped;
+                        public StringId Name;
+                        public List<SameTypeParticipant> SameTypeParticipants;
+                        public List<OtherParticipant> OtherParticipants;
 
                         [TagStructure(Size = 0x30)]
-                        public class UnknownBlock
+                        public class SameTypeParticipant
                         {
-                            public int Unknown;
+                            public ParticipantFlags Flags;
                             public short GraphIndex;
                             public short Animation;
-                            public uint Unknown2;
-                            public uint Unknown3;
-                            public uint Unknown4;
-                            public uint Unknown5;
-                            public uint Unknown6;
-                            public uint Unknown7;
-                            public uint Unknown8;
-                            public uint Unknown9;
-                            public uint Unknown10;
-                            public uint Unknown11;
+                            public RealPoint3d StartOffset;
+                            public RealVector3d StartFacing;
+                            public RealVector3d EndOffset;
+                            public float TimeUntilHurt;
+
+                            [Flags]
+                            public enum ParticipantFlags : int
+                            {
+                                None = 0,
+                                Initiator = 1 << 0,
+                                CriticalParticipant = 1 << 1,
+                                Disabled = 1 << 2,
+                                Airborne = 1 << 3,
+                                Partner = 1 << 4
+                            }
                         }
 
                         [TagStructure(Size = 0x14)]
-                        public class SyncBipedBlock
+                        public class OtherParticipant
                         {
-                            public int Unknown;
-                            public TagInstance Biped;
+                            public ParticipantFlags Flags;
+                            public TagInstance ObjectType;
+
+                            public enum ParticipantFlags : int
+                            {
+                                None = 0,
+                                SupportsAnyType = 1 << 0,
+                                Disabled = 1 << 1
+                            }
                         }
                     }
                 }
@@ -438,26 +524,38 @@ namespace TagTool.TagDefinitions
             public StringId Label;
             public short GraphIndex;
             public short Animation;
-            public short Unknown;
+
+            [TagField(Padding = true, Length = 2)]
+            public byte[] Unused1;
+
             public FunctionControlsValue FunctionControls;
             public StringId Function;
-            public uint Unknown2;
+
+            [TagField(Padding = true, Length = 4)]
+            public byte[] Unused2;
 
             public enum FunctionControlsValue : short
             {
                 Frame,
-                Scale,
+                Scale
             }
         }
 
+        [Flags]
+        public enum InheritanceFlags : int
+        {
+            None = 0,
+            TightenNodes = 1 << 0
+        }
+
         [TagStructure(Size = 0x30)]
-        public class InheritanceListBlock
+        public class Inheritance
         {
             public TagInstance InheritedGraph;
             public List<NodeMapBlock> NodeMap;
             public List<NodeMapFlag> NodeMapFlags;
             public float RootZOffset;
-            public uint InheritanceFlags;
+            public InheritanceFlags Flags;
 
             [TagStructure(Size = 0x2)]
             public class NodeMapBlock
@@ -468,7 +566,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x4)]
             public class NodeMapFlag
             {
-                public uint LocalNodeFlags;
+                public int LocalNodeFlags;
             }
         }
 
@@ -479,12 +577,25 @@ namespace TagTool.TagDefinitions
             public StringId WeaponClass;
         }
 
+        [TagStructure]
+        public class AdditionalNodeDataBlock
+        {
+            public StringId NodeName;
+            public RealQuaternion DefaultRotation;
+            public RealPoint3d DefaultTranslation;
+            public float DefaultScale;
+            public RealPoint3d MinimumBounds;
+            public RealPoint3d MaximumBounds;
+        }
+
         [TagStructure(Size = 0xC)]
         public class ResourceGroup
         {
             public int MemberCount;
             public ResourceReference Resource;
-            public int UnusedPadding;
+
+            [TagField(Padding = true, Length = 4)]
+            public byte[] Padding;
         }
     }
 }
