@@ -1,14 +1,15 @@
-﻿using TagTool.Cache;
+﻿using TagTool.Bitmaps;
+using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 
-namespace TagTool.Bitmaps
+namespace TagTool.TagResources
 {
     /// <summary>
     /// Resource definition data for bitmap textures.
     /// </summary>
     [TagStructure(Size = 0xC)]
-    public class BitmapTextureResourceDefinition
+    public class BitmapDataResourceDefinition
     {
         /// <summary>
         /// Gets or sets the texture object.
@@ -73,7 +74,7 @@ namespace TagTool.Bitmaps
             public BitmapFormat Format;
 
             // Some sort of enum? No idea what this does but it IS used for something.
-            public byte Unknown35;
+            public byte TileMode;
 
             /// <summary>
             /// Gets or sets flags describing the bitmap.

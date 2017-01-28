@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.Cache;
+using TagTool.TagResources;
 
 namespace TagTool.Geometry
 {
@@ -22,7 +23,7 @@ namespace TagTool.Geometry
         /// <param name="version">The engine version to target.</param>
         /// <param name="mesh">The mesh.</param>
         /// <param name="definition">The mesh's definition data.</param>
-        public MeshReader(CacheVersion version, Mesh mesh, RenderGeometryResourceDefinition definition)
+        public MeshReader(CacheVersion version, Mesh mesh, RenderGeometryApiResourceDefinition definition)
         {
             _version = version;
             Mesh = mesh;
@@ -41,7 +42,7 @@ namespace TagTool.Geometry
         /// <summary>
         /// Gets the mesh's definition data.
         /// </summary>
-        public RenderGeometryResourceDefinition Definition { get; private set; }
+        public RenderGeometryApiResourceDefinition Definition { get; private set; }
 
         /// <summary>
         /// Gets the vertex streams for the mesh. Note that elements can be <c>null</c>.

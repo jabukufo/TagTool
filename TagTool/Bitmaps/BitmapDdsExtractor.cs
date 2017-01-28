@@ -6,6 +6,7 @@ using TagTool.Common;
 using TagTool.IO;
 using TagTool.Serialization;
 using TagTool.TagDefinitions;
+using TagTool.TagResources;
 
 namespace TagTool.Bitmaps
 {
@@ -25,7 +26,7 @@ namespace TagTool.Bitmaps
             // Deserialize the resource definition and verify it
             var resource = bitmap.Resources[imageIndex];
             var resourceContext = new ResourceSerializationContext(resource.Resource);
-            var definition = deserializer.Deserialize<BitmapTextureResourceDefinition>(resourceContext);
+            var definition = deserializer.Deserialize<BitmapDataResourceDefinition>(resourceContext);
             if (definition.Texture == null || definition.Texture.Definition == null)
                 throw new ArgumentException("Invalid bitmap definition");
             var dataReference = definition.Texture.Definition.Data;
@@ -40,7 +41,7 @@ namespace TagTool.Bitmaps
             StreamUtil.Copy(resourceDataStream, outStream, dataReference.Size);
         }
 
-        private static DdsHeader CreateDdsHeader(BitmapTextureResourceDefinition definition)
+        private static DdsHeader CreateDdsHeader(BitmapDataResourceDefinition definition)
         {
             var info = definition.Texture.Definition;
             var result = new DdsHeader

@@ -5,6 +5,7 @@ using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 using TagTool.TagDefinitions;
+using TagTool.TagResources;
 
 namespace TagTool.Bitmaps
 {
@@ -22,7 +23,7 @@ namespace TagTool.Bitmaps
             var resource = bitmap.Resources[imageIndex].Resource;
             var newResource = (resource == null);
             ResourceSerializationContext resourceContext;
-            BitmapTextureResourceDefinition definition;
+            BitmapDataResourceDefinition definition;
             if (newResource)
             {
                 // Create a new resource reference
@@ -35,11 +36,11 @@ namespace TagTool.Bitmaps
                 };
                 bitmap.Resources[imageIndex].Resource = resource;
                 resourceContext = new ResourceSerializationContext(resource);
-                definition = new BitmapTextureResourceDefinition
+                definition = new BitmapDataResourceDefinition
                 {
-                    Texture = new D3DPointer<BitmapTextureResourceDefinition.BitmapDefinition>
+                    Texture = new D3DPointer<BitmapDataResourceDefinition.BitmapDefinition>
                     {
-                        Definition = new BitmapTextureResourceDefinition.BitmapDefinition()
+                        Definition = new BitmapDataResourceDefinition.BitmapDefinition()
                     }
                 };
             }
@@ -47,7 +48,7 @@ namespace TagTool.Bitmaps
             {
                 // Deserialize the old definition
                 resourceContext = new ResourceSerializationContext(resource);
-                definition = deserializer.Deserialize<BitmapTextureResourceDefinition>(resourceContext);
+                definition = deserializer.Deserialize<BitmapDataResourceDefinition>(resourceContext);
             }
             if (definition.Texture == null || definition.Texture.Definition == null)
                 throw new ArgumentException("Invalid bitmap definition");
@@ -101,7 +102,7 @@ namespace TagTool.Bitmaps
             imageData.MipmapCount = (sbyte)(texture.Levels - 1);
             imageData.DataOffset = texture.Data.Address.Offset;
             imageData.DataSize = texture.Data.Size;
-            imageData.Unknown15 = texture.Unknown35;
+            imageData.TileMode = texture.TileMode;
         }
     }
 }

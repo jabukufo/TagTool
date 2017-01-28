@@ -6,6 +6,7 @@ using TagTool.Cache;
 using TagTool.Geometry;
 using TagTool.Serialization;
 using TagTool.TagDefinitions;
+using TagTool.TagResources;
 
 namespace TagTool.Commands.Models
 {
@@ -64,7 +65,7 @@ namespace TagTool.Commands.Models
 
             // Deserialize the resource definition
             var resourceContext = new ResourceSerializationContext(renderModel.Geometry.Resource);
-            var definition = CacheContext.Deserializer.Deserialize<RenderGeometryResourceDefinition>(resourceContext);
+            var definition = CacheContext.Deserializer.Deserialize<RenderGeometryApiResourceDefinition>(resourceContext);
 
             using (var resourceStream = new MemoryStream())
             {
@@ -268,7 +269,7 @@ namespace TagTool.Commands.Models
             
             // Deserialize the resource definition
             var resourceContext = new ResourceSerializationContext(renderModel.Geometry.Resource);
-            var definition = CacheContext.Deserializer.Deserialize<RenderGeometryResourceDefinition>(resourceContext);
+            var definition = CacheContext.Deserializer.Deserialize<RenderGeometryApiResourceDefinition>(resourceContext);
 
             using (var resourceStream = new MemoryStream())
             {

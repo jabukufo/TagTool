@@ -4,10 +4,10 @@ using TagTool.Cache;
 using TagTool.Common;
 using TagTool.Serialization;
 
-namespace TagTool.Geometry
+namespace TagTool.TagResources
 {
     [TagStructure(Name = "model_animation_tag_resource", Size = 0xC)]
-    public class ModelAnimationResourceDefinition
+    public class ModelAnimationTagResource
     {
         public List<GroupMember> GroupMembers;
 

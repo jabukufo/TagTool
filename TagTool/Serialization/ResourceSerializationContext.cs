@@ -7,6 +7,7 @@ using TagTool.Bitmaps;
 using TagTool.Geometry;
 using TagTool.Common;
 using TagTool.Cache;
+using TagTool.TagResources;
 
 namespace TagTool.Serialization
 {
@@ -182,7 +183,7 @@ namespace TagTool.Serialization
                     return D3DObjectType.VertexBuffer;
                 if (type == typeof(IndexBufferDefinition))
                     return D3DObjectType.IndexBuffer;
-                if (type == typeof(BitmapTextureResourceDefinition.BitmapDefinition))
+                if (type == typeof(BitmapDataResourceDefinition.BitmapDefinition))
                     return D3DObjectType.Texture;
                 // TODO: interleaved textures
                 throw new InvalidOperationException("Invalid D3D object type: " + type);

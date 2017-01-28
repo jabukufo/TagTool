@@ -10,7 +10,6 @@ namespace TagTool.Geometry
     /// </summary>
     class BlenderPhmoReader
     {
-
         public string filename;
 
         public BlenderPhmoReader(string fname)

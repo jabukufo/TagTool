@@ -8,6 +8,7 @@ using TagTool.IO;
 using TagTool.Geometry;
 using TagTool.Serialization;
 using TagTool.TagDefinitions;
+using TagTool.TagResources;
 
 namespace TagTool.Commands.Tags
 {
@@ -366,7 +367,7 @@ namespace TagTool.Commands.Tags
 
                 // Deserialize the definition data
                 var resourceContext = new ResourceSerializationContext(geometry.Resource);
-                var definition = srcInfo.Deserializer.Deserialize<RenderGeometryResourceDefinition>(resourceContext);
+                var definition = srcInfo.Deserializer.Deserialize<RenderGeometryApiResourceDefinition>(resourceContext);
 
                 // Convert each vertex buffer
                 foreach (var buffer in definition.VertexBuffers)

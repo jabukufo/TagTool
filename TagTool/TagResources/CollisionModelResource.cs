@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
+using TagTool.Common;
+using TagTool.Geometry;
 using TagTool.Serialization;
 
-namespace TagTool.Geometry
+namespace TagTool.TagResources
 {
     [TagStructure(Size = 0x30)]
-    public class CollisionBspResourceDefinition
+    public class CollisionModelResource
     {
         public List<CollisionGeometry> CollisionBsps;
         public List<CollisionGeometry> LargeCollisionBsps;
         public List<Compression> Compressions;
-        public int Unknown4;
-        public int Unknown5;
-        public int Unknown6;
+        public List<HavokDatum> HavokData;
         
         [TagStructure(Size = 0xC8)]
         public class Compression
@@ -51,6 +51,26 @@ namespace TagTool.Geometry
             public class Unknown3Block
             {
                 public uint Unknown;
+            }
+        }
+
+        [TagStructure]
+        public class HavokDatum
+        {
+            public int PrefabIndex;
+            public List<HavokGeometry> HavokGeometries;
+            public List<HavokGeometry> HavokInvertedGeometries;
+            public RealPoint3d ShapesBoundsMinimum;
+            public RealPoint3d ShapesBoundsMaximum;
+
+            [TagStructure]
+            public class HavokGeometry
+            {
+                [TagField(Padding = true, Count = 4)]
+                public byte[] Unused;
+                public int CollisionType;
+                public int ShapeCount;
+                public byte[] Data;
             }
         }
     }

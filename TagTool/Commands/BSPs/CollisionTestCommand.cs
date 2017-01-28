@@ -5,6 +5,7 @@ using TagTool.Serialization;
 using TagTool.TagDefinitions;
 using TagTool.Cache;
 using TagTool.IO;
+using TagTool.TagResources;
 
 namespace TagTool.Commands.BSPs
 {
@@ -36,7 +37,7 @@ namespace TagTool.Commands.BSPs
 
             // Deserialize the definition data
             var resourceContext = new ResourceSerializationContext(BSP.CollisionBspResource);
-            var definition = CacheContext.Deserializer.Deserialize<CollisionBspResourceDefinition>(resourceContext);
+            var definition = CacheContext.Deserializer.Deserialize<CollisionModelResource>(resourceContext);
 
             // Extract the resource data
             var resourceDataStream = new MemoryStream();

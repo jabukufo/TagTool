@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using TagTool.Cache;
 using TagTool.Common;
+using TagTool.Geometry;
 using TagTool.Serialization;
 
-namespace TagTool.Geometry
+namespace TagTool.TagResources
 {
     /// <summary>
     /// Resource definition data for renderable geometry.
     /// </summary>
-    [TagStructure(Size = 0x30)]
-    public class RenderGeometryResourceDefinition
+    [TagStructure(Name = "render_geometry_api_resource_definition", Size = 0x30)]
+    public class RenderGeometryApiResourceDefinition
     {
         public int Unknown0;
         public int Unknown4;

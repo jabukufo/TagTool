@@ -7,6 +7,7 @@ using TagTool.Common;
 using TagTool.IO;
 using TagTool.Serialization;
 using TagTool.TagDefinitions;
+using TagTool.TagResources;
 
 namespace TagTool.Geometry
 {
@@ -423,7 +424,7 @@ namespace TagTool.Geometry
 
         private void BuildResourceData(TagSerializer serializer, Stream resourceDataStream)
         {
-            var definition = new RenderGeometryResourceDefinition();
+            var definition = new RenderGeometryApiResourceDefinition();
             definition.VertexBuffers = new List<D3DPointer<VertexBufferDefinition>>();
             definition.IndexBuffers = new List<D3DPointer<IndexBufferDefinition>>();
             foreach (var mesh in Meshes)
@@ -465,7 +466,7 @@ namespace TagTool.Geometry
             SerializeDefinitionData(serializer, definition);
         }
 
-        private void SerializeDefinitionData(TagSerializer serializer, RenderGeometryResourceDefinition definition)
+        private void SerializeDefinitionData(TagSerializer serializer, RenderGeometryApiResourceDefinition definition)
         {
             _model.Geometry.Resource = new ResourceReference
             {

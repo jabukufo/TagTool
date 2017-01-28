@@ -85,7 +85,7 @@
     <Compile Include="Bitmaps\BitmapDdsInjector.cs" />
     <Compile Include="Bitmaps\BitmapFlags.cs" />
     <Compile Include="Bitmaps\BitmapFormat.cs" />
-    <Compile Include="Bitmaps\BitmapTextureResourceDefinition.cs" />
+    <Compile Include="TagResources\BitmapDataResourceDefinition.cs" />
     <Compile Include="Bitmaps\BitmapType.cs" />
     <Compile Include="Cache\ResourceAddress.cs" />
     <Compile Include="Cache\ResourceBlockReference.cs" />
@@ -217,7 +217,7 @@
     <Compile Include="Geometry\CollisionMoppCode.cs" />
     <Compile Include="Serialization\DataSerializationContext.cs" />
     <Compile Include="Geometry\BlenderPhmoReader.cs" />
-    <Compile Include="Geometry\CollisionBspResourceDefinition.cs" />
+    <Compile Include="TagResources\CollisionModelResource.cs" />
     <Compile Include="Geometry\CollisionGeometryBuilder.cs" />
     <Compile Include="Geometry\GeometryReference.cs" />
     <Compile Include="Geometry\IndexBufferStream.cs" />
@@ -225,12 +225,12 @@
     <Compile Include="Geometry\Mesh.cs" />
     <Compile Include="Geometry\MeshFlags.cs" />
     <Compile Include="Geometry\MeshReader.cs" />
-    <Compile Include="Geometry\ModelAnimationResourceDefinition.cs" />
+    <Compile Include="TagResources\ModelAnimationTagResource.cs" />
     <Compile Include="Geometry\ObjExtractor.cs" />
     <Compile Include="Geometry\PhysicsModelBuilder.cs" />
     <Compile Include="Geometry\PrimitiveType.cs" />
     <Compile Include="Geometry\PrtType.cs" />
-    <Compile Include="Geometry\RenderGeometryResourceDefinition.cs" />
+    <Compile Include="TagResources\RenderGeometryApiResourceDefinition.cs" />
     <Compile Include="Geometry\RenderMaterial.cs" />
     <Compile Include="Geometry\RenderModelBuilder.cs" />
     <Compile Include="Geometry\Vertex.cs" />

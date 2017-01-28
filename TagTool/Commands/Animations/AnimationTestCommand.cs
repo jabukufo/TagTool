@@ -6,6 +6,7 @@ using TagTool.Serialization;
 using TagTool.TagDefinitions;
 using TagTool.Cache;
 using TagTool.IO;
+using TagTool.TagResources;
 
 namespace TagTool.Commands.Animations
 {
@@ -37,14 +38,14 @@ namespace TagTool.Commands.Animations
 
             var name = CacheContext.StringIdCache.GetString(new StringId(0x1818));
 
-            var jmadDefinitions = new List<ModelAnimationResourceDefinition>();
-            var jmadAnimationGroups = new List<List<ModelAnimationResourceDefinition.GroupMember.Animation>>();
+            var jmadDefinitions = new List<ModelAnimationTagResource>();
+            var jmadAnimationGroups = new List<List<ModelAnimationTagResource.GroupMember.Animation>>();
 
             foreach (var resourceGroup in JMAD.ResourceGroups)
             {
                 var context = new ResourceSerializationContext(resourceGroup.Resource);
-                var jmadDefinition = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition>(context);
-                var jmadAnimationGroup = new List<ModelAnimationResourceDefinition.GroupMember.Animation>();
+                var jmadDefinition = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource>(context);
+                var jmadAnimationGroup = new List<ModelAnimationTagResource.GroupMember.Animation>();
 
                 using (var resourceDataStream = new MemoryStream())
                 using (var reader = new EndianReader(resourceDataStream))
@@ -56,41 +57,41 @@ namespace TagTool.Commands.Animations
                     foreach (var groupMember in jmadDefinition.GroupMembers)
                     {
                         reader.BaseStream.Position = groupMember.AnimationData.Address.Offset;
-                        var animation = new ModelAnimationResourceDefinition.GroupMember.Animation();
+                        var animation = new ModelAnimationTagResource.GroupMember.Animation();
 
-                        animation.StaticHeader = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.AnimationHeader>(dataContext);
+                        animation.StaticHeader = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource.GroupMember.AnimationHeader>(dataContext);
 
-                        animation.StaticRotations = new ModelAnimationResourceDefinition.GroupMember.Rotation[animation.StaticHeader.RotationCount];
+                        animation.StaticRotations = new ModelAnimationTagResource.GroupMember.Rotation[animation.StaticHeader.RotationCount];
 
                         for (var i = 0; i < animation.StaticHeader.RotationCount; i++)
                         {
-                            animation.StaticRotations[i] = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Rotation>(dataContext);
+                            animation.StaticRotations[i] = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource.GroupMember.Rotation>(dataContext);
                         }
 
-                        animation.StaticPositions = new ModelAnimationResourceDefinition.GroupMember.Position[animation.StaticHeader.PositionCount];
+                        animation.StaticPositions = new ModelAnimationTagResource.GroupMember.Position[animation.StaticHeader.PositionCount];
 
                         for (var i = 0; i < animation.StaticHeader.PositionCount; i++)
                         {
-                            animation.StaticPositions[i] = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Position>(dataContext);
+                            animation.StaticPositions[i] = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource.GroupMember.Position>(dataContext);
                         }
 
-                        animation.AnimatedHeader = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.AnimationHeader>(dataContext);
+                        animation.AnimatedHeader = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource.GroupMember.AnimationHeader>(dataContext);
 
-                        animation.AnimatedRotations = new ModelAnimationResourceDefinition.GroupMember.Rotation[animation.AnimatedHeader.RotationCount];
+                        animation.AnimatedRotations = new ModelAnimationTagResource.GroupMember.Rotation[animation.AnimatedHeader.RotationCount];
 
                         for (var i = 0; i < animation.AnimatedHeader.RotationCount; i++)
                         {
-                            animation.AnimatedRotations[i] = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Rotation>(dataContext);
+                            animation.AnimatedRotations[i] = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource.GroupMember.Rotation>(dataContext);
                         }
 
-                        animation.AnimatedPositions = new ModelAnimationResourceDefinition.GroupMember.Position[animation.AnimatedHeader.PositionCount];
+                        animation.AnimatedPositions = new ModelAnimationTagResource.GroupMember.Position[animation.AnimatedHeader.PositionCount];
 
                         for (var i = 0; i < animation.AnimatedHeader.PositionCount; i++)
                         {
-                            animation.AnimatedPositions[i] = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.Position>(dataContext);
+                            animation.AnimatedPositions[i] = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource.GroupMember.Position>(dataContext);
                         }
 
-                        animation.Footer = CacheContext.Deserializer.Deserialize<ModelAnimationResourceDefinition.GroupMember.AnimationFooter>(dataContext);
+                        animation.Footer = CacheContext.Deserializer.Deserialize<ModelAnimationTagResource.GroupMember.AnimationFooter>(dataContext);
 
                         jmadAnimationGroup.Add(animation);
                     }

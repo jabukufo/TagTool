@@ -52,6 +52,8 @@ namespace TagTool.TagDefinitions
         [Flags]
         public enum RuntimeFlags : ushort
         {
+            None = 0,
+
             /// <summary>
             /// Indicates that the renderer should look in the <see cref="Resources"/> block to get the image data.
             /// </summary>
@@ -156,7 +158,7 @@ namespace TagTool.TagDefinitions
             public short OriginX;
             public short OriginY;
             public sbyte MipmapCount;
-            public byte Unknown15; // Unknown35 in the definition data
+            public byte TileMode; // Unknown35 in the definition data
             public sbyte Unknown16;
             public sbyte Unknown17;
             public int DataOffset;
