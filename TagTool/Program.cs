@@ -213,7 +213,7 @@ namespace TagTool
                     continue;
 
                 // If "exit" or "quit" is given, pop the current context
-                if (commandArgs[0] == "exit" || commandArgs[0] == "quit")
+                if (commandArgs[0].ToLower() == "exit" || commandArgs[0].ToLower() == "quit")
                 {
                     if (!contextStack.Pop())
                         break; // No more contexts - quit
@@ -266,7 +266,7 @@ namespace TagTool
                     userInput += input.KeyChar;
 
                 suggestion = hintSource.Select(item => hintField(item).ToString())
-                    .FirstOrDefault(item => item.Length > userInput.Length && item.Substring(0, userInput.Length) == userInput);
+                    .FirstOrDefault(item => item.Length > userInput.Length && item.Substring(0, userInput.Length).ToLower() == userInput.ToLower());
 
                 commandLine = suggestion == null ? userInput : suggestion;
 
