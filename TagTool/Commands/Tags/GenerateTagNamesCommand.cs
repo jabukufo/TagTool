@@ -11,8 +11,8 @@ namespace TagTool.Commands.Tags
 {
     class GenerateTagNamesCommand : Command
     {
-        private 
-            GameCacheContext CacheContext { get; }
+        private GameCacheContext CacheContext { get; }
+        private Dictionary<int, object> LoadedDefinitions { get; } = new Dictionary<int, object>();
 
         public GenerateTagNamesCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
@@ -27,6 +27,8 @@ namespace TagTool.Commands.Tags
             CacheContext = cacheContext;
         }
 
+
+
         public override bool Execute(List<string> args)
         {
             if (args.Count > 1)
@@ -34,7 +36,7 @@ namespace TagTool.Commands.Tags
 
             var csvFile = (args.Count == 1) ?
                 new FileInfo(args[0]) :
-                new FileInfo($"tagnames_{CacheVersionDetection.GetVersionString(CacheContext.Version)}.csv");
+                new FileInfo(Path.Combine(CacheContext.Directory.FullName, "tag_list.csv"));
 
             var tagNames = new Dictionary<int, string>();
 
@@ -78,10 +80,7 @@ namespace TagTool.Commands.Tags
                 {
                     var value = entry.Value;
 
-                    if (value.StartsWith("0x"))
-                        writer.WriteLine($"0x{entry.Key:X8},{value}");
-                    else
-                        writer.WriteLine($"0x{entry.Key:X8},0x{entry.Key:X4} {value}");
+                    writer.WriteLine($"0x{entry.Key:X8},{value}");
                 }
 
                 writer.Close();
@@ -92,23 +91,39 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
+        private object GetTagDefinition(Stream stream, CachedTagInstance tag)
+        {
+            object definition = null;
+
+            if (!LoadedDefinitions.ContainsKey(tag.Index))
+            {
+                var context = new TagSerializationContext(stream, CacheContext, tag);
+                definition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
+            }
+            else
+            {
+                definition = LoadedDefinitions[tag.Index];
+            }
+
+            return definition;
+        }
+
+        private T GetTagDefinition<T>(Stream stream, CachedTagInstance tag) => (T)GetTagDefinition(stream, tag);
+
         private void SetRenderModelName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
         {
             if (tagNames.ContainsKey(tag.Index))
                 return;
 
-            var context = new TagSerializationContext(stream, CacheContext, tag);
-            var definition = CacheContext.Deserializer.Deserialize<RenderModel>(context);
-            tagNames[tag.Index] = $"{CacheContext.StringIdCache.GetString(definition.Name)}";
+            tagNames[tag.Index] = $"{CacheContext.StringIdCache.GetString(GetTagDefinition<RenderModel>(stream, tag).Name)}";
         }
 
         private void SetModelName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
         {
             if (tag == null || tagNames.ContainsKey(tag.Index))
                 return;
-
-            var context = new TagSerializationContext(stream, CacheContext, tag);
-            var definition = CacheContext.Deserializer.Deserialize<Model>(context);
+            
+            var definition = GetTagDefinition<Model>(stream, tag);
 
             if (definition.RenderModel == null)
                 return;
@@ -133,30 +148,20 @@ namespace TagTool.Commands.Tags
         {
             var context = new TagSerializationContext(stream, CacheContext, tag);
 
-            GameObject definition = null;
-            try
-            {
-                definition = (GameObject)CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
-            }
-            catch
-            {
-                return;
-            }
+            var definition = GetTagDefinition<GameObject>(stream, tag);
 
             if (definition.Model == null)
                 return;
-
-            context = new TagSerializationContext(stream, CacheContext, definition.Model);
-            var modelDefinition = CacheContext.Deserializer.Deserialize<Model>(context);
+            
+            var modelDefinition = GetTagDefinition<Model>(stream, definition.Model);
 
             if (modelDefinition.RenderModel == null)
                 return;
-
-            context = new TagSerializationContext(stream, CacheContext, modelDefinition.RenderModel);
-            var renderModelDefinition = CacheContext.Deserializer.Deserialize<RenderModel>(context);
+            
+            var renderModelDefinition = GetTagDefinition<RenderModel>(stream, modelDefinition.RenderModel);
 
             var objectName = CacheContext.StringIdCache.GetString(renderModelDefinition.Name);
-
+            
             if (tag.Group.Tag == new Tag("bipd"))
             {
                 var biped = (Biped)definition;
@@ -330,20 +335,6 @@ namespace TagTool.Commands.Tags
 
                 if (objectName.EndsWith("energy_blade") && definition.WaterDensity == GameObject.WaterDensityValue.Default)
                     objectName += "_useless";
-
-                tagNames[definition.Model.Index] = objectName;
-
-                if (modelDefinition.RenderModel != null)
-                    tagNames[modelDefinition.RenderModel.Index] = objectName;
-
-                if (modelDefinition.CollisionModel != null)
-                    tagNames[modelDefinition.CollisionModel.Index] = objectName;
-
-                if (modelDefinition.PhysicsModel != null)
-                    tagNames[modelDefinition.PhysicsModel.Index] = objectName;
-
-                if (modelDefinition.Animation != null)
-                    tagNames[modelDefinition.Animation.Index] = objectName;
             }
             else if (tag.Group.Tag == new Tag("eqip"))
             {
@@ -362,36 +353,37 @@ namespace TagTool.Commands.Tags
             }
             else if (tag.Group.Tag == new Tag("vehi"))
             {
+                objectName = $"objects\\vehicles\\{objectName}\\{objectName}";
 
+                tagNames[definition.Model.Index] = objectName;
             }
             else if (tag.Group.Tag == new Tag("armr"))
             {
                 // TODO: figure out spartan/elite armor name differences
 
                 objectName = $"objects\\characters\\masterchief\\mp_masterchief\\armor\\{objectName}";
-
-                tagNames[definition.Model.Index] = objectName;
-
-                if (modelDefinition.RenderModel != null)
-                    tagNames[modelDefinition.RenderModel.Index] = objectName;
-
-                if (modelDefinition.CollisionModel != null)
-                    tagNames[modelDefinition.CollisionModel.Index] = objectName;
-
-                if (modelDefinition.PhysicsModel != null)
-                    tagNames[modelDefinition.PhysicsModel.Index] = objectName;
-
-                if (modelDefinition.Animation != null)
-                    tagNames[modelDefinition.Animation.Index] = objectName;
             }
 
             tagNames[tag.Index] = objectName;
+
+            tagNames[definition.Model.Index] = objectName;
+
+            if (modelDefinition.RenderModel != null)
+                tagNames[modelDefinition.RenderModel.Index] = objectName;
+
+            if (modelDefinition.CollisionModel != null)
+                tagNames[modelDefinition.CollisionModel.Index] = objectName;
+
+            if (modelDefinition.PhysicsModel != null)
+                tagNames[modelDefinition.PhysicsModel.Index] = objectName;
+
+            if (modelDefinition.Animation != null)
+                tagNames[modelDefinition.Animation.Index] = objectName;
         }
 
         private void SetScenarioName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
         {
-            var context = new TagSerializationContext(stream, CacheContext, tag);
-            var definition = CacheContext.Deserializer.Deserialize<Scenario>(context);
+            var definition = GetTagDefinition<Scenario>(stream, tag);
 
             var tagName = CacheContext.StringIdCache.GetString(definition.ScenarioZonesetGroups[0].Name);
             var slashIndex = tagName.LastIndexOf('\\');

@@ -142,7 +142,7 @@ namespace TagTool.Cache
         /// </summary>
         public void LoadTagNames()
         {
-            var tagNamesPath = "tagnames_" + CacheVersionDetection.GetVersionString(Version) + ".csv";
+            var tagNamesPath = Path.Combine(Directory.FullName, "tag_list.csv");
 
             if (File.Exists(tagNamesPath))
             {

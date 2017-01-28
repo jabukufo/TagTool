@@ -43,7 +43,7 @@ namespace TagTool.Commands.Tags
 
             var csvFile = (args.Count == 3) ?
                 new FileInfo(args[2]) :
-                new FileInfo($"tagnames_{CacheVersionDetection.GetVersionString(CacheContext.Version)}.csv");
+                new FileInfo(Path.Combine(CacheContext.Directory.FullName, "tag_list.csv"));
 
             if (!csvFile.Directory.Exists)
                 csvFile.Directory.Create();
@@ -55,10 +55,7 @@ namespace TagTool.Commands.Tags
                 {
                     var value = entry.Value;
 
-                    if (value.StartsWith("0x"))
-                        csvWriter.WriteLine($"0x{entry.Key:X8},{value}");
-                    else
-                        csvWriter.WriteLine($"0x{entry.Key:X8},0x{entry.Key:X4} {value}");
+                    csvWriter.WriteLine($"0x{entry.Key:X8},{value}");
                 }
             }
 
