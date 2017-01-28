@@ -161,6 +161,7 @@
     <Compile Include="Commands\Tags\ListUnusedTagsCommand.cs" />
     <Compile Include="Commands\Tags\GetMapInfoCommand.cs" />
     <Compile Include="Commands\Tags\MatchTagsCommand.cs" />
+    <Compile Include="Commands\Tags\NameTagCommand.cs" />
     <Compile Include="Commands\Tags\RenderModelTestCommand.cs" />
     <Compile Include="Commands\Tags\CreateTagCommand.cs" />
     <Compile Include="Commands\Tags\CleanCacheFilesCommand.cs" />

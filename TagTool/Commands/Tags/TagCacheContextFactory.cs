@@ -28,6 +28,7 @@ namespace TagTool.Commands.Tags
             context.AddCommand(new CleanCacheFilesCommand(cacheContext));
             context.AddCommand(new ListUnusedTagsCommand(cacheContext));
             context.AddCommand(new ListNullTagsCommand(cacheContext));
+            context.AddCommand(new NewTagCommand(cacheContext));
             context.AddCommand(new CreateTagCommand(cacheContext));
             context.AddCommand(new ExtractAllTagsCommand(cacheContext));
             context.AddCommand(new EditTagCommand(stack, cacheContext));
