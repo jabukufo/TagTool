@@ -426,15 +426,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <Content Include="FodyWeavers.xml" />
-    <Content Include="tagnames_1.106708 cert_ms23.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="tagnames_11.1.498295 Live.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="tagnames_12.1.700123 cert_ms30_oct19.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
