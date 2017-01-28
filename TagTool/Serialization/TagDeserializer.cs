@@ -189,6 +189,12 @@ namespace TagTool.Serialization
             if (valueType == typeof(byte[]))
                 return DeserializeDataReference(reader, context);
 
+            // Color types
+            if (valueType == typeof(RealRgbColor))
+                return new RealRgbColor(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            else if (valueType == typeof(RealArgbColor))
+                return new RealArgbColor(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+
             // Euler Angles types
             if (valueType == typeof(RealEulerAngles2d))
             {

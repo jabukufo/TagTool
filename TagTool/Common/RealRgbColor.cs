@@ -1,15 +1,12 @@
-﻿using TagTool.Serialization;
+﻿using System;
 
 namespace TagTool.Common
 {
-    [TagStructure]
-    public class RealRgbColor
+    public struct RealRgbColor : IEquatable<RealRgbColor>
     {
-        public float Red { get; }
-        public float Green { get; }
-        public float Blue { get; }
-
-        public RealRgbColor() : this(0.0f, 0.0f, 0.0f) { }
+        public float Red { get; set; }
+        public float Green { get; set; }
+        public float Blue { get; set; }
 
         public RealRgbColor(float red, float green, float blue)
         {
@@ -18,6 +15,28 @@ namespace TagTool.Common
             Blue = blue;
         }
 
-        public override string ToString() => $"{{ Red: {Red}, Green: {Green}, Blue: {Blue} }}";
+        public bool Equals(RealRgbColor other) =>
+            (Red == other.Red) &&
+            (Green == other.Green) &&
+            (Blue == other.Blue);
+
+        public override bool Equals(object obj) =>
+            obj is RealRgbColor ?
+                Equals((RealRgbColor)obj) :
+            false;
+
+        public static bool operator ==(RealRgbColor a, RealRgbColor b) =>
+            a.Equals(b);
+
+        public static bool operator !=(RealRgbColor a, RealRgbColor b) =>
+            !a.Equals(b);
+
+        public override int GetHashCode() =>
+            13 * 17 + Red.GetHashCode()
+               * 17 + Green.GetHashCode()
+               * 17 + Blue.GetHashCode();
+
+        public override string ToString() =>
+            $"{{ Red: {Red}, Green: {Green}, Blue: {Blue} }}";
     }
 }

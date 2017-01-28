@@ -1,16 +1,13 @@
-﻿using TagTool.Serialization;
+﻿using System;
 
 namespace TagTool.Common
 {
-    [TagStructure]
-    public class RealArgbColor
+    public struct RealArgbColor : IEquatable<RealArgbColor>
     {
-        public float Alpha { get; }
-        public float Red { get; }
-        public float Green { get; }
-        public float Blue { get; }
-
-        public RealArgbColor() : this(1.0f, 0.0f, 0.0f, 0.0f) { }
+        public float Alpha { get; set; }
+        public float Red { get; set; }
+        public float Green { get; set; }
+        public float Blue { get; set; }
 
         public RealArgbColor(float alpha, float red, float green, float blue)
         {
@@ -20,6 +17,30 @@ namespace TagTool.Common
             Blue = blue;
         }
 
-        public override string ToString() => $"{{ Alpha: {Alpha}, Red: {Red}, Green: {Green}, Blue: {Blue} }}";
+        public bool Equals(RealArgbColor other) =>
+            (Alpha == other.Alpha) &&
+            (Red == other.Red) &&
+            (Green == other.Green) &&
+            (Blue == other.Blue);
+
+        public override bool Equals(object obj) =>
+            obj is RealArgbColor ?
+                Equals((RealArgbColor)obj) :
+            false;
+
+        public static bool operator ==(RealArgbColor a, RealArgbColor b) =>
+            a.Equals(b);
+
+        public static bool operator !=(RealArgbColor a, RealArgbColor b) =>
+            !a.Equals(b);
+
+        public override int GetHashCode() =>
+            13 * 17 + Alpha.GetHashCode()
+               * 17 + Red.GetHashCode()
+               * 17 + Green.GetHashCode()
+               * 17 + Blue.GetHashCode();
+
+        public override string ToString() =>
+            $"{{ Alpha: {Alpha}, Red: {Red}, Green: {Green}, Blue: {Blue} }}";
     }
 }

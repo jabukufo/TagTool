@@ -194,6 +194,10 @@ namespace TagTool.Serialization
                 block.Writer.Write(((ResourceAddress)val).Value);
             else if (valueType == typeof(byte[]))
                 SerializeDataReference(tagStream, block, (byte[])val, valueInfo);
+            else if (valueType == typeof(RealRgbColor))
+                SerializeColor(block, (RealRgbColor)val);
+            else if (valueType == typeof(RealArgbColor))
+                SerializeColor(block, (RealArgbColor)val);
             else if (valueType == typeof(RealEulerAngles2d))
                 SerializeEulerAngles(block, (RealEulerAngles2d)val);
             else if (valueType == typeof(RealEulerAngles3d))
@@ -386,6 +390,21 @@ namespace TagTool.Serialization
 
             // Finalize the block and write the pointer
             block.WritePointer(valueBlock.Finalize(tagStream), valueType);
+        }
+
+        private static void SerializeColor(IDataBlock block, RealRgbColor color)
+        {
+            block.Writer.Write(color.Red);
+            block.Writer.Write(color.Green);
+            block.Writer.Write(color.Blue);
+        }
+
+        private static void SerializeColor(IDataBlock block, RealArgbColor color)
+        {
+            block.Writer.Write(color.Alpha);
+            block.Writer.Write(color.Red);
+            block.Writer.Write(color.Green);
+            block.Writer.Write(color.Blue);
         }
 
         private static void SerializeEulerAngles(IDataBlock block, RealEulerAngles2d angles)
