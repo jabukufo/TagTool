@@ -76,7 +76,7 @@ namespace TagTool.Commands
                     return result;
 
                 // Case-insensitive lookup
-                foreach (var pair in _commandsByName)
+                foreach (var pair in p._commandsByName)
                     if (name.ToLower() == pair.Key.ToLower())
                         if ((pair.Value.Flags & CommandFlags.Inherit) != 0)
                             return pair.Value;
