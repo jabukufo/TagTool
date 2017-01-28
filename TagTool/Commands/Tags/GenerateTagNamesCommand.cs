@@ -17,10 +17,10 @@ namespace TagTool.Commands.Tags
         public GenerateTagNamesCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
                   
-                  "generate-tag-names",
+                  "GenerateTagNames",
                   "Generates tag names into a csv file (overwriting existing entries).",
 
-                  "generate-tag-names [csv file]",
+                  "GenerateTagNames [csv file]",
 
                   "Generates tag names into a csv file (overwriting existing entries).")
         {

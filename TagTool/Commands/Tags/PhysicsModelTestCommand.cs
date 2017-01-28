@@ -13,10 +13,10 @@ namespace TagTool.Commands.Tags
         public PhysicsModelTestCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
                   
-                  "physics-model-test",
+                  "PhysicsModelTest",
                   "Physics model import command (Test)",
                   
-                  "physics-model-test <filepath> <index>|<new> [force]",
+                  "PhysicsModelTest <filepath> <index>|<new> [force]",
                   
                   "Imports a physics model from the file specified exported from Blender in JSON format.\n" +
                   "A tag-index can be specified to override an existing tag, or 'new' can be used to create a new tag.\n" +
