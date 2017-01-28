@@ -97,8 +97,8 @@
     <Compile Include="Cache\StringIdResolverBase.cs" />
     <Compile Include="Cache\StringIdResolverFactory.cs" />
     <Compile Include="Cache\TagCache.cs" />
-    <Compile Include="Cache\TagData.cs" />
-    <Compile Include="Cache\TagList.cs" />
+    <Compile Include="Cache\CachedTagData.cs" />
+    <Compile Include="Cache\TagCacheIndex.cs" />
     <Compile Include="Cache\GameCacheContext.cs" />
     <Compile Include="Commands\Animations\AnimationContextFactory.cs" />
     <Compile Include="Commands\Animations\AnimationTestCommand.cs" />
@@ -207,7 +207,6 @@
     <Compile Include="Common\RealPoint2d.cs" />
     <Compile Include="Common\RealPoint3d.cs" />
     <Compile Include="Common\RealVector4d.cs" />
-    <Compile Include="Cache\AES.cs" />
     <Compile Include="Cache\CacheVersionDetection.cs" />
     <Compile Include="Cache\StringIdResolverMS23.cs" />
     <Compile Include="Cache\VertexStreamMS23.cs" />
@@ -418,12 +417,13 @@
     <Compile Include="TagDefinitions\VisionMode.cs" />
     <Compile Include="TagDefinitions\Weapon.cs" />
     <Compile Include="TagDefinitions\Wind.cs" />
-    <Compile Include="Cache\TagGroup.cs" />
-    <Compile Include="Cache\TagInstance.cs" />
+    <Compile Include="Common\TagGroup.cs" />
+    <Compile Include="Cache\CachedTagInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <Content Include="FodyWeavers.xml" />
     <Content Include="tagnames_1.106708 cert_ms23.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -442,8 +442,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\packages\AssimpNet.3.3.2\build\AssimpNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AssimpNet.3.3.2\build\AssimpNet.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\AssimpNet.3.3.2\build\AssimpNet.targets" Condition="Exists('..\packages\AssimpNet.3.3.2\build\AssimpNet.targets')" />
+  <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

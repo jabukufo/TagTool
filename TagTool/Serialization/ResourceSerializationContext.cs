@@ -75,7 +75,7 @@ namespace TagTool.Serialization
             return (uint)resourceAddress.Offset;
         }
 
-        public TagInstance GetTagByIndex(int index)
+        public CachedTagInstance GetTagByIndex(int index)
         {
             throw new InvalidOperationException("Resource definitions cannot contain tag references");
         }

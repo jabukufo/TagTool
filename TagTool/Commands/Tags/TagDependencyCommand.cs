@@ -64,7 +64,7 @@ namespace TagTool.Commands.Tags
             }
         }
 
-        private bool ExecuteAddRemove(TagInstance tag, List<string> args)
+        private bool ExecuteAddRemove(CachedTagInstance tag, List<string> args)
         {
             if (args.Count < 3)
                 return false;
@@ -105,7 +105,7 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private bool ExecuteList(TagInstance tag, bool all)
+        private bool ExecuteList(CachedTagInstance tag, bool all)
         {
             if (tag.Dependencies.Count == 0)
             {
@@ -113,12 +113,12 @@ namespace TagTool.Commands.Tags
                 return true;
             }
 
-            IEnumerable<TagInstance> dependencies;
+            IEnumerable<CachedTagInstance> dependencies;
 
             if (all)
-                dependencies = CacheContext.TagCache.Tags.FindDependencies(tag);
+                dependencies = CacheContext.TagCache.Index.FindDependencies(tag);
             else
-                dependencies = tag.Dependencies.Where(i => CacheContext.TagCache.Tags.Contains(i)).Select(i => CacheContext.TagCache.Tags[i]);
+                dependencies = tag.Dependencies.Where(i => CacheContext.TagCache.Index.Contains(i)).Select(i => CacheContext.TagCache.Index[i]);
 
             foreach (var dependency in dependencies)
             {
@@ -132,9 +132,9 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private bool ExecuteListDependsOn(TagInstance tag)
+        private bool ExecuteListDependsOn(CachedTagInstance tag)
         {
-            var dependsOn = CacheContext.TagCache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
+            var dependsOn = CacheContext.TagCache.Index.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
 
             foreach (var dependency in dependsOn)
             {

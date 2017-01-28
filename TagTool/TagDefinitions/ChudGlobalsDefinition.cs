@@ -13,9 +13,9 @@ namespace TagTool.TagDefinitions
         public List<UnknownBlock> Unknown;
         public List<UnknownBlock2> Unknown2;
         public List<PlayerTrainingDatum> PlayerTrainingData;
-        public TagInstance StartMenuEmblems;
-        public TagInstance CampaignMedals;
-        public TagInstance CampaignMedalHudAnimation;
+        public CachedTagInstance StartMenuEmblems;
+        public CachedTagInstance CampaignMedals;
+        public CachedTagInstance CampaignMedalHudAnimation;
         public short Unknown3;
         public short Unknown4;
         public float CampaignMedalScale;
@@ -24,7 +24,7 @@ namespace TagTool.TagDefinitions
         public float CampaignMedalOffsetY;
         public float MetagameScoreboardTopY;
         public float MetagameScoreboardSpacing;
-        public TagInstance UnitDamageGrid;
+        public CachedTagInstance UnitDamageGrid;
         public float MicroTextureTileAmount;
         public float MediumSensorBlipScale;
         public float SmallSensorBlipScale;
@@ -32,10 +32,10 @@ namespace TagTool.TagDefinitions
         public float SensorBlipGlowAmount;
         public float SensorBlipGlowRadius;
         public float SensorBlipGlowOpacity;
-        public TagInstance MotionSensorBlip;
-        public TagInstance BirthdayPartyEffect;
-        public TagInstance CampaignFloodMask;
-        public TagInstance CampaignFloodMaskTile;
+        public CachedTagInstance MotionSensorBlip;
+        public CachedTagInstance BirthdayPartyEffect;
+        public CachedTagInstance CampaignFloodMask;
+        public CachedTagInstance CampaignFloodMaskTile;
         public uint Unknown5;
         public uint Unknown6;
         public uint Unknown7;
@@ -80,7 +80,7 @@ namespace TagTool.TagDefinitions
         public uint Unknown45;
         public uint Unknown46;
         public uint Unknown47;
-        public TagInstance Unknown48;
+        public CachedTagInstance Unknown48;
         public uint Unknown49;
         public byte[] Unknown50;
         public byte[] Unknown51;
@@ -93,7 +93,7 @@ namespace TagTool.TagDefinitions
         public byte[] Unknown58;
         public byte[] Unknown59;
         public byte[] Unknown60;
-        public TagInstance Unknown61;
+        public CachedTagInstance Unknown61;
         public uint Unknown62;
         public uint Unknown63;
         public uint Unknown64;
@@ -114,40 +114,40 @@ namespace TagTool.TagDefinitions
             [TagField(Count = 37)] public RgbaColor[] Colors;
             public List<HudAttribute> HudAttributes;
             public List<HudSound> HudSounds;
-            public TagInstance Unknown;
-            public TagInstance FragGrenadeSwapSound;
-            public TagInstance PlasmaGrenadeSwapSound;
-            public TagInstance SpikeGrenadeSwapSound;
-            public TagInstance FirebombGrenadeSwapSound;
-            public TagInstance DamageMicrotexture;
-            public TagInstance DamageNoise;
-            public TagInstance DirectionalArrow;
-            public TagInstance Unknown2;
-            public TagInstance Unknown3;
+            public CachedTagInstance Unknown;
+            public CachedTagInstance FragGrenadeSwapSound;
+            public CachedTagInstance PlasmaGrenadeSwapSound;
+            public CachedTagInstance SpikeGrenadeSwapSound;
+            public CachedTagInstance FirebombGrenadeSwapSound;
+            public CachedTagInstance DamageMicrotexture;
+            public CachedTagInstance DamageNoise;
+            public CachedTagInstance DirectionalArrow;
+            public CachedTagInstance Unknown2;
+            public CachedTagInstance Unknown3;
             public uint Unknown4;
             public uint Unknown5;
             public uint Unknown6;
             public uint Unknown7;
             public uint Unknown8;
             public uint Unknown9;
-            public TagInstance Waypoints;
-            public TagInstance Unknown10;
-            public TagInstance ScoreboardHud;
-            public TagInstance MetagameScoreboardHud;
-            public TagInstance SurvivalHud;
-            public TagInstance MetagameScoreboardHud2;
-            public TagInstance TheaterHud;
-            public TagInstance ForgeHud;
-            public TagInstance HudStrings;
-            public TagInstance Medals;
+            public CachedTagInstance Waypoints;
+            public CachedTagInstance Unknown10;
+            public CachedTagInstance ScoreboardHud;
+            public CachedTagInstance MetagameScoreboardHud;
+            public CachedTagInstance SurvivalHud;
+            public CachedTagInstance MetagameScoreboardHud2;
+            public CachedTagInstance TheaterHud;
+            public CachedTagInstance ForgeHud;
+            public CachedTagInstance HudStrings;
+            public CachedTagInstance Medals;
             public List<MultiplayerMedal> MultiplayerMedals;
-            public TagInstance MedalHudAnimation;
-            public TagInstance MedalHudAnimation2;
-            public TagInstance CortanaChannel;
-            public TagInstance Unknown11;
-            public TagInstance Unknown12;
-            public TagInstance Unknown13;
-            public TagInstance Unknown14;
+            public CachedTagInstance MedalHudAnimation;
+            public CachedTagInstance MedalHudAnimation2;
+            public CachedTagInstance CortanaChannel;
+            public CachedTagInstance Unknown11;
+            public CachedTagInstance Unknown12;
+            public CachedTagInstance Unknown13;
+            public CachedTagInstance Unknown14;
             public uint Unknown15;
             public uint Unknown16;
             public float GrenadeScematicsSpacing;
@@ -184,10 +184,10 @@ namespace TagTool.TagDefinitions
                 public float VerticalScale;
                 public float HorizontalStretch;
                 public float VerticalStretch;
-                public TagInstance Unknown;
-                public TagInstance Unknown2;
-                public TagInstance FirstPersonDamageBorder;
-                public TagInstance ThirdPersonDamageBorder;
+                public CachedTagInstance Unknown;
+                public CachedTagInstance Unknown2;
+                public CachedTagInstance FirstPersonDamageBorder;
+                public CachedTagInstance ThirdPersonDamageBorder;
                 public uint Unknown3;
                 public uint Unknown4;
                 public uint Unknown5;
@@ -231,7 +231,7 @@ namespace TagTool.TagDefinitions
                 public class UnknownBlock
                 {
                     public BipedValue Biped;
-                    public TagInstance Sound;
+                    public CachedTagInstance Sound;
 
                     public enum BipedValue : int
                     {
@@ -252,8 +252,8 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x20)]
         public class HudShader
         {
-            public TagInstance VertexShader;
-            public TagInstance PixelShader;
+            public CachedTagInstance VertexShader;
+            public CachedTagInstance PixelShader;
         }
 
         [TagStructure(Size = 0x40)]
@@ -311,7 +311,7 @@ namespace TagTool.TagDefinitions
                 public uint Unknown23;
                 public uint Unknown24;
                 public uint Unknown25;
-                public TagInstance Sound;
+                public CachedTagInstance Sound;
                 public uint Unknown26;
                 public uint Unknown27;
                 public uint Unknown28;
@@ -336,7 +336,7 @@ namespace TagTool.TagDefinitions
                 public uint Unknown47;
                 public uint Unknown48;
                 public uint Unknown49;
-                public TagInstance Sound2;
+                public CachedTagInstance Sound2;
             }
         }
 

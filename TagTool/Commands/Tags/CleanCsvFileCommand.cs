@@ -60,7 +60,7 @@ namespace TagTool.Commands.Tags
                     if (!int.TryParse(tagIndices[0], NumberStyles.HexNumber, null, out tagIndex))
                         continue;
 
-                    if (tagIndex >= CacheContext.TagCache.Tags.Count || CacheContext.TagCache.Tags[tagIndex] == null)
+                    if (tagIndex >= CacheContext.TagCache.Index.Count || CacheContext.TagCache.Index[tagIndex] == null)
                         continue;
 
                     var first = true;

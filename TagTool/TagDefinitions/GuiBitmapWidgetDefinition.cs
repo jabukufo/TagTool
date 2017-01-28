@@ -19,9 +19,9 @@ namespace TagTool.TagDefinitions
         public short StandardXBoundsMin;
         public short StandardYBoundsMax;
         public short StandardXBoundsMax;
-        public TagInstance Animation;
-        public TagInstance Bitmap;
-        public TagInstance Unknown2;
+        public CachedTagInstance Animation;
+        public CachedTagInstance Bitmap;
+        public CachedTagInstance Unknown2;
         public BlendMethodValue BlendMethod;
         public short Unknown3;
         public short SpriteIndex;

@@ -9,7 +9,7 @@ namespace TagTool.TagDefinitions
     {
         public uint Unknown;
         public uint Unknown2;
-        public TagInstance Unknown3;
+        public CachedTagInstance Unknown3;
         public uint Unknown4;
         public uint RespawnTime;
         public uint Unknown5;

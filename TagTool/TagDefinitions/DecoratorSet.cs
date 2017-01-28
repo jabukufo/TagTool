@@ -6,12 +6,12 @@ namespace TagTool.TagDefinitions
     [TagStructure(Name = "decorator_set", Class = "dctr", Size = 0x80)]
     public class DecoratorSet
     {
-        public TagInstance Model;
+        public CachedTagInstance Model;
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;
         public int Unknown4;
-        public TagInstance Texture;
+        public CachedTagInstance Texture;
         public short AffectsVisibility;
         public short Unknown5;
         public float ColorR;

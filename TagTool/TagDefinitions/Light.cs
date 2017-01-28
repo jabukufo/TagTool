@@ -26,7 +26,7 @@ namespace TagTool.TagDefinitions
         public short Unknown6;
         public uint Unknown7;
         public byte[] Function2;
-        public TagInstance GelMap;
+        public CachedTagInstance GelMap;
         public uint Unknown8;
         public uint Unknown9;
         public uint Unknown10;
@@ -35,7 +35,7 @@ namespace TagTool.TagDefinitions
         public sbyte Unknown13;
         public sbyte Unknown14;
         public sbyte Unknown15;
-        public TagInstance LensFlare;
+        public CachedTagInstance LensFlare;
 
         public enum TypeValue : short
         {

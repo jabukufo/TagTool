@@ -36,7 +36,7 @@ namespace TagTool.Commands.Tags
                 return false;
 
             ResourceLocation location = ResourceLocation.Resources;
-            TagInstance destination = CacheContext.TagCache.Tags[0x3317];
+            CachedTagInstance destination = CacheContext.TagCache.Index[0x3317];
 
             if (args.Count == 3)
             {
@@ -164,7 +164,7 @@ namespace TagTool.Commands.Tags
                     // Define a material and part for this mesh
                     var material = builder.AddMaterial(new RenderMaterial
                     {
-                        RenderMethod = CacheContext.TagCache.Tags[0x101F],
+                        RenderMethod = CacheContext.TagCache.Index[0x101F],
                     });
 
 

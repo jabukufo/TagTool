@@ -56,7 +56,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x48)]
             public class SoundEffectBlock
             {
-                public TagInstance Unknown;
+                public CachedTagInstance Unknown;
                 public List<Component> Components;
                 public List<TemplateCollectionBlock> TemplateCollection;
                 public uint Unknown2;
@@ -71,7 +71,7 @@ namespace TagTool.TagDefinitions
                 [TagStructure(Size = 0x18)]
                 public class Component
                 {
-                    public TagInstance Sound;
+                    public CachedTagInstance Sound;
                     public uint Gain;
                     public int Flags;
                 }

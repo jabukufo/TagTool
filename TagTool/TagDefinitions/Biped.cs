@@ -47,7 +47,7 @@ namespace TagTool.TagDefinitions
         public short HeadNodeIndex;
         public uint Unknown33;
         public float HeadshotAccelerationScale;
-        public TagInstance AreaDamageEffect;
+        public CachedTagInstance AreaDamageEffect;
         public List<UnknownBlock3> Unknown34;
         public List<UnknownBlock4> Unknown35;
         public uint Unknown36;
@@ -97,9 +97,9 @@ namespace TagTool.TagDefinitions
         public Angle AngularAccelerationMaximum;
         public float CrouchVelocityModifier;
         public List<ContactPoint> ContactPoints;
-        public TagInstance ReanimationCharacter;
-        public TagInstance TransformationMuffin;
-        public TagInstance DeathSpawnCharacter;
+        public CachedTagInstance ReanimationCharacter;
+        public CachedTagInstance TransformationMuffin;
+        public CachedTagInstance DeathSpawnCharacter;
         public short DeathSpawnCount;
         public short Unknown52;
         public Angle Unknown53;

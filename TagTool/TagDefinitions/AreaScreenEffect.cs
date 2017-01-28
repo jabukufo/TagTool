@@ -99,7 +99,7 @@ namespace TagTool.TagDefinitions
 
             public float ScreenShake;
 
-            public TagInstance ScreenShader;
+            public CachedTagInstance ScreenShader;
         }
     }
 }

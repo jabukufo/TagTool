@@ -60,12 +60,12 @@ namespace TagTool.Commands.Tags
             var count = 0;
             using (var stream = CacheContext.OpenTagCacheRead())
             {
-                foreach (var groupTag in CacheContext.TagCache.Tags.NonNull().Select(t => t.Group.Tag).Distinct())
+                foreach (var groupTag in CacheContext.TagCache.Index.NonNull().Select(t => t.Group.Tag).Distinct())
                 {
                     TagLayoutGuess layout = null;
-                    TagInstance lastTag = null;
+                    CachedTagInstance lastTag = null;
 
-                    foreach (var tag in CacheContext.TagCache.Tags.FindAllInGroup(groupTag))
+                    foreach (var tag in CacheContext.TagCache.Index.FindAllInGroup(groupTag))
                     {
                         Console.Write("Analyzing ");
                         TagPrinter.PrintTagShort(tag);

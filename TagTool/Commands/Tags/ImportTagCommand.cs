@@ -22,7 +22,7 @@ namespace TagTool.Commands.Tags
             CacheContext = cacheContext;
         }
 
-        private void ImportTagInstance(TagInstance instance, string path)
+        private void ImportTagInstance(CachedTagInstance instance, string path)
         {
             byte[] data;
 

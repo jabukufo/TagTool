@@ -11,10 +11,10 @@ namespace TagTool.Commands.BSPs
     class CollisionTestCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private ScenarioStructureBsp BSP { get; }
 
-        public CollisionTestCommand(GameCacheContext cacheContext, TagInstance tag, ScenarioStructureBsp bsp)
+        public CollisionTestCommand(GameCacheContext cacheContext, CachedTagInstance tag, ScenarioStructureBsp bsp)
             : base(CommandFlags.Inherit,
 
                   "CollisionTest",

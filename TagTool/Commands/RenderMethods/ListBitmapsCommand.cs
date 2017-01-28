@@ -10,10 +10,10 @@ namespace TagTool.Commands.RenderMethods
     class ListBitmapsCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private RenderMethod Definition { get; }
 
-        public ListBitmapsCommand(GameCacheContext cacheContext, TagInstance tag, RenderMethod definition)
+        public ListBitmapsCommand(GameCacheContext cacheContext, CachedTagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
 
                  "ListBitmaps",

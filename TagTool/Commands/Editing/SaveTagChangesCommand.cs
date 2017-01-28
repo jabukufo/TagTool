@@ -8,10 +8,10 @@ namespace TagTool.Commands.Editing
     class SaveTagChangesCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private object Value { get; }
 
-        public SaveTagChangesCommand(GameCacheContext cacheContext, TagInstance tag, object value)
+        public SaveTagChangesCommand(GameCacheContext cacheContext, CachedTagInstance tag, object value)
             : base(CommandFlags.Inherit,
 
                   "SaveTagChanges",

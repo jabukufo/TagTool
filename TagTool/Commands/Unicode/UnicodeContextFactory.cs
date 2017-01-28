@@ -5,7 +5,7 @@ namespace TagTool.Commands.Unicode
 {
     static class UnicodeContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, MultilingualUnicodeStringList unic)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, MultilingualUnicodeStringList unic)
         {
             var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
@@ -17,7 +17,7 @@ namespace TagTool.Commands.Unicode
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, MultilingualUnicodeStringList unic)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, MultilingualUnicodeStringList unic)
         {
             if (info.StringIdCache == null)
                 return;

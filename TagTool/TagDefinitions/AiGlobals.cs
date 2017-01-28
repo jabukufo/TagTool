@@ -27,7 +27,7 @@ namespace TagTool.TagDefinitions
             public float DangerExtendedShieldDamage;
             public float DangerBodyDamage;
             public float DangerExtendedBodyDamage;
-            public TagInstance GlobalDialogue;
+            public CachedTagInstance GlobalDialogue;
             public StringId DefaultMissionDialogueSoundEffect;
             public float JumpDown;
             public float JumpStep;
@@ -93,19 +93,19 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x10)]
             public class Style
             {
-                public TagInstance Style2;
+                public CachedTagInstance Style2;
             }
 
             [TagStructure(Size = 0x10)]
             public class Formation
             {
-                public TagInstance Formations;
+                public CachedTagInstance Formations;
             }
 
             [TagStructure(Size = 0x10)]
             public class Template
             {
-                public TagInstance SquadTemplate;
+                public CachedTagInstance SquadTemplate;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace TagTool.TagDefinitions
         public short StandardXBoundsMin;
         public short StandardYBoundsMax;
         public short StandardXBoundsMax;
-        public TagInstance Animation;
+        public CachedTagInstance Animation;
         public List<Biped> Bipeds;
         public uint Unknown2;
         public uint Unknown3;
@@ -77,7 +77,7 @@ namespace TagTool.TagDefinitions
             public Angle Unknown30;
             public uint Unknown31;
             public uint Unknown32;
-            public TagInstance Unknown33;
+            public CachedTagInstance Unknown33;
             public uint Unknown34;
 
             [TagStructure(Size = 0x14)]

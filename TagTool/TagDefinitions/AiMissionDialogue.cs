@@ -21,7 +21,7 @@ namespace TagTool.TagDefinitions
             public class Variant
             {
                 public StringId Designation;
-                public TagInstance Sound;
+                public CachedTagInstance Sound;
                 public StringId SoundEffect;
             }
         }

@@ -21,7 +21,7 @@ namespace TagTool.TagDefinitions
         public uint Unknown7;
         public uint Unknown8;
         public uint Unknown9;
-        public TagInstance BaseRenderMethod;
+        public CachedTagInstance BaseRenderMethod;
         public List<UnknownBlock2> Unknown10;
         public List<ImportDatum> ImportData;
         public List<ShaderProperty> ShaderProperties;
@@ -81,7 +81,7 @@ namespace TagTool.TagDefinitions
         public byte[] Unknown36;
         public uint Unknown37;
         public uint Unknown38;
-        public TagInstance ParticleModel;
+        public CachedTagInstance ParticleModel;
         public uint Unknown39;
         public uint Unknown40;
         public uint Unknown41;
@@ -94,7 +94,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x14)]
         public class UnknownBlock
         {
-            public TagInstance Unknown;
+            public CachedTagInstance Unknown;
             public uint Unknown2;
         }
 
@@ -109,7 +109,7 @@ namespace TagTool.TagDefinitions
         {
             public StringId MaterialType;
             public int Unknown;
-            public TagInstance Bitmap;
+            public CachedTagInstance Bitmap;
             public uint Unknown2;
             public int Unknown3;
             public short Unknown4;
@@ -135,7 +135,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x84)]
         public class ShaderProperty
         {
-            public TagInstance Template;
+            public CachedTagInstance Template;
             public List<ShaderMap> ShaderMaps;
             public List<Argument> Arguments;
             public List<UnknownBlock> Unknown;
@@ -159,7 +159,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x18)]
             public class ShaderMap
             {
-                public TagInstance Bitmap;
+                public CachedTagInstance Bitmap;
                 public sbyte Unknown;
                 public sbyte BitmapIndex;
                 public sbyte Unknown2;

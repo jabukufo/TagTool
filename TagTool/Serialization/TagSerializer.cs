@@ -188,8 +188,8 @@ namespace TagTool.Serialization
                 SerializeString(block.Writer, (string)val, valueInfo);
             else if (valueType == typeof(Tag))
                 SerializeTag(block, (Tag)val);
-            else if (valueType == typeof(TagInstance))
-                SerializeTagReference(block.Writer, (TagInstance)val, valueInfo);
+            else if (valueType == typeof(CachedTagInstance))
+                SerializeTagReference(block.Writer, (CachedTagInstance)val, valueInfo);
             else if (valueType == typeof(ResourceAddress))
                 block.Writer.Write(((ResourceAddress)val).Value);
             else if (valueType == typeof(byte[]))
@@ -258,7 +258,7 @@ namespace TagTool.Serialization
         /// <param name="writer">The writer to write to.</param>
         /// <param name="referencedTag">The referenced tag.</param>
         /// <param name="valueInfo">Information about the value. Can be <c>null</c>.</param>
-        private static void SerializeTagReference(BinaryWriter writer, TagInstance referencedTag, TagFieldAttribute valueInfo)
+        private static void SerializeTagReference(BinaryWriter writer, CachedTagInstance referencedTag, TagFieldAttribute valueInfo)
         {
             // Write the reference out
             if (valueInfo == null || (valueInfo.Flags & TagFieldFlags.Short) == 0)

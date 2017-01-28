@@ -55,7 +55,7 @@ namespace TagTool.TagDefinitions
                 public Angle Unknown4;
                 public Angle Unknown5;
                 public Angle Unknown6;
-                public TagInstance Light;
+                public CachedTagInstance Light;
             }
         }
 
@@ -63,14 +63,14 @@ namespace TagTool.TagDefinitions
         public class Bink
         {
             [TagField(Length = 32)] public string Name;
-            public TagInstance Bink2;
+            public CachedTagInstance Bink2;
         }
 
         [TagStructure(Size = 0x4C)]
         public class Mannequin
         {
             public int Unknown;
-            public TagInstance Biped;
+            public CachedTagInstance Biped;
             public int Unknown2;
             public float Unknown3;
             public float Unknown4;
@@ -91,7 +91,7 @@ namespace TagTool.TagDefinitions
         public class Weapon
         {
             [TagField(Length = 32)] public string Name;
-            public TagInstance Weapon2;
+            public CachedTagInstance Weapon2;
             public float Unknown;
             public float Unknown2;
             public float Unknown3;

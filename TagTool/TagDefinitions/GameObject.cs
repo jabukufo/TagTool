@@ -27,14 +27,14 @@ namespace TagTool.TagDefinitions
         public float DynamicLightSphereOffsetY;
         public float DynamicLightSphereOffsetZ;
         public StringId DefaultModelVariant;
-        public TagInstance Model;
-        [MaxVersion(CacheVersion.HaloOnline449175)] public TagInstance CrateObject;
-        public TagInstance CollisionDamage;
+        public CachedTagInstance Model;
+        [MaxVersion(CacheVersion.HaloOnline449175)] public CachedTagInstance CrateObject;
+        public CachedTagInstance CollisionDamage;
         public List<EarlyMoverProperty> EarlyMoverProperties;
-        public TagInstance CreationEffect;
-        public TagInstance MaterialEffects;
-        public TagInstance ArmorSounds;
-        public TagInstance MeleeImpact;
+        public CachedTagInstance CreationEffect;
+        public CachedTagInstance MaterialEffects;
+        public CachedTagInstance ArmorSounds;
+        public CachedTagInstance MeleeImpact;
         public List<AiProperty> AiProperties;
         public List<Function> Functions;
         public short HudTextMessageIndex;
@@ -44,7 +44,7 @@ namespace TagTool.TagDefinitions
         public List<ChangeColor> ChangeColors;
         public List<NodeMap> NodeMaps;
         public List<MultiplayerObjectProperty> MultiplayerObjectProperties;
-        [MinVersion(CacheVersion.HaloOnline498295)] public TagInstance SimulationInterpolation;
+        [MinVersion(CacheVersion.HaloOnline498295)] public CachedTagInstance SimulationInterpolation;
         public uint Unknown3;
         public uint Unknown4;
         public uint Unknown5;
@@ -161,7 +161,7 @@ namespace TagTool.TagDefinitions
         public class Attachment
         {
             public uint AtlasFlags;
-            public TagInstance Attachment2;
+            public CachedTagInstance Attachment2;
             public StringId Marker;
             public ChangeColorValue ChangeColor;
             public short Unknown;
@@ -181,7 +181,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class Widget
         {
-            public TagInstance Type;
+            public CachedTagInstance Type;
         }
 
         [TagStructure(Size = 0x18)]
@@ -245,16 +245,16 @@ namespace TagTool.TagDefinitions
             public uint Unknown4;
             public int Unknown5;
             public int Unknown6;
-            public TagInstance ChildObject;
+            public CachedTagInstance ChildObject;
             public int Unknown7;
-            public TagInstance ShapeShader;
-            public TagInstance UnknownShader;
-            public TagInstance Unknown8;
-            public TagInstance Unknown9;
-            public TagInstance Unknown10;
-            public TagInstance Unknown11;
-            public TagInstance Unknown12;
-            public TagInstance Unknown13;
+            public CachedTagInstance ShapeShader;
+            public CachedTagInstance UnknownShader;
+            public CachedTagInstance Unknown8;
+            public CachedTagInstance Unknown9;
+            public CachedTagInstance Unknown10;
+            public CachedTagInstance Unknown11;
+            public CachedTagInstance Unknown12;
+            public CachedTagInstance Unknown13;
         }
 
         public enum ObjectTypeValue : sbyte

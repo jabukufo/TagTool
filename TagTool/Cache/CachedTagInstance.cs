@@ -8,7 +8,7 @@ namespace TagTool.Cache
     /// <summary>
     /// Describes a tag in a tag cache.
     /// </summary>
-    public class TagInstance
+    public class CachedTagInstance
     {
         private List<uint> _pointerOffsets = new List<uint>();
         private List<uint> _resourceOffsets = new List<uint>();
@@ -19,12 +19,12 @@ namespace TagTool.Cache
         // Size of a tag header with no dependencies or offsets
         private const uint TagHeaderSize = 0x24;
 
-        internal TagInstance(int index)
+        internal CachedTagInstance(int index)
         {
             Index = index;
         }
 
-        internal TagInstance(int index, TagGroup group)
+        internal CachedTagInstance(int index, TagGroup group)
         {
             Index = index;
             Group = group;
@@ -194,7 +194,7 @@ namespace TagTool.Cache
         /// </summary>
         /// <param name="data">The descriptor to use.</param>
         /// <returns>The size of the tag's header.</returns>
-        internal static uint CalculateHeaderSize(TagData data) =>
+        internal static uint CalculateHeaderSize(CachedTagData data) =>
             (uint)(TagHeaderSize + data.Dependencies.Count * 4 + data.PointerFixups.Count * 4 + data.ResourcePointerOffsets.Count * 4);
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace TagTool.Cache
         /// </summary>
         /// <param name="data">The tag data.</param>
         /// <param name="dataOffset">The offset of the tag data relative to the tag instance's header.</param>
-        internal void Update(TagData data, uint dataOffset)
+        internal void Update(CachedTagData data, uint dataOffset)
         {
             Group = data.Group;
             MainStructOffset = data.MainStructOffset + dataOffset;

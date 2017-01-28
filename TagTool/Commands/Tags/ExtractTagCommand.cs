@@ -22,7 +22,7 @@ namespace TagTool.Commands.Tags
             CacheContext = cacheContext;
         }
 
-        private void ExtractTagInstance(TagInstance tag, string path)
+        private void ExtractTagInstance(CachedTagInstance tag, string path)
         {
             var info = new FileInfo(path);
 
@@ -55,7 +55,7 @@ namespace TagTool.Commands.Tags
                 var groupTag = ArgumentParser.ParseGroupTag(CacheContext.StringIdCache, args[1]);
                 var path = args[2];
 
-                foreach (var instance in CacheContext.TagCache.Tags.FindAllInGroup(groupTag))
+                foreach (var instance in CacheContext.TagCache.Index.FindAllInGroup(groupTag))
                 {
                     if (instance == null)
                         continue;

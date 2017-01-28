@@ -11,12 +11,12 @@ namespace TagTool.Commands.Editing
     {
         private CommandContextStack ContextStack { get; }
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
         
-        public EditBlockCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, object value)
+        public EditBlockCommand(CommandContextStack contextStack, GameCacheContext cacheContext, CachedTagInstance tag, object value)
             : base(CommandFlags.Inherit,
 
                   "EditBlock",

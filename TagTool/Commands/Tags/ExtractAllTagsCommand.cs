@@ -45,7 +45,7 @@ namespace TagTool.Commands.Tags
 
             using (var cacheStream = CacheContext.OpenTagCacheRead())
             {
-                foreach (var instance in CacheContext.TagCache.Tags)
+                foreach (var instance in CacheContext.TagCache.Index)
                 {
                     if (instance == null)
                         continue;

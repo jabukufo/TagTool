@@ -9,7 +9,7 @@ namespace TagTool.TagDefinitions
     [TagStructure(Name = "model_animation_graph", Class = "jmad", Size = 0x104)]
     public class ModelAnimationGraph
     {
-        public TagInstance ParentAnimationGraph;
+        public CachedTagInstance ParentAnimationGraph;
         public AnimationInheritanceFlags InheritanceFlags;
         public AnimationPrivateFlags PrivateFlags;
         public short AnimationCodecPack;
@@ -95,7 +95,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x14)]
         public class AnimationTagReference
         {
-            public TagInstance Reference;
+            public CachedTagInstance Reference;
             public AnimationTagReferenceFlags Flags;
             public short Unknown;
         }
@@ -481,7 +481,7 @@ namespace TagTool.TagDefinitions
                         public class OtherParticipant
                         {
                             public ParticipantFlags Flags;
-                            public TagInstance ObjectType;
+                            public CachedTagInstance ObjectType;
 
                             public enum ParticipantFlags : int
                             {
@@ -551,7 +551,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class Inheritance
         {
-            public TagInstance InheritedGraph;
+            public CachedTagInstance InheritedGraph;
             public List<NodeMapBlock> NodeMap;
             public List<NodeMapFlag> NodeMapFlags;
             public float RootZOffset;

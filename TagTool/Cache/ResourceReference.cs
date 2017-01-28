@@ -68,7 +68,7 @@ namespace TagTool.Cache
         /// <summary>
         /// Gets or sets the tag that owns the resource.
         /// </summary>
-        public TagInstance Owner;
+        public CachedTagInstance Owner;
 
         public ushort Salt;
 

@@ -10,10 +10,10 @@ namespace TagTool.Commands.VFiles
     class ReplaceAllFilesCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private VFilesList Definition { get; }
 
-        public ReplaceAllFilesCommand(GameCacheContext cacheContext, TagInstance tag, VFilesList definition)
+        public ReplaceAllFilesCommand(GameCacheContext cacheContext, CachedTagInstance tag, VFilesList definition)
             : base(CommandFlags.None,
 
                   "ReplaceAllFiles",

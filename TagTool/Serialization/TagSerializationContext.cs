@@ -17,7 +17,7 @@ namespace TagTool.Serialization
 
         private Stream Stream { get; }
         private GameCacheContext Context { get; }
-        private TagData Data { get; set; }
+        private CachedTagData Data { get; set; }
 
         /// <summary>
         /// Creates a tag serialization context which serializes data into a tag.
@@ -25,7 +25,7 @@ namespace TagTool.Serialization
         /// <param name="stream">The stream to write to.</param>
         /// <param name="context">The game cache context.</param>
         /// <param name="tag">The tag to overwrite.</param>
-        public TagSerializationContext(Stream stream, GameCacheContext context, TagInstance tag)
+        public TagSerializationContext(Stream stream, GameCacheContext context, CachedTagInstance tag)
         {
             Stream = stream;
             Context = context;
@@ -35,11 +35,11 @@ namespace TagTool.Serialization
         /// <summary>
         /// Gets the tag that the context is operating on.
         /// </summary>
-        public TagInstance Tag { get; }
+        public CachedTagInstance Tag { get; }
 
         public void BeginSerialize(TagStructureInfo info)
         {
-            Data = new TagData
+            Data = new CachedTagData
             {
                 Group = new TagGroup
                 (
@@ -76,9 +76,9 @@ namespace TagTool.Serialization
             return Tag.PointerToOffset(address);
         }
 
-        public TagInstance GetTagByIndex(int index)
+        public CachedTagInstance GetTagByIndex(int index)
         {
-            return (index >= 0 && index < Context.TagCache.Tags.Count) ? Context.TagCache.Tags[index] : null;
+            return (index >= 0 && index < Context.TagCache.Index.Count) ? Context.TagCache.Index[index] : null;
         }
 
         public IDataBlock CreateBlock()
@@ -134,10 +134,10 @@ namespace TagTool.Serialization
                 if (resource != null)
                     resource.Owner = _context.Tag;
 
-                if (type == typeof(TagInstance))
+                if (type == typeof(CachedTagInstance))
                 {
                     // Object is a tag reference - add it as a dependency
-                    var referencedTag = obj as TagInstance;
+                    var referencedTag = obj as CachedTagInstance;
                     if (referencedTag != null && referencedTag != _context.Tag)
                         _context.Data.Dependencies.Add(referencedTag.Index);
                 }

@@ -121,13 +121,13 @@ namespace TagTool.Commands.Tags
 
                             // Now get the data for the base tag
                             var baseTag = result.Translate(info.Version, tag.Tag.Index, baseVersion);
-                            if (baseTag == -1 || CacheContext.TagCache.Tags[baseTag].Group.Tag != tag.Tag.Group.Tag)
+                            if (baseTag == -1 || CacheContext.TagCache.Index[baseTag].Group.Tag != tag.Tag.Group.Tag)
                                 continue;
                             object baseData;
                             if (!baseTagData.TryGetValue(baseTag, out baseData))
                             {
                                 // No data yet - deserialize it
-                                var context = new TagSerializationContext(baseStream, CacheContext, CacheContext.TagCache.Tags[baseTag]);
+                                var context = new TagSerializationContext(baseStream, CacheContext, CacheContext.TagCache.Index[baseTag]);
                                 var type = TagStructureTypes.FindByGroupTag(tag.Tag.Group.Tag);
                                 baseData = CacheContext.Deserializer.Deserialize(context, type);
                                 baseTagData[baseTag] = baseData;
@@ -154,11 +154,11 @@ namespace TagTool.Commands.Tags
             if (leftData == null || rightData == null)
                 return;
             var type = leftData.GetType();
-            if (type == typeof(TagInstance))
+            if (type == typeof(CachedTagInstance))
             {
                 // If the objects are tags, then we've found a match
-                var leftTag = (TagInstance)leftData;
-                var rightTag = (TagInstance)rightData;
+                var leftTag = (CachedTagInstance)leftData;
+                var rightTag = (CachedTagInstance)rightData;
                 if (leftTag.Group.Tag != rightTag.Group.Tag)
                     return;
                 if (leftTag.IsInGroup("rmt2") || leftTag.IsInGroup("rmdf") || leftTag.IsInGroup("vtsh") || leftTag.IsInGroup("pixl") || leftTag.IsInGroup("rm  ") || leftTag.IsInGroup("bitm"))
@@ -236,7 +236,7 @@ namespace TagTool.Commands.Tags
         {
             // Get a dictionary of scenarios by map ID
             var scenarios = new Dictionary<int, QueuedTag>();
-            foreach (var scenarioTag in info.TagCache.Tags.FindAllInGroup("scnr"))
+            foreach (var scenarioTag in info.TagCache.Index.FindAllInGroup("scnr"))
             {
                 var context = new TagSerializationContext(stream, info, scenarioTag);
                 var scenario = info.Deserializer.Deserialize<Scenario>(context);
@@ -252,7 +252,7 @@ namespace TagTool.Commands.Tags
 
         private class QueuedTag
         {
-            public TagInstance Tag { get; set; }
+            public CachedTagInstance Tag { get; set; }
 
             public object Data { get; set; }
         }

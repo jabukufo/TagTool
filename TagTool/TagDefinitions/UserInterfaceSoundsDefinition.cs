@@ -8,26 +8,26 @@ namespace TagTool.TagDefinitions
     [TagStructure(Name = "user_interface_sounds_definition", Class = "uise", Size = 0x150)]
     public class UserInterfaceSoundsDefinition
     {
-        public TagInstance Error;
-        public TagInstance VerticalNavigation;
-        public TagInstance HorizontalNavigation;
-        public TagInstance AButton;
-        public TagInstance BButton;
-        public TagInstance XButton;
-        public TagInstance YButton;
-        public TagInstance StartButton;
-        public TagInstance BackButton;
-        public TagInstance LeftBumper;
-        public TagInstance RightBumper;
-        public TagInstance LeftTrigger;
-        public TagInstance RightTrigger;
-        public TagInstance TimerSound;
-        public TagInstance TimerSoundZero;
-        public TagInstance AltTimerSound;
-        public TagInstance SecondAltTimerSound;
-        public TagInstance MatchmakingAdvanceSound;
-        public TagInstance RankUp;
-        public TagInstance MatchmakingPartyUpSound;
+        public CachedTagInstance Error;
+        public CachedTagInstance VerticalNavigation;
+        public CachedTagInstance HorizontalNavigation;
+        public CachedTagInstance AButton;
+        public CachedTagInstance BButton;
+        public CachedTagInstance XButton;
+        public CachedTagInstance YButton;
+        public CachedTagInstance StartButton;
+        public CachedTagInstance BackButton;
+        public CachedTagInstance LeftBumper;
+        public CachedTagInstance RightBumper;
+        public CachedTagInstance LeftTrigger;
+        public CachedTagInstance RightTrigger;
+        public CachedTagInstance TimerSound;
+        public CachedTagInstance TimerSoundZero;
+        public CachedTagInstance AltTimerSound;
+        public CachedTagInstance SecondAltTimerSound;
+        public CachedTagInstance MatchmakingAdvanceSound;
+        public CachedTagInstance RankUp;
+        public CachedTagInstance MatchmakingPartyUpSound;
         public List<AtlasSound> AtlasSounds;
         public uint Unknown;
 
@@ -35,7 +35,7 @@ namespace TagTool.TagDefinitions
         public class AtlasSound
         {
             public StringId Name;
-            public TagInstance Sound;
+            public CachedTagInstance Sound;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace TagTool.TagDefinitions
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;
-        public TagInstance Unused;
+        public CachedTagInstance Unused;
         public SoundClassValue SoundClass;
         public short Unknown4;
         public List<Track> Tracks;
@@ -99,15 +99,15 @@ namespace TagTool.TagDefinitions
             public float FadeOutDuration;
             public short Unknown2;
             public short Unknown3;
-            public TagInstance In;
-            public TagInstance Loop;
-            public TagInstance Out;
-            public TagInstance AlternateLoop;
-            public TagInstance AlternateOut;
+            public CachedTagInstance In;
+            public CachedTagInstance Loop;
+            public CachedTagInstance Out;
+            public CachedTagInstance AlternateLoop;
+            public CachedTagInstance AlternateOut;
             public OutputEffectValue OutputEffect;
             public short Unknown4;
-            public TagInstance AlternateTransitionIn;
-            public TagInstance AlternateTransitionOut;
+            public CachedTagInstance AlternateTransitionIn;
+            public CachedTagInstance AlternateTransitionOut;
             public float AlternateCrossfadeDuration;
             public uint Unknown5;
             public float AlternateFadeOutDuration;
@@ -126,7 +126,7 @@ namespace TagTool.TagDefinitions
         public class DetailSound
         {
             public StringId Name;
-            public TagInstance Sound;
+            public CachedTagInstance Sound;
             public float RandomPeriodBoundsMin;
             public float RandomPeriodBoundsMax;
             public uint Unknown;

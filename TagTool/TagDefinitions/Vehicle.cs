@@ -51,10 +51,10 @@ namespace TagTool.TagDefinitions
         public float SeatExitAccelerationScale;
         public float FlipTime;
         public StringId FlipOverMessage;
-        public TagInstance SuspensionSound;
-        public TagInstance RunningEffect;
-        public TagInstance UnknownResponse;
-        public TagInstance UnknownResponse2;
+        public CachedTagInstance SuspensionSound;
+        public CachedTagInstance RunningEffect;
+        public CachedTagInstance UnknownResponse;
+        public CachedTagInstance UnknownResponse2;
         public uint Unknown31;
         public uint Unknown32;
 
@@ -75,7 +75,7 @@ namespace TagTool.TagDefinitions
             public float EngineMomentum;
             public float EngineMaximumAngularVelocity;
             public List<Gear> Gears;
-            public TagInstance ChangeGearSound;
+            public CachedTagInstance ChangeGearSound;
             public uint Unknown2;
             public uint Unknown3;
 
@@ -113,7 +113,7 @@ namespace TagTool.TagDefinitions
             public float EngineMomentum;
             public float EngineMaximumAngularVelocity;
             public List<Gear> Gears;
-            public TagInstance ChangeGearSound;
+            public CachedTagInstance ChangeGearSound;
             public uint Unknown;
             public uint Unknown2;
 
@@ -283,7 +283,7 @@ namespace TagTool.TagDefinitions
             public float EngineMomentum;
             public float EngineMaximumAngularVelocity;
             public List<Gear> Gears;
-            public TagInstance ChangeGearSound;
+            public CachedTagInstance ChangeGearSound;
             public uint Unknown;
             public StringId Unknown2;
             public uint Unknown3;

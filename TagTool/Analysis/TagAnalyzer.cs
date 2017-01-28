@@ -18,11 +18,11 @@ namespace TagTool.Analysis
         public TagAnalyzer(TagCache cache)
         {
             _cache = cache;
-            foreach (var group in cache.Tags.NonNull().Select(t => t.Group.Tag).Distinct())
+            foreach (var group in cache.Index.NonNull().Select(t => t.Group.Tag).Distinct())
                 _tagGroups.Add(group);
         }
 
-        public TagLayoutGuess Analyze(TagData data)
+        public TagLayoutGuess Analyze(CachedTagData data)
         {
             _tagMap = BuildTagMap(data);
             _dataFixupsByWriteOffset = data.PointerFixups.ToDictionary(f => f.WriteOffset);
@@ -81,9 +81,9 @@ namespace TagTool.Analysis
                 else if (offset >= 0xC && lookBehind[0] == 0 && lookBehind[1] == 0 && _tagGroups.Contains(new Tag((int)lookBehind[2])))
                 {
                     // Tag reference
-                    if (val != 0xFFFFFFFF && val < _cache.Tags.Count)
+                    if (val != 0xFFFFFFFF && val < _cache.Index.Count)
                     {
-                        var referencedTag = _cache.Tags[(int)val];
+                        var referencedTag = _cache.Index[(int)val];
                         if (referencedTag != null && referencedTag.Group.Tag.Value == (int)lookBehind[2])
                             result.Add(offset - 0xC, new TagReferenceGuess());
                     }
@@ -132,7 +132,7 @@ namespace TagTool.Analysis
         /// </summary>
         /// <param name="data">The tag data to build a memory map for.</param>
         /// <returns>The built map.</returns>
-        private static MemoryMap BuildTagMap(TagData data)
+        private static MemoryMap BuildTagMap(CachedTagData data)
         {
             // Create a memory map with a boundary at each fixup target
             // and at the main structure

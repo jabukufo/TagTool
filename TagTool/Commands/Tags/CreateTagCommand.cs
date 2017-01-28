@@ -4,6 +4,7 @@ using TagTool.Serialization;
 using TagTool.TagDefinitions;
 using TagTool.Cache;
 using System.Globalization;
+using TagTool.Common;
 
 namespace TagTool.Commands.Tags
 {
@@ -34,7 +35,7 @@ namespace TagTool.Commands.Tags
             if (groupTag == null || !TagGroup.Instances.ContainsKey(groupTag))
                 return false;
 
-            TagInstance instance = null;
+            CachedTagInstance instance = null;
 
             using (var stream = CacheContext.OpenTagCacheReadWrite())
             {
@@ -44,20 +45,20 @@ namespace TagTool.Commands.Tags
                     if (!int.TryParse(args[1].Replace("0x", ""), NumberStyles.HexNumber, null, out tagIndex))
                         return false;
 
-                    if (tagIndex > CacheContext.TagCache.Tags.Count)
+                    if (tagIndex > CacheContext.TagCache.Index.Count)
                         return false;
 
-                    if (tagIndex < CacheContext.TagCache.Tags.Count)
+                    if (tagIndex < CacheContext.TagCache.Index.Count)
                     {
-                        if (CacheContext.TagCache.Tags[tagIndex] != null)
+                        if (CacheContext.TagCache.Index[tagIndex] != null)
                         {
-                            var oldInstance = CacheContext.TagCache.Tags[tagIndex];
-                            CacheContext.TagCache.Tags[tagIndex] = null;
+                            var oldInstance = CacheContext.TagCache.Index[tagIndex];
+                            CacheContext.TagCache.Index[tagIndex] = null;
                             CacheContext.TagCache.SetTagDataRaw(stream, oldInstance, new byte[] { });
                         }
 
-                        instance = new TagInstance(tagIndex, TagGroup.Instances[groupTag]);
-                        CacheContext.TagCache.Tags[tagIndex] = instance;
+                        instance = new CachedTagInstance(tagIndex, TagGroup.Instances[groupTag]);
+                        CacheContext.TagCache.Index[tagIndex] = instance;
                     }
                 }
 

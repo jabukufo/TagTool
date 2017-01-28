@@ -20,15 +20,15 @@ namespace TagTool.TagDefinitions
         public short StandardXBoundsMin;
         public short StandardYBoundsMax;
         public short StandardXBoundsMax;
-        public TagInstance Animation;
-        public TagInstance Strings;
+        public CachedTagInstance Animation;
+        public CachedTagInstance Strings;
         public List<TextWidget> TextWidgets;
         public List<BitmapWidget> BitmapWidgets;
 
         [TagStructure(Size = 0x4C)]
         public class TextWidget
         {
-            public TagInstance Parent;
+            public CachedTagInstance Parent;
             public uint Flags;
             public StringId Name;
             public short Unknown;
@@ -41,7 +41,7 @@ namespace TagTool.TagDefinitions
             public short StandardXBoundsMin;
             public short StandardYBoundsMax;
             public short StandardXBoundsMax;
-            public TagInstance Animation;
+            public CachedTagInstance Animation;
             public StringId DataSourceName;
             public StringId TextString;
             public StringId TextColor;
@@ -52,7 +52,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x6C)]
         public class BitmapWidget
         {
-            public TagInstance Parent;
+            public CachedTagInstance Parent;
             public uint Flags;
             public StringId Name;
             public short Unknown;
@@ -65,9 +65,9 @@ namespace TagTool.TagDefinitions
             public short StandardXBoundsMin;
             public short StandardYBoundsMax;
             public short StandardXBoundsMax;
-            public TagInstance Animation;
-            public TagInstance Bitmap;
-            public TagInstance Unknown2;
+            public CachedTagInstance Animation;
+            public CachedTagInstance Bitmap;
+            public CachedTagInstance Unknown2;
             public BlendMethodValue BlendMethod;
             public short Unknown3;
             public short SpriteIndex;

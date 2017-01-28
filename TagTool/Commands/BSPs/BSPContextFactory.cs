@@ -5,7 +5,7 @@ namespace TagTool.Commands.BSPs
 {
     static class BSPContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, ScenarioStructureBsp bsp)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, ScenarioStructureBsp bsp)
         {
             var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
@@ -17,7 +17,7 @@ namespace TagTool.Commands.BSPs
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, ScenarioStructureBsp bsp)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, ScenarioStructureBsp bsp)
         {
             context.AddCommand(new CollisionTestCommand(info, tag, bsp));
         }

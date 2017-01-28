@@ -20,13 +20,13 @@ namespace TagTool.TagDefinitions
         public short StandardXOffset;
         public short StandardYUnknown;
         public short StandardXUnknown;
-        public TagInstance Animation;
+        public CachedTagInstance Animation;
         public StringId DataSourceName;
-        public TagInstance Skin;
+        public CachedTagInstance Skin;
         public int RowCount;
         public List<ListWidgetItem> ListWidgetItems;
-        public TagInstance UpArrowBitmap;
-        public TagInstance DownArrowBitmap;
+        public CachedTagInstance UpArrowBitmap;
+        public CachedTagInstance DownArrowBitmap;
 
         [TagStructure(Size = 0x30)]
         public class ListWidgetItem
@@ -43,7 +43,7 @@ namespace TagTool.TagDefinitions
             public short StandardXOffset;
             public short StandardYUnknown;
             public short StandardXUnknown;
-            public TagInstance Animation;
+            public CachedTagInstance Animation;
             public StringId Target;
         }
     }

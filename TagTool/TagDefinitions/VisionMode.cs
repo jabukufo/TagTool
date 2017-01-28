@@ -28,7 +28,7 @@ namespace TagTool.TagDefinitions
         public uint Unknown20;
         public uint Unknown21;
         public uint Unknown22;
-        public TagInstance Unknown23;
+        public CachedTagInstance Unknown23;
         public byte[] Unknown24;
         public byte[] Unknown25;
         public uint Unknown26;
@@ -59,8 +59,8 @@ namespace TagTool.TagDefinitions
         public uint Unknown51;
         public uint Unknown52;
         public uint Unknown53;
-        public TagInstance Unknown54;
-        public TagInstance Unknown55;
+        public CachedTagInstance Unknown54;
+        public CachedTagInstance Unknown55;
         public uint Unknown56;
         public uint Unknown57;
         public uint Unknown58;

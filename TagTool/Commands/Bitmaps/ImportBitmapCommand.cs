@@ -12,10 +12,10 @@ namespace TagTool.Commands.Bitmaps
     class ImportBitmapCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private Bitmap Bitmap { get; }
 
-        public ImportBitmapCommand(GameCacheContext cacheContext, TagInstance tag, Bitmap bitmap)
+        public ImportBitmapCommand(GameCacheContext cacheContext, CachedTagInstance tag, Bitmap bitmap)
             : base(CommandFlags.None,
 
                   "ImportBitmap",

@@ -8,18 +8,18 @@ namespace TagTool.TagDefinitions
     [TagStructure(Name = "user_interface_globals_definition", Class = "wgtz", Size = 0x60, MinVersion = CacheVersion.HaloOnline498295)]
     public class UserInterfaceGlobalsDefinition
     {
-        public TagInstance SharedUiGlobals;
-        public TagInstance EditableSettings;
-        public TagInstance MatchmakingHopperStrings;
+        public CachedTagInstance SharedUiGlobals;
+        public CachedTagInstance EditableSettings;
+        public CachedTagInstance MatchmakingHopperStrings;
         public List<ScreenWidget> ScreenWidgets;
-        public TagInstance TextureRenderList;
-        [MinVersion(CacheVersion.HaloOnline498295)] public TagInstance SwearFilter; // TODO: Version number
+        public CachedTagInstance TextureRenderList;
+        [MinVersion(CacheVersion.HaloOnline498295)] public CachedTagInstance SwearFilter; // TODO: Version number
         public uint Unknown;
 
         [TagStructure(Size = 0x10)]
         public class ScreenWidget
         {
-            public TagInstance Widget;
+            public CachedTagInstance Widget;
         }
     }
 }

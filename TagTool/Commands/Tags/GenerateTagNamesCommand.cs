@@ -43,24 +43,24 @@ namespace TagTool.Commands.Tags
 
             using (var cacheStream = CacheContext.OpenTagCacheRead())
             {
-                var scenarioTags = CacheContext.TagCache.Tags.FindAllInGroup(new Tag("scnr"));
+                var scenarioTags = CacheContext.TagCache.Index.FindAllInGroup(new Tag("scnr"));
                 foreach (var scenarioTag in scenarioTags)
                     SetScenarioName(cacheStream, scenarioTag, ref tagNames);
 
-                var objectTags = CacheContext.TagCache.Tags.FindAllInGroup(new Tag("obje"));
+                var objectTags = CacheContext.TagCache.Index.FindAllInGroup(new Tag("obje"));
                 foreach (var objectTag in objectTags)
                     SetGameObjectName(cacheStream, objectTag, ref tagNames);
 
-                var renderModelTags = CacheContext.TagCache.Tags.FindAllInGroup(new Tag("mode"));
+                var renderModelTags = CacheContext.TagCache.Index.FindAllInGroup(new Tag("mode"));
                 foreach (var renderModelTag in renderModelTags)
                     SetRenderModelName(cacheStream, renderModelTag, ref tagNames);
 
-                var modelTags = CacheContext.TagCache.Tags.FindAllInGroup(new Tag("hlmt"));
+                var modelTags = CacheContext.TagCache.Index.FindAllInGroup(new Tag("hlmt"));
                 foreach (var modelTag in modelTags)
                     SetModelName(cacheStream, modelTag, ref tagNames);
             }
 
-            foreach (var tag in CacheContext.TagCache.Tags)
+            foreach (var tag in CacheContext.TagCache.Index)
                 if (!(tag == null || tagNames.ContainsKey(tag.Index)))
                     tagNames[tag.Index] = $"0x{tag.Index:X4}";
 
@@ -92,7 +92,7 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private void SetRenderModelName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
+        private void SetRenderModelName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
         {
             if (tagNames.ContainsKey(tag.Index))
                 return;
@@ -102,7 +102,7 @@ namespace TagTool.Commands.Tags
             tagNames[tag.Index] = $"{CacheContext.StringIdCache.GetString(definition.Name)}";
         }
 
-        private void SetModelName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
+        private void SetModelName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
         {
             if (tag == null || tagNames.ContainsKey(tag.Index))
                 return;
@@ -129,7 +129,7 @@ namespace TagTool.Commands.Tags
                 tagNames[definition.Animation.Index] = $"{tagName}";
         }
 
-        private void SetGameObjectName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
+        private void SetGameObjectName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
         {
             var context = new TagSerializationContext(stream, CacheContext, tag);
 
@@ -388,7 +388,7 @@ namespace TagTool.Commands.Tags
             tagNames[tag.Index] = objectName;
         }
 
-        private void SetScenarioName(Stream stream, TagInstance tag, ref Dictionary<int, string> tagNames)
+        private void SetScenarioName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
         {
             var context = new TagSerializationContext(stream, CacheContext, tag);
             var definition = CacheContext.Deserializer.Deserialize<Scenario>(context);

@@ -34,7 +34,7 @@ namespace TagTool.Commands.Tags
 
             using (var cacheStream = CacheContext.OpenTagCacheRead())
             {
-                foreach (var scnrTag in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
+                foreach (var scnrTag in CacheContext.TagCache.Index.FindAllInGroup("scnr"))
                 {
                     var tagContext = new TagSerializationContext(cacheStream, CacheContext, scnrTag);
                     var scnr = CacheContext.Deserializer.Deserialize<Scenario>(tagContext);

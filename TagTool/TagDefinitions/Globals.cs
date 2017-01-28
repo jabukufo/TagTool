@@ -57,7 +57,7 @@ namespace TagTool.TagDefinitions
         public List<HavokCleanupResource> HavokCleanupResources;
         public List<SoundGlobal> SoundGlobals;
         public List<AiGlobal> AiGlobals;
-        public TagInstance AiGlobals2;
+        public CachedTagInstance AiGlobals2;
         public List<DamageTableBlock> DamageTable;
         public uint Unknown45;
         public uint Unknown46;
@@ -85,9 +85,9 @@ namespace TagTool.TagDefinitions
         public List<FallingDamageBlock> FallingDamage;
         public List<UnknownBlock> Unknown60;
         public List<Material> Materials;
-        public TagInstance MultiplayerGlobals;
-        public TagInstance SurvivalGlobals;
-        [MinVersion(CacheVersion.HaloOnline498295)] public TagInstance ArmorGlobals;
+        public CachedTagInstance MultiplayerGlobals;
+        public CachedTagInstance SurvivalGlobals;
+        [MinVersion(CacheVersion.HaloOnline498295)] public CachedTagInstance ArmorGlobals;
         public List<CinematicAnchor> CinematicAnchors;
         public List<MetagameGlobal> MetagameGlobals;
         public uint Unknown61;
@@ -294,19 +294,19 @@ namespace TagTool.TagDefinitions
         public uint Unknown262;
         public uint Unknown263;
         public uint Unknown264;
-        public TagInstance RasterizerGlobals;
-        public TagInstance DefaultCameraEffect;
-        public TagInstance PodiumDefinition;
-        public TagInstance DefaultWind;
-        public TagInstance DefaultDamageEffect;
-        public TagInstance DefaultCollisionDamage;
+        public CachedTagInstance RasterizerGlobals;
+        public CachedTagInstance DefaultCameraEffect;
+        public CachedTagInstance PodiumDefinition;
+        public CachedTagInstance DefaultWind;
+        public CachedTagInstance DefaultDamageEffect;
+        public CachedTagInstance DefaultCollisionDamage;
         public StringId UnknownMaterial;
         public short UnknownGlobalMaterialIndex;
         public short Unknown265;
-        public TagInstance EffectGlobals;
-        public TagInstance GameProgressionGlobals;
-        public TagInstance AchievementGlobals;
-        public TagInstance InputGlobals;
+        public CachedTagInstance EffectGlobals;
+        public CachedTagInstance GameProgressionGlobals;
+        public CachedTagInstance AchievementGlobals;
+        public CachedTagInstance InputGlobals;
         public uint Unknown266;
         public uint Unknown267;
         public uint Unknown268;
@@ -324,18 +324,18 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class HavokCleanupResource
         {
-            public TagInstance ObjectCleanupEffect;
+            public CachedTagInstance ObjectCleanupEffect;
         }
 
         [TagStructure(Size = 0x60)]
         public class SoundGlobal
         {
-            public TagInstance SoundClasses;
-            public TagInstance SoundEffects;
-            public TagInstance SoundMix;
-            public TagInstance SoundCombatDialogueConstants;
-            public TagInstance SoundGlobalPropagation;
-            public TagInstance GfxUiSounds;
+            public CachedTagInstance SoundClasses;
+            public CachedTagInstance SoundEffects;
+            public CachedTagInstance SoundMix;
+            public CachedTagInstance SoundCombatDialogueConstants;
+            public CachedTagInstance SoundGlobalPropagation;
+            public CachedTagInstance GfxUiSounds;
         }
 
         [TagStructure(Size = 0x144)]
@@ -352,7 +352,7 @@ namespace TagTool.TagDefinitions
             public float DangerExtendedShieldDamage;
             public float DangerBodyDamage;
             public float DangerExtendedBodyDamage;
-            public TagInstance GlobalDialogue;
+            public CachedTagInstance GlobalDialogue;
             public float DefaultMissionDialogueSoundEffect;
             public float JumpDown;
             public float JumpStep;
@@ -427,7 +427,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x10)]
             public class Style
             {
-                public TagInstance Style2;
+                public CachedTagInstance Style2;
             }
         }
 
@@ -454,13 +454,13 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class Sound
         {
-            public TagInstance SoundObsolete;
+            public CachedTagInstance SoundObsolete;
         }
 
         [TagStructure(Size = 0xA4)]
         public class CameraBlock
         {
-            public TagInstance DefaultUnitCameraTrack;
+            public CachedTagInstance DefaultUnitCameraTrack;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -727,43 +727,43 @@ namespace TagTool.TagDefinitions
         {
             public short MaximumCount;
             public short Unknown;
-            public TagInstance ThrowingEffect;
+            public CachedTagInstance ThrowingEffect;
             public uint Unknown2;
             public uint Unknown3;
             public uint Unknown4;
             public uint Unknown5;
-            public TagInstance Equipment;
-            public TagInstance Projectile;
+            public CachedTagInstance Equipment;
+            public CachedTagInstance Projectile;
         }
 
         [TagStructure(Size = 0x12C)]
         public class InterfaceTag
         {
-            public TagInstance Spinner;
-            public TagInstance Obsolete;
-            public TagInstance ScreenColorTable;
-            public TagInstance HudColorTable;
-            public TagInstance EditorColorTable;
-            public TagInstance DialogColorTable;
-            public TagInstance MotionSensorSweepBitmap;
-            public TagInstance MotionSensorSweepBitmapMask;
-            public TagInstance MultiplayerHudBitmap;
-            public TagInstance HudDigitsDefinition;
-            public TagInstance MotionSensorBlipBitmap;
-            public TagInstance InterfaceGooMap1;
-            public TagInstance InterfaceGooMap2;
-            public TagInstance InterfaceGooMap3;
-            public TagInstance MainMenuUiGlobals;
-            public TagInstance SinglePlayerUiGlobals;
-            public TagInstance MultiplayerUiGlobals;
-            public TagInstance HudGlobals;
+            public CachedTagInstance Spinner;
+            public CachedTagInstance Obsolete;
+            public CachedTagInstance ScreenColorTable;
+            public CachedTagInstance HudColorTable;
+            public CachedTagInstance EditorColorTable;
+            public CachedTagInstance DialogColorTable;
+            public CachedTagInstance MotionSensorSweepBitmap;
+            public CachedTagInstance MotionSensorSweepBitmapMask;
+            public CachedTagInstance MultiplayerHudBitmap;
+            public CachedTagInstance HudDigitsDefinition;
+            public CachedTagInstance MotionSensorBlipBitmap;
+            public CachedTagInstance InterfaceGooMap1;
+            public CachedTagInstance InterfaceGooMap2;
+            public CachedTagInstance InterfaceGooMap3;
+            public CachedTagInstance MainMenuUiGlobals;
+            public CachedTagInstance SinglePlayerUiGlobals;
+            public CachedTagInstance MultiplayerUiGlobals;
+            public CachedTagInstance HudGlobals;
             public List<GfxUiString> GfxUiStrings;
 
             [TagStructure(Size = 0x30)]
             public class GfxUiString
             {
                 [TagField(Length = 32)] public string Name;
-                public TagInstance Strings;
+                public CachedTagInstance Strings;
             }
         }
 
@@ -790,16 +790,16 @@ namespace TagTool.TagDefinitions
             public Bounds<float> FirstPersonIdleTimeRange;
             public float FirstPersonSkipFraction;
             public uint Unknown;
-            public TagInstance Unknown2;
-            public TagInstance Unknown3;
-            public TagInstance Unknown4;
+            public CachedTagInstance Unknown2;
+            public CachedTagInstance Unknown3;
+            public CachedTagInstance Unknown4;
             public int BinocularsZoomCount;
             public Bounds<float> BinocularZoomRange;
             public uint Unknown5;
             public uint Unknown6;
-            public TagInstance FlashlightOn;
-            public TagInstance FlashlightOff;
-            public TagInstance DefaultDamageResponse;
+            public CachedTagInstance FlashlightOn;
+            public CachedTagInstance FlashlightOff;
+            public CachedTagInstance DefaultDamageResponse;
         }
 
         [TagStructure(Size = 0x6C)]
@@ -807,13 +807,13 @@ namespace TagTool.TagDefinitions
         {
             public StringId Name;
             public uint Flags;
-            public TagInstance FirstPersonHands;
-            public TagInstance FirstPersonBody;
-            public TagInstance ThirdPersonUnit;
+            public CachedTagInstance FirstPersonHands;
+            public CachedTagInstance FirstPersonBody;
+            public CachedTagInstance ThirdPersonUnit;
             public StringId ThirdPersonVariant;
-            public TagInstance BinocularsZoomInSound;
-            public TagInstance BinocularsZoomOutSound;
-            public TagInstance Unknown;
+            public CachedTagInstance BinocularsZoomInSound;
+            public CachedTagInstance BinocularsZoomOutSound;
+            public CachedTagInstance Unknown;
         }
 
         [TagStructure(Size = 0x78)]
@@ -821,13 +821,13 @@ namespace TagTool.TagDefinitions
         {
             public float HarmfulFallingDistanceMin;
             public float HarmfulFallingDistanceMax;
-            public TagInstance FallingDamage;
-            public TagInstance Unknown;
-            public TagInstance SoftLanding;
-            public TagInstance HardLanding;
-            public TagInstance ScriptDamage;
+            public CachedTagInstance FallingDamage;
+            public CachedTagInstance Unknown;
+            public CachedTagInstance SoftLanding;
+            public CachedTagInstance HardLanding;
+            public CachedTagInstance ScriptDamage;
             public float MaximumFallingDistance;
-            public TagInstance DistanceDamage;
+            public CachedTagInstance DistanceDamage;
             public uint Unknown2;
             public uint Unknown3;
             public uint Unknown4;
@@ -855,26 +855,26 @@ namespace TagTool.TagDefinitions
             public float Restitution;
             public float Density;
             public List<WaterDragProperty> WaterDragProperties;
-            public TagInstance BreakableSurface;
-            public TagInstance SoundSweetenerSmall;
-            public TagInstance SoundSweetenerMedium;
-            public TagInstance SoundSweetenerLarge;
-            public TagInstance SoundSweetenerRolling;
-            public TagInstance SoundSweetenerGrinding;
-            public TagInstance SoundSweetenerMeleeSmall;
-            public TagInstance SoundSweetenerMeleeMedium;
-            public TagInstance SoundSweetenerMeleeLarge;
-            public TagInstance EffectSweetenerSmall;
-            public TagInstance EffectSweetenerMedium;
-            public TagInstance EffectSweetenerLarge;
-            public TagInstance EffectSweetenerRolling;
-            public TagInstance EffectSweetenerGrinding;
-            public TagInstance EffectSweetenerMelee;
-            public TagInstance WaterRippleSmall;
-            public TagInstance WaterRippleMedium;
-            public TagInstance WaterRippleLarge;
+            public CachedTagInstance BreakableSurface;
+            public CachedTagInstance SoundSweetenerSmall;
+            public CachedTagInstance SoundSweetenerMedium;
+            public CachedTagInstance SoundSweetenerLarge;
+            public CachedTagInstance SoundSweetenerRolling;
+            public CachedTagInstance SoundSweetenerGrinding;
+            public CachedTagInstance SoundSweetenerMeleeSmall;
+            public CachedTagInstance SoundSweetenerMeleeMedium;
+            public CachedTagInstance SoundSweetenerMeleeLarge;
+            public CachedTagInstance EffectSweetenerSmall;
+            public CachedTagInstance EffectSweetenerMedium;
+            public CachedTagInstance EffectSweetenerLarge;
+            public CachedTagInstance EffectSweetenerRolling;
+            public CachedTagInstance EffectSweetenerGrinding;
+            public CachedTagInstance EffectSweetenerMelee;
+            public CachedTagInstance WaterRippleSmall;
+            public CachedTagInstance WaterRippleMedium;
+            public CachedTagInstance WaterRippleLarge;
             public uint SweetenerInheritanceFlags;
-            public TagInstance MaterialEffects;
+            public CachedTagInstance MaterialEffects;
             public List<WaterInteractionBlock> WaterInteraction;
             public uint Unknown2;
             public short Unknown3;
@@ -908,7 +908,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x18)]
         public class CinematicAnchor
         {
-            public TagInstance CinematicAnchor2;
+            public CachedTagInstance CinematicAnchor2;
             public uint Unknown;
             public uint Unknown2;
         }

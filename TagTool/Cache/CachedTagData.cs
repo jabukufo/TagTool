@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using TagTool.Common;
 
 namespace TagTool.Cache
 {
     /// <summary>
     /// Contains tag data and a description of it.
     /// </summary>
-    public class TagData
+    public class CachedTagData
     {
         /// <summary>
         /// Gets or sets the tag data's group.

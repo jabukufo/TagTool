@@ -28,7 +28,7 @@ namespace TagTool.TagDefinitions
             public List<SecondaryWeapon> SecondaryWeapons;
             public List<EquipmentBlock> Equipment;
             public uint Unknown5;
-            public TagInstance Vehicle;
+            public CachedTagInstance Vehicle;
             public StringId VehicleVariant;
             public uint Unknown6;
 
@@ -40,7 +40,7 @@ namespace TagTool.TagDefinitions
                 public short MinimumRound;
                 public short MaximumRound;
                 public uint Unknown3;
-                public TagInstance Character;
+                public CachedTagInstance Character;
                 public short Probability;
                 public short Unknown4;
             }
@@ -53,7 +53,7 @@ namespace TagTool.TagDefinitions
                 public short MinimumRound;
                 public short MaximumRound;
                 public uint Unknown3;
-                public TagInstance Weapon2;
+                public CachedTagInstance Weapon2;
                 public short Probability;
                 public short Unknown4;
             }
@@ -66,7 +66,7 @@ namespace TagTool.TagDefinitions
                 public short MinimumRound;
                 public short MaximumRound;
                 public uint Unknown3;
-                public TagInstance Weapon;
+                public CachedTagInstance Weapon;
                 public short Probability;
                 public short Unknown4;
             }
@@ -79,7 +79,7 @@ namespace TagTool.TagDefinitions
                 public short MinimumRound;
                 public short MaximumRound;
                 public uint Unknown3;
-                public TagInstance Equipment;
+                public CachedTagInstance Equipment;
                 public short Probability;
                 public short Unknown4;
             }

@@ -79,7 +79,7 @@ namespace TagTool
             }
 
             if (autoexecCommand == null)
-                Console.WriteLine("{0} tags loaded.", cache.Tags.Count);
+                Console.WriteLine("{0} tags loaded.", cache.Index.Count);
 
             // Version detection
             CacheVersion closestVersion;
@@ -157,7 +157,7 @@ namespace TagTool
                         if (!int.TryParse(indexString, NumberStyles.HexNumber, null, out tagIndex))
                             tagIndex = -1;
 
-                        if (tagIndex < 0 || tagIndex >= cache.Tags.Count)
+                        if (tagIndex < 0 || tagIndex >= cache.Index.Count)
                             continue;
 
                         var nameString = line.Substring(separatorIndex + 1);
@@ -175,7 +175,7 @@ namespace TagTool
                 }
             }
 
-            foreach (var tag in cacheContext.TagCache.Tags)
+            foreach (var tag in cacheContext.TagCache.Index)
                 if (tag != null && !cacheContext.TagNames.ContainsKey(tag.Index))
                     cacheContext.TagNames[tag.Index] = $"0x{tag.Index:X4}";
             

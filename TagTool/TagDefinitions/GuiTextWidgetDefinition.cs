@@ -19,7 +19,7 @@ namespace TagTool.TagDefinitions
         public short StandardXBoundsMin;
         public short StandardYBoundsMax;
         public short StandardXBoundsMax;
-        public TagInstance Animation;
+        public CachedTagInstance Animation;
         public StringId DataSourceName;
         public StringId TextString;
         public StringId TextColor;

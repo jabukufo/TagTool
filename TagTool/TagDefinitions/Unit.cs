@@ -11,9 +11,9 @@ namespace TagTool.TagDefinitions
         public uint FlagsWarningHalo4Values;
         public DefaultTeamValue DefaultTeam;
         public ConstantSoundVolumeValue ConstantSoundVolume;
-        public TagInstance HologramUnit;
+        public CachedTagInstance HologramUnit;
         public List<MetagameProperty> MetagameProperties;
-        public TagInstance IntegratedLightToggle;
+        public CachedTagInstance IntegratedLightToggle;
         public Angle CameraFieldOfView;
         public float CameraStiffness;
         public short Flags2;
@@ -40,8 +40,8 @@ namespace TagTool.TagDefinitions
         public Angle Unknown13;
         public Angle Unknown14;
         public List<UnknownBlock2> Unknown15;
-        public TagInstance AssassinationResponse;
-        public TagInstance AssassinationWeapon;
+        public CachedTagInstance AssassinationResponse;
+        public CachedTagInstance AssassinationWeapon;
         public StringId AssasinationToolStowAnchor;
         public StringId AssasinationToolHandMarker;
         public StringId AssasinationToolMarker;
@@ -61,7 +61,7 @@ namespace TagTool.TagDefinitions
         public float StunnedMovementThreshold;
         public float FeignDeathChance;
         public float FeignRepeatChance;
-        public TagInstance SpawnedTurretCharacter;
+        public CachedTagInstance SpawnedTurretCharacter;
         public short SpawnedActorCountMin;
         public short SpawnedActorCountMax;
         public float SpawnedVelocity;
@@ -73,16 +73,16 @@ namespace TagTool.TagDefinitions
         public StringId RightHandNode;
         public StringId LeftHandNode;
         public StringId PreferredGunNode;
-        public TagInstance MeleeDamage;
-        public TagInstance BoardingMeleeDamage;
-        public TagInstance BoardingMeleeResponse;
-        public TagInstance EjectionMeleeDamage;
-        public TagInstance EjectionMeleeResponse;
-        public TagInstance LandingMeleeDamage;
-        public TagInstance FlurryMeleeDamage;
-        public TagInstance ObstacleSmashMeleeDamage;
-        public TagInstance ShieldPopDamage;
-        public TagInstance AssassinationDamage;
+        public CachedTagInstance MeleeDamage;
+        public CachedTagInstance BoardingMeleeDamage;
+        public CachedTagInstance BoardingMeleeResponse;
+        public CachedTagInstance EjectionMeleeDamage;
+        public CachedTagInstance EjectionMeleeResponse;
+        public CachedTagInstance LandingMeleeDamage;
+        public CachedTagInstance FlurryMeleeDamage;
+        public CachedTagInstance ObstacleSmashMeleeDamage;
+        public CachedTagInstance ShieldPopDamage;
+        public CachedTagInstance AssassinationDamage;
         public MotionSensorBlipSizeValue MotionSensorBlipSize;
         public ItemScaleValue ItemScale;
         public List<Posture> Postures;
@@ -100,8 +100,8 @@ namespace TagTool.TagDefinitions
         public List<TargetTrackingBlock> TargetTracking;
         public List<Seat> Seats;
         public float EmpRadius;
-        public TagInstance EmpEffect;
-        public TagInstance BoostCollisionDamage;
+        public CachedTagInstance EmpEffect;
+        public CachedTagInstance BoostCollisionDamage;
         public float BoostPeakPower;
         public float BoostRisePower;
         public float BoostPeakTime;
@@ -109,8 +109,8 @@ namespace TagTool.TagDefinitions
         public float BoostDeadTime;
         public float LipsyncAttackWeight;
         public float LipsyncDecayWeight;
-        public TagInstance DetachDamage;
-        public TagInstance DetachedWeapon;
+        public CachedTagInstance DetachDamage;
+        public CachedTagInstance DetachedWeapon;
 
         public enum DefaultTeamValue : short
         {
@@ -201,7 +201,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class CameraTrack
         {
-            public TagInstance Track;
+            public CachedTagInstance Track;
         }
 
         [TagStructure(Size = 0x4C)]
@@ -231,7 +231,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class CameraTrack2
         {
-            public TagInstance Track;
+            public CachedTagInstance Track;
         }
 
         [TagStructure(Size = 0x4C)]
@@ -285,7 +285,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class HudInterface
         {
-            public TagInstance UnitHudInterface;
+            public CachedTagInstance UnitHudInterface;
         }
 
         [TagStructure(Size = 0x14)]
@@ -293,7 +293,7 @@ namespace TagTool.TagDefinitions
         {
             public short VariantNumber;
             public short Unknown;
-            public TagInstance Dialogue;
+            public CachedTagInstance Dialogue;
         }
 
         public enum GrenadeTypeValue : short
@@ -314,7 +314,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class Weapon
         {
-            public TagInstance Weapon2;
+            public CachedTagInstance Weapon2;
         }
 
         [TagStructure(Size = 0x38)]
@@ -324,8 +324,8 @@ namespace TagTool.TagDefinitions
             public float AcquireTime;
             public float GraceTime;
             public float DecayTime;
-            public TagInstance TrackingSound;
-            public TagInstance LockedSound;
+            public CachedTagInstance TrackingSound;
+            public CachedTagInstance LockedSound;
 
             [TagStructure(Size = 0x4)]
             public class TrackingType
@@ -380,7 +380,7 @@ namespace TagTool.TagDefinitions
             public StringId EnterSeatString;
             public Angle YawRangeMin;
             public Angle YawRangeMax;
-            public TagInstance BuiltInGunner;
+            public CachedTagInstance BuiltInGunner;
             public float EntryRadius;
             public Angle EntryMarkerConeAngle;
             public Angle EntryMarkerFacingAngle;
@@ -401,7 +401,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x10)]
             public class CameraTrack
             {
-                public TagInstance Track;
+                public CachedTagInstance Track;
             }
 
             [TagStructure(Size = 0x4C)]
@@ -431,7 +431,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x10)]
             public class UnitHudInterfaceBlock
             {
-                public TagInstance UnitHudInterface;
+                public CachedTagInstance UnitHudInterface;
             }
         }
     }

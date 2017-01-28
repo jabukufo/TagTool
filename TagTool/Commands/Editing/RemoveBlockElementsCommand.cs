@@ -10,11 +10,11 @@ namespace TagTool.Commands.Editing
     {
         private CommandContextStack ContextStack { get; }
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private TagStructureInfo Structure { get; set; }
         private object Owner { get; set; }
 
-        public RemoveBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
+        public RemoveBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, CachedTagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
 
                   "RemoveBlockElements",

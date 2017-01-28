@@ -11,9 +11,9 @@ namespace TagTool.TagDefinitions
         public TriggersWhenValue TriggersWhen;
         public float CallValue;
         public StringId ActionString;
-        public TagInstance On;
-        public TagInstance Off;
-        public TagInstance Deny;
+        public CachedTagInstance On;
+        public CachedTagInstance Off;
+        public CachedTagInstance Deny;
         public uint Unknown8;
         public uint Unknown9;
 

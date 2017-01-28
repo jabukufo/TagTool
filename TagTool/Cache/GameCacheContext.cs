@@ -80,7 +80,7 @@ namespace TagTool.Cache
         /// </summary>
         /// <param name="index">The index of the tag.</param>
         /// <returns></returns>
-        public TagInstance GetTag(int index) => TagCache.Tags[index];
+        public CachedTagInstance GetTag(int index) => TagCache.Index[index];
 
         /// <summary>
         /// Opens the string_id cache file for reading.

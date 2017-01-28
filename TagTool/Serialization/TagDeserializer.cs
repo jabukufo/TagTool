@@ -177,7 +177,7 @@ namespace TagTool.Serialization
                 return new Tag(reader.ReadInt32());
 
             // TagInstance = Tag reference
-            if (valueType == typeof(TagInstance))
+            if (valueType == typeof(CachedTagInstance))
                 return DeserializeTagReference(reader, context, valueInfo);
 
             // ResourceAddress = Resource address
@@ -317,7 +317,7 @@ namespace TagTool.Serialization
         /// <param name="context">The serialization context to use.</param>
         /// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
         /// <returns>The deserialized tag reference.</returns>
-        public TagInstance DeserializeTagReference(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
+        public CachedTagInstance DeserializeTagReference(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
         {
             if (valueInfo == null || (valueInfo.Flags & TagFieldFlags.Short) == 0)
                 reader.BaseStream.Position += 0xC; // Skip the class name and zero bytes, it's not important

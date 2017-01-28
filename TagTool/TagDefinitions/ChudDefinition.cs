@@ -25,7 +25,7 @@ namespace TagTool.TagDefinitions
             public List<PlacementDatum> PlacementData;
             public List<AnimationDatum> AnimationData;
             public List<RenderDatum> RenderData;
-            public TagInstance ParallaxData;
+            public CachedTagInstance ParallaxData;
             public List<BitmapWidget> BitmapWidgets;
             public List<TextWidget> TextWidgets;
 
@@ -605,22 +605,22 @@ namespace TagTool.TagDefinitions
             public class AnimationDatum
             {
                 public uint Unknown;
-                public TagInstance Animation1;
+                public CachedTagInstance Animation1;
                 public uint Unknown2;
                 public uint Unknown3;
-                public TagInstance Animation2;
+                public CachedTagInstance Animation2;
                 public uint Unknown4;
                 public uint Unknown5;
-                public TagInstance Animation3;
+                public CachedTagInstance Animation3;
                 public uint Unknown6;
                 public uint Unknown7;
-                public TagInstance Animation4;
+                public CachedTagInstance Animation4;
                 public uint Unknown8;
                 public uint Unknown9;
-                public TagInstance Animation5;
+                public CachedTagInstance Animation5;
                 public uint Unknown10;
                 public uint Unknown11;
-                public TagInstance Animation6;
+                public CachedTagInstance Animation6;
                 public uint Unknown12;
             }
 
@@ -890,7 +890,7 @@ namespace TagTool.TagDefinitions
                 public int WidgetIndex;
                 public FlagsValue Flags;
                 public short Unknown3;
-                public TagInstance Bitmap;
+                public CachedTagInstance Bitmap;
                 public byte BitmapSpriteIndex;
                 public byte Unknown4;
                 public byte Unknown5;

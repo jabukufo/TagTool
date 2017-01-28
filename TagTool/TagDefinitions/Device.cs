@@ -14,14 +14,14 @@ namespace TagTool.TagDefinitions
         public float DepoweredPositionTransitionTime;
         public float DepoweredPositionAccelerationTime;
         public uint LightmapFlags;
-        public TagInstance OpenUp;
-        public TagInstance CloseDown;
-        public TagInstance Opened;
-        public TagInstance Closed;
-        public TagInstance Depowered;
-        public TagInstance Repowered;
+        public CachedTagInstance OpenUp;
+        public CachedTagInstance CloseDown;
+        public CachedTagInstance Opened;
+        public CachedTagInstance Closed;
+        public CachedTagInstance Depowered;
+        public CachedTagInstance Repowered;
         public float DelayTime;
-        public TagInstance DelayEffect;
+        public CachedTagInstance DelayEffect;
         public float AutomaticActivationRadius;
     }
 }

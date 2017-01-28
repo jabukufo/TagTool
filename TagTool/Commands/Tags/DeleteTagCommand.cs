@@ -50,12 +50,12 @@ namespace TagTool.Commands.Tags
                 {
                     if (!tags.Contains(entry))
                     {
-                        if (CacheContext.TagCache.Tags[entry] == null)
+                        if (CacheContext.TagCache.Index[entry] == null)
                             continue;
 
                         tags.Add(entry);
 
-                        foreach (var dependency in CacheContext.TagCache.Tags[entry].Dependencies)
+                        foreach (var dependency in CacheContext.TagCache.Index[entry].Dependencies)
                             if (!nextQueue.Contains(dependency))
                                 nextQueue.Add(dependency);
                     }
@@ -98,9 +98,9 @@ namespace TagTool.Commands.Tags
 
         private void NullTags(Stream stream, ref HashSet<int> tags, ref HashSet<int> retainedTags)
         {
-            for (var i = 0; i < CacheContext.TagCache.Tags.Count; i++)
+            for (var i = 0; i < CacheContext.TagCache.Index.Count; i++)
             {
-                var tag = CacheContext.TagCache.Tags[i];
+                var tag = CacheContext.TagCache.Index[i];
 
                 if (tag == null)
                     continue;
@@ -108,7 +108,7 @@ namespace TagTool.Commands.Tags
                 if (!retainedTags.Contains(i) && tags.Contains(i))
                 {
                     Console.Write($"Nulling {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
-                    CacheContext.TagCache.Tags[tag.Index] = null;
+                    CacheContext.TagCache.Index[tag.Index] = null;
                     CacheContext.TagCache.SetTagDataRaw(stream, tag, new byte[] { });
                 }
                 else
@@ -311,9 +311,9 @@ namespace TagTool.Commands.Tags
             using (var stream = CacheContext.OpenTagCacheReadWrite())
             {
                 var retainedTags = new HashSet<int>();
-                LoadTagDependencies(CacheContext.TagCache.Tags.FindFirstInGroup("cfgt").Index, ref retainedTags);
+                LoadTagDependencies(CacheContext.TagCache.Index.FindFirstInGroup("cfgt").Index, ref retainedTags);
 
-                foreach (var scnr in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
+                foreach (var scnr in CacheContext.TagCache.Index.FindAllInGroup("scnr"))
                     LoadTagDependencies(scnr.Index, ref retainedTags);
 
                 var tags = new HashSet<int>();

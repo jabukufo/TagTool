@@ -181,7 +181,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x18)]
         public class CollisionMaterial
         {
-            public TagInstance Shader;
+            public CachedTagInstance Shader;
             public short GlobalMaterialIndex;
             public short ConveyorSurfaceIndex;
             public short SeamIndex;
@@ -259,7 +259,7 @@ namespace TagTool.TagDefinitions
         public class CameraEffect
         {
             public StringId Name;
-            public TagInstance Effect;
+            public CachedTagInstance Effect;
             public sbyte Unknown;
             public sbyte Unknown2;
             public sbyte Unknown3;
@@ -338,7 +338,7 @@ namespace TagTool.TagDefinitions
             public int Unknown12;
             public uint Unknown13;
             public uint Unknown14;
-            public TagInstance Bsp;
+            public CachedTagInstance Bsp;
             public int ClusterIndex;
             public int Unknown15;
             public short Size2;
@@ -395,12 +395,12 @@ namespace TagTool.TagDefinitions
         public class BackgroundSoundEnvironmentPaletteBlock
         {
             public StringId Name;
-            public TagInstance SoundEnvironment;
+            public CachedTagInstance SoundEnvironment;
             public uint Unknown;
             public float CutoffDistance;
             public float InterpolationSpeed;
-            public TagInstance BackgroundSound;
-            public TagInstance InsideClusterSound;
+            public CachedTagInstance BackgroundSound;
+            public CachedTagInstance InsideClusterSound;
             public float CutoffDistance2;
             public uint ScaleFlags;
             public float InteriorScale;
@@ -420,7 +420,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class Light
         {
-            public TagInstance Reference;
+            public CachedTagInstance Reference;
         }
 
         [TagStructure(Size = 0x2)]
@@ -443,8 +443,8 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x24)]
         public class EnvironmentObjectPaletteBlock
         {
-            public TagInstance Definition;
-            public TagInstance Model;
+            public CachedTagInstance Definition;
+            public CachedTagInstance Model;
             public uint ObjectType;
         }
 
@@ -534,7 +534,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class Decorator
         {
-            public TagInstance Reference;
+            public CachedTagInstance Reference;
         }
 
         [TagStructure(Size = 0x1C)]
@@ -613,7 +613,7 @@ namespace TagTool.TagDefinitions
         {
             public short Unknown;
             public short Unknown2;
-            public TagInstance Reference;
+            public CachedTagInstance Reference;
             public uint Unknown3;
             public uint Unknown4;
             public uint Unknown5;

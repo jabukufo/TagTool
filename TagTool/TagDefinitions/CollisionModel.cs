@@ -228,7 +228,7 @@ namespace TagTool.TagDefinitions
                     public uint Unknown12;
                     public uint Unknown13;
                     public uint Unknown14;
-                    [TagField(Flags = TagFieldFlags.Short)] public TagInstance Model;
+                    [TagField(Flags = TagFieldFlags.Short)] public CachedTagInstance Model;
                     public uint Unknown15;
                     public uint Unknown16;
                     public short Unknown17;

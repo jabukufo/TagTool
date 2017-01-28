@@ -82,7 +82,7 @@ namespace TagTool.Commands
             return results;
         }
 
-        public static TagInstance ParseTagName(GameCacheContext info, string name)
+        public static CachedTagInstance ParseTagName(GameCacheContext info, string name)
         {
             if (name.Length == 0 || !char.IsLetter(name[0]) || !name.Contains('.'))
                 throw new Exception($"Invalid tag name: {name}");
@@ -99,7 +99,7 @@ namespace TagTool.Commands
             {
                 if (nameEntry.Value == tagName)
                 {
-                    var instance = info.TagCache.Tags[nameEntry.Key];
+                    var instance = info.TagCache.Index[nameEntry.Key];
 
                     if (instance.Group.Tag == groupTag)
                         return instance;
@@ -110,7 +110,7 @@ namespace TagTool.Commands
             return null;
         }
 
-        public static TagInstance ParseTagIndex(GameCacheContext info, string arg)
+        public static CachedTagInstance ParseTagIndex(GameCacheContext info, string arg)
         {
             if (!(arg == "*" || arg == "null" || char.IsLetter(arg[0]) || arg.StartsWith("0x")))
             {
@@ -119,7 +119,7 @@ namespace TagTool.Commands
             }
 
             if (arg == "*")
-                return info.TagCache.Tags.Last();
+                return info.TagCache.Index.Last();
             else if (arg == "null")
                 return null;
             else if (char.IsLetter(arg[0]))
@@ -131,13 +131,13 @@ namespace TagTool.Commands
             if (!int.TryParse(arg, NumberStyles.HexNumber, null, out tagIndex))
                 return null;
 
-            if (!info.TagCache.Tags.Contains(tagIndex))
+            if (!info.TagCache.Index.Contains(tagIndex))
             {
                 Console.WriteLine("Unable to find tag {0:X8}.", tagIndex);
                 return null;
             }
 
-            return info.TagCache.Tags[tagIndex];
+            return info.TagCache.Index[tagIndex];
         }
 
         public static Tag ParseGroupTag(StringIdCache stringIDs, string groupName)

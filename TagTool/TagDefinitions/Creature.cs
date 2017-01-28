@@ -55,8 +55,8 @@ namespace TagTool.TagDefinitions
         public Angle AngularAccelerationMaximum;
         public float CrouchVelocityModifier;
         public uint Unknown14;
-        public TagInstance ImpactDamage;
-        public TagInstance ImpactShieldDamage;
+        public CachedTagInstance ImpactDamage;
+        public CachedTagInstance ImpactShieldDamage;
         public List<MetagameProperty> MetagameProperties;
         public float DestroyAfterDeathTimeMin;
         public float DestroyAfterDeathTimeMax;

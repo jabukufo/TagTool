@@ -9,16 +9,16 @@ namespace TagTool.TagDefinitions
     [TagStructure(Name = "model", Class = "hlmt", Size = 0x1B8, MinVersion = CacheVersion.HaloOnline498295)]
     public class Model
     {
-        public TagInstance RenderModel;
-        public TagInstance CollisionModel;
-        public TagInstance Animation;
-        public TagInstance PhysicsModel;
+        public CachedTagInstance RenderModel;
+        public CachedTagInstance CollisionModel;
+        public CachedTagInstance Animation;
+        public CachedTagInstance PhysicsModel;
         public float ReduceToL1SuperLow;
         public float ReduceToL2Low;
         public float ReduceToL3Medium;
         public float ReduceToL4High;
         public float ReduceToL5SuperHigh;
-        public TagInstance LodModel;
+        public CachedTagInstance LodModel;
         public List<Variant> Variants;
         public List<UnknownBlock> Unknown;
         public List<FlairApplication> FlairApplications;
@@ -29,8 +29,8 @@ namespace TagTool.TagDefinitions
         public List<Node> Nodes;
         public uint Unknown2;
         public List<ModelObjectDatum> ModelObjectData;
-        public TagInstance PrimaryDialogue;
-        public TagInstance SecondaryDialogue;
+        public CachedTagInstance PrimaryDialogue;
+        public CachedTagInstance SecondaryDialogue;
         public uint Flags;
         public StringId DefaultDialogueEffect;
         public uint RenderOnlyNodeFlags1;
@@ -59,16 +59,16 @@ namespace TagTool.TagDefinitions
         public List<UnknownBlock2> Unknown6;
         public List<UnknownBlock3> Unknown7;
         public List<UnknownBlock4> Unknown8;
-        public TagInstance ShieldImpactThirdPerson;
-        public TagInstance ShieldImpactFirstPerson;
-        public TagInstance OvershieldThirdPerson;
-        public TagInstance OvershieldFirstPerson;
+        public CachedTagInstance ShieldImpactThirdPerson;
+        public CachedTagInstance ShieldImpactFirstPerson;
+        public CachedTagInstance OvershieldThirdPerson;
+        public CachedTagInstance OvershieldFirstPerson;
 
         [TagStructure(Size = 0x50)]
         public class Variant
         {
             public StringId Name;
-            public TagInstance VariantDialogue;
+            public CachedTagInstance VariantDialogue;
             public StringId DefaultDialogEffect;
             public sbyte Unknown;
             public sbyte Unknown2;
@@ -129,7 +129,7 @@ namespace TagTool.TagDefinitions
                         public sbyte Unknown;
                         public byte PropertyFlags;
                         public StateValue State2;
-                        public TagInstance LoopingEffect;
+                        public CachedTagInstance LoopingEffect;
                         public StringId LoopingEffectMarkerName;
                         public float InitialProbability;
 
@@ -167,7 +167,7 @@ namespace TagTool.TagDefinitions
                 public StringId ParentMarker;
                 public StringId ChildMarker;
                 public StringId ChildVariant;
-                public TagInstance ChildObject;
+                public CachedTagInstance ChildObject;
             }
         }
 
@@ -254,9 +254,9 @@ namespace TagTool.TagDefinitions
             public float StunTime2;
             public float ShieldRechargeTime;
             public float ShieldDamagedThreshold;
-            public TagInstance ShieldDamagedEffect;
-            public TagInstance ShieldDepletedEffect;
-            public TagInstance ShieldRechargingEffect;
+            public CachedTagInstance ShieldDamagedEffect;
+            public CachedTagInstance ShieldDepletedEffect;
+            public CachedTagInstance ShieldRechargingEffect;
             public List<DamageSection> DamageSections;
             public List<Node> Nodes;
             public short GlobalShieldMaterialIndex;
@@ -430,9 +430,9 @@ namespace TagTool.TagDefinitions
                     public StringId Trigger;
                     public uint Flags;
                     public float DamageThreshold;
-                    public TagInstance PrimaryTransitionEffect;
-                    public TagInstance SecondaryTransitionEffect;
-                    public TagInstance TransitionDamageEffect;
+                    public CachedTagInstance PrimaryTransitionEffect;
+                    public CachedTagInstance SecondaryTransitionEffect;
+                    public CachedTagInstance TransitionDamageEffect;
                     public StringId Region;
                     public NewStateValue NewState;
                     public short RuntimeRegionIndex;
@@ -445,7 +445,7 @@ namespace TagTool.TagDefinitions
                     public StringId EffectMarkerName;
                     public StringId DamageEffectMarkerName;
                     public float ResponseDelay;
-                    public TagInstance DelayEffect;
+                    public CachedTagInstance DelayEffect;
                     public StringId DelayEffectMarkerName;
                     public StringId EjectingSeatLabel;
                     public float SkipFraction;

@@ -5,7 +5,7 @@ namespace TagTool.Commands.VFiles
 {
     static class VFilesContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, VFilesList vfsl)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, VFilesList vfsl)
         {
             var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
@@ -15,7 +15,7 @@ namespace TagTool.Commands.VFiles
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, VFilesList vfsl)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, VFilesList vfsl)
         {
             context.AddCommand(new ListFilesCommand(vfsl));
             context.AddCommand(new ExtractFileCommand(vfsl));

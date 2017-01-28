@@ -22,13 +22,13 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class LightmapDataReference
         {
-            public TagInstance LightmapData;
+            public CachedTagInstance LightmapData;
         }
 
         [TagStructure(Size = 0x10)]
         public class UnknownBlock
         {
-            public TagInstance Unknown;
+            public CachedTagInstance Unknown;
         }
 
         [TagStructure(Size = 0x5C)]

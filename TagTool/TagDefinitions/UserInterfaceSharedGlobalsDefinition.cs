@@ -13,10 +13,10 @@ namespace TagTool.TagDefinitions
         public float NearClipPlaneDistance;
         public float ProjectionPlaneDistance;
         public float FarClipPlaneDistance;
-        public TagInstance GlobalStrings;
-        public TagInstance DamageTypeStrings;
-        public TagInstance UnknownStrings;
-        public TagInstance MainMenuMusic;
+        public CachedTagInstance GlobalStrings;
+        public CachedTagInstance DamageTypeStrings;
+        public CachedTagInstance UnknownStrings;
+        public CachedTagInstance MainMenuMusic;
         public int MusicFadeTime;
         public float ColorA;
         public float ColorR;
@@ -28,7 +28,7 @@ namespace TagTool.TagDefinitions
         public float TextStrokeColorB;
         public List<TextColor> TextColors;
         public List<PlayerColor> PlayerColors;
-        public TagInstance UiSounds;
+        public CachedTagInstance UiSounds;
         public List<Alert> Alerts;
         public List<Dialog> Dialogs;
         public List<GlobalDataSource> GlobalDataSources;
@@ -201,7 +201,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class GlobalDataSource
         {
-            public TagInstance DataSource;
+            public CachedTagInstance DataSource;
         }
 
         [TagStructure(Size = 0x154)]

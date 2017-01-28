@@ -10,14 +10,14 @@ namespace TagTool.TagDefinitions
     public class Character
     {
         public uint CharacterFlags;
-        public TagInstance ParentCharacter;
-        public TagInstance Unit;
+        public CachedTagInstance ParentCharacter;
+        public CachedTagInstance Unit;
         /// <summary>
         /// Creature reference for swarm characters ONLY
         /// </summary>
-        public TagInstance Creature;
-        public TagInstance Style;
-        public TagInstance MajorCharacter;
+        public CachedTagInstance Creature;
+        public CachedTagInstance Style;
+        public CachedTagInstance MajorCharacter;
         public List<Variant> Variants;
         public List<UnitDialogueBlock> UnitDialogue;
         public List<GeneralProperty> GeneralProperties;
@@ -70,7 +70,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x18)]
             public class DialogueVariation
             {
-                public TagInstance Dialogue;
+                public CachedTagInstance Dialogue;
                 public StringId Name;
                 public float Weight;
             }
@@ -84,7 +84,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x18)]
             public class DialogueVariation
             {
-                public TagInstance Dialogue;
+                public CachedTagInstance Dialogue;
                 public StringId Name;
                 public float Weight;
             }
@@ -259,7 +259,7 @@ namespace TagTool.TagDefinitions
             public float SuicideRadius;
             public float RuntimeBodyRechargeVelocity;
             public float RuntimeShieldRechargeVelocity;
-            public TagInstance ResurrectWeapon;
+            public CachedTagInstance ResurrectWeapon;
         }
 
         [TagStructure(Size = 0x34)]
@@ -482,7 +482,7 @@ namespace TagTool.TagDefinitions
             public float StandDangerThreshold;
             public float FightDangerMoveThreshold;
             public Bounds<short> FightDangerMoveThresholdCooldown;
-            public TagInstance OverrideGrenadeProjectile;
+            public CachedTagInstance OverrideGrenadeProjectile;
             public uint Unknown4;
             public uint Unknown5;
             public uint Unknown6;
@@ -526,7 +526,7 @@ namespace TagTool.TagDefinitions
             public uint Unknown3;
             public uint Unknown4;
             public uint Unknown5;
-            public TagInstance BerserkWeapon;
+            public CachedTagInstance BerserkWeapon;
             public uint Unknown6;
             public uint Unknown7;
             public uint Unknown8;
@@ -611,7 +611,7 @@ namespace TagTool.TagDefinitions
             public Angle ZigZagAngle;
             public float ZigZagPeriod;
             public float RetreatGrenadeChance;
-            public TagInstance BackupWeapon;
+            public CachedTagInstance BackupWeapon;
         }
 
         [Flags]
@@ -717,7 +717,7 @@ namespace TagTool.TagDefinitions
             public uint Unknown7;
             public uint Unknown8;
             public uint Unknown9;
-            public TagInstance Unknown10;
+            public CachedTagInstance Unknown10;
         }
 
         [TagStructure(Size = 0x14)]
@@ -745,7 +745,7 @@ namespace TagTool.TagDefinitions
         public class WeaponsProperty
         {
             public uint WeaponFlags;
-            public TagInstance Weapon;
+            public CachedTagInstance Weapon;
             public float MaximumFiringRange;
             public float MinimumFiringRange;
             public float NormalCombatRangeMin;
@@ -793,7 +793,7 @@ namespace TagTool.TagDefinitions
             public float LegendaryAccuracyBoundsMax;
             public float LegendaryAccuracyTime;
             public List<FiringPattern> FiringPatterns;
-            public TagInstance WeaponMeleeDamage;
+            public CachedTagInstance WeaponMeleeDamage;
 
             public enum SpecialFireModeValue : short
             {
@@ -835,7 +835,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x1C)]
         public class FiringPatternProperty
         {
-            public TagInstance Weapon;
+            public CachedTagInstance Weapon;
             public List<FiringPattern> FiringPatterns;
 
             [TagStructure(Size = 0x40)]
@@ -900,8 +900,8 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0xD0)]
         public class VehicleProperty
         {
-            public TagInstance Unit;
-            public TagInstance Style;
+            public CachedTagInstance Unit;
+            public CachedTagInstance Style;
             public uint VehicleFlags;
             public float AiPathfindingRadius;
             public float AiDestinationRadius;
@@ -964,13 +964,13 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0xE4)]
         public class MorphProperty
         {
-            public TagInstance MorphCharacter1;
-            public TagInstance MorphCharacter2;
-            public TagInstance MorphCharacter3;
-            public TagInstance MorphMuffin;
-            public TagInstance MorphWeapon1;
-            public TagInstance MorphWeapon2;
-            public TagInstance MorphWeapon3;
+            public CachedTagInstance MorphCharacter1;
+            public CachedTagInstance MorphCharacter2;
+            public CachedTagInstance MorphCharacter3;
+            public CachedTagInstance MorphMuffin;
+            public CachedTagInstance MorphWeapon1;
+            public CachedTagInstance MorphWeapon2;
+            public CachedTagInstance MorphWeapon3;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -979,7 +979,7 @@ namespace TagTool.TagDefinitions
             public uint Unknown6;
             public uint Unknown7;
             public uint Unknown8;
-            public TagInstance Character;
+            public CachedTagInstance Character;
             public uint Unknown9;
             public StringId Unknown10;
             public uint Unknown11;
@@ -1002,7 +1002,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x24)]
         public class EquipmentProperty
         {
-            public TagInstance Equipment;
+            public CachedTagInstance Equipment;
             public uint Unknown;
             public float UsageChance;
             public List<UsageCondition> UsageConditions;
@@ -1078,7 +1078,7 @@ namespace TagTool.TagDefinitions
         public class ActAttachment
         {
             public StringId Name;
-            public TagInstance ChildObject;
+            public CachedTagInstance ChildObject;
             public StringId ChildMarker;
             public StringId ParentMarker;
         }

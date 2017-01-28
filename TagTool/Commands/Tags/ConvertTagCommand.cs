@@ -105,7 +105,7 @@ namespace TagTool.Commands.Tags
 
             using (var stream = CacheContext.OpenTagCacheReadWrite())
             {
-                foreach (var scnr in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
+                foreach (var scnr in CacheContext.TagCache.Index.FindAllInGroup("scnr"))
                 {
                     var scnrContext = new TagSerializationContext(stream, CacheContext, scnr);
                     var scnrDefinition = CacheContext.Deserializer.Deserialize<Scenario>(scnrContext);
@@ -131,7 +131,7 @@ namespace TagTool.Commands.Tags
                 }
             }
 
-                TagInstance resultTag;
+                CachedTagInstance resultTag;
             using (Stream srcStream = CacheContext.OpenTagCacheRead(), destStream = destCacheContext.OpenTagCacheReadWrite())
                 resultTag = ConvertTag(srcTag, CacheContext, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
 
@@ -161,7 +161,7 @@ namespace TagTool.Commands.Tags
             return true;
         }
 
-        private TagInstance ConvertTag(TagInstance srcTag, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
+        private CachedTagInstance ConvertTag(CachedTagInstance srcTag, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             TagPrinter.PrintTagShort(srcTag);
             
@@ -174,7 +174,7 @@ namespace TagTool.Commands.Tags
             if (destIndex >= 0)
             {
                 Console.WriteLine("- Using already-known index {0:X4}", destIndex);
-                return destCacheContext.TagCache.Tags[destIndex];
+                return destCacheContext.TagCache.Index[destIndex];
             }
 
             // Deserialize the tag from the source cache
@@ -197,13 +197,13 @@ namespace TagTool.Commands.Tags
 
             // Allocate a new tag and create a mapping for it
 
-            TagInstance instance = null;
+            CachedTagInstance instance = null;
 
-            for (var i = 0; i < destCacheContext.TagCache.Tags.Count; i++)
+            for (var i = 0; i < destCacheContext.TagCache.Index.Count; i++)
             {
-                if (destCacheContext.TagCache.Tags[i] == null)
+                if (destCacheContext.TagCache.Index[i] == null)
                 {
-                    destCacheContext.TagCache.Tags[i] = instance = new TagInstance(i, TagGroup.Instances[srcTag.Group.Tag]);
+                    destCacheContext.TagCache.Index[i] = instance = new CachedTagInstance(i, TagGroup.Instances[srcTag.Group.Tag]);
                     break;
                 }
             }
@@ -236,8 +236,8 @@ namespace TagTool.Commands.Tags
                 return data;
             if (type == typeof(StringId))
                 return ConvertStringID((StringId)data, srcInfo, destCacheContext);
-            if (type == typeof(TagInstance))
-                return ConvertTag((TagInstance)data, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
+            if (type == typeof(CachedTagInstance))
+                return ConvertTag((CachedTagInstance)data, srcInfo, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
             if (type == typeof(ResourceReference))
                 return ConvertResource((ResourceReference)data, srcInfo, srcResources, destCacheContext, destResources);
             if (type == typeof(GeometryReference))
@@ -769,14 +769,14 @@ namespace TagTool.Commands.Tags
             // pass, but we'd have to store the rmdf somewhere and frankly I'm
             // too lazy to do that...
 
-            var firstDecalSystemTag = destCacheContext.TagCache.Tags.FindFirstInGroup("decs");
+            var firstDecalSystemTag = destCacheContext.TagCache.Index.FindFirstInGroup("decs");
             if (firstDecalSystemTag == null)
                 return;
             using (var stream = destCacheContext.OpenTagCacheReadWrite())
             {
                 var firstDecalSystemContext = new TagSerializationContext(stream, destCacheContext, firstDecalSystemTag);
                 var firstDecalSystem = destCacheContext.Deserializer.Deserialize<DecalSystem>(firstDecalSystemContext);
-                foreach (var decalSystemTag in destCacheContext.TagCache.Tags.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
+                foreach (var decalSystemTag in destCacheContext.TagCache.Index.FindAllInGroup("decs").Where(t => t.Index >= firstNewIndex))
                 {
                     TagPrinter.PrintTagShort(decalSystemTag);
                     var context = new TagSerializationContext(stream, destCacheContext, decalSystemTag);

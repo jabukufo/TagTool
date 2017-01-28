@@ -22,7 +22,7 @@ namespace TagTool.TagDefinitions
         public uint Unknown10;
         public List<Location> Locations;
         public List<Event> Events;
-        public TagInstance LoopingSound;
+        public CachedTagInstance LoopingSound;
         public sbyte LocationIndex;
         public sbyte EventIndex;
         public short Unknown11;
@@ -72,7 +72,7 @@ namespace TagTool.TagDefinitions
                 public sbyte Unknown3;
                 public CameraModeValue CameraMode;
                 public int AnticipatedTagClass;
-                public TagInstance SpawnedTag;
+                public CachedTagInstance SpawnedTag;
                 public float VelocityBoundsMin;
                 public float VelocityBoundsMax;
                 public uint Unknown4;
@@ -148,7 +148,7 @@ namespace TagTool.TagDefinitions
                 public sbyte Unknown2;
                 public sbyte Unknown3;
                 public sbyte Unknown4;
-                public TagInstance Particle;
+                public CachedTagInstance Particle;
                 public short Unknown5;
                 public short LocationIndex;
                 public CoordinateSystemValue CoordinateSystem;
@@ -206,7 +206,7 @@ namespace TagTool.TagDefinitions
                     public StringId Name;
                     public ushort Unknown;
                     public short Unknown2;
-                    public TagInstance CustomEmitterPoints;
+                    public CachedTagInstance CustomEmitterPoints;
                     public uint Unknown3;
                     public uint Unknown4;
                     public uint Unknown5;
@@ -286,7 +286,7 @@ namespace TagTool.TagDefinitions
                     public byte[] Unknown43;
                     public uint Unknown44;
                     public uint Unknown45;
-                    public TagInstance ParticlePhysics;
+                    public CachedTagInstance ParticlePhysics;
                     public uint Unknown46;
                     public List<UnknownBlock> Unknown47;
                     public sbyte Input10;

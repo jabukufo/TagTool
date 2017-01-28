@@ -51,12 +51,12 @@ namespace TagTool.Commands.Tags
                 {
                     if (!tags.Contains(entry))
                     {
-                        if (CacheContext.TagCache.Tags[entry] == null)
+                        if (CacheContext.TagCache.Index[entry] == null)
                             continue;
 
                         tags.Add(entry);
 
-                        foreach (var dependency in CacheContext.TagCache.Tags[entry].Dependencies)
+                        foreach (var dependency in CacheContext.TagCache.Index[entry].Dependencies)
                             if (!nextQueue.Contains(dependency))
                                 nextQueue.Add(dependency);
                     }
@@ -99,7 +99,7 @@ namespace TagTool.Commands.Tags
 
         private void CleanGlobals(Stream stream)
         {
-            var matgTag = CacheContext.TagCache.Tags.FindFirstInGroup("matg");
+            var matgTag = CacheContext.TagCache.Index.FindFirstInGroup("matg");
             var matgContext = new TagSerializationContext(stream, CacheContext, matgTag);
             var matgDefinition = CacheContext.Deserializer.Deserialize<Globals>(matgContext);
 
@@ -129,7 +129,7 @@ namespace TagTool.Commands.Tags
 
         private void CleanMultiplayerGlobals(Stream stream)
         {
-            var mulgTag = CacheContext.TagCache.Tags.FindFirstInGroup("mulg");
+            var mulgTag = CacheContext.TagCache.Index.FindFirstInGroup("mulg");
             var mulgContext = new TagSerializationContext(stream, CacheContext, mulgTag);
             var mulgDefinition = CacheContext.Deserializer.Deserialize<MultiplayerGlobals>(mulgContext);
 
@@ -140,103 +140,103 @@ namespace TagTool.Commands.Tags
                 {
                     Name = CacheContext.StringIdCache.GetStringId("battle_rifle"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x157C]
+                    Weapon = CacheContext.TagCache.Index[0x157C]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("assault_rifle"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x151E]
+                    Weapon = CacheContext.TagCache.Index[0x151E]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("plasma_pistol"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x14F7]
+                    Weapon = CacheContext.TagCache.Index[0x14F7]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("spike_rifle"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x1500]
+                    Weapon = CacheContext.TagCache.Index[0x1500]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("smg"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x157D]
+                    Weapon = CacheContext.TagCache.Index[0x157D]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("carbine"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x14FE]
+                    Weapon = CacheContext.TagCache.Index[0x14FE]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("energy_sword"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x159E]
+                    Weapon = CacheContext.TagCache.Index[0x159E]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("magnum"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x157E]
+                    Weapon = CacheContext.TagCache.Index[0x157E]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("needler"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x14F8]
+                    Weapon = CacheContext.TagCache.Index[0x14F8]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("plasma_rifle"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x1525]
+                    Weapon = CacheContext.TagCache.Index[0x1525]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("rocket_launcher"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x15B3]
+                    Weapon = CacheContext.TagCache.Index[0x15B3]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("shotgun"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x1A45]
+                    Weapon = CacheContext.TagCache.Index[0x1A45]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("sniper_rifle"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x15B1]
+                    Weapon = CacheContext.TagCache.Index[0x15B1]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("brute_shot"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x14FF]
+                    Weapon = CacheContext.TagCache.Index[0x14FF]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("unarmed"),
                     RandomChance = 0,
-                    Weapon = CacheContext.TagCache.Tags[0x157F]
+                    Weapon = CacheContext.TagCache.Index[0x157F]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("beam_rifle"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x1509]
+                    Weapon = CacheContext.TagCache.Index[0x1509]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("spartan_laser"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x15B2]
+                    Weapon = CacheContext.TagCache.Index[0x15B2]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
@@ -248,25 +248,25 @@ namespace TagTool.Commands.Tags
                 {
                     Name = CacheContext.StringIdCache.GetStringId("gravity_hammer"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x150C]
+                    Weapon = CacheContext.TagCache.Index[0x150C]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("excavator"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x1504]
+                    Weapon = CacheContext.TagCache.Index[0x1504]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("flamethrower"),
                     RandomChance = 0,
-                    Weapon = CacheContext.TagCache.Tags[0x1A55]
+                    Weapon = CacheContext.TagCache.Index[0x1A55]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
                     Name = CacheContext.StringIdCache.GetStringId("missile_pod"),
                     RandomChance = 0.1f,
-                    Weapon = CacheContext.TagCache.Tags[0x1A54]
+                    Weapon = CacheContext.TagCache.Index[0x1A54]
                 }
             };
             #endregion
@@ -277,7 +277,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // battle_rifle
-                    Weapon2 = CacheContext.TagCache.Tags[0x157C],
+                    Weapon2 = CacheContext.TagCache.Index[0x157C],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -286,7 +286,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // carbine
-                    Weapon2 = CacheContext.TagCache.Tags[0x14FE],
+                    Weapon2 = CacheContext.TagCache.Index[0x14FE],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -295,7 +295,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // sniper_rifle
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B1],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B1],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -304,7 +304,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // beam_rifle
-                    Weapon2 = CacheContext.TagCache.Tags[0x1509],
+                    Weapon2 = CacheContext.TagCache.Index[0x1509],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -313,7 +313,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // spartan_laster
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B2],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B2],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -322,7 +322,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // rocket_launcher
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B3],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B3],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -331,7 +331,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // chaingun_turret
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B4],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B4],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -340,7 +340,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // machinegun_turret
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B5],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B5],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -349,7 +349,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // machinegun_turret_integrated
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B6],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B6],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -358,7 +358,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // plasma_cannon
-                    Weapon2 = CacheContext.TagCache.Tags[0x150E],
+                    Weapon2 = CacheContext.TagCache.Index[0x150E],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -367,7 +367,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // plasma_cannon_integrated
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B7],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B7],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -376,7 +376,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // needler
-                    Weapon2 = CacheContext.TagCache.Tags[0x14F8],
+                    Weapon2 = CacheContext.TagCache.Index[0x14F8],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -385,7 +385,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // flak_cannon
-                    Weapon2 = CacheContext.TagCache.Tags[0x14F9],
+                    Weapon2 = CacheContext.TagCache.Index[0x14F9],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -394,7 +394,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // gauss_turret
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B8],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B8],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -403,7 +403,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // anti_infantry
-                    Weapon2 = CacheContext.TagCache.Tags[0x15B9],
+                    Weapon2 = CacheContext.TagCache.Index[0x15B9],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -412,7 +412,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon
                 {
                     // behemoth_chaingun_turret
-                    Weapon2 = CacheContext.TagCache.Tags[0x15BA],
+                    Weapon2 = CacheContext.TagCache.Index[0x15BA],
                     Unknown1 = 5.0f,
                     Unknown2 = 15.0f,
                     Unknown3 = 5.0f,
@@ -427,37 +427,37 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("warthog"),
-                    Vehicle = CacheContext.TagCache.Tags[0x151F]
+                    Vehicle = CacheContext.TagCache.Index[0x151F]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("ghost"),
-                    Vehicle = CacheContext.TagCache.Tags[0x1517]
+                    Vehicle = CacheContext.TagCache.Index[0x1517]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("scorpion"),
-                    Vehicle = CacheContext.TagCache.Tags[0x1520]
+                    Vehicle = CacheContext.TagCache.Index[0x1520]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("wraith"),
-                    Vehicle = CacheContext.TagCache.Tags[0x1519]
+                    Vehicle = CacheContext.TagCache.Index[0x1519]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("banshee"),
-                    Vehicle = CacheContext.TagCache.Tags[0x151A]
+                    Vehicle = CacheContext.TagCache.Index[0x151A]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("mongoose"),
-                    Vehicle = CacheContext.TagCache.Tags[0x1596]
+                    Vehicle = CacheContext.TagCache.Index[0x1596]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("chopper"),
-                    Vehicle = CacheContext.TagCache.Tags[0x1518]
+                    Vehicle = CacheContext.TagCache.Index[0x1518]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
@@ -467,7 +467,7 @@ namespace TagTool.Commands.Tags
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
                     Name = CacheContext.StringIdCache.GetStringId("hornet"),
-                    Vehicle = CacheContext.TagCache.Tags[0x1598]
+                    Vehicle = CacheContext.TagCache.Index[0x1598]
                 }
             };
             #endregion
@@ -785,7 +785,7 @@ namespace TagTool.Commands.Tags
             {
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x1517],
+                    Vehicle2 = CacheContext.TagCache.Index[0x1517],
                     Unknown1 = 2.0f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.5f,
@@ -793,7 +793,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x151F],
+                    Vehicle2 = CacheContext.TagCache.Index[0x151F],
                     Unknown1 = 2.0f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.5f,
@@ -801,7 +801,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x151A],
+                    Vehicle2 = CacheContext.TagCache.Index[0x151A],
                     Unknown1 = 2.0f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.5f,
@@ -809,7 +809,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x1596],
+                    Vehicle2 = CacheContext.TagCache.Index[0x1596],
                     Unknown1 = 1.5f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.5f,
@@ -817,7 +817,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x1518],
+                    Vehicle2 = CacheContext.TagCache.Index[0x1518],
                     Unknown1 = 3.0f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.25f,
@@ -825,7 +825,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x1598],
+                    Vehicle2 = CacheContext.TagCache.Index[0x1598],
                     Unknown1 = 2.0f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.5f,
@@ -833,7 +833,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x1520],
+                    Vehicle2 = CacheContext.TagCache.Index[0x1520],
                     Unknown1 = 3.0f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.5f,
@@ -841,7 +841,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Vehicle
                 {
-                    Vehicle2 = CacheContext.TagCache.Tags[0x1519],
+                    Vehicle2 = CacheContext.TagCache.Index[0x1519],
                     Unknown1 = 3.0f,
                     Unknown2 = 1.5f,
                     Unknown3 = 0.5f,
@@ -855,9 +855,9 @@ namespace TagTool.Commands.Tags
 
         private void NullTags(Stream stream, ref HashSet<int> retainedTags)
         {
-            for (var i = 0; i < CacheContext.TagCache.Tags.Count; i++)
+            for (var i = 0; i < CacheContext.TagCache.Index.Count; i++)
             {
-                var tag = CacheContext.TagCache.Tags[i];
+                var tag = CacheContext.TagCache.Index[i];
 
                 if (tag == null)
                     continue;
@@ -949,7 +949,7 @@ namespace TagTool.Commands.Tags
                 else
                 {
                     Console.Write($"Nulling {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
-                    CacheContext.TagCache.Tags[tag.Index] = null;
+                    CacheContext.TagCache.Index[tag.Index] = null;
                     CacheContext.TagCache.SetTagDataRaw(stream, tag, new byte[] { });
                 }
 
@@ -1066,9 +1066,9 @@ namespace TagTool.Commands.Tags
                 CleanMultiplayerGlobals(stream);
 
                 var retainedTags = new HashSet<int>();
-                LoadTagDependencies(CacheContext.TagCache.Tags.FindFirstInGroup("cfgt").Index, ref retainedTags);
+                LoadTagDependencies(CacheContext.TagCache.Index.FindFirstInGroup("cfgt").Index, ref retainedTags);
 
-                foreach (var scnr in CacheContext.TagCache.Tags.FindAllInGroup("scnr"))
+                foreach (var scnr in CacheContext.TagCache.Index.FindAllInGroup("scnr"))
                     LoadTagDependencies(scnr.Index, ref retainedTags);
 
                 NullTags(stream, ref retainedTags);

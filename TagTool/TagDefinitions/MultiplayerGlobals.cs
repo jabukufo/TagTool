@@ -14,22 +14,22 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0xD8)]
         public class UniversalBlock
         {
-            public TagInstance RandomPlayerNameStrings;
-            public TagInstance TeamNameStrings;
+            public CachedTagInstance RandomPlayerNameStrings;
+            public CachedTagInstance TeamNameStrings;
             public List<SpartanArmorCustomizationBlock> SpartanArmorCustomization;
             public List<EliteArmorCustomizationBlock> EliteArmorCustomization;
             public List<EquipmentBlock> Equipment;
             public List<UnknownBlock> Unknown;
-            public TagInstance MultiplayerStrings;
-            public TagInstance SandboxUiStrings;
-            public TagInstance SandboxUiProperties;
+            public CachedTagInstance MultiplayerStrings;
+            public CachedTagInstance SandboxUiStrings;
+            public CachedTagInstance SandboxUiProperties;
             public List<GameVariantWeapon> GameVariantWeapons;
             public List<GameVariantVehicle> GameVariantVehicles;
             public List<GameVariantEquipmentBlock> GameVariantEquipment;
             public List<WeaponSet> WeaponSets;
             public List<VehicleSet> VehicleSets;
             public List<PodiumBlock> Podium;
-            public TagInstance EngineSettings;
+            public CachedTagInstance EngineSettings;
 
             [TagStructure(Size = 0x14)]
             public class SpartanArmorCustomizationBlock
@@ -42,8 +42,8 @@ namespace TagTool.TagDefinitions
                 public class Permutation
                 {
                     public StringId Name;
-                    public TagInstance ThirdPersonArmorObject;
-                    public TagInstance FirstPersonArmorModel;
+                    public CachedTagInstance ThirdPersonArmorObject;
+                    public CachedTagInstance FirstPersonArmorModel;
                     public short Unknown;
                     public short Unknown2;
                     public StringId ParentAttachMarker;
@@ -62,8 +62,8 @@ namespace TagTool.TagDefinitions
                 public class Permutation
                 {
                     public StringId Name;
-                    public TagInstance ThirdPersonArmorObject;
-                    public TagInstance FirstPersonArmorModel;
+                    public CachedTagInstance ThirdPersonArmorObject;
+                    public CachedTagInstance FirstPersonArmorModel;
                     public short Unknown;
                     public short Unknown2;
                     public StringId ParentAttachMarker;
@@ -75,7 +75,7 @@ namespace TagTool.TagDefinitions
             public class EquipmentBlock
             {
                 public StringId Name;
-                public TagInstance Equipment;
+                public CachedTagInstance Equipment;
                 public short Unknown;
                 public short Unknown2;
             }
@@ -92,21 +92,21 @@ namespace TagTool.TagDefinitions
             {
                 public StringId Name;
                 public float RandomChance;
-                public TagInstance Weapon;
+                public CachedTagInstance Weapon;
             }
 
             [TagStructure(Size = 0x14)]
             public class GameVariantVehicle
             {
                 public StringId Name;
-                public TagInstance Vehicle;
+                public CachedTagInstance Vehicle;
             }
 
             [TagStructure(Size = 0x14)]
             public class GameVariantEquipmentBlock
             {
                 public StringId Name;
-                public TagInstance Grenade;
+                public CachedTagInstance Grenade;
             }
 
             [TagStructure(Size = 0x10)]
@@ -140,7 +140,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x30)]
             public class PodiumBlock
             {
-                public TagInstance AnimationGraph;
+                public CachedTagInstance AnimationGraph;
                 public StringId DefaultUnarmed;
                 public StringId DefaultArmed;
                 public List<StanceAnimation> StanceAnimations;
@@ -165,8 +165,8 @@ namespace TagTool.TagDefinitions
                     public StringId LoopAnimation;
                     public StringId OutAnimation;
                     public int Unknown;
-                    public TagInstance PrimaryWeapon;
-                    public TagInstance SecondaryWeapon;
+                    public CachedTagInstance PrimaryWeapon;
+                    public CachedTagInstance SecondaryWeapon;
                 }
             }
         }
@@ -174,18 +174,18 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x2A8)]
         public class RuntimeBlock
         {
-            public TagInstance SandboxEditorUnit;
-            public TagInstance SandboxEditorObject;
-            public TagInstance Flag;
-            public TagInstance Ball;
-            public TagInstance Bomb;
-            public TagInstance VipZone;
-            public TagInstance InGameStrings;
-            public TagInstance Unknown;
-            public TagInstance Unknown2;
-            public TagInstance Unknown3;
-            public TagInstance Unknown4;
-            public TagInstance Unknown5;
+            public CachedTagInstance SandboxEditorUnit;
+            public CachedTagInstance SandboxEditorObject;
+            public CachedTagInstance Flag;
+            public CachedTagInstance Ball;
+            public CachedTagInstance Bomb;
+            public CachedTagInstance VipZone;
+            public CachedTagInstance InGameStrings;
+            public CachedTagInstance Unknown;
+            public CachedTagInstance Unknown2;
+            public CachedTagInstance Unknown3;
+            public CachedTagInstance Unknown4;
+            public CachedTagInstance Unknown5;
             public List<Sound> Sounds;
             public List<LoopingSound> LoopingSounds;
             public List<UnknownEvent> UnknownEvents;
@@ -204,35 +204,35 @@ namespace TagTool.TagDefinitions
             public int DefaultPlasmaGrenadeCount;
             public List<MultiplayerConstant> MultiplayerConstants;
             public List<StateRespons> StateResponses;
-            public TagInstance ScoreboardEmblemBitmap;
-            public TagInstance ScoreboardDeadEmblemBitmap;
-            public TagInstance DefaultShapeShader;
-            public TagInstance Unknown6;
-            public TagInstance CtfIntroUi;
-            public TagInstance SlayerIntroUi;
-            public TagInstance OddballIntroUi;
-            public TagInstance KingOfTheHillIntroUi;
-            public TagInstance SandboxIntroUi;
-            public TagInstance VipIntroUi;
-            public TagInstance JuggernautIntroUi;
-            public TagInstance TerritoriesIntroUi;
-            public TagInstance AssaultIntroUi;
-            public TagInstance InfectionIntroUi;
-            public TagInstance MenuMusic1;
-            public TagInstance MenuMusic2;
-            public TagInstance MenuMusic3;
-            public TagInstance Unknown7;
+            public CachedTagInstance ScoreboardEmblemBitmap;
+            public CachedTagInstance ScoreboardDeadEmblemBitmap;
+            public CachedTagInstance DefaultShapeShader;
+            public CachedTagInstance Unknown6;
+            public CachedTagInstance CtfIntroUi;
+            public CachedTagInstance SlayerIntroUi;
+            public CachedTagInstance OddballIntroUi;
+            public CachedTagInstance KingOfTheHillIntroUi;
+            public CachedTagInstance SandboxIntroUi;
+            public CachedTagInstance VipIntroUi;
+            public CachedTagInstance JuggernautIntroUi;
+            public CachedTagInstance TerritoriesIntroUi;
+            public CachedTagInstance AssaultIntroUi;
+            public CachedTagInstance InfectionIntroUi;
+            public CachedTagInstance MenuMusic1;
+            public CachedTagInstance MenuMusic2;
+            public CachedTagInstance MenuMusic3;
+            public CachedTagInstance Unknown7;
 
             [TagStructure(Size = 0x10)]
             public class Sound
             {
-                public TagInstance Sound2;
+                public CachedTagInstance Sound2;
             }
 
             [TagStructure(Size = 0x10)]
             public class LoopingSound
             {
-                public TagInstance LoopingSound2;
+                public CachedTagInstance LoopingSound2;
             }
 
             [TagStructure(Size = 0x10C)]
@@ -259,18 +259,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -372,18 +372,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -485,18 +485,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -598,18 +598,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -711,18 +711,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -824,18 +824,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -937,18 +937,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -1050,18 +1050,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -1163,18 +1163,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -1276,18 +1276,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -1389,18 +1389,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -1502,18 +1502,18 @@ namespace TagTool.TagDefinitions
                 public float SoundDelayAnnouncerOnly;
                 public ushort SoundFlags;
                 public short Unknown5;
-                public TagInstance EnglishSound;
-                public TagInstance JapaneseSound;
-                public TagInstance GermanSound;
-                public TagInstance FrenchSound;
-                public TagInstance SpanishSound;
-                public TagInstance LatinAmericanSpanishSound;
-                public TagInstance ItalianSound;
-                public TagInstance KoreanSound;
-                public TagInstance ChineseTraditionalSound;
-                public TagInstance ChineseSimplifiedSound;
-                public TagInstance PortugueseSound;
-                public TagInstance PolishSound;
+                public CachedTagInstance EnglishSound;
+                public CachedTagInstance JapaneseSound;
+                public CachedTagInstance GermanSound;
+                public CachedTagInstance FrenchSound;
+                public CachedTagInstance SpanishSound;
+                public CachedTagInstance LatinAmericanSpanishSound;
+                public CachedTagInstance ItalianSound;
+                public CachedTagInstance KoreanSound;
+                public CachedTagInstance ChineseTraditionalSound;
+                public CachedTagInstance ChineseSimplifiedSound;
+                public CachedTagInstance PortugueseSound;
+                public CachedTagInstance PolishSound;
                 public uint Unknown6;
                 public uint Unknown7;
                 public uint Unknown8;
@@ -1675,16 +1675,16 @@ namespace TagTool.TagDefinitions
                 public float VehicleDangerRadius;
                 public float VehicleDangerLeadTime;
                 public float VehicleNearbyPlayerDistance;
-                public TagInstance HillShader;
+                public CachedTagInstance HillShader;
                 public float Unknown67;
                 public float Unknown68;
                 public float Unknown69;
                 public float Unknown70;
-                public TagInstance BombExplodeEffect;
-                public TagInstance Unknown71;
-                public TagInstance BombExplodeDamageEffect;
-                public TagInstance BombDefuseEffect;
-                public TagInstance CursorImpactEffect;
+                public CachedTagInstance BombExplodeEffect;
+                public CachedTagInstance Unknown71;
+                public CachedTagInstance BombExplodeDamageEffect;
+                public CachedTagInstance BombDefuseEffect;
+                public CachedTagInstance CursorImpactEffect;
                 public StringId BombDefusalString;
                 public StringId BlockedTeleporterString;
                 public int Unknown72;
@@ -1708,7 +1708,7 @@ namespace TagTool.TagDefinitions
                 [TagStructure(Size = 0x20)]
                 public class Weapon
                 {
-                    public TagInstance Weapon2;
+                    public CachedTagInstance Weapon2;
                     public float Unknown1;
                     public float Unknown2;
                     public float Unknown3;
@@ -1718,7 +1718,7 @@ namespace TagTool.TagDefinitions
                 [TagStructure(Size = 0x20)]
                 public class Vehicle
                 {
-                    public TagInstance Vehicle2;
+                    public CachedTagInstance Vehicle2;
                     public float Unknown1;
                     public float Unknown2;
                     public float Unknown3;
@@ -1728,7 +1728,7 @@ namespace TagTool.TagDefinitions
                 [TagStructure(Size = 0x1C)]
                 public class Projectile
                 {
-                    public TagInstance Projectile2;
+                    public CachedTagInstance Projectile2;
                     public float Unknown;
                     public float Unknown2;
                     public float Unknown3;
@@ -1737,7 +1737,7 @@ namespace TagTool.TagDefinitions
                 [TagStructure(Size = 0x14)]
                 public class EquipmentBlock
                 {
-                    public TagInstance Equipment;
+                    public CachedTagInstance Equipment;
                     public float Unknown;
                 }
             }
@@ -1751,7 +1751,7 @@ namespace TagTool.TagDefinitions
                 public short Unknown2;
                 public StringId FreeForAllMessage;
                 public StringId TeamMessage;
-                public TagInstance Unknown3;
+                public CachedTagInstance Unknown3;
                 public uint Unknown4;
 
                 public enum StateValue : short

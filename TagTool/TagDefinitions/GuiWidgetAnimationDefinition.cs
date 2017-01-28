@@ -8,13 +8,13 @@ namespace TagTool.TagDefinitions
     {
         public uint Unknown;
         public uint Unknown2;
-        public TagInstance WidgetColor;
-        public TagInstance WidgetPosition;
-        public TagInstance WidgetRotation;
-        public TagInstance WidgetScale;
-        public TagInstance WidgetTextureCoordinate;
-        public TagInstance WidgetSprite;
-        public TagInstance WidgetFont;
+        public CachedTagInstance WidgetColor;
+        public CachedTagInstance WidgetPosition;
+        public CachedTagInstance WidgetRotation;
+        public CachedTagInstance WidgetScale;
+        public CachedTagInstance WidgetTextureCoordinate;
+        public CachedTagInstance WidgetSprite;
+        public CachedTagInstance WidgetFont;
         public uint Unknown3;
         public uint Unknown4;
     }

@@ -42,7 +42,7 @@ namespace TagTool.Serialization
             throw new NotImplementedException();
         }
 
-        public TagInstance GetTagByIndex(int index)
+        public CachedTagInstance GetTagByIndex(int index)
         {
             throw new NotImplementedException();
         }

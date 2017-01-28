@@ -27,12 +27,12 @@ namespace TagTool.Commands.Tags
             if (args.Count != 0)
                 return false;
 
-            foreach (var tag in CacheContext.TagCache.Tags)
+            foreach (var tag in CacheContext.TagCache.Index)
             {
                 if (tag == null)
                     continue;
 
-                var dependsOn = CacheContext.TagCache.Tags.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
+                var dependsOn = CacheContext.TagCache.Index.NonNull().Where(t => t.Dependencies.Contains(tag.Index));
 
                 if (dependsOn.Count() == 0)
                 {

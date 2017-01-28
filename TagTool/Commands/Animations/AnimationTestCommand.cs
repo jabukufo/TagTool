@@ -12,10 +12,10 @@ namespace TagTool.Commands.Animations
     class AnimationTestCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private ModelAnimationGraph JMAD { get; }
 
-        public AnimationTestCommand(GameCacheContext cacheContext, TagInstance tag, ModelAnimationGraph jmad)
+        public AnimationTestCommand(GameCacheContext cacheContext, CachedTagInstance tag, ModelAnimationGraph jmad)
             : base(CommandFlags.Inherit,
                   
                   "AnimationTest",

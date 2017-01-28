@@ -10,10 +10,10 @@ namespace TagTool.Commands.Unicode
     class SetStringCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private MultilingualUnicodeStringList Definition { get; }
 
-        public SetStringCommand(GameCacheContext cacheContext, TagInstance tag, MultilingualUnicodeStringList unic)
+        public SetStringCommand(GameCacheContext cacheContext, CachedTagInstance tag, MultilingualUnicodeStringList unic)
             : base(CommandFlags.None,
 
                   "SetString",

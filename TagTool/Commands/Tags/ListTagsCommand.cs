@@ -33,11 +33,11 @@ namespace TagTool.Commands.Tags
             if (searchClasses == null)
                 return false;
 
-            TagInstance[] tags;
+            CachedTagInstance[] tags;
             if (args.Count > 0)
-                tags = CacheContext.TagCache.Tags.FindAllInGroups(searchClasses).ToArray();
+                tags = CacheContext.TagCache.Index.FindAllInGroups(searchClasses).ToArray();
             else
-                tags = CacheContext.TagCache.Tags.NonNull().ToArray();
+                tags = CacheContext.TagCache.Index.NonNull().ToArray();
 
             if (tags.Length == 0)
             {

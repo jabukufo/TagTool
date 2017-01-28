@@ -242,12 +242,12 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x3C)]
             public class Option
             {
-                public TagInstance ExplicitSubmenu;
-                public TagInstance TemplateBasedSubmenu;
+                public CachedTagInstance ExplicitSubmenu;
+                public CachedTagInstance TemplateBasedSubmenu;
                 public SubmenuSettingCategoryValue SubmenuSettingCategory;
                 public StringId SubmenuName;
                 public StringId SubmenuDescription;
-                public TagInstance ValuePairs;
+                public CachedTagInstance ValuePairs;
 
                 public enum SubmenuSettingCategoryValue : int
                 {

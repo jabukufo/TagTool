@@ -8,7 +8,7 @@ namespace TagTool.TagDefinitions
     [TagStructure(Name = "muffin", Class = "mffn", Size = 0x38)]
     public class Muffin
     {
-        public TagInstance RenderModel;
+        public CachedTagInstance RenderModel;
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;
@@ -44,7 +44,7 @@ namespace TagTool.TagDefinitions
             public float Unknown15;
             public float Unknown16;
             public float Unknown17;
-            public TagInstance Effect;
+            public CachedTagInstance Effect;
         }
     }
 }

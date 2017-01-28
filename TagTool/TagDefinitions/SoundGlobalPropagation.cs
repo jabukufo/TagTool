@@ -6,12 +6,12 @@ namespace TagTool.TagDefinitions
     [TagStructure(Name = "sound_global_propagation", Class = "sgp!", Size = 0x50)]
     public class SoundGlobalPropagation
     {
-        public TagInstance UnderwaterEnvironment;
-        public TagInstance UnderwaterLoop;
+        public CachedTagInstance UnderwaterEnvironment;
+        public CachedTagInstance UnderwaterLoop;
         public uint Unknown;
         public uint Unknown2;
-        public TagInstance EnterUnderater;
-        public TagInstance ExitUnderwater;
+        public CachedTagInstance EnterUnderater;
+        public CachedTagInstance ExitUnderwater;
         public uint Unknown3;
         public uint Unknown4;
     }

@@ -16,7 +16,7 @@ namespace TagTool.TagDefinitions
         public class LightVolumeSystemBlock
         {
             public StringId Name;
-            public TagInstance BaseRenderMethod;
+            public CachedTagInstance BaseRenderMethod;
             public List<UnknownBlock> Unknown;
             public List<ImportDatum> ImportData;
             public List<ShaderProperty> ShaderProperties;
@@ -102,7 +102,7 @@ namespace TagTool.TagDefinitions
             {
                 public StringId MaterialType;
                 public int Unknown;
-                public TagInstance Bitmap;
+                public CachedTagInstance Bitmap;
                 public uint Unknown2;
                 public int Unknown3;
                 public short Unknown4;
@@ -128,7 +128,7 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x84)]
             public class ShaderProperty
             {
-                public TagInstance Template;
+                public CachedTagInstance Template;
                 public List<ShaderMap> ShaderMaps;
                 public List<Argument> Arguments;
                 public List<UnknownBlock> Unknown;
@@ -152,7 +152,7 @@ namespace TagTool.TagDefinitions
                 [TagStructure(Size = 0x18)]
                 public class ShaderMap
                 {
-                    public TagInstance Bitmap;
+                    public CachedTagInstance Bitmap;
                     public sbyte Unknown;
                     public sbyte BitmapIndex;
                     public sbyte Unknown2;

@@ -20,19 +20,19 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x10)]
             public class UnknownBlock
             {
-                public TagInstance Unknown;
+                public CachedTagInstance Unknown;
             }
 
             [TagStructure(Size = 0x10)]
             public class UnknownBlock2
             {
-                public TagInstance Unknown;
+                public CachedTagInstance Unknown;
             }
 
             [TagStructure(Size = 0x10)]
             public class UnknownBlock3
             {
-                public TagInstance Unknown;
+                public CachedTagInstance Unknown;
             }
         }
     }

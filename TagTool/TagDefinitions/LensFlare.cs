@@ -18,7 +18,7 @@ namespace TagTool.TagDefinitions
         public uint Unknown5;
         public float NearFadeDistance;
         public float FarFadeDistance;
-        public TagInstance Bitmap;
+        public CachedTagInstance Bitmap;
         public short Unknown6;
         public short Unknown7;
         public short Unknown8;
@@ -44,7 +44,7 @@ namespace TagTool.TagDefinitions
         {
             public uint Unknown;
             public uint Unknown2;
-            public TagInstance Bitmap;
+            public CachedTagInstance Bitmap;
             public uint Unknown3;
             public uint Unknown4;
             public uint Unknown5;

@@ -13,7 +13,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class GlobalTag
         {
-            public TagInstance Tag;
+            public CachedTagInstance Tag;
         }
     }
 }

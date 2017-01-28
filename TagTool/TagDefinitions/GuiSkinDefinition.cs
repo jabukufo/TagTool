@@ -16,7 +16,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x4C)]
         public class TextWidget
         {
-            public TagInstance Parent;
+            public CachedTagInstance Parent;
             public uint Flags;
             public StringId Name;
             public short Unknown;
@@ -29,7 +29,7 @@ namespace TagTool.TagDefinitions
             public short StandardXBoundsMin;
             public short StandardYBoundsMax;
             public short StandardXBoundsMax;
-            public TagInstance Animation;
+            public CachedTagInstance Animation;
             public StringId DataSourceName;
             public StringId TextString;
             public StringId TextColor;
@@ -40,7 +40,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x6C)]
         public class BitmapWidget
         {
-            public TagInstance Parent;
+            public CachedTagInstance Parent;
             public uint Flags;
             public StringId Name;
             public short Unknown;
@@ -53,9 +53,9 @@ namespace TagTool.TagDefinitions
             public short StandardXBoundsMin;
             public short StandardYBoundsMax;
             public short StandardXBoundsMax;
-            public TagInstance Animation;
-            public TagInstance Bitmap;
-            public TagInstance Unknown2;
+            public CachedTagInstance Animation;
+            public CachedTagInstance Bitmap;
+            public CachedTagInstance Unknown2;
             public BlendMethodValue BlendMethod;
             public short Unknown3;
             public short SpriteIndex;
@@ -85,7 +85,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x94)]
         public class ModelWidget
         {
-            public TagInstance Parent;
+            public CachedTagInstance Parent;
             public uint Flags;
             public StringId Name;
             public short Unknown;
@@ -98,7 +98,7 @@ namespace TagTool.TagDefinitions
             public short StandardXBoundsMin;
             public short StandardYBoundsMax;
             public short StandardXBoundsMax;
-            public TagInstance Animation;
+            public CachedTagInstance Animation;
             public List<UnknownBlock> Unknown3;
             public uint Unknown4;
             public uint Unknown5;
@@ -158,7 +158,7 @@ namespace TagTool.TagDefinitions
                 public Angle Unknown30;
                 public uint Unknown31;
                 public uint Unknown32;
-                public TagInstance Unknown33;
+                public CachedTagInstance Unknown33;
                 public uint Unknown34;
 
                 [TagStructure(Size = 0x14)]

@@ -9,18 +9,18 @@ namespace TagTool.TagDefinitions
     {
         public List<DefaultBitmap> DefaultBitmaps;
         public List<DefaultRasterizerBitmap> DefaultRasterizerBitmaps;
-        public TagInstance VertexShaderSimple;
-        public TagInstance PixelShaderSimple;
+        public CachedTagInstance VertexShaderSimple;
+        public CachedTagInstance PixelShaderSimple;
         public List<DefaultShader> DefaultShaders;
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;
         public int Unknown4;
         public int Unknown5;
-        public TagInstance ActiveCamoDistortion;
-        public TagInstance DefaultPerformanceTemplate;
-        public TagInstance DefaultShieldImpact;
-        public TagInstance DefaultVisionMode;
+        public CachedTagInstance ActiveCamoDistortion;
+        public CachedTagInstance DefaultPerformanceTemplate;
+        public CachedTagInstance DefaultShieldImpact;
+        public CachedTagInstance DefaultVisionMode;
         public int Unknown6;
         public float Unknown7;
         public float Unknown8;
@@ -35,20 +35,20 @@ namespace TagTool.TagDefinitions
         public class DefaultBitmap
         {
             public int Unknown;
-            public TagInstance Bitmap;
+            public CachedTagInstance Bitmap;
         }
 
         [TagStructure(Size = 0x10)]
         public class DefaultRasterizerBitmap
         {
-            public TagInstance Bitmap;
+            public CachedTagInstance Bitmap;
         }
 
         [TagStructure(Size = 0x20)]
         public class DefaultShader
         {
-            public TagInstance VertexShader;
-            public TagInstance PixelShader;
+            public CachedTagInstance VertexShader;
+            public CachedTagInstance PixelShader;
         }
     }
 }

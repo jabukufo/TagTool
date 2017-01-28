@@ -29,7 +29,7 @@ namespace TagTool.TagDefinitions
         public float SoloPlayerFadeOutTime;
         public float SoloPlayerFadeInTime;
         public float GameMusicFadeOutTime;
-        public TagInstance Unknown3;
+        public CachedTagInstance Unknown3;
         public float Unknown4;
         public float Unknown5;
         public uint Unknown6;

@@ -11,7 +11,7 @@ namespace TagTool.TagDefinitions
         public uint Flags;
         public StringId MarkerAttachmentName;
         public StringId SecondMarkerAttachmentName;
-        public TagInstance Shader;
+        public CachedTagInstance Shader;
         public short GridXDimension;
         public short GridYDimension;
         public float GridSpacingX;

@@ -48,7 +48,7 @@ namespace TagTool.TagDefinitions
             public StringId MapName;
             public int Unknown;
             public int Unknown2;
-            public TagInstance Unknown3;
+            public CachedTagInstance Unknown3;
             public int MapId;
             public int Unknown4;
             [TagField(Length = 256)] public string MapScenarioPath;

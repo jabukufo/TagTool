@@ -16,7 +16,7 @@ namespace TagTool.TagDefinitions
         public Angle LocalNorth;
         public float SandboxBudget;
         public List<StructureBsp> StructureBsps;
-        public TagInstance Unknown2;
+        public CachedTagInstance Unknown2;
         public List<SkyReference> SkyReferences;
         public List<BspGroup> BspGroups;
         public List<ScenarioBspAudibilityBlock> ScenarioBspAudibility;
@@ -168,10 +168,10 @@ namespace TagTool.TagDefinitions
         public List<CutsceneFlag> CutsceneFlags;
         public List<CutsceneCameraPoint> CutsceneCameraPoints;
         public List<CutsceneTitle> CutsceneTitles;
-        public TagInstance CustomObjectNameStrings;
-        public TagInstance ChapterTitleStrings;
+        public CachedTagInstance CustomObjectNameStrings;
+        public CachedTagInstance ChapterTitleStrings;
         [MinVersion(CacheVersion.HaloOnline498295)]
-        public TagInstance Unknown156;
+        public CachedTagInstance Unknown156;
         public List<ScenarioResource> ScenarioResources;
         public List<UnitSeatsMappingBlock> UnitSeatsMapping;
         public List<ScenarioKillTrigger> ScenarioKillTriggers;
@@ -239,22 +239,22 @@ namespace TagTool.TagDefinitions
         public int ObjectSalts31;
         public int ObjectSalts32;
         public List<SpawnDatum> SpawnData;
-        public TagInstance SoundEffectsCollection;
+        public CachedTagInstance SoundEffectsCollection;
         public List<Crate> Crates;
         public List<CratePaletteBlock> CratePalette;
         public List<FlockPaletteBlock> FlockPalette;
         public List<Flock> Flocks;
-        public TagInstance SubtitleStrings;
+        public CachedTagInstance SubtitleStrings;
         public uint Unknown122;
         public uint Unknown123;
         public uint Unknown124;
         public List<CreaturePaletteBlock> CreaturePalette;
         public List<EditorFolder> EditorFolders;
-        public TagInstance TerritoryLocationNameStrings;
+        public CachedTagInstance TerritoryLocationNameStrings;
         public uint Unknown125;
         public uint Unknown126;
         public List<MissionDialogueBlock> MissionDialogue;
-        public TagInstance ObjectiveStrings;
+        public CachedTagInstance ObjectiveStrings;
         public List<Interpolator> Interpolators;
         public uint Unknown127;
         public uint Unknown128;
@@ -263,13 +263,13 @@ namespace TagTool.TagDefinitions
         public uint Unknown131;
         public uint Unknown132;
         public List<SimulationDefinitionTableBlock> SimulationDefinitionTable;
-        public TagInstance DefaultCameraFx;
-        public TagInstance DefaultScreenFx;
-        public TagInstance Unknown133;
-        public TagInstance SkyParameters;
-        public TagInstance GlobalLighing;
-        public TagInstance Lightmap;
-        public TagInstance PerformanceThrottles;
+        public CachedTagInstance DefaultCameraFx;
+        public CachedTagInstance DefaultScreenFx;
+        public CachedTagInstance Unknown133;
+        public CachedTagInstance SkyParameters;
+        public CachedTagInstance GlobalLighing;
+        public CachedTagInstance Lightmap;
+        public CachedTagInstance PerformanceThrottles;
         public List<UnknownBlock4> Unknown134;
         public List<AiObjective> AiObjectives;
         public List<DesignerZoneset> DesignerZonesets;
@@ -294,8 +294,8 @@ namespace TagTool.TagDefinitions
         public uint Unknown150;
         public uint Unknown151;
         public uint Unknown152;
-        public TagInstance Unknown153;
-        public TagInstance Unknown154;
+        public CachedTagInstance Unknown153;
+        public CachedTagInstance Unknown154;
         public List<UnknownBlock8> Unknown155;
 
         public enum MapTypeValue : short
@@ -308,9 +308,9 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x6C)]
         public class StructureBsp
         {
-            public TagInstance StructureBsp2;
-            public TagInstance Design;
-            public TagInstance Lighting;
+            public CachedTagInstance StructureBsp2;
+            public CachedTagInstance Design;
+            public CachedTagInstance Lighting;
             public int Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -319,15 +319,15 @@ namespace TagTool.TagDefinitions
             public short Unknown6;
             public short Unknown7;
             public short Unknown8;
-            public TagInstance Cubemap;
-            public TagInstance Wind;
+            public CachedTagInstance Cubemap;
+            public CachedTagInstance Wind;
             public int Unknown9;
         }
 
         [TagStructure(Size = 0x14)]
         public class SkyReference
         {
-            public TagInstance SkyObject;
+            public CachedTagInstance SkyObject;
             public short NameIndex;
             public ushort ActiveBsps;
         }
@@ -717,7 +717,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class SceneryPaletteBlock
         {
-            public TagInstance Scenery;
+            public CachedTagInstance Scenery;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -827,7 +827,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class BipedPaletteBlock
         {
-            public TagInstance Biped;
+            public CachedTagInstance Biped;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -987,7 +987,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class VehiclePaletteBlock
         {
-            public TagInstance Vehicle;
+            public CachedTagInstance Vehicle;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1124,7 +1124,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class EquipmentPaletteBlock
         {
-            public TagInstance Equipment;
+            public CachedTagInstance Equipment;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1285,7 +1285,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class WeaponPaletteBlock
         {
-            public TagInstance Weapon;
+            public CachedTagInstance Weapon;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1427,7 +1427,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class MachinePaletteBlock
         {
-            public TagInstance Machine;
+            public CachedTagInstance Machine;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1539,7 +1539,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class TerminalPaletteBlock
         {
-            public TagInstance Terminal;
+            public CachedTagInstance Terminal;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1656,7 +1656,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class AlternateRealityDevicePaletteBlock
         {
-            public TagInstance ArgDevice;
+            public CachedTagInstance ArgDevice;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1770,7 +1770,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class ControlPaletteBlock
         {
-            public TagInstance Control;
+            public CachedTagInstance Control;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1863,7 +1863,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class SoundSceneryPaletteBlock
         {
-            public TagInstance SoundScenery;
+            public CachedTagInstance SoundScenery;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -1983,7 +1983,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class GiantPaletteBlock
         {
-            public TagInstance Giant;
+            public CachedTagInstance Giant;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -2069,7 +2069,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class EffectSceneryBlock2
         {
-            public TagInstance EffectScenery;
+            public CachedTagInstance EffectScenery;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -2186,7 +2186,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class LightVolumesPaletteBlock
         {
-            public TagInstance LightVolume;
+            public CachedTagInstance LightVolume;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -2200,7 +2200,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class SandboxObject
         {
-            public TagInstance Object;
+            public CachedTagInstance Object;
             public StringId Name;
             public int MaxAllowed;
             public float Cost;
@@ -2228,10 +2228,10 @@ namespace TagTool.TagDefinitions
             public string Name;
             public float StartingHealthDamage;
             public float StartingShieldDamage;
-            public TagInstance PrimaryWeapon;
+            public CachedTagInstance PrimaryWeapon;
             public short RoundsLoaded;
             public short RoundsTotal;
-            public TagInstance SecondaryWeapon;
+            public CachedTagInstance SecondaryWeapon;
             public short RoundsLoaded2;
             public short RoundsTotal2;
             public uint Unknown;
@@ -2357,13 +2357,13 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class DecalPaletteBlock
         {
-            public TagInstance Decal;
+            public CachedTagInstance Decal;
         }
 
         [TagStructure(Size = 0x10)]
         public class StylePaletteBlock
         {
-            public TagInstance Style;
+            public CachedTagInstance Style;
         }
 
         [TagStructure(Size = 0x28)]
@@ -2393,7 +2393,7 @@ namespace TagTool.TagDefinitions
             public List<SingleLocation> SingleLocations;
             public StringId SquadTemplateName;
             [TagField(Flags = TagFieldFlags.Short)]
-            public TagInstance SquadTemplate;
+            public CachedTagInstance SquadTemplate;
             public List<SquadABlock> SquadA;
             public List<SquadBBlock> SquadB;
 
@@ -2852,7 +2852,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class CharacterPaletteBlock
         {
-            public TagInstance Character;
+            public CachedTagInstance Character;
         }
 
         [TagStructure(Size = 0x6C)]
@@ -3211,7 +3211,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class ScriptReference
         {
-            public TagInstance Reference;
+            public CachedTagInstance Reference;
         }
 
         [TagStructure(Size = 0x84)]
@@ -3368,71 +3368,71 @@ namespace TagTool.TagDefinitions
             [TagStructure(Size = 0x10)]
             public class ScriptSourceBlock
             {
-                public TagInstance HsSourceFile;
+                public CachedTagInstance HsSourceFile;
             }
 
             [TagStructure(Size = 0x10)]
             public class AiResource
             {
-                public TagInstance AiResource2;
+                public CachedTagInstance AiResource2;
             }
 
             [TagStructure(Size = 0x16C)]
             public class Reference
             {
-                public TagInstance SceneryResource;
+                public CachedTagInstance SceneryResource;
                 public List<OtherSceneryBlock> OtherScenery;
-                public TagInstance BipedsResource;
+                public CachedTagInstance BipedsResource;
                 public List<OtherBiped> OtherBipeds;
-                public TagInstance VehiclesResource;
-                public TagInstance EquipmentResource;
-                public TagInstance WeaponsResource;
-                public TagInstance SoundSceneryResource;
-                public TagInstance LightsResource;
-                public TagInstance DevicesResource;
+                public CachedTagInstance VehiclesResource;
+                public CachedTagInstance EquipmentResource;
+                public CachedTagInstance WeaponsResource;
+                public CachedTagInstance SoundSceneryResource;
+                public CachedTagInstance LightsResource;
+                public CachedTagInstance DevicesResource;
                 public List<OtherDevice> OtherDevices;
-                public TagInstance EffectSceneryResource;
-                public TagInstance DecalsResource;
+                public CachedTagInstance EffectSceneryResource;
+                public CachedTagInstance DecalsResource;
                 public List<OtherDecal> OtherDecals;
-                public TagInstance CinematicsResource;
-                public TagInstance TriggerVolumesResource;
-                public TagInstance ClusterDataResource;
-                public TagInstance CommentsResource;
-                public TagInstance CreatureResource;
-                public TagInstance StructureLightingResource;
-                public TagInstance DecoratorsResource;
+                public CachedTagInstance CinematicsResource;
+                public CachedTagInstance TriggerVolumesResource;
+                public CachedTagInstance ClusterDataResource;
+                public CachedTagInstance CommentsResource;
+                public CachedTagInstance CreatureResource;
+                public CachedTagInstance StructureLightingResource;
+                public CachedTagInstance DecoratorsResource;
                 public List<OtherDecorator> OtherDecorators;
-                public TagInstance SkyReferencesResource;
-                public TagInstance CubemapResource;
+                public CachedTagInstance SkyReferencesResource;
+                public CachedTagInstance CubemapResource;
 
                 [TagStructure(Size = 0x10)]
                 public class OtherSceneryBlock
                 {
-                    public TagInstance SceneryResource;
+                    public CachedTagInstance SceneryResource;
                 }
 
                 [TagStructure(Size = 0x10)]
                 public class OtherBiped
                 {
-                    public TagInstance BipedsResource;
+                    public CachedTagInstance BipedsResource;
                 }
 
                 [TagStructure(Size = 0x10)]
                 public class OtherDevice
                 {
-                    public TagInstance DevicesResource;
+                    public CachedTagInstance DevicesResource;
                 }
 
                 [TagStructure(Size = 0x10)]
                 public class OtherDecal
                 {
-                    public TagInstance DecalsResource;
+                    public CachedTagInstance DecalsResource;
                 }
 
                 [TagStructure(Size = 0x10)]
                 public class OtherDecorator
                 {
-                    public TagInstance DecoratorsResource;
+                    public CachedTagInstance DecoratorsResource;
                 }
             }
         }
@@ -3441,7 +3441,7 @@ namespace TagTool.TagDefinitions
         public class UnitSeatsMappingBlock
         {
             [TagField(Flags = TagFieldFlags.Short)]
-            public TagInstance Unit;
+            public CachedTagInstance Unit;
             public uint Seats;
             public uint Seats2;
         }
@@ -3569,12 +3569,12 @@ namespace TagTool.TagDefinitions
         public class BackgroundSoundEnvironmentPaletteBlock
         {
             public StringId Name;
-            public TagInstance SoundEnvironment;
+            public CachedTagInstance SoundEnvironment;
             public int Unknown;
             public float CutoffDistance;
             public float InterpolationSpeed;
-            public TagInstance BackgroundSound;
-            public TagInstance InsideClusterSound;
+            public CachedTagInstance BackgroundSound;
+            public CachedTagInstance InsideClusterSound;
             public float CutoffDistance2;
             public uint ScaleFlags;
             public float InteriorScale;
@@ -3624,7 +3624,7 @@ namespace TagTool.TagDefinitions
         public class CameraFxBlock
         {
             public StringId Name;
-            public TagInstance CameraFx;
+            public CachedTagInstance CameraFx;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -3638,7 +3638,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x74, MinVersion = CacheVersion.HaloOnline498295)]
         public class ScenarioClusterDatum
         {
-            public TagInstance Bsp;
+            public CachedTagInstance Bsp;
             public List<BackgroundSoundEnvironment> BackgroundSoundEnvironments;
             public List<UnknownBlock> Unknown;
             public List<UnknownBlock2> Unknown2;
@@ -3933,7 +3933,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class CratePaletteBlock
         {
-            public TagInstance Crate;
+            public CachedTagInstance Crate;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -3947,7 +3947,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class FlockPaletteBlock
         {
-            public TagInstance Flock;
+            public CachedTagInstance Flock;
         }
 
         [TagStructure(Size = 0x48)]
@@ -4002,7 +4002,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x30)]
         public class CreaturePaletteBlock
         {
-            public TagInstance Creature;
+            public CachedTagInstance Creature;
             public uint Unknown;
             public uint Unknown2;
             public uint Unknown3;
@@ -4024,7 +4024,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class MissionDialogueBlock
         {
-            public TagInstance MissionDialogue;
+            public CachedTagInstance MissionDialogue;
         }
 
         [TagStructure(Size = 0x24)]
@@ -4042,7 +4042,7 @@ namespace TagTool.TagDefinitions
         public class SimulationDefinitionTableBlock
         {
             [TagField(Flags = TagFieldFlags.Short)]
-            public TagInstance Tag;
+            public CachedTagInstance Tag;
         }
 
         [TagStructure(Size = 0x10)]
@@ -4293,14 +4293,14 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class Cinematic
         {
-            public TagInstance Cinematic2;
+            public CachedTagInstance Cinematic2;
         }
 
         [TagStructure(Size = 0x14)]
         public class CinematicLightingBlock
         {
             public StringId Name;
-            public TagInstance CinematicLight;
+            public CachedTagInstance CinematicLight;
         }
 
         [TagStructure(Size = 0x1C)]
@@ -4350,7 +4350,7 @@ namespace TagTool.TagDefinitions
         [TagStructure(Size = 0x10)]
         public class UnknownBlock8
         {
-            public TagInstance Unknown;
+            public CachedTagInstance Unknown;
         }
     }
 }

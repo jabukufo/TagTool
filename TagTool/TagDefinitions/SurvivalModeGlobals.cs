@@ -9,9 +9,9 @@ namespace TagTool.TagDefinitions
     public class SurvivalModeGlobals
     {
         public uint Unknown;
-        public TagInstance InGameStrings;
-        public TagInstance TimerSound;
-        public TagInstance TimerSoundZero;
+        public CachedTagInstance InGameStrings;
+        public CachedTagInstance TimerSound;
+        public CachedTagInstance TimerSoundZero;
         public List<SurvivalEvent> SurvivalEvents;
         public uint Unknown2;
         public uint Unknown3;
@@ -40,18 +40,18 @@ namespace TagTool.TagDefinitions
             public float SoundDelayAnnouncerOnly;
             public ushort SoundFlags;
             public short Unknown4;
-            public TagInstance EnglishSound;
-            public TagInstance JapaneseSound;
-            public TagInstance GermanSound;
-            public TagInstance FrenchSound;
-            public TagInstance SpanishSound;
-            public TagInstance LatinAmericanSpanishSound;
-            public TagInstance ItalianSound;
-            public TagInstance KoreanSound;
-            public TagInstance ChineseTraditionalSound;
-            public TagInstance ChineseSimplifiedSound;
-            public TagInstance PortugueseSound;
-            public TagInstance PolishSound;
+            public CachedTagInstance EnglishSound;
+            public CachedTagInstance JapaneseSound;
+            public CachedTagInstance GermanSound;
+            public CachedTagInstance FrenchSound;
+            public CachedTagInstance SpanishSound;
+            public CachedTagInstance LatinAmericanSpanishSound;
+            public CachedTagInstance ItalianSound;
+            public CachedTagInstance KoreanSound;
+            public CachedTagInstance ChineseTraditionalSound;
+            public CachedTagInstance ChineseSimplifiedSound;
+            public CachedTagInstance PortugueseSound;
+            public CachedTagInstance PolishSound;
             public uint Unknown5;
             public uint Unknown6;
             public uint Unknown7;

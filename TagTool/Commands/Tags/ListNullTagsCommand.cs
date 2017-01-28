@@ -26,9 +26,9 @@ namespace TagTool.Commands.Tags
             if (args.Count != 0)
                 return false;
 
-            for (var i = 0; i < CacheContext.TagCache.Tags.Count; i++)
+            for (var i = 0; i < CacheContext.TagCache.Index.Count; i++)
             {
-                if (CacheContext.TagCache.Tags[i] == null)
+                if (CacheContext.TagCache.Index[i] == null)
                     Console.WriteLine($"0x{i:X4}");
             }
 

@@ -20,7 +20,7 @@ namespace TagTool.Commands.Editing
     {
         public static XmlDocument Documentation { get; } = new XmlDocument();
 
-        public static CommandContext Create(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag)
+        public static CommandContext Create(CommandContextStack contextStack, GameCacheContext cacheContext, CachedTagInstance tag)
         {
             var documentationPath = Assembly.GetExecutingAssembly().Location;
             documentationPath = $"{documentationPath.Substring(0, documentationPath.Length - 4)}.xml";

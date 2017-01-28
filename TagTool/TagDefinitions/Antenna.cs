@@ -9,8 +9,8 @@ namespace TagTool.TagDefinitions
     public class Antenna
     {
         public StringId AttachmentMarkerName;
-        public TagInstance Bitmaps;
-        public TagInstance Physics;
+        public CachedTagInstance Bitmaps;
+        public CachedTagInstance Physics;
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;

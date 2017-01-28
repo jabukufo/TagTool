@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TagTool.Common;
 using TagTool.IO;
 
 namespace TagTool.Cache
@@ -13,24 +14,12 @@ namespace TagTool.Cache
     {
         private const uint CacheHeaderSize = 0x20;
 
-        private readonly List<TagInstance> _tags = new List<TagInstance>();
-
-        /// <summary>
-        /// Opens a tags.dat file from a stream.
-        /// </summary>
-        /// <param name="stream">The stream to open.</param>
-        public TagCache(Stream stream)
-        {
-            Tags = new TagList(_tags);
-
-            if (stream.Length != 0)
-                Load(new BinaryReader(stream));
-        }
+        private readonly List<CachedTagInstance> _tags = new List<CachedTagInstance>();
 
         /// <summary>
         /// Gets the tags in the file.
         /// </summary>
-        public TagList Tags { get; }
+        public TagCacheIndex Index { get; }
 
         /// <summary>
         /// Gets the timestamp stored in the file (as a FILETIME value).
@@ -38,15 +27,24 @@ namespace TagTool.Cache
         public long Timestamp { get; set; }
 
         /// <summary>
+        /// Opens a tags.dat file from a stream.
+        /// </summary>
+        /// <param name="stream">The stream to open.</param>
+        public TagCache(Stream stream)
+        {
+            Index = new TagCacheIndex(_tags);
+
+            if (stream.Length != 0)
+                Load(new BinaryReader(stream));
+        }
+
+        /// <summary>
         /// Allocates a new tag at the end of the tag list without updating the file.
         /// The tag's group will be null until it is assigned data.
         /// You can give the tag data by using one of the overwrite functions.
         /// </summary>
         /// <returns>The allocated tag.</returns>
-        public TagInstance AllocateTag()
-        {
-            return AllocateTag(TagGroup.Null);
-        }
+        public CachedTagInstance AllocateTag() => AllocateTag(TagGroup.Null);
 
         /// <summary>
         /// Allocates a new tag at the end of the tag list without updating the file.
@@ -54,10 +52,10 @@ namespace TagTool.Cache
         /// </summary>
         /// <param name="type">The tag's type information.</param>
         /// <returns>The allocated tag.</returns>
-        public TagInstance AllocateTag(TagGroup type)
+        public CachedTagInstance AllocateTag(TagGroup type)
         {
             var tagIndex = _tags.Count;
-            var tag = new TagInstance(tagIndex, type);
+            var tag = new CachedTagInstance(tagIndex, type);
             _tags.Add(tag);
             return tag;
         }
@@ -68,15 +66,18 @@ namespace TagTool.Cache
         /// <param name="stream">The stream to read from.</param>
         /// <param name="tag">The tag to read.</param>
         /// <returns>The data that was read.</returns>
-        public byte[] ExtractTagRaw(Stream stream, TagInstance tag)
+        public byte[] ExtractTagRaw(Stream stream, CachedTagInstance tag)
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
-            if (tag.HeaderOffset < 0)
+            else if (tag.HeaderOffset < 0)
                 throw new ArgumentException("The tag is not in the cache file");
-            stream.Position = tag.HeaderOffset;
+
             var result = new byte[tag.TotalSize];
+
+            stream.Position = tag.HeaderOffset;
             stream.Read(result, 0, result.Length);
+
             return result;
         }
 
@@ -86,11 +87,11 @@ namespace TagTool.Cache
         /// <param name="stream">The stream to read from.</param>
         /// <param name="tag">The tag to read.</param>
         /// <returns>The data that was read.</returns>
-        public TagData ExtractTag(Stream stream, TagInstance tag)
+        public CachedTagData ExtractTag(Stream stream, CachedTagInstance tag)
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
-            if (tag.HeaderOffset < 0)
+            else if (tag.HeaderOffset < 0)
                 throw new ArgumentException("The tag is not in the cache file");
 
             // Build the description info and get the data offset
@@ -121,7 +122,7 @@ namespace TagTool.Cache
         /// <param name="tag">The tag to overwrite.</param>
         /// <param name="data">The data to overwrite the tag with.</param>
         /// <exception cref="System.ArgumentNullException">tag</exception>
-        public void SetTagDataRaw(Stream stream, TagInstance tag, byte[] data)
+        public void SetTagDataRaw(Stream stream, CachedTagInstance tag, byte[] data)
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
@@ -148,19 +149,19 @@ namespace TagTool.Cache
         /// <param name="stream">The stream to write to.</param>
         /// <param name="tag">The tag to overwrite.</param>
         /// <param name="data">The data to store.</param>
-        public void SetTagData(Stream stream, TagInstance tag, TagData data)
+        public void SetTagData(Stream stream, CachedTagInstance tag, CachedTagData data)
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
-            if (data == null)
+            else if (data == null)
                 throw new ArgumentNullException(nameof(data));
-            if (data.Group == TagGroup.Null)
+            else if (data.Group == TagGroup.Null)
                 throw new ArgumentException("Cannot assign a tag to a null tag group");
-            if (data.Data == null)
+            else if (data.Data == null)
                 throw new ArgumentException("The tag data buffer is null");
 
             // Ensure the data fits
-            var headerSize = TagInstance.CalculateHeaderSize(data);
+            var headerSize = CachedTagInstance.CalculateHeaderSize(data);
             var alignedHeaderSize = (uint)((headerSize + 0xF) & ~0xF);
             if (tag.HeaderOffset < 0)
                 tag.HeaderOffset = GetNewTagOffset(tag.Index);
@@ -183,6 +184,7 @@ namespace TagTool.Cache
                 writer.BaseStream.Position = tag.HeaderOffset + alignedHeaderSize + fixup.WriteOffset;
                 writer.Write(tag.OffsetToPointer(alignedHeaderSize + fixup.TargetOffset));
             }
+
             UpdateTagOffsets(writer);
         }
 
@@ -192,7 +194,7 @@ namespace TagTool.Cache
         /// <param name="stream">The stream to write to.</param>
         /// <param name="tag">The tag to duplicate.</param>
         /// <returns>The new tag.</returns>
-        public TagInstance DuplicateTag(Stream stream, TagInstance tag)
+        public CachedTagInstance DuplicateTag(Stream stream, CachedTagInstance tag)
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
@@ -210,13 +212,14 @@ namespace TagTool.Cache
         /// <param name="tag">The tag to read.</param>
         /// <param name="dataOffset">On return, this will contain the offset of the tag's data relative to its header.</param>
         /// <returns>The description that was built. </returns>
-        private static TagData BuildTagDescription(Stream stream, TagInstance tag, out uint dataOffset)
+        private static CachedTagData BuildTagDescription(Stream stream, CachedTagInstance tag, out uint dataOffset)
         {
-            var data = new TagData
+            var data = new CachedTagData
             {
                 Group = tag.Group,
                 MainStructOffset = tag.MainStructOffset,
             };
+
             foreach (var dependency in tag.Dependencies)
                 data.Dependencies.Add(dependency);
 
@@ -259,15 +262,18 @@ namespace TagTool.Cache
         /// <param name="oldSize">The current size of the block to resize.</param>
         /// <param name="newSize">The new size of the block.</param>
         /// <exception cref="System.ArgumentException">Cannot resize a block to a negative size</exception>
-        private void ResizeBlock(Stream stream, TagInstance tag, long startOffset, long oldSize, long newSize)
+        private void ResizeBlock(Stream stream, CachedTagInstance tag, long startOffset, long oldSize, long newSize)
         {
             if (newSize < 0)
                 throw new ArgumentException("Cannot resize a block to a negative size");
-            if (oldSize == newSize)
+            else if (oldSize == newSize)
                 return;
+
             var oldEndOffset = startOffset + oldSize;
             var sizeDelta = newSize - oldSize;
+
             StreamUtil.Copy(stream, oldEndOffset, oldEndOffset + sizeDelta, stream.Length - oldEndOffset);
+
             FixTagOffsets(oldEndOffset, sizeDelta, tag);
         }
 
@@ -277,7 +283,7 @@ namespace TagTool.Cache
         /// <param name="startOffset">The offset where the resize operation took place.</param>
         /// <param name="sizeDelta">The amount to add to each tag offset after the start offset.</param>
         /// <param name="ignore">A tag to ignore.</param>
-        private void FixTagOffsets(long startOffset, long sizeDelta, TagInstance ignore)
+        private void FixTagOffsets(long startOffset, long sizeDelta, CachedTagInstance ignore)
         {
             foreach (var adjustTag in _tags.Where(t => t != null && t != ignore && t.HeaderOffset >= startOffset))
                 adjustTag.HeaderOffset += sizeDelta;
@@ -311,7 +317,7 @@ namespace TagTool.Cache
                     _tags.Add(null);
                     continue;
                 }
-                var tag = new TagInstance(i) { HeaderOffset = headerOffsets[i] };
+                var tag = new CachedTagInstance(i) { HeaderOffset = headerOffsets[i] };
                 _tags.Add(tag);
                 reader.BaseStream.Position = tag.HeaderOffset;
                 tag.ReadHeader(reader);
@@ -345,7 +351,7 @@ namespace TagTool.Cache
         private long GetTagDataEndOffset()
         {
             long endOffset = CacheHeaderSize;
-            foreach (var tag in Tags.NonNull())
+            foreach (var tag in Index.NonNull())
                 endOffset = Math.Max(endOffset, tag.HeaderOffset + tag.TotalSize);
             return endOffset;
         }

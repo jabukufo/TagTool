@@ -7,14 +7,14 @@ namespace TagTool.TagDefinitions
     public class BreakableSurface
     {
         public float MaximumVitality;
-        public TagInstance Effect;
-        public TagInstance Sound;
+        public CachedTagInstance Effect;
+        public CachedTagInstance Sound;
         public uint Unknown;
         public uint Unknown2;
         public uint Unknown3;
         public uint Unknown4;
-        public TagInstance CrackBitmap;
-        public TagInstance HoleBitmap;
+        public CachedTagInstance CrackBitmap;
+        public CachedTagInstance HoleBitmap;
         public uint Unknown5;
         public uint Unknown6;
         public uint Unknown7;

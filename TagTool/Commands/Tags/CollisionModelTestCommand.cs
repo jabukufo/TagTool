@@ -37,7 +37,7 @@ namespace TagTool.Commands.Tags
                 return false;
             }
 
-            TagInstance tag = null;
+            CachedTagInstance tag = null;
             bool b_duplicate;
 
             // optional argument: forces overwriting of tags that are not type: coll
@@ -125,7 +125,7 @@ namespace TagTool.Commands.Tags
                 if (b_duplicate)
                 {
                     //duplicate an existing tag, trashcan phmo
-                    tag = CacheContext.TagCache.DuplicateTag(stream, CacheContext.TagCache.Tags[0x4436]);
+                    tag = CacheContext.TagCache.DuplicateTag(stream, CacheContext.TagCache.Index[0x4436]);
                     if (tag == null)
                     {
                         Console.WriteLine("Failed tag duplication.");

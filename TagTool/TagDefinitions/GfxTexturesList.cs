@@ -14,7 +14,7 @@ namespace TagTool.TagDefinitions
         public class Texture
         {
             [TagField(Length = 256)] public string FileName;
-            public TagInstance Bitmap;
+            public CachedTagInstance Bitmap;
         }
     }
 }

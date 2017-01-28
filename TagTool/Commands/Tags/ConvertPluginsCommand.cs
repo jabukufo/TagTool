@@ -57,7 +57,7 @@ namespace TagTool.Commands.Tags
             // order to look up the group name without using a static table.
             var processedGroups = new HashSet<Tag>();
             var numConflicts = 0;
-            foreach (var tag in CacheContext.TagCache.Tags.NonNull().Where(tag => !processedGroups.Contains(tag.Group.Tag)))
+            foreach (var tag in CacheContext.TagCache.Index.NonNull().Where(tag => !processedGroups.Contains(tag.Group.Tag)))
             {
                 processedGroups.Add(tag.Group.Tag);
 

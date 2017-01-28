@@ -32,7 +32,7 @@ namespace TagTool.Commands.Tags
             if (tag == null)
                 return false;
 
-            TagInstance newTag;
+            CachedTagInstance newTag;
             using (var stream = CacheContext.OpenTagCacheReadWrite())
                 newTag = CacheContext.TagCache.DuplicateTag(stream, tag);
 

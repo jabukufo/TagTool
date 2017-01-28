@@ -10,10 +10,10 @@ namespace TagTool.Commands.RenderMethods
     class SpecifyBitmapsCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private RenderMethod Definition { get; }
 
-        public SpecifyBitmapsCommand(GameCacheContext cacheContext, TagInstance tag, RenderMethod definition)
+        public SpecifyBitmapsCommand(GameCacheContext cacheContext, CachedTagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
 
                  "SpecifyBitmaps",
@@ -33,7 +33,7 @@ namespace TagTool.Commands.RenderMethods
             if (args.Count != 0)
                 return false;
             
-            var shaderMaps = new Dictionary<StringId, TagInstance>();
+            var shaderMaps = new Dictionary<StringId, CachedTagInstance>();
 
             foreach (var property in Definition.ShaderProperties)
             {

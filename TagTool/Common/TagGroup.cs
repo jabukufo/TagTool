@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TagTool.Common;
 
-namespace TagTool.Cache
+namespace TagTool.Common
 {
     /// <summary>
     /// Describes the type of data in a tag.

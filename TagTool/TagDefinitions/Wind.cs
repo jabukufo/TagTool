@@ -12,7 +12,7 @@ namespace TagTool.TagDefinitions
         public byte[] Function4;
         public byte[] Function5;
         public uint Unknown;
-        public TagInstance WarpBitmap;
+        public CachedTagInstance WarpBitmap;
         public uint Unknown2;
     }
 }

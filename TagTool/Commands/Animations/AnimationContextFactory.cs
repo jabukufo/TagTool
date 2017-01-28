@@ -5,7 +5,7 @@ namespace TagTool.Commands.Animations
 {
     static class AnimationContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, ModelAnimationGraph animation)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, ModelAnimationGraph animation)
         {
             var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
@@ -17,7 +17,7 @@ namespace TagTool.Commands.Animations
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, ModelAnimationGraph animation)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, ModelAnimationGraph animation)
         {
             context.AddCommand(new GetResourceInfoCommand(info, tag, animation));
             context.AddCommand(new AnimationTestCommand(info, tag, animation));

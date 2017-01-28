@@ -5,7 +5,7 @@ namespace TagTool.Commands.Scenarios
 {
     static class ScnrContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, Scenario scenario)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, Scenario scenario)
         {
             var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
@@ -17,7 +17,7 @@ namespace TagTool.Commands.Scenarios
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, Scenario scenario)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, Scenario scenario)
         {
             context.AddCommand(new CopyForgePaletteCommand(info, scenario));
         }

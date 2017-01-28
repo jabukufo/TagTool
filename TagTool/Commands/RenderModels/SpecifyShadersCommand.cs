@@ -10,10 +10,10 @@ namespace TagTool.Commands.RenderModels
     class SpecifyShadersCommand : Command
     {
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
         private RenderModel Definition { get; }
 
-        public SpecifyShadersCommand(GameCacheContext cacheContext, TagInstance tag, RenderModel definition)
+        public SpecifyShadersCommand(GameCacheContext cacheContext, CachedTagInstance tag, RenderModel definition)
             : base(CommandFlags.Inherit,
 
                   "SpecifyShaders",

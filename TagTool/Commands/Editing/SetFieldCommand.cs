@@ -12,12 +12,12 @@ namespace TagTool.Commands.Editing
     {
         private CommandContextStack ContextStack { get; }
         private GameCacheContext CacheContext { get; }
-        private TagInstance Tag { get; }
+        private CachedTagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
         
-        public SetFieldCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
+        public SetFieldCommand(CommandContextStack contextStack, GameCacheContext cacheContext, CachedTagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
 
                   "SetField",
@@ -222,7 +222,7 @@ namespace TagTool.Commands.Editing
                     return false;
                 output = input;
             }
-            else if (type == typeof(TagInstance))
+            else if (type == typeof(CachedTagInstance))
             {
                 if (args.Count != 1)
                     return false;
@@ -385,7 +385,7 @@ namespace TagTool.Commands.Editing
                 type == typeof(ulong) ||
                 type == typeof(float) ||
                 type == typeof(string) ||
-                type == typeof(TagInstance) ||
+                type == typeof(CachedTagInstance) ||
                 type == typeof(StringId) ||
                 type == typeof(Angle))
                 return 1;
