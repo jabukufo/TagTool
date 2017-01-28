@@ -18,10 +18,10 @@ namespace TagTool.Commands.Tags
 
         public NameTagCommand(GameCacheContext info)
             : base(CommandFlags.Inherit,
-            "name-tag",
+            "NameTag",
             "Renames a tag in memory and in the .csv file",
 
-            "name-tag <tag> <name>",
+            "NameTag <tag> <name>",
 
             "<tag> - a reference to a tag by index, *, or its old tagname. \n" +
             "<name> - should be a concise name that resembles the format of existing tagnames.\n")
