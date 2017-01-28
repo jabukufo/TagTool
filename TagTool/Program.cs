@@ -116,6 +116,8 @@ namespace TagTool
                     context = context.Parent;
                 }
 
+                commandNames.Sort();
+
                 var commandLine = ReadCommandLine(contextStack, commandNames, s => s);
 
                 if (commandLine == null)
