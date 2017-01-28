@@ -55,44 +55,11 @@ namespace TagTool.Commands.Tags
             using (var reader = new StreamReader(File.Exists(csvPath) ? File.OpenRead(csvPath) : File.Create(csvPath)))
                 tagMap = TagVersionMap.ParseTagVersionMap(reader);
 
-            // Load destination files
-            Console.WriteLine("Loading the target tags.dat...");
-            var destCachePath = Path.Combine(targetDir, "tags.dat");
-            var destCacheContext = new GameCacheContext { TagCacheFile = new FileInfo(destCachePath) };
+            // Load destination cache files
+            var destCacheContext = new GameCacheContext(new DirectoryInfo(targetDir));
             using (var stream = destCacheContext.OpenTagCacheRead())
                 destCacheContext.TagCache = new TagCache(stream);
-
-            // Do version detection
-            CacheVersion guessedVersion;
-            destCacheContext.Version = CacheVersionDetection.Detect(destCacheContext.TagCache, out guessedVersion);
-            if (destCacheContext.Version == CacheVersion.Unknown)
-            {
-                Console.WriteLine("Unrecognized target version!");
-                return true;
-            }
-            Console.WriteLine("- Detected version {0}", CacheVersionDetection.GetVersionString(destCacheContext.Version));
-
-            if (CacheContext.Version != CacheVersion.HaloOnline498295 && destCacheContext.Version != CacheVersion.HaloOnline106708)
-            {
-                Console.Error.WriteLine("Conversion is only supported from 11.1.498295 Live to 1.106708 cert_ms23.");
-                return true;
-            }
-
-            // Set up version-specific objects
-            destCacheContext.Serializer = new TagSerializer(destCacheContext.Version);
-            destCacheContext.Deserializer = new TagDeserializer(destCacheContext.Version);
-
-            // Load stringIDs
-            Console.WriteLine("Loading the target string_ids.dat...");
-
-            var resolver = StringIdResolverFactory.Create(destCacheContext.Version);
-
-            var destStringIDsPath = Path.Combine(targetDir, "string_ids.dat");
-            destCacheContext.StringIdCacheFile = new FileInfo(destStringIDsPath);
-
-            using (var stream = destCacheContext.StringIdCacheFile.OpenRead())
-                destCacheContext.StringIdCache = new StringIdCache(stream, resolver);
-
+            
             // Load resources for the target build
             Console.WriteLine("Loading target resources...");
             var destResources = new ResourceDataManager();

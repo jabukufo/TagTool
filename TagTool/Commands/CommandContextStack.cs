@@ -35,6 +35,8 @@ namespace TagTool.Commands
             return result.ToString();
         }
 
+
+
         /// <summary>
         /// Pushes a context onto the stack, making it active.
         /// </summary>

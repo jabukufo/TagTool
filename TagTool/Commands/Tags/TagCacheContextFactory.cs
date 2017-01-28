@@ -7,7 +7,7 @@ namespace TagTool.Commands.Tags
     {
         public static CommandContext Create(CommandContextStack stack, GameCacheContext cacheContext)
         {
-            var context = new CommandContext(stack.Context, cacheContext.TagCacheFile.Name);
+            var context = new CommandContext(stack.Context, "tags");
 
             context.AddCommand(new HelpCommand(stack));
             context.AddCommand(new ClearCommand());

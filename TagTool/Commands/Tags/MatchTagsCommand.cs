@@ -59,7 +59,7 @@ namespace TagTool.Commands.Tags
                 Console.WriteLine("Loading {0}...", path);
 
                 // Load the cache file
-                var cacheContext = new GameCacheContext { TagCacheFile = new FileInfo(path) };
+                var cacheContext = new GameCacheContext(new FileInfo(path).Directory);
                 using (var stream = cacheContext.OpenTagCacheRead())
                     cacheContext.TagCache = new TagCache(stream);
 

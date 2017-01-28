@@ -17,7 +17,7 @@ namespace TagTool
 {
     static class Program
     {
-        enum WindowState : int
+        private enum WindowState : int
         {
             Hidden = 0,
             Normal = 1,
@@ -53,132 +53,15 @@ namespace TagTool
                 // Maximize the console window
                 ShowWindow(Process.GetCurrentProcess().MainWindowHandle, WindowState.Maximized);
 
-                Console.WriteLine("Tag Tool [{0}]", Assembly.GetExecutingAssembly().GetName().Version);
+                Console.WriteLine("TagTool [{0}]", Assembly.GetExecutingAssembly().GetName().Version);
                 Console.WriteLine();
                 Console.WriteLine("Please report any bugs and feature requests at");
                 Console.WriteLine("<https://github.com/TheGuardians/TagTool/issues>.");
                 Console.WriteLine();
-                Console.Write("Reading tags...");
             }
 
-            // Load the tag cache
-            FileInfo fileInfo = null;
-            TagCache cache = null;
+            var cacheContext = new GameCacheContext(new FileInfo(filePath).Directory);
 
-            try
-            {
-                fileInfo = new FileInfo(filePath);
-                using (var stream = fileInfo.Open(FileMode.Open, FileAccess.Read))
-                    cache = new TagCache(stream);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR: " + e.Message);
-                ConsoleHistory.Dump("hott_*_tags_init.log");
-                return;
-            }
-
-            if (autoexecCommand == null)
-                Console.WriteLine("{0} tags loaded.", cache.Index.Count);
-
-            // Version detection
-            CacheVersion closestVersion;
-            var version = CacheVersionDetection.Detect(cache, out closestVersion);
-            if (version != CacheVersion.Unknown)
-            {
-                if (autoexecCommand == null)
-                {
-                    var buildDate = DateTime.FromFileTime(cache.Timestamp);
-                    Console.WriteLine("- Detected target engine version {0}.", CacheVersionDetection.GetVersionString(closestVersion));
-                    Console.WriteLine("- This cache file was built on {0} at {1}.", buildDate.ToShortDateString(), buildDate.ToShortTimeString());
-                }
-            }
-            else
-            {
-                Console.WriteLine("WARNING: The cache file's version was not recognized!");
-                Console.WriteLine("Using the closest known version {0}.", CacheVersionDetection.GetVersionString(closestVersion));
-                version = closestVersion;
-            }
-
-            // Load stringIDs
-            Console.Write("Reading stringIDs...");
-            var stringIdPath = Path.Combine(fileInfo.DirectoryName ?? "", "string_ids.dat");
-            var resolver = StringIdResolverFactory.Create(version);
-            StringIdCache stringIds = null;
-            try
-            {
-                using (var stream = File.OpenRead(stringIdPath))
-                    stringIds = new StringIdCache(stream, resolver);
-            }
-            catch (IOException)
-            {
-                Console.WriteLine("Warning: unable to open string_ids.dat!");
-                Console.WriteLine("Commands which require stringID values will be unavailable.");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR: " + e.Message);
-                ConsoleHistory.Dump("hott_*_string_ids_init.log");
-                return;
-            }
-
-            if (autoexecCommand == null && stringIds != null)
-            {
-                Console.WriteLine("{0} strings loaded.", stringIds.Strings.Count);
-                Console.WriteLine();
-            }
-
-            var cacheContext = new GameCacheContext
-            {
-                TagCache = cache,
-                TagCacheFile = fileInfo,
-                StringIdCache = stringIds,
-                StringIdCacheFile = (stringIds != null) ? new FileInfo(stringIdPath) : null,
-                Version = version,
-                Serializer = new TagSerializer(version),
-                Deserializer = new TagDeserializer(version),
-            };
-
-            var tagNamesPath = "tagnames_" + CacheVersionDetection.GetVersionString(version) + ".csv";
-
-            if (File.Exists(tagNamesPath))
-            {
-                using (var tagNamesStream = File.Open(tagNamesPath, FileMode.Open, FileAccess.Read))
-                {
-                    var reader = new StreamReader(tagNamesStream);
-
-                    while (!reader.EndOfStream)
-                    {
-                        var line = reader.ReadLine();
-                        var separatorIndex = line.IndexOf(',');
-                        var indexString = line.Substring(2, separatorIndex - 2);
-
-                        int tagIndex;
-                        if (!int.TryParse(indexString, NumberStyles.HexNumber, null, out tagIndex))
-                            tagIndex = -1;
-
-                        if (tagIndex < 0 || tagIndex >= cache.Index.Count)
-                            continue;
-
-                        var nameString = line.Substring(separatorIndex + 1);
-
-                        if (nameString.Contains(" "))
-                        {
-                            var lastSpaceIndex = nameString.LastIndexOf(' ');
-                            nameString = nameString.Substring(lastSpaceIndex + 1, nameString.Length - lastSpaceIndex - 1);
-                        }
-
-                        cacheContext.TagNames[tagIndex] = nameString;
-                    }
-
-                    reader.Close();
-                }
-            }
-
-            foreach (var tag in cacheContext.TagCache.Index)
-                if (tag != null && !cacheContext.TagNames.ContainsKey(tag.Index))
-                    cacheContext.TagNames[tag.Index] = $"0x{tag.Index:X4}";
-            
             // Create command context
             var contextStack = new CommandContextStack();
             var tagsContext = TagCacheContextFactory.Create(contextStack, cacheContext);
@@ -196,8 +79,22 @@ namespace TagTool
                               "the current editing context, or enter \"Quit\" to quit.");
             while (true)
             {
+                var originalColor = Console.ForegroundColor;
+                var contextPath = contextStack.GetPath();
+
                 Console.WriteLine();
-                Console.Write("{0}> ", contextStack.GetPath());
+
+                if (contextStack.Context.Name.Length < contextPath.Length)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.Write(contextPath.Substring(0, contextPath.Length - contextStack.Context.Name.Length));
+                }
+
+                Console.ForegroundColor = originalColor;
+                Console.Write(contextStack.Context.Name);
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("> ");
+                Console.ForegroundColor = originalColor;
 
                 var commandNames = new List<string> { "Exit", "Quit" };
                 var context = contextStack.Context;
@@ -268,7 +165,7 @@ namespace TagTool
             }
         }
 
-        public static string ReadCommandLine<T, TResult>(CommandContextStack contextStack, IEnumerable<T> hintSource, Func<T, TResult> hintField, string inputRegex = ".*", ConsoleColor hintColor = ConsoleColor.DarkCyan)
+        private static string ReadCommandLine<T, TResult>(CommandContextStack contextStack, IEnumerable<T> hintSource, Func<T, TResult> hintField, string inputRegex = ".*", ConsoleColor hintColor = ConsoleColor.DarkCyan)
         {
             ConsoleKeyInfo input;
 
@@ -278,7 +175,8 @@ namespace TagTool
             var commandLine = string.Empty;
 
             var originalColor = Console.ForegroundColor;
-
+            var contextPath = contextStack.GetPath();
+            
             while (ConsoleKey.Enter != (input = Console.ReadKey()).Key)
             {
                 if (input.Key == ConsoleKey.Backspace)
@@ -303,8 +201,20 @@ namespace TagTool
                 Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, currentLineCursor);
-                
-                Console.Write("{0}> {1}", contextStack.GetPath(), userInput);
+
+                if (contextStack.Context.Name.Length < contextPath.Length)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.Write(contextPath.Substring(0, contextPath.Length - contextStack.Context.Name.Length));
+                }
+
+                Console.ForegroundColor = originalColor;
+                Console.Write(contextStack.Context.Name);
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("> ");
+                Console.ForegroundColor = originalColor;
+
+                Console.Write(userInput);
 
                 Console.ForegroundColor = hintColor;
 
@@ -314,8 +224,8 @@ namespace TagTool
                 Console.ForegroundColor = originalColor;
             }
 
-            Console.ForegroundColor = originalColor;
             Console.Write($"{contextStack.GetPath()}> ");
+
             if (lastSuggestion != string.Empty && commandLine.StartsWith(lastSuggestion))
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -327,6 +237,7 @@ namespace TagTool
             {
                 Console.Write(commandLine);
             }
+
             Console.WriteLine();
 
             return commandLine;
