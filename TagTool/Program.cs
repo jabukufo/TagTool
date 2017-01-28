@@ -310,11 +310,17 @@ namespace TagTool
 
             Console.ForegroundColor = originalColor;
             Console.Write($"{contextStack.GetPath()}> ");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write(lastSuggestion);
-            Console.ForegroundColor = originalColor;
-            Console.Write(commandLine.Substring(lastSuggestion.Length, commandLine.Length - lastSuggestion.Length));
-            Console.WriteLine();
+            if (lastSuggestion != string.Empty && commandLine.StartsWith(lastSuggestion))
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(lastSuggestion);
+                Console.ForegroundColor = originalColor;
+                Console.Write(commandLine.Substring(lastSuggestion.Length, commandLine.Length - lastSuggestion.Length));
+            }
+            else
+            {
+                Console.Write(commandLine);
+            }
             Console.WriteLine();
 
             return commandLine;
