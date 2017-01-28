@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.IO;
-using TagTool.Cache;
 using TagTool.Bitmaps;
 using TagTool.Geometry;
-using TagTool.Tags;
 using TagTool.Common;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 
 namespace TagTool.Serialization
 {
@@ -77,7 +75,7 @@ namespace TagTool.Serialization
             return (uint)resourceAddress.Offset;
         }
 
-        public TagInstance GetTagByIndex(int index)
+        public CachedTagInstance GetTagByIndex(int index)
         {
             throw new InvalidOperationException("Resource definitions cannot contain tag references");
         }

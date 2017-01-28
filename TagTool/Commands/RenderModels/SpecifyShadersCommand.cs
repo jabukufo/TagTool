@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.RenderModels
 {
     class SpecifyShadersCommand : Command
     {
-        private GameCacheContext Info { get; }
-        private TagInstance Tag { get; }
+        private GameCacheContext CacheContext { get; }
+        private CachedTagInstance Tag { get; }
         private RenderModel Definition { get; }
 
-        public SpecifyShadersCommand(GameCacheContext info, TagInstance tag, RenderModel definition)
+        public SpecifyShadersCommand(GameCacheContext cacheContext, CachedTagInstance tag, RenderModel definition)
             : base(CommandFlags.Inherit,
-                  "specifyshaders",
+
+                  "SpecifyShaders",
                   "Allows the shaders of a render_model to be respecified.",
-                  "specifyshaders",
+
+                  "SpecifyShaders",
+
                   "Allows the shaders of a render_model to be respecified.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Tag = tag;
             Definition = definition;
         }
@@ -36,13 +37,13 @@ namespace TagTool.Commands.RenderModels
                 else
                     Console.Write("Please enter the replace material #{0} index: ", Definition.Materials.IndexOf(material));
 
-                material.RenderMethod = ArgumentParser.ParseTagIndex(Info, Console.ReadLine());
+                material.RenderMethod = ArgumentParser.ParseTagIndex(CacheContext, Console.ReadLine());
             }
 
-            using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = CacheContext.TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Tag);
-                Info.Serializer.Serialize(context, Definition);
+                var context = new TagSerializationContext(cacheStream, CacheContext, Tag);
+                CacheContext.Serializer.Serialize(context, Definition);
             }
 
             Console.WriteLine("Done!");

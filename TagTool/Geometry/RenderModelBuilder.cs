@@ -6,8 +6,7 @@ using TagTool.Cache;
 using TagTool.Common;
 using TagTool.IO;
 using TagTool.Serialization;
-using TagTool.Tags.Definitions;
-using TagTool.Cache.HaloOnline;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Geometry
 {
@@ -79,7 +78,7 @@ namespace TagTool.Geometry
         /// </summary>
         /// <param name="name">The name stringID.</param>
         /// <exception cref="System.InvalidOperationException">Cannot begin a new region while another is active</exception>
-        public void BeginRegion(StringID name)
+        public void BeginRegion(StringId name)
         {
             if (_currentRegion != null)
                 throw new InvalidOperationException("Cannot begin a new region while another is active");
@@ -119,7 +118,7 @@ namespace TagTool.Geometry
         /// or
         /// Cannot begin a new permutation while another is active
         /// </exception>
-        public void BeginPermutation(StringID name)
+        public void BeginPermutation(StringId name)
         {
             if (_currentRegion == null)
                 throw new InvalidOperationException("Cannot begin a new permutation if a region is not active");
@@ -229,7 +228,6 @@ namespace TagTool.Geometry
         /// Binds a world vertex to the current mesh.
         /// </summary>
         /// <param name="vertices"></param>
-        /// <param name="nodeIndex"></param>
         public void BindWorldVertexBuffer(IEnumerable<WorldVertex> vertices)
         {
             if (_currentMesh == null)
@@ -389,8 +387,8 @@ namespace TagTool.Geometry
             {
                 // TODO: Refactor how vertices work, this is just ugly
 
-                IEnumerable<Vector4> positions = null;
-                IEnumerable<Vector2> texCoords = null;
+                IEnumerable<RealVector4d> positions = null;
+                IEnumerable<RealPoint2d> texCoords = null;
                 if (mesh.RigidVertices != null)
                 {
                     positions = mesh.RigidVertices.Select(v => v.Position);
@@ -404,12 +402,12 @@ namespace TagTool.Geometry
 
                 if (positions != null)
                 {
-                    result.PositionMinX = Math.Min(result.PositionMinX, positions.Min(v => v.X));
-                    result.PositionMinY = Math.Min(result.PositionMinY, positions.Min(v => v.Y));
-                    result.PositionMinZ = Math.Min(result.PositionMinZ, positions.Min(v => v.Z));
-                    result.PositionMaxX = Math.Max(result.PositionMaxX, positions.Max(v => v.X));
-                    result.PositionMaxY = Math.Max(result.PositionMaxY, positions.Max(v => v.Y));
-                    result.PositionMaxZ = Math.Max(result.PositionMaxZ, positions.Max(v => v.Z));
+                    result.PositionMinX = Math.Min(result.PositionMinX, positions.Min(v => v.I));
+                    result.PositionMinY = Math.Min(result.PositionMinY, positions.Min(v => v.J));
+                    result.PositionMinZ = Math.Min(result.PositionMinZ, positions.Min(v => v.K));
+                    result.PositionMaxX = Math.Max(result.PositionMaxX, positions.Max(v => v.I));
+                    result.PositionMaxY = Math.Max(result.PositionMaxY, positions.Max(v => v.J));
+                    result.PositionMaxZ = Math.Max(result.PositionMaxZ, positions.Max(v => v.K));
                 }
                 if (texCoords != null)
                 {

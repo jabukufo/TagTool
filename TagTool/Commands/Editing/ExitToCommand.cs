@@ -5,16 +5,19 @@ namespace TagTool.Commands.Editing
 {
     class ExitToCommand : Command
     {
-        private CommandContextStack Stack { get; }
+        private CommandContextStack ContextStack { get; }
 
-        public ExitToCommand(CommandContextStack stack)
+        public ExitToCommand(CommandContextStack contextStack)
             : base( CommandFlags.Inherit,
-                  "exitto",
+
+                  "ExitTo",
                   "Exits each context on the stack until the specified one is found.",
-                  "exitto <context name>",
+
+                  "ExitTo <context name>",
+
                   "Exits each context on the stack until the specified one is found.")
         {
-            Stack = stack;
+            ContextStack = contextStack;
         }
 
         public override bool Execute(List<string> args)
@@ -26,10 +29,10 @@ namespace TagTool.Commands.Editing
 
             var request = args[0];
             var requestLow = request.ToLower();
-            var context = Stack.Context;
+            var context = ContextStack.Context;
 
             // Assert that there is a context with the requested name.
-            for (var parent = Stack.Context; parent != null; parent = parent.Parent)
+            for (var parent = ContextStack.Context; parent != null; parent = parent.Parent)
             {
                 if (parent.Name == request || parent.Name.ToLower() == requestLow)
                 {
@@ -49,8 +52,8 @@ namespace TagTool.Commands.Editing
             {
                 if (request == context.Name || requestLow == context.Name.ToLower())
                     break;
-                Stack.Pop();
-                context = Stack.Context;
+                ContextStack.Pop();
+                context = ContextStack.Context;
             }
 
             return true;

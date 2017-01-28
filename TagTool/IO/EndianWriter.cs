@@ -9,7 +9,7 @@ namespace TagTool.IO
     {
         public EndianFormat Format { get; set; }
         
-        public EndianWriter(Stream stream, EndianFormat format)
+        public EndianWriter(Stream stream, EndianFormat format = EndianFormat.Little)
             : base(stream)
         {
             Format = format;

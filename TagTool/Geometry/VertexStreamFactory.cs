@@ -14,8 +14,8 @@ namespace TagTool.Geometry
         public static IVertexStream Create(CacheVersion version, Stream stream)
         {
             if (CacheVersionDetection.Compare(version, CacheVersion.HaloOnline235640) >= 0)
-                return new Cache.HaloOnline.MS25.VertexStream(stream);
-            return new Cache.HaloOnline.MS23.VertexStream(stream);
+                return new VertexStreamMS25(stream);
+            return new VertexStreamMS23(stream);
         }
     }
 }

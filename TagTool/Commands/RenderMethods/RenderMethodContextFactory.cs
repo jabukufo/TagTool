@@ -1,15 +1,13 @@
 ﻿using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.RenderMethods
 {
     static class RenderMethodContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, RenderMethod renderMethod)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, RenderMethod renderMethod)
         {
-            var groupName = info.StringIDs.GetString(tag.Group.Name);
+            var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
             var context = new CommandContext(parent,
                 string.Format("{0:X8}.{1}", tag.Index, groupName));
@@ -19,7 +17,7 @@ namespace TagTool.Commands.RenderMethods
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, RenderMethod renderMethod)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, RenderMethod renderMethod)
         {
             context.AddCommand(new ListArgumentsCommand(info, tag, renderMethod));
             context.AddCommand(new ListBitmapsCommand(info, tag, renderMethod));

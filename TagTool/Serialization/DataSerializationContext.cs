@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagTool.Cache.HaloOnline;
+using TagTool.Cache;
 using TagTool.IO;
-using TagTool.Tags;
 
 namespace TagTool.Serialization
 {
@@ -48,7 +42,7 @@ namespace TagTool.Serialization
             throw new NotImplementedException();
         }
 
-        public TagInstance GetTagByIndex(int index)
+        public CachedTagInstance GetTagByIndex(int index)
         {
             throw new NotImplementedException();
         }

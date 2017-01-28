@@ -2,7 +2,6 @@
 using TagTool.Common;
 using TagTool.Cache;
 using TagTool.Serialization;
-using TagTool.Tags;
 
 namespace TagTool.Geometry
 {
@@ -16,7 +15,7 @@ namespace TagTool.Geometry
         /// <summary>
         /// Gets or sets the render method tag to use to render the material.
         /// </summary>
-        public TagInstance RenderMethod;
+        public CachedTagInstance RenderMethod;
 
         [MinVersion(CacheVersion.HaloOnline700123)] public List<Skin> Skins;
         public List<Property> Properties;
@@ -29,8 +28,8 @@ namespace TagTool.Geometry
         [TagStructure(Size = 0x14)]
         public class Skin
         {
-            public StringID Name;
-            public TagInstance RenderMethod;
+            public StringId Name;
+            public CachedTagInstance RenderMethod;
         }
 
         [TagStructure(Size = 0xC)]

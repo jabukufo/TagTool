@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Tags
 {
     class ListNullTagsCommand : Command
     {
-        public GameCacheContext Info { get; }
+        public GameCacheContext CacheContext { get; }
 
-        public ListNullTagsCommand(GameCacheContext info)
+        public ListNullTagsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
-                  "listnulltags",
+                  
+                  "ListNullTags",
                   "Lists all null tag indices in the current tag cache",
-                  "listnulltags",
+                  
+                  "ListNullTags",
+                  
                   "Lists all null tag indices in the current tag cache")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
@@ -24,9 +26,9 @@ namespace TagTool.Commands.Tags
             if (args.Count != 0)
                 return false;
 
-            for (var i = 0; i < Info.Cache.Tags.Count; i++)
+            for (var i = 0; i < CacheContext.TagCache.Index.Count; i++)
             {
-                if (Info.Cache.Tags[i] == null)
+                if (CacheContext.TagCache.Index[i] == null)
                     Console.WriteLine($"0x{i:X4}");
             }
 

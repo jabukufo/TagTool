@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.RenderMethods
 {
     class SpecifyBitmapsCommand : Command
     {
-        private GameCacheContext Info { get; }
-        private TagInstance Tag { get; }
+        private GameCacheContext CacheContext { get; }
+        private CachedTagInstance Tag { get; }
         private RenderMethod Definition { get; }
 
-        public SpecifyBitmapsCommand(GameCacheContext info, TagInstance tag, RenderMethod definition)
+        public SpecifyBitmapsCommand(GameCacheContext cacheContext, CachedTagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
-                 "specifybitmaps",
+
+                 "SpecifyBitmaps",
                  "Allows the bitmaps of the render_method to be respecified.",
-                 "specifybitmaps",
+
+                 "SpecifyBitmaps",
+
                  "Allows the bitmaps of the render_method to be respecified.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Tag = tag;
             Definition = definition;
         }
@@ -33,24 +33,24 @@ namespace TagTool.Commands.RenderMethods
             if (args.Count != 0)
                 return false;
             
-            var shaderMaps = new Dictionary<StringID, TagInstance>();
+            var shaderMaps = new Dictionary<StringId, CachedTagInstance>();
 
             foreach (var property in Definition.ShaderProperties)
             {
                 RenderMethodTemplate template = null;
 
-                using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.Read))
+                using (var cacheStream = CacheContext.OpenTagCacheRead())
                 {
-                    var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, property.Template);
-                    template = Info.Deserializer.Deserialize<RenderMethodTemplate>(context);
+                    var context = new TagSerializationContext(cacheStream, CacheContext, property.Template);
+                    template = CacheContext.Deserializer.Deserialize<RenderMethodTemplate>(context);
                 }
 
                 for (var i = 0; i < template.ShaderMaps.Count; i++)
                 {
                     var mapTemplate = template.ShaderMaps[i];
 
-                    Console.Write(string.Format("Please enter the {0} index: ", Info.StringIDs.GetString(mapTemplate.Name)));
-                    shaderMaps[mapTemplate.Name] = ArgumentParser.ParseTagIndex(Info, Console.ReadLine());
+                    Console.Write(string.Format("Please enter the {0} index: ", CacheContext.StringIdCache.GetString(mapTemplate.Name)));
+                    shaderMaps[mapTemplate.Name] = ArgumentParser.ParseTagIndex(CacheContext, Console.ReadLine());
                     property.ShaderMaps[i].Bitmap = shaderMaps[mapTemplate.Name];
                 }
             }
@@ -59,10 +59,10 @@ namespace TagTool.Commands.RenderMethods
                 if (shaderMaps.ContainsKey(import.MaterialType))
                     import.Bitmap = shaderMaps[import.MaterialType];
 
-            using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = CacheContext.OpenTagCacheReadWrite())
             {
-                var context = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, Tag);
-                Info.Serializer.Serialize(context, Definition);
+                var context = new TagSerializationContext(cacheStream, CacheContext, Tag);
+                CacheContext.Serializer.Serialize(context, Definition);
             }
 
             Console.WriteLine("Done!");

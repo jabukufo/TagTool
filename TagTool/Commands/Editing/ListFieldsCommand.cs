@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Collections;
 using TagTool.Serialization;
 using TagTool.Common;
-using TagTool.Tags;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Commands.Editing
 {
     class ListFieldsCommand : Command
     {
-        private 
-            GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private TagStructureInfo Structure { get; }
         private object Value { get; }
-
-        public ListFieldsCommand(GameCacheContext info, TagStructureInfo structure, object value)
+        
+        public ListFieldsCommand(GameCacheContext cacheContext, TagStructureInfo structure, object value)
             : base(CommandFlags.Inherit,
-                  "listfields",
+
+                  "ListFields",
                   $"Lists the fields in the current {structure.Types[0].Name} definition.",
-                  "listfields",
+
+                  "ListFields",
+
                   $"Lists the fields in the current {structure.Types[0].Name} definition.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Structure = structure;
             Value = value;
         }
@@ -40,6 +40,9 @@ namespace TagTool.Commands.Editing
 
             while (enumerator.Next())
             {
+                if (enumerator.Attribute != null && enumerator.Attribute.Padding == true)
+                    continue;
+
                 var nameString = enumerator.Field.Name;
 
                 if (match && !nameString.ToLower().Contains(token))
@@ -62,14 +65,20 @@ namespace TagTool.Commands.Editing
                         ((IList)fieldValue).Count != 0 ?
                             $"{{...}}[{((IList)fieldValue).Count}]" :
                         "null";
-                else if (fieldType == typeof(StringID))
-                    valueString = Info.StringIDs.GetString((StringID)fieldValue);
-                else if (fieldType == typeof(TagInstance))
-                    valueString = $"[0x{((TagInstance)fieldValue).Index:X4}] {Info.TagNames[((TagInstance)fieldValue).Index]}.{Info.StringIDs.GetString(((TagInstance)fieldValue).Group.Name)}";
+                else if (fieldType == typeof(StringId))
+                    valueString = CacheContext.StringIdCache.GetString((StringId)fieldValue);
+                else if (fieldType == typeof(CachedTagInstance))
+                    valueString = $"[0x{((CachedTagInstance)fieldValue).Index:X4}] {CacheContext.TagNames[((CachedTagInstance)fieldValue).Index]}.{CacheContext.StringIdCache.GetString(((CachedTagInstance)fieldValue).Group.Name)}";
                 else
                     valueString = fieldValue.ToString();
+
+                var fieldName = $"{enumerator.Field.DeclaringType.FullName}.{enumerator.Field.Name}".Replace("+", ".");
+                var documentationNode = EditTagContextFactory.Documentation.SelectSingleNode($"//member[starts-with(@name, 'F:{fieldName}')]");
                 
-                Console.WriteLine("{0}: {1} = {2}", nameString, typeString, valueString);
+                Console.WriteLine("{0}: {1} = {2} {3}", nameString, typeString, valueString,
+                    documentationNode != null ?
+                        $":: {documentationNode.FirstChild.InnerText.Replace("\r\n", "").TrimStart().TrimEnd()}" :
+                        "");
             }
 
             return true;

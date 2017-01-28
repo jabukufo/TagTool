@@ -8,9 +8,12 @@ namespace TagTool.Commands.Core
     {
         public SetLocaleCommand()
             : base(CommandFlags.Inherit,
-                  "setlocale",
+
+                  "SetLocale",
                   "Changes the parsing locale of numbers to the specified locale.",
-                  "setlocale <locale>",
+
+                  "SetLocale <locale>",
+
                   "Use a culture name from https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo(vs.71).aspx")
         {
         }

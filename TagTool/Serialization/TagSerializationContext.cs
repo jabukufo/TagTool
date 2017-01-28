@@ -5,8 +5,6 @@ using System.Linq;
 using TagTool.Common;
 using TagTool.IO;
 using TagTool.Cache;
-using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
 
 namespace TagTool.Serialization
 {
@@ -17,56 +15,53 @@ namespace TagTool.Serialization
     {
         private const int DefaultBlockAlign = 4;
 
-        private readonly Stream _stream;
-        private readonly TagCache _cache;
-        private readonly StringIdCache _stringIds;
-        private TagData _data;
+        private Stream Stream { get; }
+        private GameCacheContext Context { get; }
+        private CachedTagData Data { get; set; }
 
         /// <summary>
         /// Creates a tag serialization context which serializes data into a tag.
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
-        /// <param name="cache">The cache file to write to.</param>
-        /// <param name="stringIds">The stringID source to use.</param>
+        /// <param name="context">The game cache context.</param>
         /// <param name="tag">The tag to overwrite.</param>
-        public TagSerializationContext(Stream stream, TagCache cache, StringIdCache stringIds, TagInstance tag)
+        public TagSerializationContext(Stream stream, GameCacheContext context, CachedTagInstance tag)
         {
-            _stream = stream;
-            _cache = cache;
-            _stringIds = stringIds;
+            Stream = stream;
+            Context = context;
             Tag = tag;
         }
 
         /// <summary>
         /// Gets the tag that the context is operating on.
         /// </summary>
-        public TagInstance Tag { get; }
+        public CachedTagInstance Tag { get; }
 
         public void BeginSerialize(TagStructureInfo info)
         {
-            _data = new TagData
+            Data = new CachedTagData
             {
                 Group = new TagGroup
                 (
                     tag: info.GroupTag,
                     parentTag: info.ParentGroupTag,
                     grandparentTag: info.GrandparentGroupTag,
-                    name: (info.Structure.Name != null) ? _stringIds.GetStringID(info.Structure.Name) : StringID.Null
+                    name: (info.Structure.Name != null) ? Context.StringIdCache.GetStringId(info.Structure.Name) : StringId.Null
                 ),
             };
         }
 
         public void EndSerialize(TagStructureInfo info, byte[] data, uint mainStructOffset)
         {
-            _data.MainStructOffset = mainStructOffset;
-            _data.Data = data;
-            _cache.SetTagData(_stream, Tag, _data);
-            _data = null;
+            Data.MainStructOffset = mainStructOffset;
+            Data.Data = data;
+            Context.TagCache.SetTagData(Stream, Tag, Data);
+            Data = null;
         }
 
         public EndianReader BeginDeserialize(TagStructureInfo info)
         {
-            var data = _cache.ExtractTagRaw(_stream, Tag);
+            var data = Context.TagCache.ExtractTagRaw(Stream, Tag);
             var reader = new EndianReader(new MemoryStream(data));
             reader.BaseStream.Position = Tag.MainStructOffset;
             return reader;
@@ -81,9 +76,9 @@ namespace TagTool.Serialization
             return Tag.PointerToOffset(address);
         }
 
-        public TagInstance GetTagByIndex(int index)
+        public CachedTagInstance GetTagByIndex(int index)
         {
-            return (index >= 0 && index < _cache.Tags.Count) ? _cache.Tags[index] : null;
+            return (index >= 0 && index < Context.TagCache.Index.Count) ? Context.TagCache.Index[index] : null;
         }
 
         public IDataBlock CreateBlock()
@@ -139,12 +134,12 @@ namespace TagTool.Serialization
                 if (resource != null)
                     resource.Owner = _context.Tag;
 
-                if (type == typeof(TagInstance))
+                if (type == typeof(CachedTagInstance))
                 {
                     // Object is a tag reference - add it as a dependency
-                    var referencedTag = obj as TagInstance;
+                    var referencedTag = obj as CachedTagInstance;
                     if (referencedTag != null && referencedTag != _context.Tag)
-                        _context._data.Dependencies.Add(referencedTag.Index);
+                        _context.Data.Dependencies.Add(referencedTag.Index);
                 }
                 return obj;
             }
@@ -163,8 +158,8 @@ namespace TagTool.Serialization
                 StreamUtil.Align(outStream, DefaultBlockAlign);
 
                 // Adjust fixups and add them to the tag
-                _context._data.PointerFixups.AddRange(_fixups.Select(f => FinalizeFixup(f, dataOffset)));
-                _context._data.ResourcePointerOffsets.AddRange(_resourceOffsets.Select(o => o + dataOffset));
+                _context.Data.PointerFixups.AddRange(_fixups.Select(f => FinalizeFixup(f, dataOffset)));
+                _context.Data.ResourcePointerOffsets.AddRange(_resourceOffsets.Select(o => o + dataOffset));
 
                 // Free the block data
                 Writer.Close();

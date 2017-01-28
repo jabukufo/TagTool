@@ -5,12 +5,12 @@ namespace TagTool.Common
     /// <summary>
     /// A constant ID representing a debug string.
     /// </summary>
-    public struct StringID: IComparable<StringID>
+    public struct StringId : IComparable<StringId>
     {
         /// <summary>
         /// A null stringID.
         /// </summary>
-        public static readonly StringID Null = new StringID(0);
+        public static readonly StringId Null = new StringId(0);
 
         private readonly uint _value;
 
@@ -19,7 +19,7 @@ namespace TagTool.Common
         /// </summary>
         /// <param name="set">The set the stringID belongs to.</param>
         /// <param name="index">The index of the stringID within the set.</param>
-        public StringID(int set, int index)
+        public StringId(int set, int index)
             : this(0, set, index)
         {
         }
@@ -30,7 +30,7 @@ namespace TagTool.Common
         /// <param name="length">The length of the string.</param>
         /// <param name="set">The set the stringID belongs to.</param>
         /// <param name="index">The index of the stringID within the set.</param>
-        public StringID(int length, int set, int index)
+        public StringId(int length, int set, int index)
         {
             var shiftedLength = ((length & 0xFF) << 24);
             var shiftedSet = ((set & 0xFF) << 16);
@@ -42,7 +42,7 @@ namespace TagTool.Common
         /// Constructs a new StringID from a 32-bit value.
         /// </summary>
         /// <param name="value">The 32-bit value of the stringID.</param>
-        public StringID(uint value)
+        public StringId(uint value)
         {
             _value = value;
         }
@@ -82,7 +82,7 @@ namespace TagTool.Common
 
         public override bool Equals(object obj)
         {
-            return (obj is StringID) && (this == (StringID)obj);
+            return (obj is StringId) && (this == (StringId)obj);
         }
 
         public override int GetHashCode()
@@ -90,12 +90,12 @@ namespace TagTool.Common
             return (int) Value;
         }
 
-        public static bool operator==(StringID x, StringID y)
+        public static bool operator==(StringId x, StringId y)
         {
             return (x.Value == y.Value);
         }
 
-        public static bool operator!=(StringID x, StringID y)
+        public static bool operator!=(StringId x, StringId y)
         {
             return !(x == y);
         }
@@ -105,7 +105,7 @@ namespace TagTool.Common
             return "0x" + Value.ToString("X8");
         }
 
-        public int CompareTo(StringID other)
+        public int CompareTo(StringId other)
         {
             return (int)Value - (int)other.Value;
         }

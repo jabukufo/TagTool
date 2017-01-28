@@ -7,9 +7,12 @@ namespace TagTool.Commands.Core
     {
         public EchoCommand()
             : base(CommandFlags.Inherit,
-                  "echo",
+
+                  "Echo",
                   "Prints arguments to the console.",
-                  "echo <arg1> <arg2> ... <argN>",
+
+                  "Echo <arg1> <arg2> ... <argN>",
+
                   "Prints arguments to the console.")
         {
         }

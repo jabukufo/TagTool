@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using TagTool.Common;
 using TagTool.Cache;
-using TagTool.Tags;
-using TagTool.Cache.HaloOnline;
 using TagTool.IO;
 
 namespace TagTool.Serialization
@@ -85,12 +82,19 @@ namespace TagTool.Serialization
         public void DeserializeProperty(EndianReader reader, ISerializationContext context, object instance, TagFieldEnumerator enumerator, long baseOffset)
         {
             // Seek to the value if it has an offset specified and then read it
-            if (enumerator.Attribute.Offset >= 0)
-                reader.BaseStream.Position = baseOffset + enumerator.Attribute.Offset;
-            var startOffset = reader.BaseStream.Position;
-            enumerator.Field.SetValue(instance, DeserializeValue(reader, context, enumerator.Attribute, enumerator.Field.FieldType));
-            if (enumerator.Attribute.Size > 0)
-                reader.BaseStream.Position = startOffset + enumerator.Attribute.Size; // Honor the value's size if it has one set
+            if (enumerator.Attribute.Padding == true)
+            {
+                reader.BaseStream.Position += enumerator.Attribute.Length;
+            }
+            else
+            {
+                if (enumerator.Attribute.Offset >= 0)
+                    reader.BaseStream.Position = baseOffset + enumerator.Attribute.Offset;
+                var startOffset = reader.BaseStream.Position;
+                enumerator.Field.SetValue(instance, DeserializeValue(reader, context, enumerator.Attribute, enumerator.Field.FieldType));
+                if (enumerator.Attribute.Size > 0)
+                    reader.BaseStream.Position = startOffset + enumerator.Attribute.Size; // Honor the value's size if it has one set
+            }
         }
 
         /// <summary>
@@ -173,7 +177,7 @@ namespace TagTool.Serialization
                 return new Tag(reader.ReadInt32());
 
             // TagInstance = Tag reference
-            if (valueType == typeof(TagInstance))
+            if (valueType == typeof(CachedTagInstance))
                 return DeserializeTagReference(reader, context, valueInfo);
 
             // ResourceAddress = Resource address
@@ -185,42 +189,54 @@ namespace TagTool.Serialization
             if (valueType == typeof(byte[]))
                 return DeserializeDataReference(reader, context);
 
+            // Color types
+            if (valueType == typeof(RealRgbColor))
+                return new RealRgbColor(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            else if (valueType == typeof(RealArgbColor))
+                return new RealArgbColor(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+
             // Euler Angles types
-            if (valueType == typeof(Euler2))
+            if (valueType == typeof(RealEulerAngles2d))
             {
                 var i = Angle.FromRadians(reader.ReadSingle());
                 var j = Angle.FromRadians(reader.ReadSingle());
-                return new Euler2(i, j);
+                return new RealEulerAngles2d(i, j);
             }
-            else if (valueType == typeof(Euler3))
+            else if (valueType == typeof(RealEulerAngles3d))
             {
                 var i = Angle.FromRadians(reader.ReadSingle());
                 var j = Angle.FromRadians(reader.ReadSingle());
                 var k = Angle.FromRadians(reader.ReadSingle());
-                return new Euler3(i, j, k);
+                return new RealEulerAngles3d(i, j, k);
             }
 
-            // Vector types
-            if (valueType == typeof(Vector2))
-                return new Vector2(reader.ReadSingle(), reader.ReadSingle());
-            if (valueType == typeof(Vector3))
-                return new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-            if (valueType == typeof(Vector4))
-                return new Vector4(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            // Point/Vector types
+
+            if (valueType == typeof(RealPoint2d))
+                return new RealPoint2d(reader.ReadSingle(), reader.ReadSingle());
+            if (valueType == typeof(RealPoint3d))
+                return new RealPoint3d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+
+            if (valueType == typeof(RealVector2d))
+                return new RealVector2d(reader.ReadSingle(), reader.ReadSingle());
+            if (valueType == typeof(RealVector3d))
+                return new RealVector3d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            if (valueType == typeof(RealVector4d))
+                return new RealVector4d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
             if (valueType == typeof(RealQuaternion))
                 return new RealQuaternion(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
-            if (valueType == typeof(Matrix4x3))
-                return new Matrix4x3(
+            if (valueType == typeof(RealMatrix4x3))
+                return new RealMatrix4x3(
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
                     reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
             // StringID
-            if (valueType == typeof(StringID))
-                return new StringID(reader.ReadUInt32());
+            if (valueType == typeof(StringId))
+                return new StringId(reader.ReadUInt32());
 
             // Angle (radians)
             if (valueType == typeof(Angle))
@@ -236,7 +252,7 @@ namespace TagTool.Serialization
                 return DeserializeTagBlock(reader, context, valueType);
 
             // Ranges
-            if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Range<>))
+            if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Bounds<>))
                 return DeserializeRange(reader, context, valueType);
 
             // Assume the value is a structure
@@ -307,7 +323,7 @@ namespace TagTool.Serialization
         /// <param name="context">The serialization context to use.</param>
         /// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
         /// <returns>The deserialized tag reference.</returns>
-        public TagInstance DeserializeTagReference(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
+        public CachedTagInstance DeserializeTagReference(EndianReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
         {
             if (valueInfo == null || (valueInfo.Flags & TagFieldFlags.Short) == 0)
                 reader.BaseStream.Position += 0xC; // Skip the class name and zero bytes, it's not important
@@ -391,7 +407,7 @@ namespace TagTool.Serialization
         }
 
         /// <summary>
-        /// Deserializes a <see cref="Range{T}"/> value.
+        /// Deserializes a <see cref="Bounds{T}"/> value.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="context">The serialization context to use.</param>

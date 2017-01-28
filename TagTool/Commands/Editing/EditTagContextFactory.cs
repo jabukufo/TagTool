@@ -6,63 +6,69 @@ using TagTool.Commands.Scenarios;
 using TagTool.Commands.Unicode;
 using TagTool.Commands.VFiles;
 using TagTool.Serialization;
-using TagTool.Tags.Definitions;
-using TagTool.Tags;
+using TagTool.TagDefinitions;
 using TagTool.Commands.Animations;
 using TagTool.Commands.BSPs;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
+using System.Reflection;
+using System.IO;
+using System.Xml;
 
 namespace TagTool.Commands.Editing
 {
     static class EditTagContextFactory
     {
-        public static CommandContext Create(CommandContextStack stack, GameCacheContext info, TagInstance tag)
+        public static XmlDocument Documentation { get; } = new XmlDocument();
+
+        public static CommandContext Create(CommandContextStack contextStack, GameCacheContext cacheContext, CachedTagInstance tag)
         {
-            var groupName = info.StringIDs.GetString(tag.Group.Name);
+            var documentationPath = Assembly.GetExecutingAssembly().Location;
+            documentationPath = $"{documentationPath.Substring(0, documentationPath.Length - 4)}.xml";
+
+            if (Documentation.ChildNodes.Count == 0 && File.Exists(documentationPath))
+                Documentation.Load(documentationPath);
+
+            var groupName = cacheContext.StringIdCache.GetString(tag.Group.Name);
 
             var tagName = $"0x{tag.Index:X4}";
 
-            if (info.TagNames.ContainsKey(tag.Index))
+            if (cacheContext.TagNames.ContainsKey(tag.Index))
             {
-                tagName = info.TagNames[tag.Index];
+                tagName = cacheContext.TagNames[tag.Index];
                 tagName = $"(0x{tag.Index:X4}) {tagName.Substring(tagName.LastIndexOf('\\') + 1)}";
             }
 
-            var context = new CommandContext(stack.Context,
-                string.Format("{0}.{1}", tagName, groupName));
+            var commandContext = new CommandContext(contextStack.Context, string.Format("{0}.{1}", tagName, groupName));
 
             object value = null;
 
-            using (var stream = info.OpenCacheRead())
-                value = info.Deserializer.Deserialize(
-                    new TagSerializationContext(stream, info.Cache, info.StringIDs, tag),
-                    TagStructureTypes.FindByGroupTag(tag.Group.Tag));
+            using (var stream = cacheContext.OpenTagCacheRead())
+                value = cacheContext.Deserializer.Deserialize(new TagSerializationContext(stream, cacheContext, tag), TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
             switch (tag.Group.Tag.ToString())
             {
                 case "vfsl": // vfiles_list
-                    VFilesContextFactory.Populate(context, info, tag, (VFilesList)value);
+                    VFilesContextFactory.Populate(commandContext, cacheContext, tag, (VFilesList)value);
                     break;
 
                 case "unic": // multilingual_unicode_string_list
-                    UnicodeContextFactory.Populate(context, info, tag, (MultilingualUnicodeStringList)value);
+                    UnicodeContextFactory.Populate(commandContext, cacheContext, tag, (MultilingualUnicodeStringList)value);
                     break;
 
                 case "bitm": // bitmap
-                    BitmapContextFactory.Populate(context, info, tag, (Bitmap)value);
+                    BitmapContextFactory.Populate(commandContext, cacheContext, tag, (Bitmap)value);
                     break;
 
                 case "hlmt": // model
-                    ModelContextFactory.Populate(context, info, tag, (Model)value);
+                    ModelContextFactory.Populate(commandContext, cacheContext, tag, (Model)value);
                     break;
 
                 case "mode": // render_model
-                    RenderModelContextFactory.Populate(context, info, tag, (RenderModel)value);
+                    RenderModelContextFactory.Populate(commandContext, cacheContext, tag, (RenderModel)value);
                     break;
 
                 case "jmad":
-                    AnimationContextFactory.Populate(context, info, tag, (ModelAnimationGraph)value);
+                    AnimationContextFactory.Populate(commandContext, cacheContext, tag, (ModelAnimationGraph)value);
                     break;
 
                 case "rm  ": // render_method
@@ -75,33 +81,31 @@ namespace TagTool.Commands.Editing
                 case "rmw ": // shader_water
                 case "rmzo": // shader_zonly
                 case "rmcs": // shader_custom
-                    RenderMethodContextFactory.Populate(context, info, tag, (RenderMethod)value);
+                    RenderMethodContextFactory.Populate(commandContext, cacheContext, tag, (RenderMethod)value);
                     break;
 
                 case "scnr":
-                    ScnrContextFactory.Populate(context, info, tag, (Scenario)value);
+                    ScnrContextFactory.Populate(commandContext, cacheContext, tag, (Scenario)value);
                     break;
 
                 case "sbsp":
-                    BSPContextFactory.Populate(context, info, tag, (ScenarioStructureBsp)value);
+                    BSPContextFactory.Populate(commandContext, cacheContext, tag, (ScenarioStructureBsp)value);
                     break;
             }
 
-            var structure = new TagStructureInfo(
-                TagStructureTypes.FindByGroupTag(tag.Group.Tag));
+            var structure = new TagStructureInfo(TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
-            context.AddCommand(new ListFieldsCommand(info, structure, value));
-            context.AddCommand(new SetFieldCommand(stack, info, tag, structure, value));
-            context.AddCommand(new EditBlockCommand(stack, info, tag, value));
-            context.AddCommand(new AddToCommand(stack, info, tag, structure, value));
-            context.AddCommand(new RemoveFromCommand(stack, info, tag, structure, value));
-            context.AddCommand(new CopyElementsCommand(stack, info, tag, structure, value));
-            context.AddCommand(new PasteElementsCommand(stack, info, tag, structure, value));
-            context.AddCommand(new SaveChangesCommand(info, tag, value));
-            context.AddCommand(new ExecuteCommand(info, tag, value));
-            context.AddCommand(new ExitToCommand(stack));
+            commandContext.AddCommand(new ListFieldsCommand(cacheContext, structure, value));
+            commandContext.AddCommand(new SetFieldCommand(contextStack, cacheContext, tag, structure, value));
+            commandContext.AddCommand(new EditBlockCommand(contextStack, cacheContext, tag, value));
+            commandContext.AddCommand(new AddBlockElementsCommand(contextStack, cacheContext, tag, structure, value));
+            commandContext.AddCommand(new RemoveBlockElementsCommand(contextStack, cacheContext, tag, structure, value));
+            commandContext.AddCommand(new CopyBlockElementsCommand(contextStack, cacheContext, tag, structure, value));
+            commandContext.AddCommand(new PasteBlockElementsCommand(contextStack, cacheContext, tag, structure, value));
+            commandContext.AddCommand(new SaveTagChangesCommand(cacheContext, tag, value));
+            commandContext.AddCommand(new ExitToCommand(contextStack));
 
-            return context;
+            return commandContext;
         }
     }
 }

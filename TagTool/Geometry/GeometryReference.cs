@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
 
 namespace TagTool.Geometry
@@ -41,10 +40,10 @@ namespace TagTool.Geometry
         /// </summary>
         [MinVersion(Cache.CacheVersion.HaloOnline106708)]
         public ResourceReference Resource;
-        [MaxVersion(Cache.CacheVersion.HaloODST)]
-        public ushort ZoneAssetSalt;
-        [MaxVersion(Cache.CacheVersion.HaloODST)]
-        public ushort ZoneAssetIndex;
+        //[MaxVersion(Cache.CacheVersion.HaloODST)]
+        //public ushort ZoneAssetSalt;
+        //[MaxVersion(Cache.CacheVersion.HaloODST)]
+        //public ushort ZoneAssetIndex;
 
         public int Padding;
 

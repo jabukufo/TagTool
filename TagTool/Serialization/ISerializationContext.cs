@@ -1,6 +1,5 @@
-﻿using System.IO;
+﻿using TagTool.Cache;
 using TagTool.IO;
-using TagTool.Tags;
 
 namespace TagTool.Serialization
 {
@@ -50,7 +49,7 @@ namespace TagTool.Serialization
         /// </summary>
         /// <param name="index">The index of the tag to get.</param>
         /// <returns>The tag if it exists, or <c>null</c> otherwise.</returns>
-        TagInstance GetTagByIndex(int index);
+        CachedTagInstance GetTagByIndex(int index);
 
         /// <summary>
         /// Creates a data block.

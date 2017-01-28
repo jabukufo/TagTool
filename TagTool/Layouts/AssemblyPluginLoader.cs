@@ -113,7 +113,6 @@ namespace TagTool.Layouts
         /// </summary>
         /// <param name="reader">The XmlReader that read the element.</param>
         /// <param name="elementName">The element's name.</param>
-        /// <param name="layout">The layout to add to.</param>
         private void HandleValueElement(XmlReader reader, string elementName)
         {
             string name = "Unknown";

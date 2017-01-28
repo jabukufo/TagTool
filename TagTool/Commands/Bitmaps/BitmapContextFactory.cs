@@ -1,27 +1,24 @@
 ﻿using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Bitmaps
 {
     static class BitmapContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, Bitmap bitmap)
+        public static CommandContext Create(CommandContext parent, GameCacheContext cacheContext, CachedTagInstance tag, Bitmap bitmap)
         {
-            var groupName = info.StringIDs.GetString(tag.Group.Name);
+            var groupName = cacheContext.StringIdCache.GetString(tag.Group.Name);
+            var commandContext = new CommandContext(parent, string.Format("{0:X8}.{1}", tag.Index, groupName));
 
-            var context = new CommandContext(parent,
-                string.Format("{0:X8}.{1}", tag.Index, groupName));
+            Populate(commandContext, cacheContext, tag, bitmap);
 
-            Populate(context, info, tag, bitmap);
-
-            return context;
+            return commandContext;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, Bitmap bitmap)
+        public static void Populate(CommandContext commandContext, GameCacheContext cacheContext, CachedTagInstance tag, Bitmap bitmap)
         {
-            context.AddCommand(new ImportCommand(info, tag, bitmap));
+            commandContext.AddCommand(new ExtractBitmapCommand(cacheContext, tag, bitmap));
+            commandContext.AddCommand(new ImportBitmapCommand(cacheContext, tag, bitmap));
         }
     }
 }

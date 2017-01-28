@@ -33,12 +33,12 @@ namespace TagTool.Geometry
         /// </summary>
         /// <param name="pos">The position to compress.</param>
         /// <returns>The compressed position.</returns>
-        public Vector4 CompressPosition(Vector4 pos)
+        public RealVector4d CompressPosition(RealVector4d pos)
         {
-            var newX = (pos.X - _info.PositionMinX) / _xScale;
-            var newY = (pos.Y - _info.PositionMinY) / _yScale;
-            var newZ = (pos.Z - _info.PositionMinZ) / _zScale;
-            return new Vector4(newX, newY, newZ, pos.W);
+            var newX = (pos.I - _info.PositionMinX) / _xScale;
+            var newY = (pos.J - _info.PositionMinY) / _yScale;
+            var newZ = (pos.K - _info.PositionMinZ) / _zScale;
+            return new RealVector4d(newX, newY, newZ, pos.W);
         }
 
         /// <summary>
@@ -46,12 +46,12 @@ namespace TagTool.Geometry
         /// </summary>
         /// <param name="pos">The position to decompress.</param>
         /// <returns>The decompressed position.</returns>
-        public Vector4 DecompressPosition(Vector4 pos)
+        public RealVector4d DecompressPosition(RealVector4d pos)
         {
-            var newX = pos.X * _xScale + _info.PositionMinX;
-            var newY = pos.Y * _yScale + _info.PositionMinY;
-            var newZ = pos.Z * _zScale + _info.PositionMinZ;
-            return new Vector4(newX, newY, newZ, pos.W);
+            var newX = pos.I * _xScale + _info.PositionMinX;
+            var newY = pos.J * _yScale + _info.PositionMinY;
+            var newZ = pos.K * _zScale + _info.PositionMinZ;
+            return new RealVector4d(newX, newY, newZ, pos.W);
         }
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace TagTool.Geometry
         /// </summary>
         /// <param name="uv">The texture coordinates to compress.</param>
         /// <returns>The compressed coordinates.</returns>
-        public Vector2 CompressUv(Vector2 uv)
+        public RealPoint2d CompressUv(RealPoint2d uv)
         {
             var newU = (uv.X - _info.TextureMinU) / _uScale;
             var newV = (uv.Y - _info.TextureMinV) / _vScale;
-            return new Vector2(newU, newV);
+            return new RealPoint2d(newU, newV);
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace TagTool.Geometry
         /// </summary>
         /// <param name="uv">The texture coordinates to decompress.</param>
         /// <returns>The decompressed coordinates.</returns>
-        public Vector2 DecompressUv(Vector2 uv)
+        public RealPoint2d DecompressUv(RealPoint2d uv)
         {
             var newU = uv.X * _uScale + _info.TextureMinU;
             var newV = uv.Y * _vScale + _info.TextureMinV;
-            return new Vector2(newU, newV);
+            return new RealPoint2d(newU, newV);
         }
     }
 }

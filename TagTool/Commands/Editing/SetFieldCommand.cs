@@ -3,31 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 using TagTool.Common;
 using TagTool.Serialization;
-using TagTool.Tags;
 
 namespace TagTool.Commands.Editing
 {
     class SetFieldCommand : Command
     {
-        private CommandContextStack Stack { get; }
-        private GameCacheContext Info { get; }
-        private TagInstance Tag { get; }
+        private CommandContextStack ContextStack { get; }
+        private GameCacheContext CacheContext { get; }
+        private CachedTagInstance Tag { get; }
 
         public TagStructureInfo Structure { get; set; }
         public object Owner { get; set; }
-
-        public SetFieldCommand(CommandContextStack stack, GameCacheContext info, TagInstance tag, TagStructureInfo structure, object owner)
+        
+        public SetFieldCommand(CommandContextStack contextStack, GameCacheContext cacheContext, CachedTagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
-                  "setfield",
+
+                  "SetField",
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.",
-                  "setfield <field name> <field value>",
+
+                  "SetField <field name> <field value>",
+
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.")
         {
-            Stack = stack;
-            Info = info;
+            ContextStack = contextStack;
+            CacheContext = cacheContext;
             Tag = tag;
             Structure = structure;
             Owner = owner;
@@ -41,7 +42,7 @@ namespace TagTool.Commands.Editing
             var fieldName = args[0];
             var fieldNameLow = fieldName.ToLower();
 
-            var previousContext = Stack.Context;
+            var previousContext = ContextStack.Context;
             var previousOwner = Owner;
             var previousStructure = Structure;
 
@@ -52,24 +53,24 @@ namespace TagTool.Commands.Editing
                 fieldName = fieldName.Substring(lastIndex + 1, (fieldName.Length - lastIndex) - 1);
                 fieldNameLow = fieldName.ToLower();
 
-                var command = new EditBlockCommand(Stack, Info, Tag, Owner);
+                var command = new EditBlockCommand(ContextStack, CacheContext, Tag, Owner);
 
                 if (!command.Execute(new List<string> { blockName }))
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
                 }
 
-                command = (Stack.Context.GetCommand("Edit") as EditBlockCommand);
+                command = (ContextStack.Context.GetCommand("Edit") as EditBlockCommand);
 
                 Owner = command.Owner;
                 Structure = command.Structure;
 
                 if (Owner == null)
                 {
-                    while (Stack.Context != previousContext) Stack.Pop();
+                    while (ContextStack.Context != previousContext) ContextStack.Pop();
                     Owner = previousOwner;
                     Structure = previousStructure;
                     return false;
@@ -82,7 +83,7 @@ namespace TagTool.Commands.Editing
             if (field == null)
             {
                 Console.WriteLine("ERROR: {0} does not contain a field named \"{1}\".", Structure.Types[0].Name, fieldName);
-                while (Stack.Context != previousContext) Stack.Pop();
+                while (ContextStack.Context != previousContext) ContextStack.Pop();
                 Owner = previousOwner;
                 Structure = previousStructure;
                 return false;
@@ -93,7 +94,7 @@ namespace TagTool.Commands.Editing
 
             if (fieldValue != null && fieldValue.Equals(false))
             {
-                while (Stack.Context != previousContext) Stack.Pop();
+                while (ContextStack.Context != previousContext) ContextStack.Pop();
                 Owner = previousOwner;
                 Structure = previousStructure;
                 return false;
@@ -107,8 +108,8 @@ namespace TagTool.Commands.Editing
                 fieldType.Name;
 
             var valueString =
-                fieldType == typeof(StringID) ?
-                    Info.StringIDs.GetString((StringID)fieldValue) :
+                fieldType == typeof(StringId) ?
+                    CacheContext.StringIdCache.GetString((StringId)fieldValue) :
                 fieldType.GetInterface(typeof(IList).Name) != null ?
                     (((IList)fieldValue).Count != 0 ?
                         $"{{...}}[{((IList)fieldValue).Count}]" :
@@ -119,7 +120,7 @@ namespace TagTool.Commands.Editing
 
             Console.WriteLine("{0}: {1} = {2}", field.Name, typeString, valueString);
 
-            while (Stack.Context != previousContext) Stack.Pop();
+            while (ContextStack.Context != previousContext) ContextStack.Pop();
             Owner = previousOwner;
             Structure = previousStructure;
 
@@ -221,17 +222,17 @@ namespace TagTool.Commands.Editing
                     return false;
                 output = input;
             }
-            else if (type == typeof(TagInstance))
+            else if (type == typeof(CachedTagInstance))
             {
                 if (args.Count != 1)
                     return false;
-                output = ArgumentParser.ParseTagIndex(Info, input);
+                output = ArgumentParser.ParseTagIndex(CacheContext, input);
             }
-            else if (type == typeof(StringID))
+            else if (type == typeof(StringId))
             {
                 if (args.Count != 1)
                     return false;
-                output = Info.StringIDs.GetStringID(input);
+                output = CacheContext.StringIdCache.GetStringId(input);
             }
             else if (type == typeof(Angle))
             {
@@ -242,7 +243,7 @@ namespace TagTool.Commands.Editing
                     return false;
                 output = Angle.FromDegrees(value);
             }
-            else if (type == typeof(Euler2))
+            else if (type == typeof(RealEulerAngles2d))
             {
                 if (args.Count != 2)
                     return false;
@@ -250,11 +251,11 @@ namespace TagTool.Commands.Editing
                 if (!float.TryParse(args[0], out yaw) ||
                     !float.TryParse(args[1], out pitch))
                     return false;
-                output = new Euler2(
+                output = new RealEulerAngles2d(
                     Angle.FromDegrees(yaw),
                     Angle.FromDegrees(pitch));
             }
-            else if (type == typeof(Euler3))
+            else if (type == typeof(RealEulerAngles3d))
             {
                 if (args.Count != 2)
                     return false;
@@ -263,12 +264,12 @@ namespace TagTool.Commands.Editing
                     !float.TryParse(args[1], out pitch) ||
                     !float.TryParse(args[2], out roll))
                     return false;
-                output = new Euler3(
+                output = new RealEulerAngles3d(
                     Angle.FromDegrees(yaw),
                     Angle.FromDegrees(pitch),
                     Angle.FromDegrees(roll));
             }
-            else if (type == typeof(Vector2))
+            else if (type == typeof(RealPoint2d))
             {
                 if (args.Count != 2)
                     return false;
@@ -276,9 +277,9 @@ namespace TagTool.Commands.Editing
                 if (!float.TryParse(args[0], out x) ||
                     !float.TryParse(args[1], out y))
                     return false;
-                output = new Vector2(x, y);
+                output = new RealPoint2d(x, y);
             }
-            else if (type == typeof(Vector3))
+            else if (type == typeof(RealPoint3d))
             {
                 if (args.Count != 3)
                     return false;
@@ -287,9 +288,9 @@ namespace TagTool.Commands.Editing
                     !float.TryParse(args[1], out y) ||
                     !float.TryParse(args[2], out z))
                     return false;
-                output = new Vector3(x, y, z);
+                output = new RealPoint3d(x, y, z);
             }
-            else if (type == typeof(Vector4))
+            else if (type == typeof(RealVector4d))
             {
                 if (args.Count != 4)
                     return false;
@@ -299,7 +300,7 @@ namespace TagTool.Commands.Editing
                     !float.TryParse(args[2], out z) ||
                     !float.TryParse(args[3], out w))
                     return false;
-                output = new Vector4(x, y, z, w);
+                output = new RealVector4d(x, y, z, w);
             }
             else if (type.IsEnum)
             {
@@ -308,7 +309,16 @@ namespace TagTool.Commands.Editing
 
                 var query = args[0];
 
-                var found = Enum.Parse(type, query);
+                object found;
+
+                try
+                {
+                    found = Enum.Parse(type, query);
+                }
+                catch
+                {
+                    found = null;
+                }
 
                 if (found == null)
                 {
@@ -323,7 +333,15 @@ namespace TagTool.Commands.Editing
 
                         Console.WriteLine("Valid options:");
                         foreach (var name in Enum.GetNames(type))
-                            Console.WriteLine("\t{0}", name);
+                        {
+                            var fieldName = $"{type.FullName}.{name}".Replace("+", ".");
+                            var documentationNode = EditTagContextFactory.Documentation.SelectSingleNode($"//member[starts-with(@name, 'F:{fieldName}')]");
+
+                            Console.WriteLine("\t{0} {1}", name,
+                                documentationNode != null ?
+                                    $":: {documentationNode.FirstChild.InnerText.Replace("\r\n", "").TrimStart().TrimEnd()}" :
+                                    "");
+                        }
                         Console.WriteLine();
 
                         return false;
@@ -332,7 +350,7 @@ namespace TagTool.Commands.Editing
                 
                 output = found;
             }
-            else if (type == typeof(Range<>))
+            else if (type == typeof(Bounds<>))
             {
                 var rangeType = type.GenericTypeArguments[0];
                 var argCount = RangeArgCount(rangeType);
@@ -367,19 +385,19 @@ namespace TagTool.Commands.Editing
                 type == typeof(ulong) ||
                 type == typeof(float) ||
                 type == typeof(string) ||
-                type == typeof(TagInstance) ||
-                type == typeof(StringID) ||
+                type == typeof(CachedTagInstance) ||
+                type == typeof(StringId) ||
                 type == typeof(Angle))
                 return 1;
-            else if (type == typeof(Euler2))
+            else if (type == typeof(RealEulerAngles2d))
                 return 2;
-            else if (type == typeof(Euler3))
+            else if (type == typeof(RealEulerAngles3d))
                 return 3;
-            else if (type == typeof(Vector2))
+            else if (type == typeof(RealPoint2d))
                 return 2;
-            else if (type == typeof(Vector3))
+            else if (type == typeof(RealPoint3d))
                 return 3;
-            else if (type == typeof(Vector4))
+            else if (type == typeof(RealVector4d))
                 return 4;
             else throw new NotImplementedException();
         }

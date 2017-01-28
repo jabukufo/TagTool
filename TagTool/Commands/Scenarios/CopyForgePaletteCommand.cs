@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
 using TagTool.Serialization;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Scenarios
 {
     class CopyForgePaletteCommand : Command
     {
-        private GameCacheContext Info { get; }
+        private GameCacheContext CacheContext { get; }
         private Scenario Definition { get; }
 
-        public CopyForgePaletteCommand(GameCacheContext info, Scenario definition)
+        public CopyForgePaletteCommand(GameCacheContext cacheContext, Scenario definition)
             : base(CommandFlags.Inherit,
-                 "copyforgepalette",
-                 "Copies the forge palette from the current scenario to another scenario",
-                 "copyforgepalette [palette = all] <destination scenario>",
-                 "Copies the forge palette from the current scenario to another scenario")
+
+                 "CopyForgePalette",
+                 "Copies the forge palette from the current scenario to another scenario.",
+
+                 "CopyForgePalette [palette = all] <destination scenario>",
+
+                 "Copies the forge palette from the current scenario to another scenario.")
         {
-            Info = info;
+            CacheContext = cacheContext;
             Definition = definition;
         }
 
@@ -55,7 +57,7 @@ namespace TagTool.Commands.Scenarios
                 return false;
             }
 
-            var destinationTag = ArgumentParser.ParseTagIndex(Info, args[0]);
+            var destinationTag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
 
             if (destinationTag == null || destinationTag.Group.Tag.ToString() != "scnr")
             {
@@ -67,10 +69,10 @@ namespace TagTool.Commands.Scenarios
 
             Scenario destinationScenario = null;
             
-            using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = CacheContext.TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var scenarioContext = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, destinationTag);
-                destinationScenario = Info.Deserializer.Deserialize<Scenario>(scenarioContext);
+                var scenarioContext = new TagSerializationContext(cacheStream, CacheContext, destinationTag);
+                destinationScenario = CacheContext.Deserializer.Deserialize<Scenario>(scenarioContext);
             }
 
             Console.WriteLine("done.");
@@ -104,10 +106,10 @@ namespace TagTool.Commands.Scenarios
 
             Console.Write("Serializing destination scenario...");
 
-            using (var cacheStream = Info.CacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var cacheStream = CacheContext.TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                var scenarioContext = new TagSerializationContext(cacheStream, Info.Cache, Info.StringIDs, destinationTag);
-                Info.Serializer.Serialize(scenarioContext, destinationScenario);
+                var scenarioContext = new TagSerializationContext(cacheStream, CacheContext, destinationTag);
+                CacheContext.Serializer.Serialize(scenarioContext, destinationScenario);
             }
 
             Console.WriteLine("done.");

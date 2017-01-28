@@ -13,7 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>dfd87735</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -37,13 +38,27 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
+    <DocumentationFile>bin\x64\Debug\TagTool.xml</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AssimpNet, Version=3.3.1.0, Culture=neutral, PublicKeyToken=0d51b391f59f42a6, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AssimpNet.3.3.1\lib\net45\AssimpNet.dll</HintPath>
+    <Reference Include="AssimpNet, Version=3.3.2.0, Culture=neutral, PublicKeyToken=3edc10cb77b1bca2, processorArchitecture=MSIL">
+      <HintPath>..\packages\AssimpNet.3.3.2\lib\net45\AssimpNet.dll</HintPath>
     </Reference>
-    <Reference Include="LZ4">
-      <HintPath>..\packages\lz4net.1.0.5.93\lib\net40-client\LZ4.dll</HintPath>
+    <Reference Include="LZ4, Version=1.0.10.93, Culture=neutral, PublicKeyToken=62e1b5ec1eec9bdd, processorArchitecture=MSIL">
+      <HintPath>..\packages\lz4net.1.0.10.93\lib\net4-client\LZ4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,7 +66,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -73,54 +87,45 @@
     <Compile Include="Bitmaps\BitmapFormat.cs" />
     <Compile Include="Bitmaps\BitmapTextureResourceDefinition.cs" />
     <Compile Include="Bitmaps\BitmapType.cs" />
-    <Compile Include="Cache\CacheFile.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceAddress.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceBlockReference.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceCache.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceDataManager.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceDataReference.cs" />
-    <Compile Include="Cache\HaloOnline\ResourceReference.cs" />
-    <Compile Include="Cache\HaloOnline\StringIdCache.cs" />
-    <Compile Include="Cache\HaloOnline\StringIdResolverBase.cs" />
-    <Compile Include="Cache\HaloOnline\StringIdResolverFactory.cs" />
-    <Compile Include="Cache\HaloOnline\TagCache.cs" />
-    <Compile Include="Cache\HaloOnline\TagData.cs" />
-    <Compile Include="Cache\HaloOnline\TagList.cs" />
-    <Compile Include="Cache\HaloOnline\GameCacheContext.cs" />
+    <Compile Include="Cache\ResourceAddress.cs" />
+    <Compile Include="Cache\ResourceBlockReference.cs" />
+    <Compile Include="Cache\ResourceCache.cs" />
+    <Compile Include="Cache\ResourceDataManager.cs" />
+    <Compile Include="Cache\ResourceDataReference.cs" />
+    <Compile Include="Cache\ResourceReference.cs" />
+    <Compile Include="Cache\StringIdCache.cs" />
+    <Compile Include="Cache\StringIdResolverBase.cs" />
+    <Compile Include="Cache\StringIdResolverFactory.cs" />
+    <Compile Include="Cache\TagCache.cs" />
+    <Compile Include="Cache\CachedTagData.cs" />
+    <Compile Include="Cache\TagCacheIndex.cs" />
+    <Compile Include="Cache\GameCacheContext.cs" />
     <Compile Include="Commands\Animations\AnimationContextFactory.cs" />
     <Compile Include="Commands\Animations\AnimationTestCommand.cs" />
-    <Compile Include="Commands\Animations\GetResourcesCommand.cs" />
+    <Compile Include="Commands\Animations\GetResourceInfoCommand.cs" />
     <Compile Include="Commands\ArgumentParser.cs" />
     <Compile Include="Commands\Bitmaps\BitmapContextFactory.cs" />
-    <Compile Include="Commands\Bitmaps\ImportCommand.cs" />
+    <Compile Include="Commands\Bitmaps\ExtractBitmapCommand.cs" />
+    <Compile Include="Commands\Bitmaps\ImportBitmapCommand.cs" />
     <Compile Include="Commands\BSPs\BSPContextFactory.cs" />
     <Compile Include="Commands\BSPs\CollisionTestCommand.cs" />
-    <Compile Include="Commands\BSPs\LoadResourcesCommand.cs" />
-    <Compile Include="Commands\Cache\CacheContextFactory.cs" />
-    <Compile Include="Commands\Cache\ListBitmapsCommand.cs" />
-    <Compile Include="Commands\Cache\PortBspCommand.cs" />
-    <Compile Include="Commands\Cache\PortModelCommand.cs" />
-    <Compile Include="Commands\Cache\PortShaderCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandContext.cs" />
     <Compile Include="Commands\CommandContextStack.cs" />
     <Compile Include="Commands\Core\ClearCommand.cs" />
     <Compile Include="Commands\Core\DumpLogCommand.cs" />
     <Compile Include="Commands\Core\EchoCommand.cs" />
-    <Compile Include="Commands\Core\ExecuteCommand.cs" />
     <Compile Include="Commands\Core\HelpCommand.cs" />
     <Compile Include="Commands\Core\SetLocaleCommand.cs" />
-    <Compile Include="Commands\Core\SetVarCommand.cs" />
-    <Compile Include="Commands\Editing\AddToCommand.cs" />
-    <Compile Include="Commands\Editing\CopyElementsCommand.cs" />
+    <Compile Include="Commands\Editing\AddBlockElementsCommand.cs" />
+    <Compile Include="Commands\Editing\CopyBlockElementsCommand.cs" />
     <Compile Include="Commands\Editing\EditBlockCommand.cs" />
     <Compile Include="Commands\Editing\EditTagContextFactory.cs" />
-    <Compile Include="Commands\Editing\ExecuteCommand.cs" />
     <Compile Include="Commands\Editing\ExitToCommand.cs" />
     <Compile Include="Commands\Editing\ListFieldsCommand.cs" />
-    <Compile Include="Commands\Editing\PasteElementsCommand.cs" />
-    <Compile Include="Commands\Editing\RemoveFromCommand.cs" />
-    <Compile Include="Commands\Editing\SaveChangesCommand.cs" />
+    <Compile Include="Commands\Editing\PasteBlockElementsCommand.cs" />
+    <Compile Include="Commands\Editing\RemoveBlockElementsCommand.cs" />
+    <Compile Include="Commands\Editing\SaveTagChangesCommand.cs" />
     <Compile Include="Commands\Editing\SetFieldCommand.cs" />
     <Compile Include="Commands\LocalizedStringPrinter.cs" />
     <Compile Include="Commands\Models\ExtractModelCommand.cs" />
@@ -130,99 +135,88 @@
     <Compile Include="Commands\RenderMethods\ListBitmapsCommand.cs" />
     <Compile Include="Commands\RenderMethods\RenderMethodContextFactory.cs" />
     <Compile Include="Commands\RenderMethods\SpecifyBitmapsCommand.cs" />
-    <Compile Include="Commands\RenderModels\GetResourceCommand.cs" />
+    <Compile Include="Commands\RenderModels\GetResourceInfoCommand.cs" />
     <Compile Include="Commands\RenderModels\RenderModelContextFactory.cs" />
-    <Compile Include="Commands\RenderModels\ReplaceCommand.cs" />
     <Compile Include="Commands\RenderModels\SpecifyShadersCommand.cs" />
     <Compile Include="Commands\Scenarios\CopyForgePaletteCommand.cs" />
     <Compile Include="Commands\Scenarios\ScenarioContextFactory.cs" />
     <Compile Include="Commands\TagPrinter.cs" />
-    <Compile Include="Commands\Tags\AddressCommand.cs" />
-    <Compile Include="Commands\Tags\CleanCsvCommand.cs" />
-    <Compile Include="Commands\Tags\CollisionGeometryTestCommand.cs" />
-    <Compile Include="Commands\Tags\ConvertArmorCommand.cs" />
-    <Compile Include="Commands\Tags\ConvertCommand.cs" />
+    <Compile Include="Commands\Tags\GetTagAddressCommand.cs" />
+    <Compile Include="Commands\Tags\CleanCsvFileCommand.cs" />
+    <Compile Include="Commands\Tags\CollisionModelTestCommand.cs" />
+    <Compile Include="Commands\Tags\ConvertTagCommand.cs" />
     <Compile Include="Commands\Tags\ConvertPluginsCommand.cs" />
-    <Compile Include="Commands\Tags\DependencyCommand.cs" />
+    <Compile Include="Commands\Tags\TagDependencyCommand.cs" />
     <Compile Include="Commands\Tags\DuplicateTagCommand.cs" />
-    <Compile Include="Commands\Tags\EditCommand.cs" />
-    <Compile Include="Commands\Tags\ExportTagsCommand.cs" />
-    <Compile Include="Commands\Tags\ExtractBitmapCommand.cs" />
-    <Compile Include="Commands\Tags\ExtractBitmapsCommand.cs" />
-    <Compile Include="Commands\Tags\ExtractCommand.cs" />
-    <Compile Include="Commands\Tags\GenerateCacheCommand.cs" />
-    <Compile Include="Commands\Tags\GenerateLayoutsCommand.cs" />
+    <Compile Include="Commands\Tags\EditTagCommand.cs" />
+    <Compile Include="Commands\Tags\ExtractAllTagsCommand.cs" />
+    <Compile Include="Commands\Tags\ExtractTagCommand.cs" />
+    <Compile Include="Commands\Tags\GenerateTagStructuresCommand.cs" />
     <Compile Include="Commands\Tags\GenerateTagNamesCommand.cs" />
-    <Compile Include="Commands\Tags\ImportBitmapCommand.cs" />
-    <Compile Include="Commands\Tags\ImportCommand.cs" />
-    <Compile Include="Commands\Tags\InfoCommand.cs" />
-    <Compile Include="Commands\Tags\ListCommand.cs" />
+    <Compile Include="Commands\Tags\ImportTagCommand.cs" />
+    <Compile Include="Commands\Tags\GetTagInfoCommand.cs" />
+    <Compile Include="Commands\Tags\ListTagsCommand.cs" />
     <Compile Include="Commands\Tags\ListNullTagsCommand.cs" />
-    <Compile Include="Commands\Tags\ListStringsCommand.cs" />
-    <Compile Include="Commands\Tags\ListUnreferencedTagsCommand.cs" />
-    <Compile Include="Commands\Tags\MapCommand.cs" />
+    <Compile Include="Commands\Tags\ListAllStringsCommand.cs" />
+    <Compile Include="Commands\Tags\ListUnusedTagsCommand.cs" />
+    <Compile Include="Commands\Tags\GetMapInfoCommand.cs" />
     <Compile Include="Commands\Tags\MatchTagsCommand.cs" />
-    <Compile Include="Commands\Tags\ModelTestCommand.cs" />
     <Compile Include="Commands\Tags\NameTagCommand.cs" />
-    <Compile Include="Commands\Tags\NewTagCommand.cs" />
-    <Compile Include="Commands\Tags\NullTagCommand.cs" />
-    <Compile Include="Commands\Tags\OpenCacheCommand.cs" />
+    <Compile Include="Commands\Tags\RenderModelTestCommand.cs" />
+    <Compile Include="Commands\Tags\CreateTagCommand.cs" />
+    <Compile Include="Commands\Tags\CleanCacheFilesCommand.cs" />
+    <Compile Include="Commands\Tags\DeleteTagCommand.cs" />
     <Compile Include="Commands\Tags\PhysicsModelTestCommand.cs" />
     <Compile Include="Commands\Tags\ResourceCommand.cs" />
+    <Compile Include="Cache\ResourceFile.cs" />
     <Compile Include="Commands\Tags\StringIdCommand.cs" />
     <Compile Include="Commands\Tags\TagCacheContextFactory.cs" />
-    <Compile Include="Commands\Tags\TestCommand.cs" />
-    <Compile Include="Commands\Unicode\GetCommand.cs" />
-    <Compile Include="Commands\Unicode\ListCommand.cs" />
-    <Compile Include="Commands\Unicode\SetCommand.cs" />
+    <Compile Include="Commands\Tags\UpdateMapFilesCommand.cs" />
+    <Compile Include="Commands\Unicode\GetStringCommand.cs" />
+    <Compile Include="Commands\Unicode\ListStringsCommand.cs" />
+    <Compile Include="Commands\Unicode\SetStringCommand.cs" />
     <Compile Include="Commands\Unicode\UnicodeContextFactory.cs" />
-    <Compile Include="Commands\VFiles\ExtractAllCommand.cs" />
-    <Compile Include="Commands\VFiles\ExtractCommand.cs" />
-    <Compile Include="Commands\VFiles\ImportAllCommand.cs" />
-    <Compile Include="Commands\VFiles\ImportCommand.cs" />
-    <Compile Include="Commands\VFiles\ListCommand.cs" />
+    <Compile Include="Commands\VFiles\ExtractFilesCommand.cs" />
+    <Compile Include="Commands\VFiles\ExtractFileCommand.cs" />
+    <Compile Include="Commands\VFiles\ReplaceAllFilesCommand.cs" />
+    <Compile Include="Commands\VFiles\ReplaceFileCommand.cs" />
+    <Compile Include="Commands\VFiles\ListFilesCommand.cs" />
     <Compile Include="Commands\VFiles\VFilesContextFactory.cs" />
     <Compile Include="Common\Angle.cs" />
     <Compile Include="Common\ArrayUtil.cs" />
-    <Compile Include="Common\Bitmask.cs" />
-    <Compile Include="Common\BoundingBox.cs" />
     <Compile Include="Common\D3DPointer.cs" />
     <Compile Include="Common\DdsHeader.cs" />
-    <Compile Include="Common\Euler2.cs" />
-    <Compile Include="Common\Euler3.cs" />
+    <Compile Include="Common\RealEulerAngles2d.cs" />
+    <Compile Include="Common\RealEulerAngles3d.cs" />
     <Compile Include="Common\GameLanguage.cs" />
     <Compile Include="Common\Half.cs" />
     <Compile Include="Common\HalfHelper.cs" />
-    <Compile Include="Common\Matrix4x3.cs" />
+    <Compile Include="Common\RealMatrix4x3.cs" />
     <Compile Include="Common\NamingConvention.cs" />
-    <Compile Include="Common\Range.cs" />
+    <Compile Include="Common\Bounds.cs" />
     <Compile Include="Common\ReadOnlySet.cs" />
+    <Compile Include="Common\RealArgbColor.cs" />
     <Compile Include="Common\RealQuaternion.cs" />
+    <Compile Include="Common\RealRgbColor.cs" />
+    <Compile Include="Common\RealVector2d.cs" />
+    <Compile Include="Common\RealVector3d.cs" />
     <Compile Include="Common\SimpleJson.cs" />
     <Compile Include="Common\StringId.cs" />
     <Compile Include="Common\Tag.cs" />
     <Compile Include="Common\TagCacheMap.cs" />
-    <Compile Include="Common\TagReferenceBlock.cs" />
     <Compile Include="Common\TagVersionMap.cs" />
-    <Compile Include="Common\Vector.cs" />
-    <Compile Include="Common\Vector2.cs" />
-    <Compile Include="Common\Vector3.cs" />
-    <Compile Include="Common\Vector4.cs" />
-    <Compile Include="Common\Vertex.cs" />
-    <Compile Include="Common\XCompress.cs" />
-    <Compile Include="Cache\AES.cs" />
-    <Compile Include="Cache\CacheFileOld.cs" />
-    <Compile Include="Cache\CacheManager.cs" />
+    <Compile Include="Common\RealPoint2d.cs" />
+    <Compile Include="Common\RealPoint3d.cs" />
+    <Compile Include="Common\RealVector4d.cs" />
     <Compile Include="Cache\CacheVersionDetection.cs" />
-    <Compile Include="Cache\Halo3\CacheFileOld.cs" />
-    <Compile Include="Cache\HaloODST\CacheFileOld.cs" />
-    <Compile Include="Cache\HaloOnline\MS23\StringIdResolver.cs" />
-    <Compile Include="Cache\HaloOnline\MS23\VertexStream.cs" />
-    <Compile Include="Cache\HaloOnline\MS25\VertexStream.cs" />
-    <Compile Include="Cache\HaloOnline\MS28\StringIdResolver.cs" />
-    <Compile Include="Cache\HaloOnline\MS30\StringIdResolver.cs" />
+    <Compile Include="Cache\StringIdResolverMS23.cs" />
+    <Compile Include="Cache\VertexStreamMS23.cs" />
+    <Compile Include="Cache\VertexStreamMS25.cs" />
+    <Compile Include="Cache\StringIdResolverMS28.cs" />
+    <Compile Include="Cache\StringIdResolverMS30.cs" />
+    <Compile Include="Geometry\CollisionGeometry.cs" />
+    <Compile Include="Geometry\CollisionMoppCode.cs" />
     <Compile Include="Serialization\DataSerializationContext.cs" />
-    <Compile Include="Tags\TagConverter.cs" />
     <Compile Include="Geometry\BlenderPhmoReader.cs" />
     <Compile Include="Geometry\CollisionBspResourceDefinition.cs" />
     <Compile Include="Geometry\CollisionGeometryBuilder.cs" />
@@ -266,34 +260,6 @@
     <Compile Include="Layouts\TagLayoutWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="S3D\Blocks.cs" />
-    <Compile Include="S3D\Enums.cs" />
-    <Compile Include="S3D\PakFile.cs" />
-    <Compile Include="S3D\Scene.cs" />
-    <Compile Include="S3D\SceneCDT.cs" />
-    <Compile Include="S3D\SceneData.cs" />
-    <Compile Include="S3D\Template.cs" />
-    <Compile Include="S3D\TemplateBase.cs" />
-    <Compile Include="S3D\Texture.cs" />
-    <Compile Include="Scripting\ScriptActorTypeValue.cs" />
-    <Compile Include="Scripting\ScriptButtonPresetValue.cs" />
-    <Compile Include="Scripting\ScriptCharacterPhysicsValue.cs" />
-    <Compile Include="Scripting\ScriptControllerValue.cs" />
-    <Compile Include="Scripting\ScriptEventValue.cs" />
-    <Compile Include="Scripting\ScriptGameDifficultyValue.cs" />
-    <Compile Include="Scripting\ScriptGlobal.cs" />
-    <Compile Include="Scripting\ScriptJoystickPresetValue.cs" />
-    <Compile Include="Scripting\ScriptModelStateValue.cs" />
-    <Compile Include="Scripting\ScriptMultiplayerTeamValue.cs" />
-    <Compile Include="Scripting\ScriptPlayerCharacterTypeValue.cs" />
-    <Compile Include="Scripting\ScriptPrimarySkullValue.cs" />
-    <Compile Include="Scripting\ScriptSecondarySkullValue.cs" />
-    <Compile Include="Scripting\ScriptSubtitleSettingValue.cs" />
-    <Compile Include="Scripting\ScriptTable.cs" />
-    <Compile Include="Scripting\ScriptTeamValue.cs" />
-    <Compile Include="Scripting\ScriptValueType.cs" />
-    <Compile Include="Scripting\ScriptVoiceMaskValue.cs" />
-    <Compile Include="Scripting\ScriptVoiceOutputSettingValue.cs" />
     <Compile Include="Serialization\IDataBlock.cs" />
     <Compile Include="Serialization\ISerializationContext.cs" />
     <Compile Include="Serialization\MaxVersionAttribute.cs" />
@@ -306,211 +272,168 @@
     <Compile Include="Serialization\TagSerializer.cs" />
     <Compile Include="Serialization\TagStructureAttribute.cs" />
     <Compile Include="Serialization\TagStructureInfo.cs" />
-    <Compile Include="Serialization\XboxSerializationContext.cs" />
-    <Compile Include="Shaders\ShaderCompiler.cs" />
-    <Compile Include="Shaders\ShaderConverter.cs" />
-    <Compile Include="Sounds\Info.cs" />
-    <Compile Include="Sounds\IWwiseObject.cs" />
-    <Compile Include="Sounds\IWwiseObjectVisitor.cs" />
-    <Compile Include="Sounds\RIFX.cs" />
-    <Compile Include="Sounds\RTPC.cs" />
-    <Compile Include="Sounds\SampleRate.cs" />
-    <Compile Include="Sounds\SoundBank.cs" />
-    <Compile Include="Sounds\SoundBankAction.cs" />
-    <Compile Include="Sounds\SoundBankActorMixer.cs" />
-    <Compile Include="Sounds\SoundBankEvent.cs" />
-    <Compile Include="Sounds\SoundBankFile.cs" />
-    <Compile Include="Sounds\SoundBankMusicPlaylist.cs" />
-    <Compile Include="Sounds\SoundBankMusicSegment.cs" />
-    <Compile Include="Sounds\SoundBankMusicSwitchContainer.cs" />
-    <Compile Include="Sounds\SoundBankMusicTrack.cs" />
-    <Compile Include="Sounds\SoundBankSequenceContainer.cs" />
-    <Compile Include="Sounds\SoundBankSwitchContainer.cs" />
-    <Compile Include="Sounds\SoundBankVoice.cs" />
-    <Compile Include="Sounds\SoundExtractor.cs" />
-    <Compile Include="Sounds\SoundFormat.cs" />
-    <Compile Include="Sounds\SoundFormatDetection.cs" />
-    <Compile Include="Sounds\SoundInfo.cs" />
-    <Compile Include="Sounds\SoundPack.cs" />
-    <Compile Include="Sounds\SoundPackFile.cs" />
-    <Compile Include="Sounds\SoundPackFolder.cs" />
-    <Compile Include="Sounds\SoundPath.cs" />
-    <Compile Include="Sounds\SoundResourceDefinition.cs" />
-    <Compile Include="Sounds\SoundScanner.cs" />
-    <Compile Include="Sounds\SoundType.cs" />
-    <Compile Include="Sounds\StateGroup.cs" />
-    <Compile Include="Sounds\WwiseObjectCollection.cs" />
-    <Compile Include="Tags\Definitions\Achievements.cs" />
-    <Compile Include="Tags\Definitions\AiDialogueGlobals.cs" />
-    <Compile Include="Tags\Definitions\AiGlobals.cs" />
-    <Compile Include="Tags\Definitions\AiMissionDialogue.cs" />
-    <Compile Include="Tags\Definitions\Antenna.cs" />
-    <Compile Include="Tags\Definitions\AreaScreenEffect.cs" />
-    <Compile Include="Tags\Definitions\Armor.cs" />
-    <Compile Include="Tags\Definitions\ArmorSounds.cs" />
-    <Compile Include="Tags\Definitions\BeamSystem.cs" />
-    <Compile Include="Tags\Definitions\Bink.cs" />
-    <Compile Include="Tags\Definitions\Biped.cs" />
-    <Compile Include="Tags\Definitions\Bitmap.cs" />
-    <Compile Include="Tags\Definitions\BreakableSurface.cs" />
-    <Compile Include="Tags\Definitions\CacheFileGlobalTags.cs" />
-    <Compile Include="Tags\Definitions\CameraFxSettings.cs" />
-    <Compile Include="Tags\Definitions\CameraTrack.cs" />
-    <Compile Include="Tags\Definitions\Camo.cs" />
-    <Compile Include="Tags\Definitions\Character.cs" />
-    <Compile Include="Tags\Definitions\ChocolateMountainNew.cs" />
-    <Compile Include="Tags\Definitions\ChudAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\ChudDefinition.cs" />
-    <Compile Include="Tags\Definitions\ChudGlobalsDefinition.cs" />
-    <Compile Include="Tags\Definitions\ChudWidgetParallaxData.cs" />
-    <Compile Include="Tags\Definitions\Cloth.cs" />
-    <Compile Include="Tags\Definitions\CollisionDamage.cs" />
-    <Compile Include="Tags\Definitions\CollisionModel.cs" />
-    <Compile Include="Tags\Definitions\ColorTable.cs" />
-    <Compile Include="Tags\Definitions\ContrailSystem.cs" />
-    <Compile Include="Tags\Definitions\Crate.cs" />
-    <Compile Include="Tags\Definitions\Creature.cs" />
-    <Compile Include="Tags\Definitions\DamageEffect.cs" />
-    <Compile Include="Tags\Definitions\DamageResponseDefinition.cs" />
-    <Compile Include="Tags\Definitions\DecalSystem.cs" />
-    <Compile Include="Tags\Definitions\DecoratorSet.cs" />
-    <Compile Include="Tags\Definitions\Device.cs" />
-    <Compile Include="Tags\Definitions\DeviceControl.cs" />
-    <Compile Include="Tags\Definitions\DeviceMachine.cs" />
-    <Compile Include="Tags\Definitions\Dialogue.cs" />
-    <Compile Include="Tags\Definitions\Effect.cs" />
-    <Compile Include="Tags\Definitions\EffectGlobals.cs" />
-    <Compile Include="Tags\Definitions\EffectScenery.cs" />
-    <Compile Include="Tags\Definitions\Equipment.cs" />
-    <Compile Include="Tags\Definitions\Flock.cs" />
-    <Compile Include="Tags\Definitions\Formation.cs" />
-    <Compile Include="Tags\Definitions\GameEngineSettingsDefinition.cs" />
-    <Compile Include="Tags\Definitions\GameObject.cs" />
-    <Compile Include="Tags\Definitions\GameProgression.cs" />
-    <Compile Include="Tags\Definitions\GfxTexturesList.cs" />
-    <Compile Include="Tags\Definitions\GlobalPixelShader.cs" />
-    <Compile Include="Tags\Definitions\Globals.cs" />
-    <Compile Include="Tags\Definitions\GlobalVertexShader.cs" />
-    <Compile Include="Tags\Definitions\GuiBitmapWidgetDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiButtonKeyDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiDatasourceDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiGroupWidgetDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiListWidgetDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiModelWidgetDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiScreenWidgetDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiSkinDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiTextWidgetDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetAnimationCollectionDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetColorAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetPositionAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetRotationAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetScaleAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetSpriteAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\GuiWidgetTextureCoordinateAnimationDefinition.cs" />
-    <Compile Include="Tags\Definitions\InputGlobals.cs" />
-    <Compile Include="Tags\Definitions\Item.cs" />
-    <Compile Include="Tags\Definitions\LeafSystem.cs" />
-    <Compile Include="Tags\Definitions\LensFlare.cs" />
-    <Compile Include="Tags\Definitions\Light.cs" />
-    <Compile Include="Tags\Definitions\LightVolumeSystem.cs" />
-    <Compile Include="Tags\Definitions\MaterialEffects.cs" />
-    <Compile Include="Tags\Definitions\Model.cs" />
-    <Compile Include="Tags\Definitions\ModelAnimationGraph.cs" />
-    <Compile Include="Tags\Definitions\Muffin.cs" />
-    <Compile Include="Tags\Definitions\MultilingualUnicodeStringList.cs" />
-    <Compile Include="Tags\Definitions\MultiplayerGlobals.cs" />
-    <Compile Include="Tags\Definitions\MultiplayerVariantSettingsInterfaceDefinition.cs" />
-    <Compile Include="Tags\Definitions\Particle.cs" />
-    <Compile Include="Tags\Definitions\ParticleModel.cs" />
-    <Compile Include="Tags\Definitions\ParticlePhysics.cs" />
-    <Compile Include="Tags\Definitions\PerformanceThrottles.cs" />
-    <Compile Include="Tags\Definitions\PhysicsModel.cs" />
-    <Compile Include="Tags\Definitions\PixelShader.cs" />
-    <Compile Include="Tags\Definitions\PodiumSettings.cs" />
-    <Compile Include="Tags\Definitions\PointPhysics.cs" />
-    <Compile Include="Tags\Definitions\Projectile.cs" />
-    <Compile Include="Tags\Definitions\RasterizerCacheFileGlobals.cs" />
-    <Compile Include="Tags\Definitions\RasterizerGlobals.cs" />
-    <Compile Include="Tags\Definitions\RenderMethod.cs" />
-    <Compile Include="Tags\Definitions\RenderMethodDefinition.cs" />
-    <Compile Include="Tags\Definitions\RenderMethodOption.cs" />
-    <Compile Include="Tags\Definitions\RenderMethodTemplate.cs" />
-    <Compile Include="Tags\Definitions\RenderModel.cs" />
-    <Compile Include="Tags\Definitions\RenderWaterRipple.cs" />
-    <Compile Include="Tags\Definitions\SandboxTextValuePairDefinition.cs" />
-    <Compile Include="Tags\Definitions\Scenario.cs" />
-    <Compile Include="Tags\Definitions\ScenarioLightmap.cs" />
-    <Compile Include="Tags\Definitions\ScenarioLightmapBspData.cs" />
-    <Compile Include="Tags\Definitions\ScenarioStructureBsp.cs" />
-    <Compile Include="Tags\Definitions\Scenery.cs" />
-    <Compile Include="Tags\Definitions\Shader.cs" />
-    <Compile Include="Tags\Definitions\ShaderCustom.cs" />
-    <Compile Include="Tags\Definitions\ShaderDecal.cs" />
-    <Compile Include="Tags\Definitions\ShaderFoliage.cs" />
-    <Compile Include="Tags\Definitions\ShaderHalogram.cs" />
-    <Compile Include="Tags\Definitions\ShaderScreen.cs" />
-    <Compile Include="Tags\Definitions\ShaderTerrain.cs" />
-    <Compile Include="Tags\Definitions\ShaderWater.cs" />
-    <Compile Include="Tags\Definitions\ShaderZonly.cs" />
-    <Compile Include="Tags\Definitions\ShieldImpact.cs" />
-    <Compile Include="Tags\Definitions\SimulationInterpolation.cs" />
-    <Compile Include="Tags\Definitions\SkyAtmParameters.cs" />
-    <Compile Include="Tags\Definitions\Sound.cs" />
-    <Compile Include="Tags\Definitions\SoundClasses.cs" />
-    <Compile Include="Tags\Definitions\SoundDialogueConstants.cs" />
-    <Compile Include="Tags\Definitions\SoundEffectCollection.cs" />
-    <Compile Include="Tags\Definitions\SoundEffectTemplate.cs" />
-    <Compile Include="Tags\Definitions\SoundEnvironment.cs" />
-    <Compile Include="Tags\Definitions\SoundGlobalPropagation.cs" />
-    <Compile Include="Tags\Definitions\SoundLooping.cs" />
-    <Compile Include="Tags\Definitions\SoundMix.cs" />
-    <Compile Include="Tags\Definitions\SoundScenery.cs" />
-    <Compile Include="Tags\Definitions\SoundUiSounds.cs" />
-    <Compile Include="Tags\Definitions\SquadTemplate.cs" />
-    <Compile Include="Tags\Definitions\StructureDesign.cs" />
-    <Compile Include="Tags\Definitions\Style.cs" />
-    <Compile Include="Tags\Definitions\SurvivalModeGlobals.cs" />
-    <Compile Include="Tags\Definitions\TagStructureTypes.cs" />
-    <Compile Include="Tags\Definitions\TextureRenderList.cs" />
-    <Compile Include="Tags\Definitions\TextValuePairDefinition.cs" />
-    <Compile Include="Tags\Definitions\Unit.cs" />
-    <Compile Include="Tags\Definitions\UserInterfaceGlobalsDefinition.cs" />
-    <Compile Include="Tags\Definitions\UserInterfaceSharedGlobalsDefinition.cs" />
-    <Compile Include="Tags\Definitions\UserInterfaceSoundsDefinition.cs" />
-    <Compile Include="Tags\Definitions\Vehicle.cs" />
-    <Compile Include="Tags\Definitions\VertexShader.cs" />
-    <Compile Include="Tags\Definitions\VFilesList.cs" />
-    <Compile Include="Tags\Definitions\VisionMode.cs" />
-    <Compile Include="Tags\Definitions\Weapon.cs" />
-    <Compile Include="Tags\Definitions\Wind.cs" />
-    <Compile Include="Tags\TagGroup.cs" />
-    <Compile Include="Tags\TagInstance.cs" />
+    <Compile Include="Geometry\ShaderCompiler.cs" />
+    <Compile Include="Geometry\ShaderConverter.cs" />
+    <Compile Include="TagDefinitions\Achievements.cs" />
+    <Compile Include="TagDefinitions\AiDialogueGlobals.cs" />
+    <Compile Include="TagDefinitions\AiGlobals.cs" />
+    <Compile Include="TagDefinitions\AiMissionDialogue.cs" />
+    <Compile Include="TagDefinitions\Antenna.cs" />
+    <Compile Include="TagDefinitions\AreaScreenEffect.cs" />
+    <Compile Include="TagDefinitions\Armor.cs" />
+    <Compile Include="TagDefinitions\ArmorSounds.cs" />
+    <Compile Include="TagDefinitions\BeamSystem.cs" />
+    <Compile Include="TagDefinitions\Bink.cs" />
+    <Compile Include="TagDefinitions\Biped.cs" />
+    <Compile Include="TagDefinitions\Bitmap.cs" />
+    <Compile Include="TagDefinitions\BreakableSurface.cs" />
+    <Compile Include="TagDefinitions\CacheFileGlobalTags.cs" />
+    <Compile Include="TagDefinitions\CameraFxSettings.cs" />
+    <Compile Include="TagDefinitions\CameraTrack.cs" />
+    <Compile Include="TagDefinitions\Camo.cs" />
+    <Compile Include="TagDefinitions\Character.cs" />
+    <Compile Include="TagDefinitions\ChocolateMountainNew.cs" />
+    <Compile Include="TagDefinitions\ChudAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\ChudDefinition.cs" />
+    <Compile Include="TagDefinitions\ChudGlobalsDefinition.cs" />
+    <Compile Include="TagDefinitions\ChudWidgetParallaxData.cs" />
+    <Compile Include="TagDefinitions\Cloth.cs" />
+    <Compile Include="TagDefinitions\CollisionDamage.cs" />
+    <Compile Include="TagDefinitions\CollisionModel.cs" />
+    <Compile Include="TagDefinitions\ColorTable.cs" />
+    <Compile Include="TagDefinitions\ContrailSystem.cs" />
+    <Compile Include="TagDefinitions\Crate.cs" />
+    <Compile Include="TagDefinitions\Creature.cs" />
+    <Compile Include="TagDefinitions\DamageEffect.cs" />
+    <Compile Include="TagDefinitions\DamageResponseDefinition.cs" />
+    <Compile Include="TagDefinitions\DecalSystem.cs" />
+    <Compile Include="TagDefinitions\DecoratorSet.cs" />
+    <Compile Include="TagDefinitions\Device.cs" />
+    <Compile Include="TagDefinitions\DeviceControl.cs" />
+    <Compile Include="TagDefinitions\DeviceMachine.cs" />
+    <Compile Include="TagDefinitions\Dialogue.cs" />
+    <Compile Include="TagDefinitions\Effect.cs" />
+    <Compile Include="TagDefinitions\EffectGlobals.cs" />
+    <Compile Include="TagDefinitions\EffectScenery.cs" />
+    <Compile Include="TagDefinitions\Equipment.cs" />
+    <Compile Include="TagDefinitions\Flock.cs" />
+    <Compile Include="TagDefinitions\Formation.cs" />
+    <Compile Include="TagDefinitions\GameEngineSettingsDefinition.cs" />
+    <Compile Include="TagDefinitions\GameObject.cs" />
+    <Compile Include="TagDefinitions\GameProgression.cs" />
+    <Compile Include="TagDefinitions\GfxTexturesList.cs" />
+    <Compile Include="TagDefinitions\GlobalPixelShader.cs" />
+    <Compile Include="TagDefinitions\Globals.cs" />
+    <Compile Include="TagDefinitions\GlobalVertexShader.cs" />
+    <Compile Include="TagDefinitions\GuiBitmapWidgetDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiButtonKeyDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiDatasourceDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiGroupWidgetDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiListWidgetDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiModelWidgetDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiScreenWidgetDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiSkinDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiTextWidgetDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetAnimationCollectionDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetColorAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetPositionAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetRotationAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetScaleAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetSpriteAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\GuiWidgetTextureCoordinateAnimationDefinition.cs" />
+    <Compile Include="TagDefinitions\InputGlobals.cs" />
+    <Compile Include="TagDefinitions\Item.cs" />
+    <Compile Include="TagDefinitions\LeafSystem.cs" />
+    <Compile Include="TagDefinitions\LensFlare.cs" />
+    <Compile Include="TagDefinitions\Light.cs" />
+    <Compile Include="TagDefinitions\LightVolumeSystem.cs" />
+    <Compile Include="TagDefinitions\MaterialEffects.cs" />
+    <Compile Include="TagDefinitions\Model.cs" />
+    <Compile Include="TagDefinitions\ModelAnimationGraph.cs" />
+    <Compile Include="TagDefinitions\Muffin.cs" />
+    <Compile Include="TagDefinitions\MultilingualUnicodeStringList.cs" />
+    <Compile Include="TagDefinitions\MultiplayerGlobals.cs" />
+    <Compile Include="TagDefinitions\MultiplayerVariantSettingsInterfaceDefinition.cs" />
+    <Compile Include="TagDefinitions\Particle.cs" />
+    <Compile Include="TagDefinitions\ParticleModel.cs" />
+    <Compile Include="TagDefinitions\ParticlePhysics.cs" />
+    <Compile Include="TagDefinitions\PerformanceThrottles.cs" />
+    <Compile Include="TagDefinitions\PhysicsModel.cs" />
+    <Compile Include="TagDefinitions\PixelShader.cs" />
+    <Compile Include="TagDefinitions\PodiumSettings.cs" />
+    <Compile Include="TagDefinitions\PointPhysics.cs" />
+    <Compile Include="TagDefinitions\Projectile.cs" />
+    <Compile Include="TagDefinitions\RasterizerCacheFileGlobals.cs" />
+    <Compile Include="TagDefinitions\RasterizerGlobals.cs" />
+    <Compile Include="TagDefinitions\RenderMethod.cs" />
+    <Compile Include="TagDefinitions\RenderMethodDefinition.cs" />
+    <Compile Include="TagDefinitions\RenderMethodOption.cs" />
+    <Compile Include="TagDefinitions\RenderMethodTemplate.cs" />
+    <Compile Include="TagDefinitions\RenderModel.cs" />
+    <Compile Include="TagDefinitions\RenderWaterRipple.cs" />
+    <Compile Include="TagDefinitions\SandboxTextValuePairDefinition.cs" />
+    <Compile Include="TagDefinitions\Scenario.cs" />
+    <Compile Include="TagDefinitions\ScenarioLightmap.cs" />
+    <Compile Include="TagDefinitions\ScenarioLightmapBspData.cs" />
+    <Compile Include="TagDefinitions\ScenarioStructureBsp.cs" />
+    <Compile Include="TagDefinitions\Scenery.cs" />
+    <Compile Include="TagDefinitions\Shader.cs" />
+    <Compile Include="TagDefinitions\ShaderCustom.cs" />
+    <Compile Include="TagDefinitions\ShaderDecal.cs" />
+    <Compile Include="TagDefinitions\ShaderFoliage.cs" />
+    <Compile Include="TagDefinitions\ShaderHalogram.cs" />
+    <Compile Include="TagDefinitions\ShaderScreen.cs" />
+    <Compile Include="TagDefinitions\ShaderTerrain.cs" />
+    <Compile Include="TagDefinitions\ShaderWater.cs" />
+    <Compile Include="TagDefinitions\ShaderZonly.cs" />
+    <Compile Include="TagDefinitions\ShieldImpact.cs" />
+    <Compile Include="TagDefinitions\SimulationInterpolation.cs" />
+    <Compile Include="TagDefinitions\SkyAtmParameters.cs" />
+    <Compile Include="TagDefinitions\Sound.cs" />
+    <Compile Include="TagDefinitions\SoundClasses.cs" />
+    <Compile Include="TagDefinitions\SoundDialogueConstants.cs" />
+    <Compile Include="TagDefinitions\SoundEffectCollection.cs" />
+    <Compile Include="TagDefinitions\SoundEffectTemplate.cs" />
+    <Compile Include="TagDefinitions\SoundEnvironment.cs" />
+    <Compile Include="TagDefinitions\SoundGlobalPropagation.cs" />
+    <Compile Include="TagDefinitions\SoundLooping.cs" />
+    <Compile Include="TagDefinitions\SoundMix.cs" />
+    <Compile Include="TagDefinitions\SoundScenery.cs" />
+    <Compile Include="TagDefinitions\SoundUiSounds.cs" />
+    <Compile Include="TagDefinitions\SquadTemplate.cs" />
+    <Compile Include="TagDefinitions\StructureDesign.cs" />
+    <Compile Include="TagDefinitions\Style.cs" />
+    <Compile Include="TagDefinitions\SurvivalModeGlobals.cs" />
+    <Compile Include="TagDefinitions\TagStructureTypes.cs" />
+    <Compile Include="TagDefinitions\TextureRenderList.cs" />
+    <Compile Include="TagDefinitions\TextValuePairDefinition.cs" />
+    <Compile Include="TagDefinitions\Unit.cs" />
+    <Compile Include="TagDefinitions\UserInterfaceGlobalsDefinition.cs" />
+    <Compile Include="TagDefinitions\UserInterfaceSharedGlobalsDefinition.cs" />
+    <Compile Include="TagDefinitions\UserInterfaceSoundsDefinition.cs" />
+    <Compile Include="TagDefinitions\Vehicle.cs" />
+    <Compile Include="TagDefinitions\VertexShader.cs" />
+    <Compile Include="TagDefinitions\VFilesList.cs" />
+    <Compile Include="TagDefinitions\VisionMode.cs" />
+    <Compile Include="TagDefinitions\Weapon.cs" />
+    <Compile Include="TagDefinitions\Wind.cs" />
+    <Compile Include="Common\TagGroup.cs" />
+    <Compile Include="Cache\CachedTagInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Tags\tagnames_1.106708 cert_ms23.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Tags\tagnames_11.1.498295 Live.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Tags\tagnames_12.1.700123 cert_ms30_oct19.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Cache\Builds.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Cache\Versions.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Cache\VertexBuffer.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="FodyWeavers.xml" />
+    <Content Include="tagnames_1.106708 cert_ms23.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tagnames_11.1.498295 Live.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tagnames_12.1.700123 cert_ms30_oct19.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -519,11 +442,11 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.1.29.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.0\build\Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\AssimpNet.3.3.1\build\AssimpNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AssimpNet.3.3.1\build\AssimpNet.targets'))" />
+    <Error Condition="!Exists('..\packages\AssimpNet.3.3.2\build\AssimpNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AssimpNet.3.3.2\build\AssimpNet.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
   </Target>
-  <Import Project="..\packages\Fody.1.29.0\build\Fody.targets" Condition="Exists('..\packages\Fody.1.29.0\build\Fody.targets')" />
-  <Import Project="..\packages\AssimpNet.3.3.1\build\AssimpNet.targets" Condition="Exists('..\packages\AssimpNet.3.3.1\build\AssimpNet.targets')" />
+  <Import Project="..\packages\AssimpNet.3.3.2\build\AssimpNet.targets" Condition="Exists('..\packages\AssimpNet.3.3.2\build\AssimpNet.targets')" />
+  <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

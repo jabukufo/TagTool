@@ -1,9 +1,9 @@
-﻿using TagTool.Tags.Definitions;
+﻿using TagTool.TagDefinitions;
 using SimpleJSON;
 using System;
 using System.Collections.Generic;
-using ShapeTypes = TagTool.Tags.Definitions.PhysicsModel.RigidBody.ShapeTypeValue;
-using MotionTypeValue = TagTool.Tags.Definitions.PhysicsModel.RigidBody.MotionTypeValue;
+using ShapeTypes = TagTool.TagDefinitions.PhysicsModel.RigidBody.ShapeTypeValue;
+using MotionTypeValue = TagTool.TagDefinitions.PhysicsModel.RigidBody.MotionTypeValue;
 using TagTool.Common;
 
 namespace TagTool.Geometry
@@ -29,15 +29,15 @@ namespace TagTool.Geometry
             node.Sibling = -1;
             node.Parent = -1;
             //the 'default' stringid
-            node.Name = new StringID(1);
+            node.Name = new StringId(1);
 
             _phmo.Nodes.Add(node);
 
             _phmo.Materials = new List<PhysicsModel.Material>();
             var material = new PhysicsModel.Material();
             //the 'default' stringid
-            material.Name = new StringID(1);
-            material.Flags = -256;
+            material.Name = new StringId(1);
+            // ??? material.Flags = -256;
             material.PhantomType = -1;
 
             _phmo.Materials.Add(material);

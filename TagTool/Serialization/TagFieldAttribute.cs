@@ -31,6 +31,11 @@ namespace TagTool.Serialization
         public int Count { get; set; }
 
         /// <summary>
+        /// Determines if the tag field is a padding value.
+        /// </summary>
+        public bool Padding { get; set; } = false;
+
+        /// <summary>
         /// If the value is a string, gets or sets the maximum number of characters in the string (including the null terminator).
         /// </summary>
         public int Length { get; set; }

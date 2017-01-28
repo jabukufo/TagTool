@@ -1,15 +1,13 @@
 ﻿using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Models
 {
     static class ModelContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, Model model)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, Model model)
         {
-            var groupName = info.StringIDs.GetString(tag.Group.Name);
+            var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
             var context = new CommandContext(parent,
                 string.Format("{0:X8}.{1}", tag.Index, groupName));
@@ -19,7 +17,7 @@ namespace TagTool.Commands.Models
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, Model model)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, Model model)
         {
             context.AddCommand(new ListVariantsCommand(info, model));
             context.AddCommand(new ExtractModelCommand(info, model));

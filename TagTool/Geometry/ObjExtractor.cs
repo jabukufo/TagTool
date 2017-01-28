@@ -216,7 +216,7 @@ namespace TagTool.Geometry
         /// <param name="vertex">The vertex to write.</param>
         private void WriteVertex(ObjVertex vertex)
         {
-            _writer.WriteLine("v {0} {1} {2}", vertex.Position.X, vertex.Position.Y, vertex.Position.Z);
+            _writer.WriteLine("v {0} {1} {2}", vertex.Position.I, vertex.Position.J, vertex.Position.K);
             _writer.WriteLine("vn {0} {1} {2}", vertex.Normal.X, vertex.Normal.Y, vertex.Normal.Z);
             _writer.WriteLine("vt {0} {1}", vertex.TexCoords.X, 1 - vertex.TexCoords.Y);
         }
@@ -244,9 +244,9 @@ namespace TagTool.Geometry
 
         private class ObjVertex
         {
-            public Vector4 Position { get; set; }
-            public Vector3 Normal { get; set; }
-            public Vector2 TexCoords { get; set; }
+            public RealVector4d Position { get; set; }
+            public RealPoint3d Normal { get; set; }
+            public RealPoint2d TexCoords { get; set; }
         }
     }
 }

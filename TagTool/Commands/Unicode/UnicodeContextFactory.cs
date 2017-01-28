@@ -1,15 +1,13 @@
 ﻿using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
+using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Unicode
 {
     static class UnicodeContextFactory
     {
-        public static CommandContext Create(CommandContext parent, GameCacheContext info, TagInstance tag, MultilingualUnicodeStringList unic)
+        public static CommandContext Create(CommandContext parent, GameCacheContext info, CachedTagInstance tag, MultilingualUnicodeStringList unic)
         {
-            var groupName = info.StringIDs.GetString(tag.Group.Name);
+            var groupName = info.StringIdCache.GetString(tag.Group.Name);
 
             var context = new CommandContext(parent,
                 string.Format("{0:X8}.{1}", tag.Index, groupName));
@@ -19,14 +17,14 @@ namespace TagTool.Commands.Unicode
             return context;
         }
 
-        public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, MultilingualUnicodeStringList unic)
+        public static void Populate(CommandContext context, GameCacheContext info, CachedTagInstance tag, MultilingualUnicodeStringList unic)
         {
-            if (info.StringIDs == null)
+            if (info.StringIdCache == null)
                 return;
 
-            context.AddCommand(new ListCommand(info, unic));
-            context.AddCommand(new GetCommand(info, tag, unic));
-            context.AddCommand(new SetCommand(info, tag, unic));
+            context.AddCommand(new ListStringsCommand(info, unic));
+            context.AddCommand(new GetStringCommand(info, tag, unic));
+            context.AddCommand(new SetStringCommand(info, tag, unic));
         }
     }
 }
