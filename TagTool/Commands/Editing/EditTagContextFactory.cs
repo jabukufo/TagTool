@@ -103,7 +103,6 @@ namespace TagTool.Commands.Editing
             commandContext.AddCommand(new CopyBlockElementsCommand(contextStack, cacheContext, tag, structure, value));
             commandContext.AddCommand(new PasteBlockElementsCommand(contextStack, cacheContext, tag, structure, value));
             commandContext.AddCommand(new SaveTagChangesCommand(cacheContext, tag, value));
-            commandContext.AddCommand(new ExecuteCommand(cacheContext, tag, value));
             commandContext.AddCommand(new ExitToCommand(contextStack));
 
             return commandContext;

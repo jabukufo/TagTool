@@ -18,10 +18,10 @@ namespace TagTool.Commands.Bitmaps
         public ImportBitmapCommand(GameCacheContext cacheContext, TagInstance tag, Bitmap bitmap)
             : base(CommandFlags.None,
 
-                  "import-bitmap",
+                  "ImportBitmap",
                   "Imports an image from a DDS file.",
 
-                  "import-bitmap <image index> <dds file>",
+                  "ImportBitmap <image index> <dds file>",
 
                   "The image index must be in hexadecimal.\n" +
                   "No conversion will be done on the data in the DDS file.\n" +

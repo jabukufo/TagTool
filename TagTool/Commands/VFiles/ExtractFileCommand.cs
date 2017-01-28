@@ -12,15 +12,15 @@ namespace TagTool.Commands.VFiles
         public ExtractFileCommand(VFilesList definition)
             : base(CommandFlags.Inherit,
 
-                  "extract-file",
+                  "ExtractFile",
                   "Extract a file from the tag.",
 
-                  "extract-file <virtual path> [output path]",
+                  "ExtractFile <virtual path> [output path]",
 
                   "Extracts a file stored in the tag. If the output path is not specified, it will\n" +
                   "be the same as the file's virtual path.\n" +
                   "\n" +
-                  "Use \"list\" to find files in the tag.")
+                  "Use the \"ListFiles\" command to find files in the tag.")
         {
             Definition = definition;
         }

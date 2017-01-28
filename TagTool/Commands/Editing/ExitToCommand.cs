@@ -10,10 +10,10 @@ namespace TagTool.Commands.Editing
         public ExitToCommand(CommandContextStack contextStack)
             : base( CommandFlags.Inherit,
 
-                  "exit-to",
+                  "ExitTo",
                   "Exits each context on the stack until the specified one is found.",
 
-                  "exit-to <context name>",
+                  "ExitTo <context name>",
 
                   "Exits each context on the stack until the specified one is found.")
         {

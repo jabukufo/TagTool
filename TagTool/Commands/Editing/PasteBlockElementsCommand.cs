@@ -17,10 +17,10 @@ namespace TagTool.Commands.Editing
         public PasteBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
 
-                  "paste-block-elements",
+                  "PasteBlockElements",
                   $"Pastes block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.",
 
-                  "paste-block-elements <tag block name> [index = *]",
+                  "PasteBlockElements <tag block name> [index = *]",
 
                   $"Pastes block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.")
         {

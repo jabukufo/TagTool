@@ -7,17 +7,17 @@ using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Tags
 {
-    class ListStringsCommand : Command
+    class ListAllStringsCommand : Command
     {
         private GameCacheContext CacheContext { get; }
 
-        public ListStringsCommand(GameCacheContext cacheContext) : base(
+        public ListAllStringsCommand(GameCacheContext cacheContext) : base(
             CommandFlags.Inherit,
 
-            "list-strings",
+            "ListAllStrings",
             "Scan unic tags to find a localized string",
 
-            "list-strings <language> [filter]",
+            "ListAllStrings <language> [filter]",
 
             "Scans all unic tags to find the strings belonging to a language.\n" +
             "If a filter is specified, only strings containing the filter will be listed.\n" +

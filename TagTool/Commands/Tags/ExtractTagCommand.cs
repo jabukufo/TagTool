@@ -12,10 +12,10 @@ namespace TagTool.Commands.Tags
         public ExtractTagCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
 
-                  "extract-tag",
+                  "ExtractTag",
                   "",
 
-                  "extract-tag [all] <index|group> <path>",
+                  "ExtractTag [all] <index|group> <path>",
 
                   "")
         {

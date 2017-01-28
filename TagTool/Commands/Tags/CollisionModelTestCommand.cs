@@ -15,10 +15,10 @@ namespace TagTool.Commands.Tags
         public CollisionModelTestCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
                   
-                  "collision-model-test",
+                  "CollisionModelTest",
                   "Collision geometry import command (Test)",
                   
-                  "collision-model-test <filepath>|<dirpath> <index>|<new> [force]",
+                  "CollisionModelTest <filepath>|<dirpath> <index>|<new> [force]",
                   
                   "Insert a collision_geometry tag compiled from Halo1 CE Tool.\n" +
                   "A file path can be specified to load from a single Halo 1 coll tag or a directory name " +

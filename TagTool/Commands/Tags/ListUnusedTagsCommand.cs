@@ -5,17 +5,17 @@ using TagTool.Cache;
 
 namespace TagTool.Commands.Tags
 {
-    class ListUnreferencedTagsCommand : Command
+    class ListUnusedTagsCommand : Command
     {
         public GameCacheContext CacheContext { get; }
 
-        public ListUnreferencedTagsCommand(GameCacheContext cacheContext)
+        public ListUnusedTagsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
 
-                  "list-unreferenced-tags",
+                  "ListUnusedTags",
                   "Lists all unreferenced tags in the current tag cache",
 
-                  "list-unreferenced-tags",
+                  "ListUnusedTags",
 
                   "Lists all unreferenced tags in the current tag cache")
         {

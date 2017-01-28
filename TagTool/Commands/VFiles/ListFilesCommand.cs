@@ -6,15 +6,18 @@ using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.VFiles
 {
-    class ListCommand : Command
+    class ListFilesCommand : Command
     {
         private readonly VFilesList Definition;
 
-        public ListCommand(VFilesList definition)
+        public ListFilesCommand(VFilesList definition)
             : base(CommandFlags.Inherit,
-                  "list",
+
+                  "ListFiles",
                   "List files stored in the tag.",
-                  "list [filter]",
+
+                  "ListFiles [filter]",
+
                   "If a filter is specified, only files which contain the filter in their path\n" +
                   "will be listed.")
         {

@@ -17,10 +17,10 @@ namespace TagTool.Commands.Tags
         public ConvertPluginsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
 
-                  "convert-plugins",
+                  "ConvertPlugins",
                   "Convert Assembly plugins to tag layout structures",
 
-                  "convert-plugins <input dir> <output type> <output dir>",
+                  "ConvertPlugins <input dir> <output type> <output dir>",
 
                   "Only plugins for groups that are actually used in the tag cache will be converted.\n" +
                   "Layouts will be written to the output directory in the chosen format.\n" +

@@ -17,10 +17,10 @@ namespace TagTool.Commands.Editing
         public AddBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
 
-                  "add-block-elements",
+                  "AddBlockElements",
                   $"Adds/inserts block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.",
 
-                  "add-block-elements <block name> [amount = 1] [index = *]",
+                  "AddBlockElements <block name> [amount = 1] [index = *]",
 
                   $"Adds/inserts block element(s) to a specific tag block in the current {structure.Types[0].Name} definition.")
         {

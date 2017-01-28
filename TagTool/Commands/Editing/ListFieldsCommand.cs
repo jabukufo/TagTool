@@ -16,10 +16,10 @@ namespace TagTool.Commands.Editing
         public ListFieldsCommand(GameCacheContext cacheContext, TagStructureInfo structure, object value)
             : base(CommandFlags.Inherit,
 
-                  "list-fields",
+                  "ListFields",
                   $"Lists the fields in the current {structure.Types[0].Name} definition.",
 
-                  "list-fields",
+                  "ListFields",
 
                   $"Lists the fields in the current {structure.Types[0].Name} definition.")
         {

@@ -17,13 +17,13 @@ namespace TagTool.Commands.Models
         public ExtractModelCommand(GameCacheContext cacheContext, Model model)
             : base(CommandFlags.Inherit,
 
-                  "extract-model",
+                  "ExtractModel",
                   "Extracts a render model from the current model definition.",
 
-                  "extract-model <variant> <filetype> <filename>",
+                  "ExtractModel <variant> <filetype> <filename>",
 
                   "Extracts a variant of the render model to a file.\n" +
-                  "Use the \"listvariants\" command to list available variants.\n" +
+                  "Use the \"ListVariants\" command to list available variants.\n" +
                   "If the model does not have any variants, just use \"default\".\n" +
                   "Supported file types: obj")
         {

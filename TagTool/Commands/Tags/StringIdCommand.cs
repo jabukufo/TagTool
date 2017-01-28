@@ -15,16 +15,16 @@ namespace TagTool.Commands.Tags
         public StringIDCommand(GameCacheContext cacheContext) : base(
             CommandFlags.Inherit,
 
-            "stringid",
+            "StringId",
             "Add, look up, or find stringID values",
 
-            "stringid add <string>\n" +
-            "stringid get <id>\n" +
-            "stringid list [filter]",
+            "StringId Add <string>\n" +
+            "StringId Get <id>\n" +
+            "StringId List [filter]",
 
-            "\"stringid add\" will add a new stringID.\n" +
-            "\"stringid get\" will display the string corresponding to an ID value.\n" +
-            "\"stringid list\" will list stringIDs, optionally filtering them.")
+            "\"StringId Add\" will add a new stringID.\n" +
+            "\"StringId Get\" will display the string corresponding to an ID value.\n" +
+            "\"StringId List\" will list stringIDs, optionally filtering them.")
         {
             CacheContext = cacheContext;
         }
@@ -34,7 +34,7 @@ namespace TagTool.Commands.Tags
             if (args.Count == 0)
                 return false;
 
-            switch (args[0])
+            switch (args[0].ToLower())
             {
                 case "add":
                     return ExecuteAdd(args);

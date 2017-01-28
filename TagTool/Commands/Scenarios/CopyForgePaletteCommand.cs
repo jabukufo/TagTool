@@ -15,10 +15,10 @@ namespace TagTool.Commands.Scenarios
         public CopyForgePaletteCommand(GameCacheContext cacheContext, Scenario definition)
             : base(CommandFlags.Inherit,
 
-                 "copy-forge-palette",
+                 "CopyForgePalette",
                  "Copies the forge palette from the current scenario to another scenario.",
 
-                 "copy-forge-palette [palette = all] <destination scenario>",
+                 "CopyForgePalette [palette = all] <destination scenario>",
 
                  "Copies the forge palette from the current scenario to another scenario.")
         {

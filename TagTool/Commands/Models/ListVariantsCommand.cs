@@ -14,10 +14,10 @@ namespace TagTool.Commands.Models
         public ListVariantsCommand(GameCacheContext cacheContext, Model model)
             : base(CommandFlags.Inherit,
                   
-                  "list-variants",
+                  "ListVariants",
                   "List available variants of the current model definition.",
                   
-                  "list-variants",
+                  "ListVariants",
                   "Lists available variants of the current model definition which can be used with \"extract-model\".")
         {
             CacheContext = cacheContext;

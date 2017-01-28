@@ -20,10 +20,10 @@ namespace TagTool.Commands.Editing
         public SetFieldCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
 
-                  "set-field",
+                  "SetField",
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.",
 
-                  "set-field <field name> <field value>",
+                  "SetField <field name> <field value>",
 
                   $"Sets the value of a specific field in the current {structure.Types[0].Name} definition.")
         {

@@ -15,10 +15,10 @@ namespace TagTool.Commands.Tags
         public UpdateMapFilesCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
 
-                  "update-map-files",
+                  "UpdateMapFiles",
                   "Updates the game's .map files to contain valid scenario tag indices.",
 
-                  "update-map-files",
+                  "UpdateMapFiles",
 
                   "Updates the game's .map files to contain valid scenario tag indices.")
         {

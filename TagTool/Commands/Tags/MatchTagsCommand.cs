@@ -33,10 +33,10 @@ namespace TagTool.Commands.Tags
         public MatchTagsCommand(GameCacheContext cacheContext) : base(
             CommandFlags.Inherit,
 
-            "match-tags",
+            "MatchTags",
             "Find equivalent tags in different engine versions",
 
-            "match-tags <output csv> <tags.dat...>",
+            "MatchTags <output csv> <tags.dat...>",
 
             "The tags in the current tag cache will be compared with the tags in each of the\n" +
             "listed tags.dat files to find tags that are the same in all of them. Results\n" +

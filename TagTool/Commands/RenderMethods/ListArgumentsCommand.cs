@@ -17,10 +17,10 @@ namespace TagTool.Commands.RenderMethods
         public ListArgumentsCommand(GameCacheContext cacheContext, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
 
-                 "list-arguments",
+                 "ListArguments",
                  "Lists the arguments of the render_method.",
 
-                 "list-arguments",
+                 "ListArguments",
 
                  "Lists the arguments of the render_method.")
         {

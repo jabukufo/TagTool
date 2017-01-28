@@ -12,19 +12,19 @@ using PrimitiveType = TagTool.Geometry.PrimitiveType;
 
 namespace TagTool.Commands.Tags
 {
-    class ModelTestCommand : Command
+    class RenderModelTestCommand : Command
     {
         private GameCacheContext CacheContext { get; }
 
-        public ModelTestCommand(GameCacheContext cacheContext)
+        public RenderModelTestCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
                   
-                  "model-test",
-                  "Model injection test",
+                  "RenderModelTest",
+                  "A test command for 'mode' tag resources.",
 
-                  "model-test [location = resources] [tag index = 0x3317] <model file>",
+                  "RenderModelTest [location = resources] [tag index = 0x3317] <model file>",
 
-                  "Injects the model over the traffic cone.\n" +
+                  "A test command for 'mode' tag resources.\n" +
                   "The model must only have a single material and no nodes.")
         {
             CacheContext = cacheContext;

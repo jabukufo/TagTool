@@ -22,7 +22,7 @@ namespace TagTool.Commands.Unicode
             if (info.StringIdCache == null)
                 return;
 
-            context.AddCommand(new ListCommand(info, unic));
+            context.AddCommand(new ListStringsCommand(info, unic));
             context.AddCommand(new GetStringCommand(info, tag, unic));
             context.AddCommand(new SetStringCommand(info, tag, unic));
         }

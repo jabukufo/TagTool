@@ -16,10 +16,10 @@ namespace TagTool.Commands.RenderMethods
         public ListBitmapsCommand(GameCacheContext cacheContext, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
 
-                 "list-bitmaps",
+                 "ListBitmaps",
                  "Lists the bitmaps used by the render_method.",
 
-                 "list-bitmaps",
+                 "ListBitmaps",
 
                  "Lists the bitmaps used by the render_method.")
         {

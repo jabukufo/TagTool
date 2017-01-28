@@ -6,17 +6,19 @@ using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Unicode
 {
-    class ListCommand : Command
+    class ListStringsCommand : Command
     {
         private GameCacheContext CacheContext { get; }
         private MultilingualUnicodeStringList Definition { get; }
 
-        public ListCommand(GameCacheContext cacheContext, MultilingualUnicodeStringList definition)
+        public ListStringsCommand(GameCacheContext cacheContext, MultilingualUnicodeStringList definition)
             : base(CommandFlags.Inherit,
-                  "list",
-                  "List strings",
-                  "list <language> [filter]",
-                  "Lists the strings belonging to a language.\n" +
+                  "ListStrings",
+                  "Lists the unicode strings belonging to a certain language.",
+                  
+                  "ListStrings <language> [filter]",
+
+                  "Lists the unicode strings belonging to a certain language.\n" +
                   "If a filter is specified, only strings containing the filter will be listed.\n" +
                   "\n" +
                   "Available languages:\n" +

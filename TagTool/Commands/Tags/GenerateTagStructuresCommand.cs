@@ -8,22 +8,22 @@ using TagTool.Layouts;
 
 namespace TagTool.Commands.Tags
 {
-    class GenerateLayoutsCommand : Command
+    class GenerateTagStructuresCommand : Command
     {
         private GameCacheContext CacheContext { get; }
 
-        public GenerateLayoutsCommand(GameCacheContext cacheFile) : base(
+        public GenerateTagStructuresCommand(GameCacheContext cacheFile) : base(
             CommandFlags.Inherit,
 
-            "generate-layouts",
-            "Generate tag layouts",
+            "GenerateTagStructures",
+            "Generates tag structures in either C# or C++.",
 
-            "genlayouts <type> <output dir>",
+            "GenerateTagStructures <type> <output dir>",
 
             "Scans all tags in the file to guess tag layouts.\n" +
             "Layouts will be written to the output directory in the chosen format.\n" +
             "\n" +
-            "Supported types: csharp, cpp")
+            "Supported types: C#, C++")
         {
             CacheContext = cacheFile;
         }
@@ -38,12 +38,17 @@ namespace TagTool.Commands.Tags
 
             TagLayoutWriter writer;
 
-            switch (type)
+            switch (type.ToLower())
             {
+                case "c#":
+                case "cs":
                 case "csharp":
                     writer = new CSharpLayoutWriter();
                     break;
+
+                case "c++":
                 case "cpp":
+                case "cplusplus":
                     writer = new CppLayoutWriter();
                     break;
                 default:

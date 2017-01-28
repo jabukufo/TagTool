@@ -14,10 +14,10 @@ namespace TagTool.Commands.Editing
         public SaveTagChangesCommand(GameCacheContext cacheContext, TagInstance tag, object value)
             : base(CommandFlags.Inherit,
 
-                  "save-tag-changes",
+                  "SaveTagChanges",
                   $"Saves changes made to the current {cacheContext.StringIdCache.GetString(tag.Group.Name)} definition.",
 
-                  "save-tag-changes",
+                  "SaveTagChanges",
 
                   $"Saves changes made to the current {cacheContext.StringIdCache.GetString(tag.Group.Name)} definition.")
         {

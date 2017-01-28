@@ -16,10 +16,10 @@ namespace TagTool.Commands.RenderMethods
         public SpecifyBitmapsCommand(GameCacheContext cacheContext, TagInstance tag, RenderMethod definition)
             : base(CommandFlags.Inherit,
 
-                 "specify-bitmaps",
+                 "SpecifyBitmaps",
                  "Allows the bitmaps of the render_method to be respecified.",
 
-                 "specify-bitmaps",
+                 "SpecifyBitmaps",
 
                  "Allows the bitmaps of the render_method to be respecified.")
         {

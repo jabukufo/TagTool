@@ -12,10 +12,10 @@ namespace TagTool.Commands.Tags
         public ImportTagCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
 
-                  "import-tag",
+                  "ImportTag",
                   "",
 
-                  "import-tag <index> <path>",
+                  "ImportTag <index> <path>",
 
                   "")
         {

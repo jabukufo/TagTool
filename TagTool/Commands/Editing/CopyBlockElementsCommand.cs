@@ -20,10 +20,10 @@ namespace TagTool.Commands.Editing
         public CopyBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.None,
 
-                  "copy-block-elements",
+                  "CopyBlockElements",
                   "Copies block elements from one tag to another.",
 
-                  "copy-block-elements <block name> [count = *] [index = 0]",
+                  "CopyBlockElements <block name> [count = *] [index = 0]",
 
                   "Copies block elements from one tag to another.")
         {

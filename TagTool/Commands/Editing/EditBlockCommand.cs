@@ -19,7 +19,7 @@ namespace TagTool.Commands.Editing
         public EditBlockCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, object value)
             : base(CommandFlags.Inherit,
 
-                  "edit-block",
+                  "EditBlock",
                   "Edit the fields of a particular block element.",
 
                   "edit-block <name> [element-index (if block)]",

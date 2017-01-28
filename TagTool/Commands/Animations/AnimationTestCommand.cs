@@ -16,7 +16,14 @@ namespace TagTool.Commands.Animations
         private ModelAnimationGraph JMAD { get; }
 
         public AnimationTestCommand(GameCacheContext cacheContext, TagInstance tag, ModelAnimationGraph jmad)
-            : base(CommandFlags.Inherit, "animation_test", "", "", "")
+            : base(CommandFlags.Inherit,
+                  
+                  "AnimationTest",
+                  "A test resource-loading command for 'jmad' tags.",
+
+                  "AnimationTest",
+
+                  "A test resource-loading command for 'jmad' tags.")
         {
             CacheContext = cacheContext;
             Tag = tag;

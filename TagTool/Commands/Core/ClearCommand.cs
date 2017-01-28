@@ -7,9 +7,12 @@ namespace TagTool.Commands.Core
     {
         public ClearCommand()
             : base(CommandFlags.Inherit,
-                  "clear",
+                  
+                  "Clear",
                   "Clears the screen of all output",
-                  "clear",
+
+                  "Clear",
+
                   "Clears the screen of all output.")
         {
         }

@@ -11,10 +11,10 @@ namespace TagTool.Commands.Tags
         public ListNullTagsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
                   
-                  "list-null-tags",
+                  "ListNullTags",
                   "Lists all null tag indices in the current tag cache",
                   
-                  "listnulltags",
+                  "ListNullTags",
                   
                   "Lists all null tag indices in the current tag cache")
         {

@@ -19,12 +19,12 @@ namespace TagTool.Commands.Tags
         public ConvertTagCommand(GameCacheContext info)
             : base(CommandFlags.None,
                   
-                  "convert-tag",
+                  "ConvertTag",
                   "Convert a tag and its dependencies to another engine version",
                   
-                  "convert-tag <tag index> <tag map csv> <output csv> <target directory>",
+                  "ConvertTag <tag index> <tag map csv> <output csv> <target directory>",
                   
-                  "The tag map CSV should be generated using the \"match-tags\" command.\n" +
+                  "The tag map CSV should be generated using the \"MatchTags\" command.\n" +
                   "If a tag is listed in the CSV file, it will not be converted.\n" +
                   "The output CSV file is used for converting multiple maps.\n" +
                   "Subsequent convert commands should use the new CSV.\n" +

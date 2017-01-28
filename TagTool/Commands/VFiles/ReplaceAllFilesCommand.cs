@@ -7,19 +7,19 @@ using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.VFiles
 {
-    class ImportFilesCommand : Command
+    class ReplaceAllFilesCommand : Command
     {
         private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private VFilesList Definition { get; }
 
-        public ImportFilesCommand(GameCacheContext cacheContext, TagInstance tag, VFilesList definition)
+        public ReplaceAllFilesCommand(GameCacheContext cacheContext, TagInstance tag, VFilesList definition)
             : base(CommandFlags.None,
 
-                  "import-files",
+                  "ReplaceAllFiles",
                   "Replace all files stored in the tag",
 
-                  "import-files [directory]",
+                  "ReplaceAllFiles [directory]",
                   "Replaces all file stored in the tag. The tag will be resized as necessary.\n" +
                   "If no directory is specified, files will be loaded from the current directory.")
         {

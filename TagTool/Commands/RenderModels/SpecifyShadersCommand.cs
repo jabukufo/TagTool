@@ -16,10 +16,10 @@ namespace TagTool.Commands.RenderModels
         public SpecifyShadersCommand(GameCacheContext cacheContext, TagInstance tag, RenderModel definition)
             : base(CommandFlags.Inherit,
 
-                  "specify-shaders",
+                  "SpecifyShaders",
                   "Allows the shaders of a render_model to be respecified.",
 
-                  "specify-shaders",
+                  "SpecifyShaders",
 
                   "Allows the shaders of a render_model to be respecified.")
         {

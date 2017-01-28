@@ -11,10 +11,10 @@ namespace TagTool.Commands.Tags
         public GetTagInfoCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
 
-            "get-tag-info",
-            "Get information about a tag",
+            "GetTagInfo",
+            "Displays detailed information about a tag.",
 
-            "get-tag-info <tag index>",
+            "GetTagInfo <tag index>",
 
             "Displays detailed information about a tag.")
         {

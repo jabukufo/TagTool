@@ -11,12 +11,12 @@ namespace TagTool.Commands.Tags
         public ResourceCommand() : base(
             CommandFlags.None,
 
-            "resource",
+            "TagResource",
             "Manage raw resource data",
 
-            "resource extract <.dat file> <index> <compressed size> <output file>\n" +
-            "resource import <.dat file> <index> <input file>\n" +
-            "resource delete <.dat file> <index>",
+            "TagResource Extract <.dat file> <index> <compressed size> <output file>\n" +
+            "TagResource Import <.dat file> <index> <input file>\n" +
+            "TagResource Delete <.dat file> <index>",
 
             "Extracts, imports and deletes raw resource data.\n" +
             "When extracting, the compressed size must include chunk headers.\n\n" +
@@ -29,17 +29,22 @@ namespace TagTool.Commands.Tags
         {
             if (args.Count < 3)
                 return false;
+
             var command = args[0];
             var cachePath = args[1];
+
             uint index;
             if (!uint.TryParse(args[2], NumberStyles.HexNumber, null, out index))
                 return false;
-            switch (command)
+
+            switch (command.ToLower())
             {
                 case "extract":
                     return ExtractResource(cachePath, index, args);
+
                 case "import":
                     return ImportResource(cachePath, index, args);
+
                 default:
                     return false;
             }

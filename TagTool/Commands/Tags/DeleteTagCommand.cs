@@ -28,10 +28,10 @@ namespace TagTool.Commands.Tags
         public DeleteTagCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
 
-                  "delete-tag",
+                  "DeleteTag",
                   "Nulls and removes a tag and its and resources from cache.",
 
-                  "delete-tag <tag index>",
+                  "DeleteTag <tag index>",
 
                   "Nulls and removes a tag and its and resources from cache.")
         {

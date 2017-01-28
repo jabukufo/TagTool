@@ -16,10 +16,10 @@ namespace TagTool.Commands.Unicode
         public SetStringCommand(GameCacheContext cacheContext, TagInstance tag, MultilingualUnicodeStringList unic)
             : base(CommandFlags.None,
 
-                  "set-string",
+                  "SetString",
                   "Set the value of a string",
 
-                  "set-string <language> <stringid> <value>",
+                  "SetString <language> <stringid> <value>",
 
                   "Sets the string associated with a stringID in a language.\n" +
                   "Remember to put the string value in quotes if it contains spaces.\n" +

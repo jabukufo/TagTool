@@ -13,10 +13,10 @@ namespace TagTool.Commands.Tags
         public CleanCsvFileCommand(GameCacheContext cacheContext) :
             base(CommandFlags.Inherit,
 
-                "clean-csv-file",
+                "CleanCsvFile",
                 "Removes any unfound tag indices from a tag conversion .csv file.",
 
-                "clean-csv-file <csv file>",
+                "CleanCsvFile <csv file>",
 
                 "Removes any unfound tag indices from a tag conversion .csv file.")
         {

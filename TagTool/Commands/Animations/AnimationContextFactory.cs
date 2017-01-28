@@ -19,7 +19,7 @@ namespace TagTool.Commands.Animations
 
         public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, ModelAnimationGraph animation)
         {
-            context.AddCommand(new GetResourcesCommand(info, tag, animation));
+            context.AddCommand(new GetResourceInfoCommand(info, tag, animation));
             context.AddCommand(new AnimationTestCommand(info, tag, animation));
         }
     }

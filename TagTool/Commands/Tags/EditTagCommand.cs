@@ -13,10 +13,10 @@ namespace TagTool.Commands.Tags
         public EditTagCommand(CommandContextStack contextStack, GameCacheContext cacheContext) : base(
             CommandFlags.None,
 
-            "edit-tag",
+            "EditTag",
             "Edit tag-specific data",
 
-            "edit-tag <tag index>",
+            "EditTag <tag index>",
 
             "If the tag contains data which is supported by this program,\n" +
             "this command will make special tag-specific commands available\n" +

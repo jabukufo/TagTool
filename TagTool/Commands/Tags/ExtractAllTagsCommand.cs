@@ -5,17 +5,17 @@ using TagTool.Cache;
 
 namespace TagTool.Commands.Tags
 {
-    class ExtractTagsCommand : Command
+    class ExtractAllTagsCommand : Command
     {
         public GameCacheContext CacheContext { get; }
 
-        public ExtractTagsCommand(GameCacheContext cacheContext)
+        public ExtractAllTagsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
 
-                  "extract-tags",
+                  "ExtractAllTags",
                   "Extracts all tags in the current tag cache to a specific directory.",
 
-                  "extract-tags <output directory>",
+                  "ExtractAllTags <output directory>",
 
                   "Extracts all tags in the current tag cache to a specific directory.")
         {

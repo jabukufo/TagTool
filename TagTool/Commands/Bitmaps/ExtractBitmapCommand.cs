@@ -17,10 +17,10 @@ namespace TagTool.Commands.Bitmaps
         public ExtractBitmapCommand(GameCacheContext cacheContext, TagInstance tag, Bitmap bitmap)
             : base(CommandFlags.None,
 
-                  "extract-bitmap",
+                  "ExtractBitmap",
                   "Extracts a bitmap to a file.",
 
-                  "extract-bitmap <output directory>",
+                  "ExtractBitmap <output directory>",
 
                   "Extracts a bitmap to a file.")
         {

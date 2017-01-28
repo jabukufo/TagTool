@@ -12,10 +12,10 @@ namespace TagTool.Commands.Tags
         public GetTagAddressCommand()
             : base(CommandFlags.Inherit,
 
-                  "get-tag-address",
+                  "GetTagAddress",
                   "Get the address of a tag in memory",
 
-                  "get-tag-address <tag index> [process id]",
+                  "GetTagAddress <tag index> [process id]",
 
                   "Gets the address of the given tag in memory.\n" +
                   "By default, this will read the memory of the first eldorado.exe process found.\n" +

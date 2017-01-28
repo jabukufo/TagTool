@@ -14,10 +14,10 @@ namespace TagTool.Commands.Tags
         public CreateTagCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
 
-                  "create-tag",
+                  "CreateTag",
                   "Creates a new tag of the specified tag group in the current tag cache.",
 
-                  "create-tag <group tag> [index = *]",
+                  "CreateTag <group tag> [index = *]",
 
                   "Creates a new tag of the specified tag group in the current tag cache.")
         {

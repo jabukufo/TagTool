@@ -11,10 +11,10 @@ namespace TagTool.Commands.Tags
         public DuplicateTagCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
                   
-                  "duplicate-tag",
+                  "DuplicateTag",
                   "Creates a new copy of a tag in the tag cache.",
                   
-                  "duplicate-tag <tag index>",
+                  "DuplicateTag <tag index>",
                   
                   "All of the tag's data, including tag blocks, will be copied into a new tag.\n" +
                   "The new tag can then be edited independently of the old tag.")

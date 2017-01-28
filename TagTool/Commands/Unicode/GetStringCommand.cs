@@ -16,10 +16,10 @@ namespace TagTool.Commands.Unicode
         public GetStringCommand(GameCacheContext cacheContext, TagInstance tag, MultilingualUnicodeStringList unic)
             : base(CommandFlags.Inherit,
 
-                  "get-string",
+                  "GetString",
                   "Gets the value of a string.",
 
-                  "get-string <language> <string_id>",
+                  "GetString <language> <string_id>",
 
                   "Gets the value of a string.")
         {

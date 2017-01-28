@@ -17,12 +17,12 @@ namespace TagTool.Commands.BSPs
         public CollisionTestCommand(GameCacheContext cacheContext, TagInstance tag, ScenarioStructureBsp bsp)
             : base(CommandFlags.Inherit,
 
-                  "collision-test",
-                  "A test bsp collision command.",
+                  "CollisionTest",
+                  "A test resource-loading command for 'sbsp' tag collision.",
                   
                   "collision-test",
 
-                  "A test bsp collision command.")
+                  "A test resource-loading command for 'sbsp' tag collision.")
         {
             CacheContext = cacheContext;
             Tag = tag;

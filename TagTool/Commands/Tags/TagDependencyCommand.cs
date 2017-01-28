@@ -15,22 +15,22 @@ namespace TagTool.Commands.Tags
         public TagDependencyCommand(GameCacheContext cacheContext) : base(
             CommandFlags.None,
 
-            "tag-dependency",
+            "TagDependency",
             "Manage tag dependencies.",
 
-            "tag-dependency add <tag> {... dependencies ...}\n" +
-            "tag-dependency remove <tag> {... dependencies ...}\n" +
-            "tag-dependency list <tag>\n" +
-            "tag-dependency list-all <tag>\n" +
-            "tag-dependency list-on <tag>",
+            "TagDependency Add <tag> {... dependencies ...}\n" +
+            "TagDependency Remove <tag> {... dependencies ...}\n" +
+            "TagDependency List <tag>\n" +
+            "TagDependency ListAll <tag>\n" +
+            "TagDependency ListOn <tag>",
 
-            "\"tag-dependency add\" will cause the first tag to load the other tags.\n" +
-            "\"tag-dependency remove\" will prevent the first tag from loading the other tags.\n" +
-            "\"tag-dependency list\" will list all immediate dependencies of a tag.\n" +
-            "\"tag-dependency list-all\" will recursively list all dependencies of a tag.\n" +
-            "\"tag-dependency list-on\" will list all tags that depend on a tag.\n" +
+            "\"TagDependency Add\" will cause the first tag to load the other tags.\n" +
+            "\"TagDependency Remove\" will prevent the first tag from loading the other tags.\n" +
+            "\"TagDependency List\" will list all immediate dependencies of a tag.\n" +
+            "\"TagDependency ListAll\" will recursively list all dependencies of a tag.\n" +
+            "\"TagDependency ListOn\" will list all tags that depend on a tag.\n" +
             "\n" +
-            "To add dependencies to a map, use the \"map\" command to get its scenario tag\n" +
+            "To add dependencies to a map, use the \"GetMapInfo\" command to get its scenario tag\n" +
             "index and then add dependencies to the scenario tag.")
         {
             CacheContext = cacheContext;

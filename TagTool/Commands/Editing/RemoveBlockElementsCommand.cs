@@ -17,10 +17,10 @@ namespace TagTool.Commands.Editing
         public RemoveBlockElementsCommand(CommandContextStack contextStack, GameCacheContext cacheContext, TagInstance tag, TagStructureInfo structure, object owner)
             : base(CommandFlags.Inherit,
 
-                  "remove-block-elements",
+                  "RemoveBlockElements",
                   $"Removes block element(s) from a specified index of a specific tag block in the current {structure.Types[0].Name} definition.",
 
-                  "remove-block-elements <block name> [* | <block index> [* | amount = 1]]",
+                  "RemoveBlockElements <block name> [* | <block index> [* | amount = 1]]",
                   $"Removes block element(s) from a specified index of a specific tag block in the current {structure.Types[0].Name} definition.")
         {
             ContextStack = contextStack;

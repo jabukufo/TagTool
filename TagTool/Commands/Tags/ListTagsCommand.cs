@@ -12,10 +12,10 @@ namespace TagTool.Commands.Tags
         public ListTagsCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
 
-                  "list-tags",
+                  "ListTags",
                   "Lists tag instances that are of the specified tag group.",
 
-                  "list-tags <group tag 1> ... <group tag n>",
+                  "ListTags <group tag 1> ... <group tag n>",
 
                   "Lists tag instances that are of the specified tag group." +
                   "Multiple group tags to list tags from can be specified.\n" +

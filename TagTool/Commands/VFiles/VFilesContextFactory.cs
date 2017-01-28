@@ -17,11 +17,11 @@ namespace TagTool.Commands.VFiles
 
         public static void Populate(CommandContext context, GameCacheContext info, TagInstance tag, VFilesList vfsl)
         {
-            context.AddCommand(new ListCommand(vfsl));
+            context.AddCommand(new ListFilesCommand(vfsl));
             context.AddCommand(new ExtractFileCommand(vfsl));
             context.AddCommand(new ExtractFilesCommand(vfsl));
-            context.AddCommand(new ImportFileCommand(info, tag, vfsl));
-            context.AddCommand(new ImportFilesCommand(info, tag, vfsl));
+            context.AddCommand(new ReplaceFileCommand(info, tag, vfsl));
+            context.AddCommand(new ReplaceAllFilesCommand(info, tag, vfsl));
         }
     }
 }

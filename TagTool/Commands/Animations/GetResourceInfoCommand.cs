@@ -5,19 +5,19 @@ using TagTool.TagDefinitions;
 
 namespace TagTool.Commands.Animations
 {
-    class GetResourcesCommand : Command
+    class GetResourceInfoCommand : Command
     {
         private GameCacheContext CacheContext { get; }
         private TagInstance Tag { get; }
         private ModelAnimationGraph Definition { get; }
 
-        public GetResourcesCommand(GameCacheContext cacheContext, TagInstance tag, ModelAnimationGraph definition)
+        public GetResourceInfoCommand(GameCacheContext cacheContext, TagInstance tag, ModelAnimationGraph definition)
             : base(CommandFlags.None,
 
-                  "get-resource-info",
+                  "GetResourceInfo",
                   "Gets information about a model_animation_graph's resources.",
 
-                  "get-resource-info",
+                  "GetResourceInfo",
 
                   "Gets information about a model_animation_graph's resources.")
         {

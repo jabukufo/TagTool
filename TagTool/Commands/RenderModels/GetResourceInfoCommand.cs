@@ -14,10 +14,10 @@ namespace TagTool.Commands.RenderModels
         public GetResourceInfoCommand(GameCacheContext cacheContext, TagInstance tag, RenderModel definition)
             : base(CommandFlags.None,
 
-                  "get-resource-info",
+                  "GetResourceInfo",
                   "Gets information about the render_model's resource.",
 
-                  "get-resource-info",
+                  "GetResourceInfo",
 
                   "Gets information about the render_model's resource.")
         {

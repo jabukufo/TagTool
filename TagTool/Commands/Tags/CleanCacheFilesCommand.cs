@@ -29,10 +29,10 @@ namespace TagTool.Commands.Tags
         public CleanCacheFilesCommand(GameCacheContext cacheContext)
             : base(CommandFlags.None,
 
-                  "clean-cache-files",
+                  "CleanCacheFiles",
                   "Nulls and removes unused tags and resources from cache.",
 
-                  "clean-cache-files",
+                  "CleanCacheFiles",
 
                   "Nulls and removes unused tags and resources from cache.")
         {

@@ -10,9 +10,12 @@ namespace TagTool.Commands.Core
  
         public HelpCommand(CommandContextStack contextStack)
             : base(CommandFlags.Inherit,
-                  "help",
+
+                  "Help",
                   "Display help",
-                  "help [command]",
+
+                  "Help [command]",
+
                   "Displays help on how to use a command.\n" +
                   "If no command is given, help will list all available commands.")
         {

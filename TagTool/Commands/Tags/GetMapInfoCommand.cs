@@ -7,18 +7,18 @@ namespace TagTool.Commands
 {
     class GetMapInfoCommand : Command
     {
-        public GetMapInfoCommand() : base(
-            CommandFlags.Inherit,
-
-            "get-map-info",
-            "Get information about a map",
-            
-            "get-map-info <filename>",
-            
-            "Loads a .map file and displays information about it.\n" +
-            "Currently only displays the scenario tag index.\n" +
-            "The filename must include the .map extension.\n" +
-            "Put the filename in quotes if it contains spaces.")
+        public GetMapInfoCommand()
+            : base(CommandFlags.Inherit,
+                  
+                  "GetMapInfo",
+                  "Get information about a map",
+                  
+                  "GetMapInfo <filename>",
+                  
+                  "Loads a .map file and displays information about it.\n" +
+                  "Currently only displays the scenario tag index.\n" +
+                  "The filename must include the .map extension.\n" +
+                  "Put the filename in quotes if it contains spaces.")
         {
         }
 
