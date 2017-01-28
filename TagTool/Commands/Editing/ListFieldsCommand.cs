@@ -40,6 +40,9 @@ namespace TagTool.Commands.Editing
 
             while (enumerator.Next())
             {
+                if (enumerator.Attribute != null && enumerator.Attribute.Padding == true)
+                    continue;
+
                 var nameString = enumerator.Field.Name;
 
                 if (match && !nameString.ToLower().Contains(token))

@@ -66,7 +66,7 @@ namespace TagTool.TagDefinitions
             public uint Unknown18;
             public List<Style> Styles;
             public List<Formation> Formations;
-            public List<SquadTemplate> SquadTemplates;
+            public List<Template> SquadTemplates;
             public uint Unknown19;
             public uint Unknown20;
             public uint Unknown21;
@@ -103,9 +103,9 @@ namespace TagTool.TagDefinitions
             }
 
             [TagStructure(Size = 0x10)]
-            public class SquadTemplate
+            public class Template
             {
-                public TagInstance SquadTemplate2;
+                public TagInstance SquadTemplate;
             }
         }
     }

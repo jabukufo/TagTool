@@ -9,6 +9,8 @@ namespace TagTool.TagDefinitions
         public TagInstance ParentModel;
         public TagInstance FirstPersonModel;
         public TagInstance ThirdPersonModel;
-        public uint Unused1;
+
+        [TagField(Padding = true, Count = 4)]
+        public sbyte[] Unused;
     }
 }
