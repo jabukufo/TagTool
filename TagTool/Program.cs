@@ -262,13 +262,16 @@ namespace TagTool
             }
         }
 
-        public static string ReadCommandLine<T, TResult>(CommandContextStack contextStack, IEnumerable<T> hintSource, Func<T, TResult> hintField, string inputRegex = ".*", ConsoleColor hintColor = ConsoleColor.DarkGray)
+        public static string ReadCommandLine<T, TResult>(CommandContextStack contextStack, IEnumerable<T> hintSource, Func<T, TResult> hintField, string inputRegex = ".*", ConsoleColor hintColor = ConsoleColor.DarkCyan)
         {
             ConsoleKeyInfo input;
 
             var suggestion = string.Empty;
+            var lastSuggestion = string.Empty;
             var userInput = string.Empty;
             var commandLine = string.Empty;
+
+            var originalColor = Console.ForegroundColor;
 
             while (ConsoleKey.Enter != (input = Console.ReadKey()).Key)
             {
@@ -284,7 +287,10 @@ namespace TagTool
                 suggestion = hintSource.Select(item => hintField(item).ToString())
                     .FirstOrDefault(item => item.Length > userInput.Length && item.Substring(0, userInput.Length).ToLower() == userInput.ToLower());
 
-                commandLine = suggestion == null ? userInput : suggestion;
+                if (suggestion != null)
+                    lastSuggestion = suggestion;
+
+                commandLine = suggestion ?? userInput;
 
                 // Clear the console input line
                 int currentLineCursor = Console.CursorTop;
@@ -294,8 +300,6 @@ namespace TagTool
                 
                 Console.Write("{0}> {1}", contextStack.GetPath(), userInput);
 
-                var originalColor = Console.ForegroundColor;
-
                 Console.ForegroundColor = hintColor;
 
                 if (userInput.Any())
@@ -304,7 +308,13 @@ namespace TagTool
                 Console.ForegroundColor = originalColor;
             }
 
-            Console.Write("{0}> {1}", contextStack.GetPath(), commandLine);
+            Console.ForegroundColor = originalColor;
+            Console.Write($"{contextStack.GetPath()}> ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write(lastSuggestion);
+            Console.ForegroundColor = originalColor;
+            Console.Write(commandLine.Substring(lastSuggestion.Length, commandLine.Length - lastSuggestion.Length));
+            Console.WriteLine();
             Console.WriteLine();
 
             return commandLine;
