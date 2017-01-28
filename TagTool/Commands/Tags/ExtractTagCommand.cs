@@ -65,7 +65,7 @@ namespace TagTool.Commands.Tags
             }
             else
             {
-                var instance = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+                var instance = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
 
                 if (instance == null)
                     return false;

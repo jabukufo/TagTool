@@ -14,7 +14,7 @@ namespace TagTool.Commands.Tags
             "GetTagInfo",
             "Displays detailed information about a tag.",
 
-            "GetTagInfo <tag index>",
+            "GetTagInfo <tag>",
 
             "Displays detailed information about a tag.")
         {
@@ -25,7 +25,9 @@ namespace TagTool.Commands.Tags
         {
             if (args.Count != 1)
                 return false;
-            var tag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+
+            var tag = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
+
             if (tag == null)
                 return false;
 

@@ -82,7 +82,7 @@ namespace TagTool.Commands.Tags
 
             if (args.Count == 2)
             {
-                destination = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+                destination = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
 
                 if (!destination.IsInGroup("mode"))
                 {

@@ -1,69 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using TagTool.Cache;
-using TagTool.Cache.HaloOnline;
-using TagTool.Common;
-using TagTool.Serialization;
-using TagTool.Tags;
-using TagTool.Tags.Definitions;
 
 namespace TagTool.Commands.Tags
 {
     class NameTagCommand : Command
     {
-        public GameCacheContext Info { get; }
+        public GameCacheContext CacheContext { get; }
 
-        public NameTagCommand(GameCacheContext info)
+        public NameTagCommand(GameCacheContext cacheContext)
             : base(CommandFlags.Inherit,
-            "NameTag",
-            "Renames a tag in memory and in the .csv file",
-
-            "NameTag <tag> <name>",
-
-            "<tag> - a reference to a tag by index, *, or its old tagname. \n" +
-            "<name> - should be a concise name that resembles the format of existing tagnames.\n")
+                  
+                  "NameTag",
+                  "Sets the name of a tag file in the current cache.",
+                  
+                  "NameTag <tag> <name> [csv path]",
+                  
+                  "<tag>  - A valid tag index, tag name, or * for the last tag in the current cache. \n" +
+                  "\n" +
+                  "<name> - The name of the tag. Should be a concise name that resembles the format \n" +
+                  "         of existing tag names.\n")
         {
-            Info = info;
+            CacheContext = cacheContext;
         }
 
         public override bool Execute(List<string> args)
         {
-            if (args.Count != 2)
+            if (args.Count < 2 || args.Count > 3)
                 return false;
 
-            var tag = ArgumentParser.ParseTagIndex(Info, args[0]);
+            var tag = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
             var name = args[1];
 
             if (tag == null)
-                return false;
-
-            // Change the tagname in memory so the tag can be referenced by it's new name.
-            Info.TagNames[tag.Index] = name;
-
-            // Write the new tagname back to the tagnames.csv file for the loaded cache version.
-            var tagNamesPath = "Tags\\tagnames_" + CacheVersionDetection.GetVersionString(Info.Version) + ".csv";
-            if (!Directory.Exists("Tags"))
-                Directory.CreateDirectory("Tags");
-                
-            using (var csvStream = File.Create(tagNamesPath))
             {
-                var writer = new StreamWriter(csvStream);
+                Console.WriteLine($"ERROR: Invalid tag specifier: {args[0]}");
+                return false;
+            }
+            
+            CacheContext.TagNames[tag.Index] = name;
 
-                foreach (var entry in Info.TagNames)
+            var csvFile = (args.Count == 3) ?
+                new FileInfo(args[2]) :
+                new FileInfo($"tagnames_{CacheVersionDetection.GetVersionString(CacheContext.Version)}.csv");
+
+            if (!csvFile.Directory.Exists)
+                csvFile.Directory.Create();
+
+            using (var csvStream = csvFile.Create())
+            using (var csvWriter = new StreamWriter(csvStream))
+            {
+                foreach (var entry in CacheContext.TagNames)
                 {
                     var value = entry.Value;
 
                     if (value.StartsWith("0x"))
-                        writer.WriteLine($"0x{entry.Key:X8},{value}");
+                        csvWriter.WriteLine($"0x{entry.Key:X8},{value}");
                     else
-                        writer.WriteLine($"0x{entry.Key:X8},0x{entry.Key:X4} {value}");
+                        csvWriter.WriteLine($"0x{entry.Key:X8},0x{entry.Key:X4} {value}");
                 }
-
-                writer.Close();
             }
+
+            Console.WriteLine($"[Index: 0x{tag.Index:X4}, Offset: 0x{tag.HeaderOffset:X8}, Size: 0x{tag.TotalSize:X4}] {name}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}");
+
             return true;
         }
     }

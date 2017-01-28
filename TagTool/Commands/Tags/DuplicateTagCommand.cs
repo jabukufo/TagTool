@@ -14,7 +14,7 @@ namespace TagTool.Commands.Tags
                   "DuplicateTag",
                   "Creates a new copy of a tag in the tag cache.",
                   
-                  "DuplicateTag <tag index>",
+                  "DuplicateTag <tag>",
                   
                   "All of the tag's data, including tag blocks, will be copied into a new tag.\n" +
                   "The new tag can then be edited independently of the old tag.")
@@ -27,7 +27,7 @@ namespace TagTool.Commands.Tags
             if (args.Count != 1)
                 return false;
 
-            var tag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+            var tag = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
 
             if (tag == null)
                 return false;

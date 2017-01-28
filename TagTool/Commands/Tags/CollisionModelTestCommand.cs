@@ -49,7 +49,7 @@ namespace TagTool.Commands.Tags
             }
             else
             {
-                tag = ArgumentParser.ParseTagIndex(CacheContext, args[1]);
+                tag = ArgumentParser.ParseTagSpecifier(CacheContext, args[1]);
                 if (tag == null)
                 {
                     return false;

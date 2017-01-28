@@ -31,7 +31,7 @@ namespace TagTool.Commands.Tags
                   "DeleteTag",
                   "Nulls and removes a tag and its and resources from cache.",
 
-                  "DeleteTag <tag index>",
+                  "DeleteTag <tag>",
 
                   "Nulls and removes a tag and its and resources from cache.")
         {
@@ -303,7 +303,7 @@ namespace TagTool.Commands.Tags
             if (args.Count != 1)
                 return false;
 
-            var tag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+            var tag = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
 
             if (tag == null)
                 return false;

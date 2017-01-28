@@ -28,7 +28,6 @@ namespace TagTool.Commands.Tags
             context.AddCommand(new CleanCacheFilesCommand(cacheContext));
             context.AddCommand(new ListUnusedTagsCommand(cacheContext));
             context.AddCommand(new ListNullTagsCommand(cacheContext));
-            context.AddCommand(new NewTagCommand(cacheContext));
             context.AddCommand(new CreateTagCommand(cacheContext));
             context.AddCommand(new ExtractAllTagsCommand(cacheContext));
             context.AddCommand(new EditTagCommand(stack, cacheContext));
@@ -40,6 +39,7 @@ namespace TagTool.Commands.Tags
             context.AddCommand(new RenderModelTestCommand(cacheContext));
             context.AddCommand(new ConvertPluginsCommand(cacheContext));
             context.AddCommand(new GenerateTagNamesCommand(cacheContext));
+            context.AddCommand(new NameTagCommand(cacheContext));
             context.AddCommand(new MatchTagsCommand(cacheContext));
             context.AddCommand(new ConvertTagCommand(cacheContext));
             context.AddCommand(new UpdateMapFilesCommand(cacheContext));

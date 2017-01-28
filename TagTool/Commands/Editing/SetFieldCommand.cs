@@ -226,7 +226,7 @@ namespace TagTool.Commands.Editing
             {
                 if (args.Count != 1)
                     return false;
-                output = ArgumentParser.ParseTagIndex(CacheContext, input);
+                output = ArgumentParser.ParseTagSpecifier(CacheContext, input);
             }
             else if (type == typeof(StringId))
             {

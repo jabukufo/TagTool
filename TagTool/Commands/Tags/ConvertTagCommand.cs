@@ -19,12 +19,12 @@ namespace TagTool.Commands.Tags
 
         public ConvertTagCommand(GameCacheContext info)
             : base(CommandFlags.None,
-                  
+
                   "ConvertTag",
                   "Convert a tag and its dependencies to another engine version",
-                  
-                  "ConvertTag <tag index> <tag map csv> <output csv> <target directory>",
-                  
+
+                  "ConvertTag <tag> <input csv> <output csv> <target directory>",
+
                   "The tag map CSV should be generated using the \"MatchTags\" command.\n" +
                   "If a tag is listed in the CSV file, it will not be converted.\n" +
                   "The output CSV file is used for converting multiple maps.\n" +
@@ -38,9 +38,12 @@ namespace TagTool.Commands.Tags
         {
             if (args.Count != 4)
                 return false;
-            var srcTag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+
+            var srcTag = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
+
             if (srcTag == null)
                 return false;
+
             var csvPath = args[1];
             var csvOutPath = args[2];
             var targetDir = args[3];
@@ -48,7 +51,7 @@ namespace TagTool.Commands.Tags
             // Load the CSV
             Console.WriteLine("Reading {0}...", csvPath);
             TagVersionMap tagMap;
-            
+
             using (var reader = new StreamReader(File.Exists(csvPath) ? File.OpenRead(csvPath) : File.Create(csvPath)))
                 tagMap = TagVersionMap.ParseTagVersionMap(reader);
 
@@ -132,7 +135,7 @@ namespace TagTool.Commands.Tags
                 }
             }
 
-                CachedTagInstance resultTag;
+            CachedTagInstance resultTag;
             using (Stream srcStream = CacheContext.OpenTagCacheRead(), destStream = destCacheContext.OpenTagCacheReadWrite())
                 resultTag = ConvertTag(srcTag, CacheContext, srcStream, srcResources, destCacheContext, destStream, destResources, tagMap);
 
@@ -165,7 +168,7 @@ namespace TagTool.Commands.Tags
         private CachedTagInstance ConvertTag(CachedTagInstance srcTag, GameCacheContext srcInfo, Stream srcStream, ResourceDataManager srcResources, GameCacheContext destCacheContext, Stream destStream, ResourceDataManager destResources, TagVersionMap tagMap)
         {
             TagPrinter.PrintTagShort(srcTag);
-            
+
             // Uncomment this to use 0x101F for all shaders
             /*if (srcTag.IsClass("rm  "))
                 return destCacheContext.Cache.Tags[0x101F];*/

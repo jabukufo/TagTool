@@ -110,7 +110,7 @@ namespace TagTool.Commands
             return null;
         }
 
-        public static CachedTagInstance ParseTagIndex(GameCacheContext info, string arg)
+        public static CachedTagInstance ParseTagSpecifier(GameCacheContext info, string arg)
         {
             if (!(arg == "*" || arg == "null" || char.IsLetter(arg[0]) || arg.StartsWith("0x")))
             {

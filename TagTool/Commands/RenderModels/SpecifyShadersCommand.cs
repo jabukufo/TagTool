@@ -37,7 +37,7 @@ namespace TagTool.Commands.RenderModels
                 else
                     Console.Write("Please enter the replace material #{0} index: ", Definition.Materials.IndexOf(material));
 
-                material.RenderMethod = ArgumentParser.ParseTagIndex(CacheContext, Console.ReadLine());
+                material.RenderMethod = ArgumentParser.ParseTagSpecifier(CacheContext, Console.ReadLine());
             }
 
             using (var cacheStream = CacheContext.TagCacheFile.Open(FileMode.Open, FileAccess.ReadWrite))

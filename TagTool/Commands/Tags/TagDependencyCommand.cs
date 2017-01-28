@@ -41,7 +41,7 @@ namespace TagTool.Commands.Tags
             if (args.Count < 2)
                 return false;
 
-            var tag = ArgumentParser.ParseTagIndex(CacheContext, args[1]);
+            var tag = ArgumentParser.ParseTagSpecifier(CacheContext, args[1]);
 
             if (tag == null)
                 return false;
@@ -69,7 +69,7 @@ namespace TagTool.Commands.Tags
             if (args.Count < 3)
                 return false;
 
-            var dependencies = args.Skip(2).Select(a => ArgumentParser.ParseTagIndex(CacheContext, a)).ToList();
+            var dependencies = args.Skip(2).Select(a => ArgumentParser.ParseTagSpecifier(CacheContext, a)).ToList();
 
             if (dependencies.Count == 0 || dependencies.Any(d => d == null))
                 return false;

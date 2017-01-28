@@ -57,7 +57,7 @@ namespace TagTool.Commands.Scenarios
                 return false;
             }
 
-            var destinationTag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+            var destinationTag = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
 
             if (destinationTag == null || destinationTag.Group.Tag.ToString() != "scnr")
             {

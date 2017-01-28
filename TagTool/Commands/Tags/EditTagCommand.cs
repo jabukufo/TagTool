@@ -16,7 +16,7 @@ namespace TagTool.Commands.Tags
             "EditTag",
             "Edit tag-specific data",
 
-            "EditTag <tag index>",
+            "EditTag <tag>",
 
             "If the tag contains data which is supported by this program,\n" +
             "this command will make special tag-specific commands available\n" +
@@ -31,7 +31,7 @@ namespace TagTool.Commands.Tags
             if (args.Count != 1)
                 return false;
             
-            var tag = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+            var tag = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
 
             if (tag == null)
                 return false;

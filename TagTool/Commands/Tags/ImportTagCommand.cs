@@ -43,7 +43,7 @@ namespace TagTool.Commands.Tags
             if (args.Count != 2)
                 return false;
 
-            var instance = ArgumentParser.ParseTagIndex(CacheContext, args[0]);
+            var instance = ArgumentParser.ParseTagSpecifier(CacheContext, args[0]);
 
             if (instance == null)
                 return false;
