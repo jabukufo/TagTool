@@ -192,13 +192,14 @@ namespace TagTool
                 return;
             }
 
-            Console.WriteLine("Enter \"help\" to list available commands. Enter \"exit\" to quit.");
+            Console.WriteLine("Enter \"Help\" to list available commands, enter \"Exit\" to leave\n" +
+                              "the current editing context, or enter \"Quit\" to quit.");
             while (true)
             {
                 Console.WriteLine();
                 Console.Write("{0}> ", contextStack.GetPath());
 
-                var commandNames = new List<string> { "exit" };
+                var commandNames = new List<string> { "Exit", "Quit" };
                 var context = contextStack.Context;
                 var first = true;
 
@@ -227,12 +228,17 @@ namespace TagTool
                 var commandArgs = ArgumentParser.ParseCommand(commandLine, out redirectFile);
                 if (commandArgs.Count == 0)
                     continue;
+                
+                if (commandArgs[0].ToLower() == "quit")
+                {
+                    break;
+                }
 
-                // If "exit" or "quit" is given, pop the current context
-                if (commandArgs[0].ToLower() == "exit" || commandArgs[0].ToLower() == "quit")
+                if (commandArgs[0].ToLower() == "exit")
                 {
                     if (!contextStack.Pop())
-                        break; // No more contexts - quit
+                        break;
+
                     continue;
                 }
 
