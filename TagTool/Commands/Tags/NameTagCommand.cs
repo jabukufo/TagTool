@@ -59,7 +59,7 @@ namespace TagTool.Commands.Tags
                 }
             }
 
-            Console.WriteLine($"[Index: 0x{tag.Index:X4}, Offset: 0x{tag.HeaderOffset:X8}, Size: 0x{tag.TotalSize:X4}] {name}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}");
+            Console.WriteLine($"[Index: 0x{tag.Index:X4}, Offset: 0x{tag.HeaderOffset:X8}, Size: 0x{tag.TotalSize:X4}] {name}.{CacheContext.GetString(tag.Group.Name)}");
 
             return true;
         }

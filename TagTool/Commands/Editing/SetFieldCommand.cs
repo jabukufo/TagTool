@@ -109,7 +109,7 @@ namespace TagTool.Commands.Editing
 
             var valueString =
                 fieldType == typeof(StringId) ?
-                    CacheContext.StringIdCache.GetString((StringId)fieldValue) :
+                    CacheContext.GetString((StringId)fieldValue) :
                 fieldType.GetInterface(typeof(IList).Name) != null ?
                     (((IList)fieldValue).Count != 0 ?
                         $"{{...}}[{((IList)fieldValue).Count}]" :
@@ -232,7 +232,7 @@ namespace TagTool.Commands.Editing
             {
                 if (args.Count != 1)
                     return false;
-                output = CacheContext.StringIdCache.GetStringId(input);
+                output = CacheContext.GetStringId(input);
             }
             else if (type == typeof(Angle))
             {

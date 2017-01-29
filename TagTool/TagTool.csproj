@@ -134,7 +134,7 @@
     <Compile Include="Bitmaps\BitmapDdsInjector.cs" />
     <Compile Include="Bitmaps\BitmapFlags.cs" />
     <Compile Include="Bitmaps\BitmapFormat.cs" />
-    <Compile Include="Commands\Models\PortGen3ModelCommand.cs" />
+    <Compile Include="Commands\Models\PortModelCommand.cs" />
     <Compile Include="Common\Bitmask.cs" />
     <Compile Include="Common\RealBoundingBox.cs" />
     <Compile Include="Geometry\Vertex.cs" />

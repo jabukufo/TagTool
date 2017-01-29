@@ -126,7 +126,7 @@ namespace TagTool.Commands.Tags
                     CacheContext.TagNames[dependency.Index] :
                     $"0x{dependency.Index:X4}";
 
-                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{CacheContext.StringIdCache.GetString(dependency.Group.Name)}");
+                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{CacheContext.GetString(dependency.Group.Name)}");
             }
 
             return true;
@@ -142,7 +142,7 @@ namespace TagTool.Commands.Tags
                     CacheContext.TagNames[dependency.Index] :
                     $"0x{dependency.Index:X4}";
 
-                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{CacheContext.StringIdCache.GetString(dependency.Group.Name)}");
+                Console.WriteLine($"[Index: 0x{dependency.Index:X4}, Offset: 0x{dependency.HeaderOffset:X8}, Size: 0x{dependency.TotalSize:X4}] {tagName}.{CacheContext.GetString(dependency.Group.Name)}");
             }
 
             return true;

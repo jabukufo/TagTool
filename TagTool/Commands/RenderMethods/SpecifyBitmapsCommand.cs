@@ -49,7 +49,7 @@ namespace TagTool.Commands.RenderMethods
                 {
                     var mapTemplate = template.ShaderMaps[i];
 
-                    Console.Write(string.Format("Please enter the {0} index: ", CacheContext.StringIdCache.GetString(mapTemplate.Name)));
+                    Console.Write(string.Format("Please enter the {0} index: ", CacheContext.GetString(mapTemplate.Name)));
                     shaderMaps[mapTemplate.Name] = ArgumentParser.ParseTagSpecifier(CacheContext, Console.ReadLine());
                     property.ShaderMaps[i].Bitmap = shaderMaps[mapTemplate.Name];
                 }

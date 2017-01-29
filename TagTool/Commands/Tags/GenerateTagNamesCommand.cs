@@ -115,7 +115,7 @@ namespace TagTool.Commands.Tags
             if (tagNames.ContainsKey(tag.Index))
                 return;
 
-            tagNames[tag.Index] = $"{CacheContext.StringIdCache.GetString(GetTagDefinition<RenderModel>(stream, tag).Name)}";
+            tagNames[tag.Index] = $"{CacheContext.GetString(GetTagDefinition<RenderModel>(stream, tag).Name)}";
         }
 
         private void SetModelName(Stream stream, CachedTagInstance tag, ref Dictionary<int, string> tagNames)
@@ -160,7 +160,7 @@ namespace TagTool.Commands.Tags
             
             var renderModelDefinition = GetTagDefinition<RenderModel>(stream, modelDefinition.RenderModel);
 
-            var objectName = CacheContext.StringIdCache.GetString(renderModelDefinition.Name);
+            var objectName = CacheContext.GetString(renderModelDefinition.Name);
             
             if (tag.Group.Tag == new Tag("bipd"))
             {
@@ -385,7 +385,7 @@ namespace TagTool.Commands.Tags
         {
             var definition = GetTagDefinition<Scenario>(stream, tag);
 
-            var tagName = CacheContext.StringIdCache.GetString(definition.ScenarioZonesetGroups[0].Name);
+            var tagName = CacheContext.GetString(definition.ScenarioZonesetGroups[0].Name);
             var slashIndex = tagName.LastIndexOf('\\');
             var scenarioName = tagName.Substring(slashIndex + 1);
 

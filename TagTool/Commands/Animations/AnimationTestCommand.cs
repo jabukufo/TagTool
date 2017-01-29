@@ -35,7 +35,7 @@ namespace TagTool.Commands.Animations
             var resources = new ResourceDataManager();
             resources.LoadCachesFromDirectory(CacheContext.TagCacheFile.DirectoryName);
 
-            var name = CacheContext.StringIdCache.GetString(new StringId(0x1818));
+            var name = CacheContext.GetString(new StringId(0x1818));
 
             var jmadDefinitions = new List<ModelAnimationTagResource>();
             var jmadAnimationGroups = new List<List<ModelAnimationTagResource.GroupMember.Animation>>();

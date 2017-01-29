@@ -74,7 +74,7 @@ namespace TagTool.Commands.Tags
                 CacheContext.TagNames[instance.Index] :
                 $"0x{instance.Index:X4}";
 
-            Console.WriteLine($"[Index: 0x{instance.Index:X4}, Offset: 0x{instance.HeaderOffset:X8}, Size: 0x{instance.TotalSize:X4}] {tagName}.{CacheContext.StringIdCache.GetString(instance.Group.Name)}");
+            Console.WriteLine($"[Index: 0x{instance.Index:X4}, Offset: 0x{instance.HeaderOffset:X8}, Size: 0x{instance.TotalSize:X4}] {tagName}.{CacheContext.GetString(instance.Group.Name)}");
 
             return true;
         }

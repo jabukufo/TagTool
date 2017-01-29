@@ -270,133 +270,133 @@ namespace TagTool.Commands.Tags
             {
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("battle_rifle"),
+                    Name = CacheContext.GetStringId("battle_rifle"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x157C]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("assault_rifle"),
+                    Name = CacheContext.GetStringId("assault_rifle"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x151E]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("plasma_pistol"),
+                    Name = CacheContext.GetStringId("plasma_pistol"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x14F7]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("spike_rifle"),
+                    Name = CacheContext.GetStringId("spike_rifle"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x1500]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("smg"),
+                    Name = CacheContext.GetStringId("smg"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x157D]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("carbine"),
+                    Name = CacheContext.GetStringId("carbine"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x14FE]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("energy_sword"),
+                    Name = CacheContext.GetStringId("energy_sword"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x159E]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("magnum"),
+                    Name = CacheContext.GetStringId("magnum"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x157E]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("needler"),
+                    Name = CacheContext.GetStringId("needler"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x14F8]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("plasma_rifle"),
+                    Name = CacheContext.GetStringId("plasma_rifle"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x1525]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("rocket_launcher"),
+                    Name = CacheContext.GetStringId("rocket_launcher"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x15B3]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("shotgun"),
+                    Name = CacheContext.GetStringId("shotgun"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x1A45]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("sniper_rifle"),
+                    Name = CacheContext.GetStringId("sniper_rifle"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x15B1]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("brute_shot"),
+                    Name = CacheContext.GetStringId("brute_shot"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x14FF]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("unarmed"),
+                    Name = CacheContext.GetStringId("unarmed"),
                     RandomChance = 0,
                     Weapon = CacheContext.TagCache.Index[0x157F]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("beam_rifle"),
+                    Name = CacheContext.GetStringId("beam_rifle"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x1509]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("spartan_laser"),
+                    Name = CacheContext.GetStringId("spartan_laser"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x15B2]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("none"),
+                    Name = CacheContext.GetStringId("none"),
                     RandomChance = 0,
                     Weapon = null
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("gravity_hammer"),
+                    Name = CacheContext.GetStringId("gravity_hammer"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x150C]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("excavator"),
+                    Name = CacheContext.GetStringId("excavator"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x1504]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("flamethrower"),
+                    Name = CacheContext.GetStringId("flamethrower"),
                     RandomChance = 0,
                     Weapon = CacheContext.TagCache.Index[0x1A55]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantWeapon
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("missile_pod"),
+                    Name = CacheContext.GetStringId("missile_pod"),
                     RandomChance = 0.1f,
                     Weapon = CacheContext.TagCache.Index[0x1A54]
                 }
@@ -575,47 +575,47 @@ namespace TagTool.Commands.Tags
             {
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("warthog"),
+                    Name = CacheContext.GetStringId("warthog"),
                     Vehicle = CacheContext.TagCache.Index[0x151F]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("ghost"),
+                    Name = CacheContext.GetStringId("ghost"),
                     Vehicle = CacheContext.TagCache.Index[0x1517]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("scorpion"),
+                    Name = CacheContext.GetStringId("scorpion"),
                     Vehicle = CacheContext.TagCache.Index[0x1520]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("wraith"),
+                    Name = CacheContext.GetStringId("wraith"),
                     Vehicle = CacheContext.TagCache.Index[0x1519]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("banshee"),
+                    Name = CacheContext.GetStringId("banshee"),
                     Vehicle = CacheContext.TagCache.Index[0x151A]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("mongoose"),
+                    Name = CacheContext.GetStringId("mongoose"),
                     Vehicle = CacheContext.TagCache.Index[0x1596]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("chopper"),
+                    Name = CacheContext.GetStringId("chopper"),
                     Vehicle = CacheContext.TagCache.Index[0x1518]
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("mauler"),
+                    Name = CacheContext.GetStringId("mauler"),
                     Vehicle = null
                 },
                 new MultiplayerGlobals.UniversalBlock.GameVariantVehicle
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("hornet"),
+                    Name = CacheContext.GetStringId("hornet"),
                     Vehicle = CacheContext.TagCache.Index[0x1598]
                 }
             };
@@ -626,58 +626,58 @@ namespace TagTool.Commands.Tags
             {
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("default"),
+                    Name = CacheContext.GetStringId("default"),
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>()
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("no_vehicles"),
+                    Name = CacheContext.GetStringId("no_vehicles"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("warthog"),
+                            OriginalVehicle = CacheContext.GetStringId("warthog"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("ghost"),
+                            OriginalVehicle = CacheContext.GetStringId("ghost"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("scorpion"),
+                            OriginalVehicle = CacheContext.GetStringId("scorpion"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("wraith"),
+                            OriginalVehicle = CacheContext.GetStringId("wraith"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mongoose"),
+                            OriginalVehicle = CacheContext.GetStringId("mongoose"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("banshee"),
+                            OriginalVehicle = CacheContext.GetStringId("banshee"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("chopper"),
+                            OriginalVehicle = CacheContext.GetStringId("chopper"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mauler"),
+                            OriginalVehicle = CacheContext.GetStringId("mauler"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("hornet"),
+                            OriginalVehicle = CacheContext.GetStringId("hornet"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -685,48 +685,48 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("mongooses_only"),
+                    Name = CacheContext.GetStringId("mongooses_only"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("warthog"),
+                            OriginalVehicle = CacheContext.GetStringId("warthog"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("ghost"),
-                            SubstitutedVehicle = CacheContext.StringIdCache.GetStringId("mongoose")
+                            OriginalVehicle = CacheContext.GetStringId("ghost"),
+                            SubstitutedVehicle = CacheContext.GetStringId("mongoose")
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("scorpion"),
+                            OriginalVehicle = CacheContext.GetStringId("scorpion"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("wraith"),
+                            OriginalVehicle = CacheContext.GetStringId("wraith"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("banshee"),
+                            OriginalVehicle = CacheContext.GetStringId("banshee"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("chopper"),
+                            OriginalVehicle = CacheContext.GetStringId("chopper"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mauler"),
+                            OriginalVehicle = CacheContext.GetStringId("mauler"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("hornet"),
+                            OriginalVehicle = CacheContext.GetStringId("hornet"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -734,28 +734,28 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("light_ground_only"),
+                    Name = CacheContext.GetStringId("light_ground_only"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("scorpion"),
+                            OriginalVehicle = CacheContext.GetStringId("scorpion"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("wraith"),
+                            OriginalVehicle = CacheContext.GetStringId("wraith"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("banshee"),
+                            OriginalVehicle = CacheContext.GetStringId("banshee"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("hornet"),
+                            OriginalVehicle = CacheContext.GetStringId("hornet"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -763,43 +763,43 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("tanks_only"),
+                    Name = CacheContext.GetStringId("tanks_only"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("warthog"),
+                            OriginalVehicle = CacheContext.GetStringId("warthog"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("ghost"),
+                            OriginalVehicle = CacheContext.GetStringId("ghost"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mongoose"),
+                            OriginalVehicle = CacheContext.GetStringId("mongoose"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("banshee"),
+                            OriginalVehicle = CacheContext.GetStringId("banshee"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("chopper"),
+                            OriginalVehicle = CacheContext.GetStringId("chopper"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mauler"),
+                            OriginalVehicle = CacheContext.GetStringId("mauler"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("hornet"),
+                            OriginalVehicle = CacheContext.GetStringId("hornet"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -807,43 +807,43 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("aircraft_only"),
+                    Name = CacheContext.GetStringId("aircraft_only"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("warthog"),
+                            OriginalVehicle = CacheContext.GetStringId("warthog"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("ghost"),
+                            OriginalVehicle = CacheContext.GetStringId("ghost"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("scorpion"),
+                            OriginalVehicle = CacheContext.GetStringId("scorpion"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("wraith"),
+                            OriginalVehicle = CacheContext.GetStringId("wraith"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mongoose"),
+                            OriginalVehicle = CacheContext.GetStringId("mongoose"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("chopper"),
+                            OriginalVehicle = CacheContext.GetStringId("chopper"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mauler"),
+                            OriginalVehicle = CacheContext.GetStringId("mauler"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -851,33 +851,33 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("no_light_ground"),
+                    Name = CacheContext.GetStringId("no_light_ground"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("warthog"),
+                            OriginalVehicle = CacheContext.GetStringId("warthog"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("ghost"),
+                            OriginalVehicle = CacheContext.GetStringId("ghost"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mongoose"),
+                            OriginalVehicle = CacheContext.GetStringId("mongoose"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("chopper"),
+                            OriginalVehicle = CacheContext.GetStringId("chopper"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("mauler"),
+                            OriginalVehicle = CacheContext.GetStringId("mauler"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -885,18 +885,18 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("no_tanks"),
+                    Name = CacheContext.GetStringId("no_tanks"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("scorpion"),
+                            OriginalVehicle = CacheContext.GetStringId("scorpion"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("wraith"),
+                            OriginalVehicle = CacheContext.GetStringId("wraith"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -904,18 +904,18 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("no_aircraft"),
+                    Name = CacheContext.GetStringId("no_aircraft"),
                     #region Substitutions
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>
                     {
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("banshee"),
+                            OriginalVehicle = CacheContext.GetStringId("banshee"),
                             SubstitutedVehicle = StringId.Null
                         },
                         new MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution
                         {
-                            OriginalVehicle = CacheContext.StringIdCache.GetStringId("hornet"),
+                            OriginalVehicle = CacheContext.GetStringId("hornet"),
                             SubstitutedVehicle = StringId.Null
                         }
                     }
@@ -923,7 +923,7 @@ namespace TagTool.Commands.Tags
                 },
                 new MultiplayerGlobals.UniversalBlock.VehicleSet
                 {
-                    Name = CacheContext.StringIdCache.GetStringId("all_vehicles"),
+                    Name = CacheContext.GetStringId("all_vehicles"),
                     Substitutions = new List<MultiplayerGlobals.UniversalBlock.VehicleSet.Substitution>()
                 }
             };
@@ -1054,14 +1054,14 @@ namespace TagTool.Commands.Tags
 
                     if (tag.IsInGroup("bink"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing video resource for recache...");
                         AddResource(((Bink)tagDefinition).Resource);
                     }
                     else if (tag.IsInGroup("bitm"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing bitmap resources for recache...");
 
@@ -1070,7 +1070,7 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("jmad"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing animation resources for recache...");
 
@@ -1079,21 +1079,21 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("Lbsp"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing geometry resource for recache...");
                         AddResource(((ScenarioLightmapBspData)tagDefinition).Geometry.Resource);
                     }
                     else if (tag.IsInGroup("mode"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing geometry resource for recache...");
                         AddResource(((RenderModel)tagDefinition).Geometry.Resource);
                     }
                     else if (tag.IsInGroup("sbsp"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
                         try
@@ -1126,7 +1126,7 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("snd!"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing sound resource for recache...");
                         AddResource(((Sound)tagDefinition).Resource);
@@ -1134,7 +1134,7 @@ namespace TagTool.Commands.Tags
                 }
                 else
                 {
-                    Console.Write($"Nulling {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                    Console.Write($"Nulling {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                     CacheContext.TagCache.Index[tag.Index] = null;
                     CacheContext.TagCache.SetTagDataRaw(stream, tag, new byte[] { });
                 }

@@ -46,7 +46,7 @@ namespace TagTool.Serialization
                     tag: info.GroupTag,
                     parentTag: info.ParentGroupTag,
                     grandparentTag: info.GrandparentGroupTag,
-                    name: (info.Structure.Name != null) ? Context.StringIdCache.GetStringId(info.Structure.Name) : StringId.Null
+                    name: (info.Structure.Name != null) ? Context.GetStringId(info.Structure.Name) : StringId.Null
                 ),
             };
         }

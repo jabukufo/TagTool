@@ -15,11 +15,11 @@ namespace TagTool.Commands.Editing
             : base(CommandFlags.Inherit,
 
                   "SaveTagChanges",
-                  $"Saves changes made to the current {cacheContext.StringIdCache.GetString(tag.Group.Name)} definition.",
+                  $"Saves changes made to the current {cacheContext.GetString(tag.Group.Name)} definition.",
 
                   "SaveTagChanges",
 
-                  $"Saves changes made to the current {cacheContext.StringIdCache.GetString(tag.Group.Name)} definition.")
+                  $"Saves changes made to the current {cacheContext.GetString(tag.Group.Name)} definition.")
         {
             CacheContext = cacheContext;
             Tag = tag;

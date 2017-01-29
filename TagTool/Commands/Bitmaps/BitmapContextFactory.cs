@@ -7,7 +7,7 @@ namespace TagTool.Commands.Bitmaps
     {
         public static CommandContext Create(CommandContext parent, GameCacheContext cacheContext, CachedTagInstance tag, Bitmap bitmap)
         {
-            var groupName = cacheContext.StringIdCache.GetString(tag.Group.Name);
+            var groupName = cacheContext.GetString(tag.Group.Name);
             var commandContext = new CommandContext(parent, string.Format("{0:X8}.{1}", tag.Index, groupName));
 
             Populate(commandContext, cacheContext, tag, bitmap);

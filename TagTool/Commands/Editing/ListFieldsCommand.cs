@@ -66,9 +66,9 @@ namespace TagTool.Commands.Editing
                             $"{{...}}[{((IList)fieldValue).Count}]" :
                         "null";
                 else if (fieldType == typeof(StringId))
-                    valueString = CacheContext.StringIdCache.GetString((StringId)fieldValue);
+                    valueString = CacheContext.GetString((StringId)fieldValue);
                 else if (fieldType == typeof(CachedTagInstance))
-                    valueString = $"[0x{((CachedTagInstance)fieldValue).Index:X4}] {CacheContext.TagNames[((CachedTagInstance)fieldValue).Index]}.{CacheContext.StringIdCache.GetString(((CachedTagInstance)fieldValue).Group.Name)}";
+                    valueString = $"[0x{((CachedTagInstance)fieldValue).Index:X4}] {CacheContext.TagNames[((CachedTagInstance)fieldValue).Index]}.{CacheContext.GetString(((CachedTagInstance)fieldValue).Group.Name)}";
                 else
                     valueString = fieldValue.ToString();
 

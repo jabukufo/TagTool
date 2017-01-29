@@ -45,7 +45,7 @@ namespace TagTool.Commands.RenderMethods
                 {
                     Console.WriteLine("");
 
-                    var argumentName = CacheContext.StringIdCache.GetString(template.Arguments[i].Name);
+                    var argumentName = CacheContext.GetString(template.Arguments[i].Name);
                     var argumentValue = new RealVector4d(
                         property.Arguments[i].Arg1,
                         property.Arguments[i].Arg2,

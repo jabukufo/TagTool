@@ -98,7 +98,7 @@ namespace TagTool.Commands.Tags
             // Add a root node
             var node = builder.AddNode(new RenderModel.Node
             {
-                Name = CacheContext.StringIdCache.GetStringId("street_cone"),
+                Name = CacheContext.GetStringId("street_cone"),
                 ParentNode = -1,
                 FirstChildNode = -1,
                 NextSiblingNode = -1,
@@ -110,8 +110,8 @@ namespace TagTool.Commands.Tags
             });
 
             // Begin building the default region and permutation
-            builder.BeginRegion(CacheContext.StringIdCache.GetStringId("default"));
-            builder.BeginPermutation(CacheContext.StringIdCache.GetStringId("default"));
+            builder.BeginRegion(CacheContext.GetStringId("default"));
+            builder.BeginPermutation(CacheContext.GetStringId("default"));
 
             using (var importer = new AssimpContext())
             {

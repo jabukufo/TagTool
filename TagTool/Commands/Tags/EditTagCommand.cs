@@ -40,7 +40,7 @@ namespace TagTool.Commands.Tags
 
             ContextStack.Push(EditTagContextFactory.Create(ContextStack, CacheContext, tag));
 
-            var groupName = CacheContext.StringIdCache.GetString(tag.Group.Name);
+            var groupName = CacheContext.GetString(tag.Group.Name);
             var tagName = $"0x{tag.Index:X4}";
 
             if (CacheContext.TagNames.ContainsKey(tag.Index))

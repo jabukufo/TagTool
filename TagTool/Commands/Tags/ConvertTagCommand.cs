@@ -276,10 +276,10 @@ namespace TagTool.Commands.Tags
         {
             if (stringId == StringId.Null)
                 return stringId;
-            var srcString = srcInfo.StringIdCache.GetString(stringId);
+            var srcString = srcInfo.GetString(stringId);
             if (srcString == null)
                 return StringId.Null;
-            var destStringID = destCacheContext.StringIdCache.GetStringId(srcString);
+            var destStringID = destCacheContext.GetStringId(srcString);
             if (destStringID == StringId.Null)
                 destStringID = destCacheContext.StringIdCache.Add(srcString);
             return destStringID;

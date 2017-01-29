@@ -107,7 +107,7 @@ namespace TagTool.Commands.Tags
 
                 if (!retainedTags.Contains(i) && tags.Contains(i))
                 {
-                    Console.Write($"Nulling {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                    Console.Write($"Nulling {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                     CacheContext.TagCache.Index[tag.Index] = null;
                     CacheContext.TagCache.SetTagDataRaw(stream, tag, new byte[] { });
                 }
@@ -117,14 +117,14 @@ namespace TagTool.Commands.Tags
 
                     if (tag.IsInGroup("bink"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing video resource for recache...");
                         AddResource(((Bink)tagDefinition).Resource);
                     }
                     else if (tag.IsInGroup("bitm"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing bitmap resources for recache...");
 
@@ -133,7 +133,7 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("jmad"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing animation resources for recache...");
 
@@ -142,21 +142,21 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("Lbsp"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing geometry resource for recache...");
                         AddResource(((ScenarioLightmapBspData)tagDefinition).Geometry.Resource);
                     }
                     else if (tag.IsInGroup("mode"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing geometry resource for recache...");
                         AddResource(((RenderModel)tagDefinition).Geometry.Resource);
                     }
                     else if (tag.IsInGroup("sbsp"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
 
                         try
@@ -189,7 +189,7 @@ namespace TagTool.Commands.Tags
                     }
                     else if (tag.IsInGroup("snd!"))
                     {
-                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.StringIdCache.GetString(tag.Group.Name)}...");
+                        Console.Write($"Loading {CacheContext.TagNames[tag.Index]}.{CacheContext.GetString(tag.Group.Name)}...");
                         var tagDefinition = CacheContext.Deserializer.Deserialize(context, TagStructureTypes.FindByGroupTag(tag.Group.Tag));
                         Console.Write($"preparing sound resource for recache...");
                         AddResource(((Sound)tagDefinition).Resource);

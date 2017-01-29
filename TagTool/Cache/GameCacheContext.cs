@@ -137,6 +137,13 @@ namespace TagTool.Cache
         public StringId GetStringId(string value) => StringIdCache.GetStringId(value);
 
         /// <summary>
+        /// Gets the string_id associated with the specified index from the string_id cache.
+        /// </summary>
+        /// <param name="index">The index of the string.</param>
+        /// <returns></returns>
+        public StringId GetStringId(int index) => StringIdCache.GetStringId(index);
+
+        /// <summary>
         /// Loads tag file names from the appropriate tagnames.csv file.
         /// </summary>
         public void LoadTagNames()

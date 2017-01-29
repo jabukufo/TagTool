@@ -86,7 +86,7 @@ namespace TagTool.Commands.Tags
                     {
                         Console.WriteLine("Writing {0} layout", groupTag);
 
-                        var name = CacheContext.StringIdCache.GetString(lastTag.Group.Name);
+                        var name = CacheContext.GetString(lastTag.Group.Name);
                         var tagLayout = LayoutGuessFinalizer.MakeLayout(layout, name, groupTag);
                         var path = Path.Combine(outDir, writer.GetSuggestedFileName(tagLayout));
 

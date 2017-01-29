@@ -74,7 +74,7 @@ namespace TagTool.Commands.Tags
             if (!uint.TryParse(args[1], NumberStyles.HexNumber, null, out stringId))
                 return false;
 
-            var str = CacheContext.StringIdCache.GetString(new StringId(stringId));
+            var str = CacheContext.GetString(new StringId(stringId));
 
             if (str != null)
                 Console.WriteLine(str);
@@ -100,7 +100,7 @@ namespace TagTool.Commands.Tags
                 if (filter != null && !CacheContext.StringIdCache.Strings[i].Contains(filter))
                     continue;
 
-                var id = CacheContext.StringIdCache.GetStringId(i);
+                var id = CacheContext.GetStringId(i);
 
                 strings.Add(new FoundStringID
                 {

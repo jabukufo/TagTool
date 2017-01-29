@@ -28,7 +28,7 @@ namespace TagTool.Commands.Editing
             if (Documentation.ChildNodes.Count == 0 && File.Exists(documentationPath))
                 Documentation.Load(documentationPath);
 
-            var groupName = cacheContext.StringIdCache.GetString(tag.Group.Name);
+            var groupName = cacheContext.GetString(tag.Group.Name);
 
             var tagName = $"0x{tag.Index:X4}";
 

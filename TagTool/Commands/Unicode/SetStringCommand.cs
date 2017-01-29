@@ -47,7 +47,7 @@ namespace TagTool.Commands.Unicode
                 Console.WriteLine("Unable to find stringID \"{0}\".", stringIdStr);
                 return true;
             }
-            var stringId = CacheContext.StringIdCache.GetStringId(stringIdIndex);
+            var stringId = CacheContext.GetStringId(stringIdIndex);
             if (stringId == StringId.Null)
             {
                 Console.WriteLine("Failed to resolve the stringID.");
