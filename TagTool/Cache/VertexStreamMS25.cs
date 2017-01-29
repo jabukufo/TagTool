@@ -16,10 +16,10 @@ namespace TagTool.Cache
         private RealVector4d TransformTangent(RealVector4d tangent)
         {
             return new RealVector4d(
-                tangent.I * 2.0f - 1.0f,
-                tangent.J * 2.0f - 1.0f,
-                tangent.K * 2.0f - 1.0f,
-                tangent.W * 2.0f - 1.0f);
+                (tangent.I * 2.0f) - 1.0f,
+                (tangent.J * 2.0f) - 1.0f,
+                (tangent.K * 2.0f) - 1.0f,
+                (tangent.W * 2.0f) - 1.0f);
         }
 
         public WorldVertex ReadWorldVertex()
