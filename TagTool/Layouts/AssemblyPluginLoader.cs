@@ -207,7 +207,7 @@ namespace TagTool.Layouts
                     RegisterField(offset, 2);
                     break;
                 case "bitfield32":
-                    ReadBits(reader, name, BasicFieldType.UInt32);
+                    ReadBits(reader, name, BasicFieldType.Int32);
                     RegisterField(offset, 4);
                     break;
 
@@ -392,31 +392,29 @@ namespace TagTool.Layouts
 
         private void ReadBits(XmlReader reader, string name, BasicFieldType type)
         {
-            // TODO: Bitfield support
-            _results.Layout.Add(new BasicTagLayoutField(name, type));
+            XmlReader subtree = reader.ReadSubtree();
 
-            /*XmlReader subtree = reader.ReadSubtree();
-
+            var enumLayout = new EnumLayout(name, type);
             subtree.ReadStartElement();
+            enumLayout.Add(new EnumValue("None", 0));
             while (subtree.ReadToNextSibling("bit"))
-                ReadBit(subtree, layout);
+                enumLayout.Add(ReadBit(subtree));
 
-            layout.LeaveBitfield();*/
-            reader.Skip();
+            _results.Layout.Add(new EnumTagLayoutField(name, enumLayout));
         }
 
-        /*private static void ReadBit(XmlReader reader)
+        private static EnumValue ReadBit(XmlReader reader)
         {
             string name = "Unknown";
+            int value = 0;
 
             if (reader.MoveToAttribute("name"))
                 name = reader.Value;
-            if (!reader.MoveToAttribute("index"))
-                throw new ArgumentException("Bit definitions must have an index." + PositionInfo(reader));
-            int index = ParseInt(reader.Value);
+            if (reader.MoveToAttribute("index"))
+                value = ParseInt(reader.Value);
 
-            layout.VisitBit(name, index);
-        }*/
+            return new EnumValue(name, 1 << value);
+        }
 
         private void ReadOptions(XmlReader reader, string name, BasicFieldType type)
         {

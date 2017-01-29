@@ -117,6 +117,7 @@
     <Compile Include="Adjutant\Halo3Retail\scenario_structure_bsp.cs" />
     <Compile Include="Adjutant\Halo3Retail\sound.cs" />
     <Compile Include="Adjutant\Halo3Retail\sound_cache_file_gestalt.cs" />
+    <Compile Include="Adjutant\Halo3Retail\TagDefinitions\Scenario.cs" />
     <Compile Include="Adjutant\ModelFunctions.cs" />
     <Compile Include="Adjutant\xcompress.cs" />
     <Compile Include="Analysis\DataReferenceGuess.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Bitmaps\BitmapFlags.cs" />
     <Compile Include="Bitmaps\BitmapFormat.cs" />
     <Compile Include="Commands\Models\PortModelCommand.cs" />
+    <Compile Include="Commands\Scenarios\PortScenarioCommand.cs" />
     <Compile Include="Common\Bitmask.cs" />
     <Compile Include="Common\RealBoundingBox.cs" />
     <Compile Include="Geometry\Vertex.cs" />
@@ -143,6 +145,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Serialization\CacheSerializationContext.cs" />
     <Compile Include="TagResources\BitmapDataResourceDefinition.cs" />
     <Compile Include="Bitmaps\BitmapType.cs" />
     <Compile Include="Cache\ResourceAddress.cs" />
