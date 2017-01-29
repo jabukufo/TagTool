@@ -9,7 +9,7 @@ namespace TagTool.IO
     {
         public EndianFormat Format { get; set; }
         
-        public EndianWriter(Stream stream, EndianFormat format = EndianFormat.Little)
+        public EndianWriter(Stream stream, EndianFormat format = EndianFormat.LittleEndian)
             : base(stream)
         {
             Format = format;
@@ -40,42 +40,42 @@ namespace TagTool.IO
             Write(value, Format);
 
         public void Write(short value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 
         public void Write(int value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 
         public void Write(long value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 
         public void Write(ushort value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 
         public void Write(uint value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 
         public void Write(ulong value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 
         public void Write(float value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 
         public void Write(double value, EndianFormat format) =>
-            Write(format == Big ?
+            Write(format == BigEndian ?
                 GetBytes(value).Reverse().ToArray() :
                 GetBytes(value));
 

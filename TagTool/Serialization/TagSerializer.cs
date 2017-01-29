@@ -482,8 +482,8 @@ namespace TagTool.Serialization
         {
             var type = val.GetType();
             var boundsType = type.GenericTypeArguments[0];
-            var min = type.GetField("Min").GetValue(val);
-            var max = type.GetField("Max").GetValue(val);
+            var min = type.GetProperty("Lower").GetValue(val);
+            var max = type.GetProperty("Upper").GetValue(val);
             SerializePrimitiveValue(block.Writer, min, boundsType);
             SerializePrimitiveValue(block.Writer, max, boundsType);
         }

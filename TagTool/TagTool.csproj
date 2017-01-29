@@ -71,6 +71,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adjutant\AES.cs" />
+    <Compile Include="Adjutant\Base\bink.cs" />
+    <Compile Include="Adjutant\Base\bitmap.cs" />
+    <Compile Include="Adjutant\Base\CacheFile.cs" />
+    <Compile Include="Adjutant\Base\cache_file_resource_gestalt.cs" />
+    <Compile Include="Adjutant\Base\cache_file_resource_layout_table.cs" />
+    <Compile Include="Adjutant\Base\multilingual_unicode_string_list.cs" />
+    <Compile Include="Adjutant\Base\render_method_template.cs" />
+    <Compile Include="Adjutant\Base\render_model.cs" />
+    <Compile Include="Adjutant\Base\scenario_structure_bsp.cs" />
+    <Compile Include="Adjutant\Base\shader.cs" />
+    <Compile Include="Adjutant\Base\sound.cs" />
+    <Compile Include="Adjutant\Base\sound_cache_file_gestalt.cs" />
+    <Compile Include="Adjutant\CacheManager.cs" />
+    <Compile Include="Adjutant\DefinitionsManager.cs" />
+    <Compile Include="Adjutant\Enums.cs" />
+    <Compile Include="Adjutant\Halo1CE\bitmap.cs" />
+    <Compile Include="Adjutant\Halo1CE\CacheFile.cs" />
+    <Compile Include="Adjutant\Halo1PC\bitmap.cs" />
+    <Compile Include="Adjutant\Halo1PC\CacheFile.cs" />
+    <Compile Include="Adjutant\Halo1PC\gbxmodel.cs" />
+    <Compile Include="Adjutant\Halo1PC\scenario_structure_bsp.cs" />
+    <Compile Include="Adjutant\Halo1PC\shader_model.cs" />
+    <Compile Include="Adjutant\Halo2Xbox\bitmap.cs" />
+    <Compile Include="Adjutant\Halo2Xbox\CacheFile.cs" />
+    <Compile Include="Adjutant\Halo2Xbox\render_model.cs" />
+    <Compile Include="Adjutant\Halo2Xbox\scenario_structure_bsp.cs" />
+    <Compile Include="Adjutant\Halo2Xbox\shader.cs" />
+    <Compile Include="Adjutant\Halo3Beta\bitmap.cs" />
+    <Compile Include="Adjutant\Halo3Beta\CacheFile.cs" />
+    <Compile Include="Adjutant\Halo3Beta\cache_file_resource_gestalt.cs" />
+    <Compile Include="Adjutant\Halo3Beta\multilingual_unicode_string_list.cs" />
+    <Compile Include="Adjutant\Halo3Beta\render_method_template.cs" />
+    <Compile Include="Adjutant\Halo3Beta\render_model.cs" />
+    <Compile Include="Adjutant\Halo3Beta\scenario_structure_bsp.cs" />
+    <Compile Include="Adjutant\Halo3Beta\shader.cs" />
+    <Compile Include="Adjutant\Halo3ODST\CacheFile.cs" />
+    <Compile Include="Adjutant\Halo3ODST\render_model.cs" />
+    <Compile Include="Adjutant\Halo3ODST\scenario_structure_bsp.cs" />
+    <Compile Include="Adjutant\Halo3ODST\sound_cache_file_gestalt.cs" />
+    <Compile Include="Adjutant\Halo3Retail\CacheFile.cs" />
+    <Compile Include="Adjutant\Halo3Retail\cache_file_resource_gestalt.cs" />
+    <Compile Include="Adjutant\Halo3Retail\cache_file_resource_layout_table.cs" />
+    <Compile Include="Adjutant\Halo3Retail\scenario_structure_bsp.cs" />
+    <Compile Include="Adjutant\Halo3Retail\sound.cs" />
+    <Compile Include="Adjutant\Halo3Retail\sound_cache_file_gestalt.cs" />
+    <Compile Include="Adjutant\ModelFunctions.cs" />
+    <Compile Include="Adjutant\xcompress.cs" />
     <Compile Include="Analysis\DataReferenceGuess.cs" />
     <Compile Include="Analysis\ITagElementGuess.cs" />
     <Compile Include="Analysis\ITagElementGuessVisitor.cs" />
@@ -86,6 +134,15 @@
     <Compile Include="Bitmaps\BitmapDdsInjector.cs" />
     <Compile Include="Bitmaps\BitmapFlags.cs" />
     <Compile Include="Bitmaps\BitmapFormat.cs" />
+    <Compile Include="Commands\Models\PortGen3ModelCommand.cs" />
+    <Compile Include="Common\Bitmask.cs" />
+    <Compile Include="Common\RealBoundingBox.cs" />
+    <Compile Include="Geometry\Vertex.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TagResources\BitmapDataResourceDefinition.cs" />
     <Compile Include="Bitmaps\BitmapType.cs" />
     <Compile Include="Cache\ResourceAddress.cs" />
@@ -235,7 +292,7 @@
     <Compile Include="TagResources\RenderGeometryApiResourceDefinition.cs" />
     <Compile Include="Geometry\RenderMaterial.cs" />
     <Compile Include="Geometry\RenderModelBuilder.cs" />
-    <Compile Include="Geometry\Vertex.cs" />
+    <Compile Include="Geometry\Vertices.cs" />
     <Compile Include="Geometry\VertexBufferFormat.cs" />
     <Compile Include="Geometry\VertexCompressor.cs" />
     <Compile Include="Geometry\VertexElementStream.cs" />
@@ -423,9 +480,20 @@
     <Compile Include="Cache\CachedTagInstance.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\VertexBuffer.xml" />
+    <None Include="Resources\Versions.xml" />
+    <None Include="Resources\Classes_H2.xml" />
+    <None Include="Resources\Classes_H1.xml" />
+    <None Include="Resources\Builds.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

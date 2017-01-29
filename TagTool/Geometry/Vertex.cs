@@ -1,241 +1,240 @@
-﻿using TagTool.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml;
+using TagTool.Common;
+using TagTool.IO;
 
 namespace TagTool.Geometry
 {
-    public class WorldVertex
+    //These need to be marked serializable for deep cloning
+    [Serializable]
+    public class Vertex
     {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-        public RealVector4d Tangent { get; set; }
-        public RealPoint3d Binormal { get; set; }
+        public string FormatName;
+        public List<VertexValue> Values;
+
+        public Vertex()
+        {
+            Values = new List<VertexValue>();
+        }
+
+        public Vertex(EndianReader reader, XmlNode formatNode)
+        {
+            if (!formatNode.HasChildNodes) throw new NotSupportedException(formatNode.Attributes["type"].Value + ":" + formatNode.Attributes["name"].Value + " has an empty definition.");
+
+            Values = new List<VertexValue>();
+            int origin = (int)reader.Position;
+            foreach (XmlNode val in formatNode.ChildNodes)
+            {
+                reader.SeekTo(origin + Convert.ToInt32(val.Attributes["offset"].Value, 16));
+                Values.Add(new VertexValue(val, reader));
+            }
+
+            FormatName = formatNode.Attributes["name"].Value;
+        }
+
+        public bool TryGetValue(string Usage, int UsageIndex, out VertexValue val)
+        {
+            foreach (var value in Values)
+                if (value.Usage == Usage && value.UsageIndex == UsageIndex)
+                {
+                    val = value;
+                    return true;
+                }
+
+            val = new VertexValue(new RealQuaternion(), 0, Usage, UsageIndex);
+            return false;
+        }
+
+        public VertexValue this[string Usage]
+        {
+            get
+            {
+                foreach (var v in Values)
+                    if (v.Usage.ToLower() == Usage.ToLower()) return v;
+
+                return new VertexValue(new RealQuaternion(), VertexValue.ValueType.None, Usage, 0);
+            }
+        }
     }
 
-    public class RigidVertex
+    [Serializable]
+    public class VertexValue
     {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-        public RealVector4d Tangent { get; set; }
-        public RealPoint3d Binormal { get; set; }
-    }
+        //public int Stream;
+        public string Usage;
+        public ValueType Type;
+        public int UsageIndex;
+        public RealQuaternion Data;
 
-    public class SkinnedVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-        public RealVector4d Tangent { get; set; }
-        public RealPoint3d Binormal { get; set; }
-        public byte[] BlendIndices { get; set; }
-        public float[] BlendWeights { get; set; }
-    }
+        public VertexValue(XmlNode Node, EndianReader reader)
+        {
+            //Stream = Convert.ToInt32(Node.Attributes["stream"].Value);
+            if (Convert.ToInt32(Node.Attributes["stream"].Value) > 0) throw new NotSupportedException("Multi-streamed vertices not supported");
+            Type = (ValueType)Enum.Parse(typeof(ValueType), Node.Attributes["type"].Value);
+            Usage = Node.Attributes["usage"].Value;
+            UsageIndex = Convert.ToInt32(Node.Attributes["usageIndex"].Value);
+            //if (Stream > 0) throw new NotSupportedException("Multi-streamed vertices not supported");
 
-    public class ParticleModelVertex
-    {
-        public RealPoint3d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-    }
+            #region read data
+            switch (Type)
+            {
+                case ValueType.Float32_2:
+                    Data = new RealQuaternion(reader.ReadSingle(), reader.ReadSingle());
+                    break;
 
-    public class FlatWorldVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-        public RealVector4d Tangent { get; set; }
-        public RealPoint3d Binormal { get; set; }
-    }
+                case ValueType.Float32_3:
+                    Data = new RealQuaternion(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+                    break;
 
-    public class FlatRigidVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-        public RealVector4d Tangent { get; set; }
-        public RealPoint3d Binormal { get; set; }
-    }
+                case ValueType.Float32_4:
+                    Data = new RealQuaternion(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+                    break;
 
-    public class FlatSkinnedVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-        public RealVector4d Tangent { get; set; }
-        public RealPoint3d Binormal { get; set; }
-        public byte[] BlendIndices { get; set; }
-        public float[] BlendWeights { get; set; }
-    }
+                case ValueType.Int8_N4:
+                    Data = new RealQuaternion((float)reader.ReadByte() / (float)0x7F, (float)reader.ReadByte() / (float)0x7F, (float)reader.ReadByte() / (float)0x7F, (float)reader.ReadByte() / (float)0x7F);
+                    break;
 
-    public class ScreenVertex
-    {
-        public RealPoint2d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public uint Color { get; set; }
-    }
+                case ValueType.UInt8_2:
+                    Data = new RealQuaternion(reader.ReadByte(), reader.ReadByte(), 0, 0);
+                    break;
 
-    public class DebugVertex
-    {
-        public RealPoint3d Position { get; set; }
-        public uint Color { get; set; }
-    }
+                case ValueType.UInt8_3:
+                    Data = new RealQuaternion(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 0);
+                    break;
 
-    public class TransparentVertex
-    {
-        public RealPoint3d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public uint Color { get; set; }
-    }
+                case ValueType.UInt8_4:
+                    //Data = new RealQuaternion(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
+                    Data = RealQuaternion.FromUByte4(reader.ReadUInt32());
+                    break;
 
-    public class ParticleVertex
-    {
-    }
+                case ValueType.UInt8_N2:
+                    Data = new RealQuaternion((float)reader.ReadByte() / (float)0xFF, (float)reader.ReadByte() / (float)0xFF, 0, 0);
+                    break;
 
-    public class ContrailVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealVector4d Position2 { get; set; }
-        public RealVector4d Position3 { get; set; }
-        public RealVector4d Texcoord { get; set; }
-        public RealVector4d Texcoord2 { get; set; }
-        public RealPoint2d Texcoord3 { get; set; }
-        public uint Color { get; set; }
-        public uint Color2 { get; set; }
-        public RealVector4d Position4 { get; set; }
-    }
+                case ValueType.UInt8_N3:
+                    Data = new RealQuaternion((float)reader.ReadByte() / (float)0xFF, (float)reader.ReadByte() / (float)0xFF, (float)reader.ReadByte() / (float)0xFF, 0);
+                    break;
 
-    public class LightVolumeVertex
-    {
-        public short[] Texcoord { get; set; }
-    }
+                case ValueType.UInt8_N4:
+                    //Data = new RealQuaternion((float)reader.ReadByte() / (float)0xFF, (float)reader.ReadByte() / (float)0xFF, (float)reader.ReadByte() / (float)0xFF, (float)reader.ReadByte() / (float)0xFF);
+                    Data = RealQuaternion.FromUByteN4(reader.ReadUInt32());
+                    break;
 
-    public class ChudVertexSimple
-    {
-        public RealPoint2d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-    }
+                case ValueType.Int16_N3:
+                    Data = new RealQuaternion(((float)reader.ReadInt16() + (float)0x7FFF) / (float)0xFFFF, ((float)reader.ReadInt16() + (float)0x7FFF) / (float)0xFFFF, ((float)reader.ReadInt16() + (float)0x7FFF) / (float)0xFFFF, 0);
+                    break;
 
-    public class ChudVertexFancy
-    {
-        public RealPoint3d Position { get; set; }
-        public uint Color { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-    }
+                case ValueType.Int16_N4:
+                    Data = new RealQuaternion(((float)reader.ReadInt16() + (float)0x7FFF) / (float)0xFFFF, ((float)reader.ReadInt16() + (float)0x7FFF) / (float)0xFFFF, ((float)reader.ReadInt16() + (float)0x7FFF) / (float)0xFFFF, ((float)reader.ReadInt16() + (float)0x7FFF) / (float)0xFFFF);
+                    break;
 
-    public class DecoratorVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealVector4d Normal { get; set; }
-        /*public short[] Texcoord2 { get; set; }
-        public Vector4 Texcoord3 { get; set; }
-        public Vector4 Texcoord4 { get; set; }*/
-    }
+                case ValueType.UInt16_2:
+                    Data = new RealQuaternion(reader.ReadUInt16(), reader.ReadUInt16());
+                    break;
 
-    public class TinyPositionVertex
-    {
-        public RealVector4d Position { get; set; }
-    }
+                case ValueType.UInt16_4:
+                    Data = new RealQuaternion(reader.ReadUInt16(), reader.ReadUInt16(), reader.ReadUInt16(), reader.ReadUInt16());
+                    break;
 
-    public class PatchyFogVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-    }
+                case ValueType.UInt16_N2:
+                    Data = new RealQuaternion((float)reader.ReadUInt16() / (float)0xFFFF, (float)reader.ReadUInt16() / (float)0xFFFF);
+                    break;
 
-    public class WaterVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealVector4d Position2 { get; set; }
-        public RealVector4d Position3 { get; set; }
-        public RealVector4d Position4 { get; set; }
-        public RealVector4d Position5 { get; set; }
-        public RealVector4d Position6 { get; set; }
-        public RealVector4d Position7 { get; set; }
-        public RealVector4d Position8 { get; set; }
-        public RealVector4d Texcoord { get; set; }
-        public RealPoint3d Texcoord2 { get; set; }
-        public RealVector4d Normal { get; set; }
-        public RealVector4d Normal2 { get; set; }
-        public RealVector4d Normal3 { get; set; }
-        public RealVector4d Normal4 { get; set; }
-        public RealPoint2d Normal5 { get; set; }
-        public RealPoint3d Texcoord3 { get; set; }
-    }
+                case ValueType.UInt16_N4:
+                    Data = new RealQuaternion((float)reader.ReadUInt16() / (float)0xFFFF, (float)reader.ReadUInt16() / (float)0xFFFF, (float)reader.ReadUInt16() / (float)0xFFFF, (float)reader.ReadUInt16() / (float)0xFFFF);
+                    break;
 
-    public class RippleVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealVector4d Texcoord { get; set; }
-        public RealVector4d Texcoord2 { get; set; }
-        public RealVector4d Texcoord3 { get; set; }
-        public RealVector4d Texcoord4 { get; set; }
-        public RealVector4d Texcoord5 { get; set; }
-        public RealVector4d Color { get; set; }
-        public RealVector4d Color2 { get; set; }
-        public short[] Texcoord6 { get; set; }
-    }
+                case ValueType.DecN4:
+                    Data = RealQuaternion.FromDecN4(reader.ReadUInt32());
+                    break;
 
-    public class ImplicitVertex
-    {
-        public RealPoint3d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-    }
+                case ValueType.UDecN4:
+                    Data = RealQuaternion.FromUDecN4(reader.ReadUInt32());
+                    break;
 
-    public class BeamVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealVector4d Texcoord { get; set; }
-        public RealVector4d Texcoord2 { get; set; }
-        public uint Color { get; set; }
-        public RealPoint3d Position2 { get; set; }
-        public short[] Texcoord3 { get; set; }
-    }
+                case ValueType.DHenN3:
+                    Data = RealQuaternion.FromDHenN3(reader.ReadUInt32());
+                    break;
 
-    public class DualQuatVertex
-    {
-        public RealVector4d Position { get; set; }
-        public RealPoint2d Texcoord { get; set; }
-        public RealPoint3d Normal { get; set; }
-        public RealVector4d Tangent { get; set; }
-        public RealPoint3d Binormal { get; set; }
-        public byte[] BlendIndices { get; set; }
-        public float[] BlendWeights { get; set; }
-    }
+                case ValueType.UDHenN3:
+                    Data = RealQuaternion.FromUDHenN3(reader.ReadUInt32());
+                    break;
 
-    public class StaticPerVertexColorData
-    {
-        public RealPoint3d Color { get; set; }
-    }
+                case ValueType.HenDN3:
+                    Data = RealQuaternion.FromHenDN3(reader.ReadUInt32());
+                    break;
 
-    public class StaticPerPixelData
-    {
-        public RealPoint2d Texcoord { get; set; }
-    }
+                case ValueType.UHenDN3:
+                    Data = RealQuaternion.FromUHenDN3(reader.ReadUInt32());
+                    break;
 
-    public class StaticPerVertexData
-    {
-        public RealVector4d Texcoord { get; set; }
-        public RealVector4d Texcoord2 { get; set; }
-        public RealVector4d Texcoord3 { get; set; }
-        public RealVector4d Texcoord4 { get; set; }
-        public RealVector4d Texcoord5 { get; set; }
-    }
+                case ValueType.Float16_2:
+                    Data = new RealQuaternion(Half.ToHalf(reader.ReadUInt16()), Half.ToHalf(reader.ReadUInt16()));
+                    break;
 
-    public class AmbientPrtData
-    {
-        public float Brightness { get; set; }
-    }
+                case ValueType.Float16_4:
+                    Data = new RealQuaternion(Half.ToHalf(reader.ReadUInt16()), Half.ToHalf(reader.ReadUInt16()), Half.ToHalf(reader.ReadUInt16()), Half.ToHalf(reader.ReadUInt16()));
+                    break;
 
-    public class LinearPrtData
-    {
-        public RealVector4d BlendWeight { get; set; }
-    }
+                case ValueType.D3DColour:
+                    reader.ReadUInt32();
+                    break;
+            }
+            #endregion
+        }
 
-    public class QuadraticPrtData
-    {
-        public RealPoint3d BlendWeight { get; set; }
-        public RealPoint3d BlendWeight2 { get; set; }
-        public RealPoint3d BlendWeight3 { get; set; }
+        public VertexValue(RealQuaternion Data, ValueType Type, string Usage, int UsageIndex)
+        {
+            this.Data = Data;
+            this.Type = Type;
+            //this.Stream = Stream;
+            this.Usage = Usage;
+            this.UsageIndex = UsageIndex;
+        }
+
+        public enum ValueType : byte
+        {
+            None,
+
+            Float16_2,
+            Float16_4,
+
+            Float32_2,
+            Float32_3,
+            Float32_4,
+
+            DHenN3,
+            UDHenN3,
+
+            HenDN3,
+            UHenDN3,
+
+            DecN4,
+            UDecN4,
+
+            Int8_N4,
+            UInt8_2,
+            UInt8_3,
+            UInt8_4,
+            UInt8_N2,
+            UInt8_N3,
+            UInt8_N4,
+
+            Int16_N2,
+            Int16_N3,
+            Int16_N4,
+            UInt16_2,
+            UInt16_4,
+            UInt16_N2,
+            UInt16_N4,
+
+            D3DColour,
+        }
+
+        public override string ToString()
+        {
+            return Usage;
+        }
     }
 }

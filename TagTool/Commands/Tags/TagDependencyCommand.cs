@@ -46,17 +46,17 @@ namespace TagTool.Commands.Tags
             if (tag == null)
                 return false;
 
-            switch (args[0])
+            switch (args[0].ToLower())
             {
                 case "add":
                 case "remove":
                     return ExecuteAddRemove(tag, args);
 
                 case "list":
-                case "list-all":
-                    return ExecuteList(tag, (args[0] == "list-all"));
+                case "listall":
+                    return ExecuteList(tag, (args[0] == "listall"));
 
-                case "list-on":
+                case "liston":
                     return ExecuteListDependsOn(tag);
 
                 default:
@@ -78,7 +78,7 @@ namespace TagTool.Commands.Tags
             {
                 var data = CacheContext.TagCache.ExtractTag(stream, tag);
 
-                if (args[0] == "add")
+                if (args[0].ToLower() == "add")
                 {
                     foreach (var dependency in dependencies)
                     {

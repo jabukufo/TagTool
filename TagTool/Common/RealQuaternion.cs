@@ -4,17 +4,31 @@ namespace TagTool.Common
 {
     public struct RealQuaternion
     {
-        public float I { get; }
-        public float J { get; }
-        public float K { get; }
-        public float W { get; }
+        public float I { get; set; }
+        public float J { get; set; }
+        public float K { get; set; }
+        public float W { get; set; }
 
         public float LengthSquared =>
             (I * I) + (J * J) + (K * K) + (W * W);
 
         public float Length =>
             (float)Math.Sqrt(LengthSquared);
+        
+        public RealQuaternion(float i)
+            : this(i, 0.0f, 0.0f, 0.0f)
+        {
+        }
 
+        public RealQuaternion(float i, float j)
+            : this(i, j, 0.0f, 0.0f)
+        {
+        }
+
+        public RealQuaternion(float i, float j, float k)
+            : this(i, j, k, 0.0f)
+        {
+        }
         public RealQuaternion(float i, float j, float k, float w)
         {
             I = i;
@@ -23,6 +37,16 @@ namespace TagTool.Common
             W = w;
         }
         
+        public static RealQuaternion operator *(RealQuaternion q, float scalar)
+        {
+            return new RealQuaternion(q.I * scalar, q.J * scalar, q.K * scalar, q.W * scalar);
+        }
+
+        public static RealQuaternion operator *(float scalar, RealQuaternion q)
+        {
+            return (q * scalar);
+        }
+
         public static RealQuaternion FromDHenN3(uint DHenN3)
         {
             uint[] SignExtendX = { 0x00000000, 0xFFFFFC00 };
@@ -126,6 +150,32 @@ namespace TagTool.Common
             var a = (float)(UByteN4 >> 24) / (float)0xFF;
 
             return new RealQuaternion(a, b, c, d);
+        }
+
+        public void Point3DTransform(RealMatrix4x3 Transform)
+        {
+            if (Transform.IsIdentity) return;
+
+            float newX = (I * Transform.m11 + J * Transform.m21 + K * Transform.m31 + Transform.m41);
+            float newY = (I * Transform.m12 + J * Transform.m22 + K * Transform.m32 + Transform.m42);
+            float newZ = (I * Transform.m13 + J * Transform.m23 + K * Transform.m33 + Transform.m43);
+
+            I = newX;
+            J = newY;
+            K = newZ;
+        }
+
+        public void Vector3DTransform(RealMatrix4x3 Transform)
+        {
+            if (Transform.IsIdentity) return;
+
+            float newX = I * Transform.m11 + J * Transform.m21 + K * Transform.m31;
+            float newY = I * Transform.m12 + J * Transform.m22 + K * Transform.m32;
+            float newZ = I * Transform.m13 + J * Transform.m23 + K * Transform.m33;
+
+            I = newX;
+            J = newY;
+            K = newZ;
         }
     }
 }

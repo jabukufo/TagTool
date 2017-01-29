@@ -4,18 +4,18 @@ namespace TagTool.Common
 {
     public struct RealMatrix4x3
     {
-        public float m11 { get; }
-        public float m12 { get; }
-        public float m13 { get; }
-        public float m21 { get; }
-        public float m22 { get; }
-        public float m23 { get; }
-        public float m31 { get; }
-        public float m32 { get; }
-        public float m33 { get; }
-        public float m41 { get; }
-        public float m42 { get; }
-        public float m43 { get; }
+        public float m11 { get; set; }
+        public float m12 { get; set; }
+        public float m13 { get; set; }
+        public float m21 { get; set; }
+        public float m22 { get; set; }
+        public float m23 { get; set; }
+        public float m31 { get; set; }
+        public float m32 { get; set; }
+        public float m33 { get; set; }
+        public float m41 { get; set; }
+        public float m42 { get; set; }
+        public float m43 { get; set; }
 
         public bool IsIdentity =>
             (m11 == 1.0f && m12 == 0.0f && m13 == 0.0f &&

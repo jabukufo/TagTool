@@ -133,6 +133,138 @@ namespace TagTool.Commands.Tags
             var mulgContext = new TagSerializationContext(stream, CacheContext, mulgTag);
             var mulgDefinition = CacheContext.Deserializer.Deserialize<MultiplayerGlobals>(mulgContext);
 
+            #region Universal SpartanArmorCustomization
+            mulgDefinition.Universal[0].SpartanArmorCustomization = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock>
+            {
+                new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock
+                {
+                    ArmorObjectRegion = CacheContext.GetStringId("helmet"),
+                    BipedRegion = CacheContext.GetStringId("helmet"),
+                    Permutations = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation>
+                    {
+                        new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation
+                        {
+                            Name = CacheContext.GetStringId("air_assault"),
+                            ThirdPersonArmorObject = CacheContext.GetTag(0x1530),
+                            FirstPersonArmorModel = null,
+                            Unknown = -1,
+                            Unknown2 = 0,
+                            ParentAttachMarker = StringId.Null,
+                            ChildAttachMarker = StringId.Null
+                        },
+                    }
+                },
+                new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock
+                {
+                    ArmorObjectRegion = CacheContext.GetStringId("chest"),
+                    BipedRegion = CacheContext.GetStringId("chest"),
+                    Permutations = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation>
+                    {
+                        new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation
+                        {
+                            Name = CacheContext.GetStringId("air_assault"),
+                            ThirdPersonArmorObject = CacheContext.GetTag(0x1530),
+                            FirstPersonArmorModel = null,
+                            Unknown = -1,
+                            Unknown2 = 0,
+                            ParentAttachMarker = StringId.Null,
+                            ChildAttachMarker = StringId.Null
+                        },
+                    }
+                },
+                new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock
+                {
+                    ArmorObjectRegion = CacheContext.GetStringId("shoulders"),
+                    BipedRegion = CacheContext.GetStringId("shoulders"),
+                    Permutations = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation>
+                    {
+                        new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation
+                        {
+                            Name = CacheContext.GetStringId("air_assault"),
+                            ThirdPersonArmorObject = CacheContext.GetTag(0x1530),
+                            FirstPersonArmorModel = null,
+                            Unknown = -1,
+                            Unknown2 = 0,
+                            ParentAttachMarker = StringId.Null,
+                            ChildAttachMarker = StringId.Null
+                        },
+                    }
+                },
+                new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock
+                {
+                    ArmorObjectRegion = CacheContext.GetStringId("arms"),
+                    BipedRegion = CacheContext.GetStringId("arms"),
+                    Permutations = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation>
+                    {
+                        new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation
+                        {
+                            Name = CacheContext.GetStringId("air_assault"),
+                            ThirdPersonArmorObject = CacheContext.GetTag(0x1530),
+                            FirstPersonArmorModel = CacheContext.GetTag(0x155D),
+                            Unknown = -1,
+                            Unknown2 = 0,
+                            ParentAttachMarker = StringId.Null,
+                            ChildAttachMarker = StringId.Null
+                        },
+                    }
+                },
+                new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock
+                {
+                    ArmorObjectRegion = CacheContext.GetStringId("legs"),
+                    BipedRegion = CacheContext.GetStringId("legs"),
+                    Permutations = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation>
+                    {
+                        new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation
+                        {
+                            Name = CacheContext.GetStringId("air_assault"),
+                            ThirdPersonArmorObject = CacheContext.GetTag(0x1530),
+                            FirstPersonArmorModel = null,
+                            Unknown = -1,
+                            Unknown2 = 0,
+                            ParentAttachMarker = StringId.Null,
+                            ChildAttachMarker = StringId.Null
+                        },
+                    }
+                },
+                new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock
+                {
+                    ArmorObjectRegion = CacheContext.GetStringId("acc"),
+                    BipedRegion = CacheContext.GetStringId("acc"),
+                    Permutations = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation>
+                    {
+                        new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation
+                        {
+                            Name = StringId.Null,
+                            ThirdPersonArmorObject = null,
+                            FirstPersonArmorModel = null,
+                            Unknown = -1,
+                            Unknown2 = 0,
+                            ParentAttachMarker = StringId.Null,
+                            ChildAttachMarker = StringId.Null
+                        },
+                    }
+                },
+                new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock
+                {
+                    ArmorObjectRegion = CacheContext.GetStringId("pelvis"),
+                    BipedRegion = CacheContext.GetStringId("pelvis"),
+                    Permutations = new List<MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation>
+                    {
+                        new MultiplayerGlobals.UniversalBlock.SpartanArmorCustomizationBlock.Permutation
+                        {
+                            Name = CacheContext.GetStringId("base"),
+                            ThirdPersonArmorObject = CacheContext.GetTag(0x155F),
+                            FirstPersonArmorModel = null,
+                            Unknown = -1,
+                            Unknown2 = 0,
+                            ParentAttachMarker = StringId.Null,
+                            ChildAttachMarker = StringId.Null
+                        },
+                    }
+                },
+            };
+            #endregion
+
             #region Universal GameVariantWeapons
             mulgDefinition.Universal[0].GameVariantWeapons = new List<MultiplayerGlobals.UniversalBlock.GameVariantWeapon>
             {
@@ -270,7 +402,7 @@ namespace TagTool.Commands.Tags
                 }
             };
             #endregion
-
+            
             #region Runtime Weapons
             mulgDefinition.Runtime[0].MultiplayerConstants[0].Weapons = new List<MultiplayerGlobals.RuntimeBlock.MultiplayerConstant.Weapon>
             {
@@ -419,6 +551,23 @@ namespace TagTool.Commands.Tags
                     Unknown4 = -10.0f
                 }
             };
+            #endregion
+
+            #region Universal Equipment
+            mulgDefinition.Universal[0].Equipment = new List<MultiplayerGlobals.UniversalBlock.EquipmentBlock>
+            {
+                new MultiplayerGlobals.UniversalBlock.EquipmentBlock
+                {
+                    Name = CacheContext.GetStringId("empty"),
+                    Equipment = null,
+                    Unknown = 0,
+                    Unknown2 = 0
+                }
+            };
+            #endregion
+
+            #region Runtime Equipment
+            mulgDefinition.Runtime[0].MultiplayerConstants[0].Equipment = null;
             #endregion
 
             #region Universal GameVariantVehicles
@@ -853,6 +1002,43 @@ namespace TagTool.Commands.Tags
             CacheContext.Serializer.Serialize(mulgContext, mulgDefinition);
         }
 
+        private void CleanScenario(Stream stream, CachedTagInstance tag)
+        {
+            var context = new TagSerializationContext(stream, CacheContext, tag);
+            var scenario = CacheContext.Deserializer.Deserialize<Scenario>(context);
+
+            var keepIndices = new HashSet<int>
+            {
+                0x01AC,
+                0x01AF,
+                0x01B2,
+                0x01B5,
+                0x1B8E,
+                0x1B8F,
+                0x2EAA,
+                0x2EAB,
+                0x2EAC
+            };
+
+            foreach (var eqip in scenario.EquipmentPalette)
+            {
+                if (eqip.Equipment != null && !keepIndices.Contains(eqip.Equipment.Index))
+                    eqip.Equipment = null;
+            }
+
+            var newSandboxEquip = new List<Scenario.SandboxObject>();
+
+            foreach (var eqip in scenario.SandboxEquipment)
+            {
+                if (eqip.Object != null && keepIndices.Contains(eqip.Object.Index))
+                    newSandboxEquip.Add(eqip);
+            }
+
+            scenario.SandboxEquipment = newSandboxEquip;
+
+            CacheContext.Serializer.Serialize(context, scenario);
+        }
+
         private void NullTags(Stream stream, ref HashSet<int> retainedTags)
         {
             for (var i = 0; i < CacheContext.TagCache.Index.Count; i++)
@@ -1069,7 +1255,36 @@ namespace TagTool.Commands.Tags
                 LoadTagDependencies(CacheContext.TagCache.Index.FindFirstInGroup("cfgt").Index, ref retainedTags);
 
                 foreach (var scnr in CacheContext.TagCache.Index.FindAllInGroup("scnr"))
-                    LoadTagDependencies(scnr.Index, ref retainedTags);
+                {
+                    switch (scnr.Index)
+                    {
+                        case 0x3A0E: // levels\multi\s3d_avalanche\s3d_avalanche.scenario
+                        case 0x3DDA: // levels\multi\s3d_edge\s3d_edge.scenario
+                        case 0x3F83: // levels\multi\s3d_reactor\s3d_reactor.scenario
+                        case 0x41E4: // levels\multi\s3d_turf\s3d_turf.scenario
+                            break;
+
+                        default:
+                            CleanScenario(stream, scnr);
+                            break;
+                    }
+                }
+
+                foreach (var scnr in CacheContext.TagCache.Index.FindAllInGroup("scnr"))
+                {
+                    switch (scnr.Index)
+                    {
+                        case 0x3A0E: // levels\multi\s3d_avalanche\s3d_avalanche.scenario
+                        case 0x3DDA: // levels\multi\s3d_edge\s3d_edge.scenario
+                        case 0x3F83: // levels\multi\s3d_reactor\s3d_reactor.scenario
+                        case 0x41E4: // levels\multi\s3d_turf\s3d_turf.scenario
+                            break;
+
+                        default:
+                            LoadTagDependencies(scnr.Index, ref retainedTags);
+                            break;
+                    }
+                }
 
                 NullTags(stream, ref retainedTags);
                 NullResources();

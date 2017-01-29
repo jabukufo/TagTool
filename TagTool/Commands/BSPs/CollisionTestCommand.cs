@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using TagTool.Geometry;
 using TagTool.Serialization;
 using TagTool.TagDefinitions;
 using TagTool.Cache;

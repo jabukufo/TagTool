@@ -11,7 +11,6 @@ using TagTool.Cache;
 using TagTool.Commands;
 using TagTool.Commands.Tags;
 using TagTool.IO;
-using TagTool.Serialization;
 
 namespace TagTool
 {
@@ -33,7 +32,7 @@ namespace TagTool
         {
             // Get the file path from the first argument
             // If no argument is given, load tags.dat
-            var filePath = (args.Length > 0) ? args[0] : "tags.dat";
+            var filePath = (args.Length > 0) ? args[0] : "C:\\AnvilOnline\\maps\\tags.dat";
 
             // If there are extra arguments, use them to automatically execute a command
             List<string> autoexecCommand = null;
@@ -258,15 +257,7 @@ namespace TagTool
             // Execute it
             commandAndArgs.RemoveAt(0);
 
-            try
-            {
-                ExecuteCommand(command, commandAndArgs);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR: " + e.Message);
-                ConsoleHistory.Dump("hott_*_crash.log");
-            }
+            ExecuteCommand(command, commandAndArgs);
 
             return true;
         }

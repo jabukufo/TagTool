@@ -2,7 +2,7 @@
 {
     public enum EndianFormat
     {
-        Little,
-        Big
+        LittleEndian,
+        BigEndian
     }
 }

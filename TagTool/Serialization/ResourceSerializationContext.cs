@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagTool.IO;
-using TagTool.Bitmaps;
-using TagTool.Geometry;
 using TagTool.Common;
 using TagTool.Cache;
 using TagTool.TagResources;
