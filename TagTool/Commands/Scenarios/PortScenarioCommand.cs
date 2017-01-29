@@ -25,7 +25,7 @@ namespace TagTool.Commands.Scenarios
                   "PortScenario",
                   "Ports a scenario from H1PC/H1CE/H2X/H3B/H3/ODST cache files.",
 
-                  "PortScenario <Map File> <Tag Path>",
+                  "PortScenario <Map File>",
 
                   "Ports a scenario from H1PC/H1CE/H2X/H3B/H3/ODST cache files.")
         {

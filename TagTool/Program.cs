@@ -32,7 +32,7 @@ namespace TagTool
         {
             // Get the file path from the first argument
             // If no argument is given, load tags.dat
-            var filePath = (args.Length > 0) ? args[0] : "C:\\HaloOnline\\maps\\tags.dat";
+            var filePath = (args.Length > 0) ? args[0] : "tags.dat";
 
             // If there are extra arguments, use them to automatically execute a command
             List<string> autoexecCommand = null;
